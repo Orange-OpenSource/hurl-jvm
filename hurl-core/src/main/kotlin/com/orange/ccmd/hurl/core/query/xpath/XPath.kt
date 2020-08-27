@@ -20,12 +20,13 @@
 package com.orange.ccmd.hurl.core.query.xpath
 
 import com.orange.ccmd.hurl.core.query.InvalidQueryException
-import com.sun.org.apache.xpath.internal.XPathAPI
-import com.sun.org.apache.xpath.internal.objects.XBoolean
-import com.sun.org.apache.xpath.internal.objects.XNodeSet
-import com.sun.org.apache.xpath.internal.objects.XNumber
-import com.sun.org.apache.xpath.internal.objects.XString
 import org.jsoup.Jsoup
+import javax.xml.xpath.XPathEvaluationResult.XPathResultType.BOOLEAN
+import javax.xml.xpath.XPathEvaluationResult.XPathResultType.NODESET
+import javax.xml.xpath.XPathEvaluationResult.XPathResultType.NUMBER
+import javax.xml.xpath.XPathEvaluationResult.XPathResultType.STRING
+import javax.xml.xpath.XPathFactory
+import javax.xml.xpath.XPathNodes
 
 
 class XPath {
@@ -39,14 +40,17 @@ class XPath {
             try {
                 val jsoup = Jsoup.parse(body)
                 val doc = W3CDom.fromJsoup(jsoup)
-                val ret = XPathAPI.eval(doc, expr)
-                return when (ret) {
-                    is XString -> XPathStringResult(value = ret.str())
-                    is XBoolean -> XPathBooleanResult(value = ret.bool())
-                    is XNumber -> XPathNumberResult(value = ret.num())
-                    is XNodeSet -> XPathNodeSetResult(size = ret.nodelist().length)
-                    else -> { throw InvalidQueryException("invalid XPath return type")
+                val xpath = XPathFactory.newInstance().newXPath()
+                val ret = xpath.evaluateExpression(expr, doc)
+                return when (ret.type()) {
+                    STRING -> XPathStringResult(value = ret.value() as String)
+                    BOOLEAN -> XPathBooleanResult(value = ret.value() as Boolean)
+                    NUMBER -> XPathNumberResult(value = ret.value() as Number)
+                    NODESET -> {
+                        val nodes = ret.value() as XPathNodes
+                        XPathNodeSetResult(size = nodes.size())
                     }
+                    else -> { throw InvalidQueryException("invalid XPath return type") }
                 }
             } catch (e: Exception) {
                 throw InvalidQueryException("$e")

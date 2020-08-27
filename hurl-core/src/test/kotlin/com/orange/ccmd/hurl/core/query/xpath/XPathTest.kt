@@ -35,9 +35,7 @@ class XPathTest {
     fun `evaluate xpath expression`(): List<DynamicTest> {
         val html = File("src/test/resources/sample.html")
         val tests = mapOf(
-            "normalize-space(//head/title)" to XPathStringResult(
-                "Toto\u00a0\u00a0Tutu"
-            ),
+            "normalize-space(//head/title)" to XPathStringResult("Toto\u00a0\u00a0Tutu"),
             "count(//div[contains(concat(' ',normalize-space(@class),' '),' pet ')])" to
                     XPathNumberResult(2.0),
             "normalize-space((//div[contains(concat(' ',normalize-space(@class),' '),' pet-title ')])[1])" to
@@ -115,6 +113,7 @@ class XPathTest {
                 <div id="two">tutu</div>
                 <div id="three"><p>tata</p></div>
                 <p></p>
+                <a href="http://sample.net">dummy</a>
                 <p></p>
             </body>""".trimIndent()
 
@@ -122,6 +121,10 @@ class XPathTest {
             "//div" to XPathNodeSetResult(size = 3),
             "//p" to XPathNodeSetResult(size = 4),
             "//div/p" to XPathNodeSetResult(size = 2),
+            "//div/a" to XPathNodeSetResult(size = 0),
+            "//a" to XPathNodeSetResult(size = 1),
+            "//body/a" to XPathNodeSetResult(size = 1),
+            "/html/body/a" to XPathNodeSetResult(size = 1),
             "//toto" to XPathNodeSetResult(size = 0)
         )
         return tests.map { (expr, expectedValue) ->
