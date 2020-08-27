@@ -22,7 +22,7 @@ plugins {
     jacoco
 }
 
-val jacksonVersion = "2.10.2"
+val jacksonVersion = "2.11.2"
 val jsoupVersion = "1.12.2"
 val jsonPathVersion = "2.4.0"
 val apacheHttpVersion = "4.5.11"
