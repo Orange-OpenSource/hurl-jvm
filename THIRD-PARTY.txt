@@ -1,0 +1,44 @@
+This document contains the list of Third Party Software along with the license information.
+
+Third Party Software may impose additional restrictions and it is the user's responsibility to ensure that they have met the licensing
+requirements of the relevant license of the Third Party Software they are using.
+
+//-----//
+jackson-core - version 2.10.2
+Copyright © FasterXML
+jackson-core is distributed under the terms and conditions of the Apache Software License 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
+You may download the source code on the following website: https://github.com/FasterXML/jackson-core
+//-----//
+jsoup - version 1.12.2
+Copyright © 2009-2020 Jonathan Hedley
+jsoup is distributed under the terms and conditions ot the MIT License (http://opensource.org/licenses/MIT)
+You may download the source code on the following website: https://github.com/jhy/jsoup
+//-----//
+Jayway JsonPath - version 2.4.0
+Copyright © 2017 Jayway
+Jayway JsonPath is distributed under the terms and conditions of the Apache Software License 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
+You may download the source code on the following website: https://github.com/json-path/JsonPath
+//-----//
+Apache HttpComponents Client - version 4.5.11
+Copyright © 1999–2020 The Apache Software Foundation.
+Apache HttpComponents Client is distributed under the terms and conditions of the Apache Software License 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
+You may download the source code on the following website: http://hc.apache.org/httpcomponents-client-ga/
+//-----//
+Simple Logging Facade for Java - version 1.7.30
+Copyright © 2004-2019 QOS.ch
+Simple Logging Facade for Java is distributed under the terms and conditions ot the MIT License (http://opensource.org/licenses/MIT)
+You may download the source code on the following website: http://www.slf4j.org
+//-----//
+Commons CLI - version 1.4
+Copyright © 2002-2019 The Apache Software Foundation.
+Apache HttpComponents Client is distributed under the terms and conditions of the Apache Software License 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
+You may download the source code on the following website: http://commons.apache.org/proper/commons-cli/
+//-----//
+JUnit - version 5.6.0
+Copyright © 2020 The JUnit Team
+JUnit is distributed under the terms and conditions ot the Eclipse Public License 2.0 (https://www.eclipse.org/legal/epl-2.0/)
+You may download the source code on the following website: https://github.com/junit-team/junit5/
+//-----//
+Gradle Versions Plugin - version 0.28.0
+Gradle Versions Plugin is distributed under the terms and conditions of the Apache Software License 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
+You may download the source code on the following website: https://github.com/ben-manes/gradle-versions-plugin

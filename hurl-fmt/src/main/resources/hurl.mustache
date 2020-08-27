@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Hurl</title>
+        <style>
+        .hurl {
+            background-color: {{theme.background}};
+            color: {{theme.foreground}};
+        }
+        .hurl .string {
+            color: {{theme.string}};
+        }
+        .hurl .number {
+            color: {{theme.number}};
+        }
+        .hurl .boolean {
+            color: {{theme.boolean}};
+        }
+        .hurl .url {
+            color: {{theme.url}};
+        }
+        .hurl .method {
+            color: {{theme.method}};
+        }
+        .hurl .version {
+            color: {{theme.version}};
+        }
+        .hurl .section-header {
+            color: {{theme.sectionHeader}};
+        }
+        .hurl .query-type {
+            color: {{theme.queryType}};
+        }
+        .hurl .predicate-type {
+            color: {{theme.predicateType}};
+        }
+        .hurl .comment {
+            color: {{theme.comment}};
+        }
+        </style>
+    </head>
+    <body class="hurl">
+        <pre><code>{{body}}</code></pre>
+    </body>
+</html>
