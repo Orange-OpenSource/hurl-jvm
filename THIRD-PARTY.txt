@@ -4,7 +4,7 @@ Third Party Software may impose additional restrictions and it is the user's res
 requirements of the relevant license of the Third Party Software they are using.
 
 //-----//
-jackson-core - version 2.10.2
+jackson-core - version 2.11.2
 Copyright © FasterXML
 jackson-core is distributed under the terms and conditions of the Apache Software License 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
 You may download the source code on the following website: https://github.com/FasterXML/jackson-core

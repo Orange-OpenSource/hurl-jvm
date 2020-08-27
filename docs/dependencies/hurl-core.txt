@@ -10,7 +10,7 @@ No dependencies
 
 -runtime (n)
 +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.72 (n)
-+--- com.fasterxml.jackson.core:jackson-core:2.10.2 (n)
++--- com.fasterxml.jackson.core:jackson-core:2.11.2 (n)
 +--- org.jsoup:jsoup:1.12.2 (n)
 +--- com.jayway.jsonpath:json-path:2.4.0 (n)
 +--- org.apache.httpcomponents:httpclient:4.5.11 (n)
@@ -39,7 +39,7 @@ compileClasspath - Compile classpath for compilation 'main' (target  (jvm)).
 |    |    \--- org.jetbrains:annotations:13.0
 |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72
 |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72 (*)
-+--- com.fasterxml.jackson.core:jackson-core:2.10.2
++--- com.fasterxml.jackson.core:jackson-core:2.11.2
 +--- org.jsoup:jsoup:1.12.2
 +--- com.jayway.jsonpath:json-path:2.4.0
 |    +--- net.minidev:json-smart:2.3
@@ -67,7 +67,7 @@ default - Configuration for default artifacts.
 |    |    \--- org.jetbrains:annotations:13.0
 |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72
 |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72 (*)
-+--- com.fasterxml.jackson.core:jackson-core:2.10.2
++--- com.fasterxml.jackson.core:jackson-core:2.11.2
 +--- org.jsoup:jsoup:1.12.2
 +--- com.jayway.jsonpath:json-path:2.4.0
 |    +--- net.minidev:json-smart:2.3
@@ -84,7 +84,7 @@ default - Configuration for default artifacts.
 
 implementation - Implementation only dependencies for compilation 'main' (target  (jvm)). (n)
 +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.72 (n)
-+--- com.fasterxml.jackson.core:jackson-core:2.10.2 (n)
++--- com.fasterxml.jackson.core:jackson-core:2.11.2 (n)
 +--- org.jsoup:jsoup:1.12.2 (n)
 +--- com.jayway.jsonpath:json-path:2.4.0 (n)
 +--- org.apache.httpcomponents:httpclient:4.5.11 (n)
@@ -98,7 +98,7 @@ implementationDependenciesMetadata
 |    |    \--- org.jetbrains:annotations:13.0
 |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72
 |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72 (*)
-+--- com.fasterxml.jackson.core:jackson-core:2.10.2
++--- com.fasterxml.jackson.core:jackson-core:2.11.2
 +--- org.jsoup:jsoup:1.12.2
 +--- com.jayway.jsonpath:json-path:2.4.0
 |    +--- net.minidev:json-smart:2.3
@@ -174,7 +174,7 @@ runtimeClasspath - Runtime classpath of compilation 'main' (target  (jvm)).
 |    |    \--- org.jetbrains:annotations:13.0
 |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72
 |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72 (*)
-+--- com.fasterxml.jackson.core:jackson-core:2.10.2
++--- com.fasterxml.jackson.core:jackson-core:2.11.2
 +--- org.jsoup:jsoup:1.12.2
 +--- com.jayway.jsonpath:json-path:2.4.0
 |    +--- net.minidev:json-smart:2.3
@@ -217,7 +217,7 @@ testCompileClasspath - Compile classpath for compilation 'test' (target  (jvm)).
 |    |    \--- org.jetbrains:annotations:13.0
 |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72
 |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72 (*)
-+--- com.fasterxml.jackson.core:jackson-core:2.10.2
++--- com.fasterxml.jackson.core:jackson-core:2.11.2
 +--- org.jsoup:jsoup:1.12.2
 +--- com.jayway.jsonpath:json-path:2.4.0
 |    +--- net.minidev:json-smart:2.3
@@ -275,7 +275,7 @@ testImplementationDependenciesMetadata
 |    |    \--- org.jetbrains:annotations:13.0
 |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72
 |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72 (*)
-+--- com.fasterxml.jackson.core:jackson-core:2.10.2
++--- com.fasterxml.jackson.core:jackson-core:2.11.2
 +--- org.jsoup:jsoup:1.12.2
 +--- com.jayway.jsonpath:json-path:2.4.0
 |    +--- net.minidev:json-smart:2.3
@@ -328,7 +328,7 @@ testRuntimeClasspath - Runtime classpath of compilation 'test' (target  (jvm)).
 |    |    \--- org.jetbrains:annotations:13.0
 |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72
 |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72 (*)
-+--- com.fasterxml.jackson.core:jackson-core:2.10.2
++--- com.fasterxml.jackson.core:jackson-core:2.11.2
 +--- org.jsoup:jsoup:1.12.2
 +--- com.jayway.jsonpath:json-path:2.4.0
 |    +--- net.minidev:json-smart:2.3
@@ -381,5 +381,5 @@ No dependencies
 
 A web-based, searchable dependency report is available by adding the --scan option.
 
-BUILD SUCCESSFUL in 710ms
+BUILD SUCCESSFUL in 738ms
 1 actionable task: 1 executed
