@@ -1,0 +1,329 @@
+
+> Task :hurl-cli:dependencies
+
+------------------------------------------------------------
+Project :hurl-cli
+------------------------------------------------------------
+
+-api (n)
+No dependencies
+
+-runtime (n)
++--- project hurl-core (n)
++--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.72 (n)
++--- commons-cli:commons-cli:1.4 (n)
+\--- org.slf4j:slf4j-jdk14:1.7.29 (n)
+
+annotationProcessor - Annotation processors and their dependencies for source set 'main'.
+No dependencies
+
+api - API dependencies for compilation 'main' (target  (jvm)). (n)
+No dependencies
+
+apiDependenciesMetadata
+No dependencies
+
+apiElements - API elements for main. (n)
+No dependencies
+
+archives - Configuration for archive artifacts.
+No dependencies
+
+compileClasspath - Compile classpath for compilation 'main' (target  (jvm)).
++--- project :hurl-core
++--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.72
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72
+|    |    \--- org.jetbrains:annotations:13.0
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72
+|         \--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72 (*)
++--- commons-cli:commons-cli:1.4
+\--- org.slf4j:slf4j-jdk14:1.7.29
+     \--- org.slf4j:slf4j-api:1.7.29
+
+compileOnly - Compile only dependencies for compilation 'main' (target  (jvm)). (n)
+No dependencies
+
+compileOnlyDependenciesMetadata
+No dependencies
+
+default - Configuration for default artifacts.
++--- project :hurl-core
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.72
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72
+|    |    |    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72
+|    |    |    \--- org.jetbrains:annotations:13.0
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72
+|    |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72 (*)
+|    +--- com.fasterxml.jackson.core:jackson-core:2.10.2
+|    +--- org.jsoup:jsoup:1.12.2
+|    +--- com.jayway.jsonpath:json-path:2.4.0
+|    |    +--- net.minidev:json-smart:2.3
+|    |    |    \--- net.minidev:accessors-smart:1.2
+|    |    |         \--- org.ow2.asm:asm:5.0.4
+|    |    \--- org.slf4j:slf4j-api:1.7.25 -> 1.7.30
+|    +--- org.apache.httpcomponents:httpclient:4.5.11
+|    |    +--- org.apache.httpcomponents:httpcore:4.4.13
+|    |    +--- commons-logging:commons-logging:1.2
+|    |    \--- commons-codec:commons-codec:1.11
+|    +--- org.apache.httpcomponents:httpmime:4.5.11
+|    |    \--- org.apache.httpcomponents:httpclient:4.5.11 (*)
+|    \--- org.slf4j:slf4j-api:1.7.30
++--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.72 (*)
++--- commons-cli:commons-cli:1.4
+\--- org.slf4j:slf4j-jdk14:1.7.29
+     \--- org.slf4j:slf4j-api:1.7.29 -> 1.7.30
+
+implementation - Implementation only dependencies for compilation 'main' (target  (jvm)). (n)
++--- project hurl-core (n)
++--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.72 (n)
++--- commons-cli:commons-cli:1.4 (n)
+\--- org.slf4j:slf4j-jdk14:1.7.29 (n)
+
+implementationDependenciesMetadata
++--- project :hurl-core
++--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.72
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72
+|    |    \--- org.jetbrains:annotations:13.0
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72
+|         \--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72 (*)
++--- commons-cli:commons-cli:1.4
+\--- org.slf4j:slf4j-jdk14:1.7.29
+     \--- org.slf4j:slf4j-api:1.7.29
+
+kotlinCompilerClasspath
+\--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.3.72
+     +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72
+     |    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72
+     |    \--- org.jetbrains:annotations:13.0
+     +--- org.jetbrains.kotlin:kotlin-script-runtime:1.3.72
+     +--- org.jetbrains.kotlin:kotlin-reflect:1.3.72
+     |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72 (*)
+     +--- org.jetbrains.kotlin:kotlin-daemon-embeddable:1.3.72
+     \--- org.jetbrains.intellij.deps:trove4j:1.0.20181211
+
+kotlinCompilerPluginClasspath
+\--- org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:1.3.72
+     +--- org.jetbrains.kotlin:kotlin-scripting-compiler-impl-embeddable:1.3.72
+     |    +--- org.jetbrains.kotlin:kotlin-scripting-common:1.3.72
+     |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72
+     |    |    |    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72
+     |    |    |    \--- org.jetbrains:annotations:13.0
+     |    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1
+     |    +--- org.jetbrains.kotlin:kotlin-scripting-jvm:1.3.72
+     |    |    +--- org.jetbrains.kotlin:kotlin-script-runtime:1.3.72
+     |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72 (*)
+     |    |    \--- org.jetbrains.kotlin:kotlin-scripting-common:1.3.72 (*)
+     |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72 (*)
+     |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1
+     \--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72 (*)
+
+kotlinNativeCompilerPluginClasspath
+No dependencies
+
+kotlinScriptDef - Script filename extensions discovery classpath configuration
+No dependencies
+
+kotlinScriptDefExtensions
+No dependencies
+
+runtimeClasspath - Runtime classpath of compilation 'main' (target  (jvm)).
++--- project :hurl-core
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.72
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72
+|    |    |    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72
+|    |    |    \--- org.jetbrains:annotations:13.0
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72
+|    |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72 (*)
+|    +--- com.fasterxml.jackson.core:jackson-core:2.10.2
+|    +--- org.jsoup:jsoup:1.12.2
+|    +--- com.jayway.jsonpath:json-path:2.4.0
+|    |    +--- net.minidev:json-smart:2.3
+|    |    |    \--- net.minidev:accessors-smart:1.2
+|    |    |         \--- org.ow2.asm:asm:5.0.4
+|    |    \--- org.slf4j:slf4j-api:1.7.25 -> 1.7.30
+|    +--- org.apache.httpcomponents:httpclient:4.5.11
+|    |    +--- org.apache.httpcomponents:httpcore:4.4.13
+|    |    +--- commons-logging:commons-logging:1.2
+|    |    \--- commons-codec:commons-codec:1.11
+|    +--- org.apache.httpcomponents:httpmime:4.5.11
+|    |    \--- org.apache.httpcomponents:httpclient:4.5.11 (*)
+|    \--- org.slf4j:slf4j-api:1.7.30
++--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.72 (*)
++--- commons-cli:commons-cli:1.4
+\--- org.slf4j:slf4j-jdk14:1.7.29
+     \--- org.slf4j:slf4j-api:1.7.29 -> 1.7.30
+
+runtimeElements - Elements of runtime for main. (n)
+No dependencies
+
+runtimeOnly - Runtime only dependencies for compilation 'main' (target  (jvm)). (n)
+No dependencies
+
+runtimeOnlyDependenciesMetadata
+No dependencies
+
+sourceArtifacts (n)
+No dependencies
+
+testAnnotationProcessor - Annotation processors and their dependencies for source set 'test'.
+No dependencies
+
+testApi - API dependencies for compilation 'test' (target  (jvm)). (n)
+No dependencies
+
+testApiDependenciesMetadata
+No dependencies
+
+testCompileClasspath - Compile classpath for compilation 'test' (target  (jvm)).
++--- project :hurl-core
++--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.72
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72
+|    |    \--- org.jetbrains:annotations:13.0
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72
+|         \--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72 (*)
++--- commons-cli:commons-cli:1.4
++--- org.slf4j:slf4j-jdk14:1.7.29
+|    \--- org.slf4j:slf4j-api:1.7.29
++--- org.jetbrains.kotlin:kotlin-test:1.3.72
+|    +--- org.jetbrains.kotlin:kotlin-test-common:1.3.72
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72
+|    \--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72 (*)
+\--- org.junit.jupiter:junit-jupiter-engine:5.6.0
+     +--- org.junit:junit-bom:5.6.0
+     |    +--- org.junit.jupiter:junit-jupiter-api:5.6.0 (c)
+     |    +--- org.junit.jupiter:junit-jupiter-engine:5.6.0 (c)
+     |    +--- org.junit.platform:junit-platform-engine:1.6.0 (c)
+     |    \--- org.junit.platform:junit-platform-commons:1.6.0 (c)
+     +--- org.apiguardian:apiguardian-api:1.1.0
+     +--- org.junit.platform:junit-platform-engine:1.6.0
+     |    +--- org.junit:junit-bom:5.6.0 (*)
+     |    +--- org.apiguardian:apiguardian-api:1.1.0
+     |    +--- org.opentest4j:opentest4j:1.2.0
+     |    \--- org.junit.platform:junit-platform-commons:1.6.0
+     |         +--- org.junit:junit-bom:5.6.0 (*)
+     |         \--- org.apiguardian:apiguardian-api:1.1.0
+     \--- org.junit.jupiter:junit-jupiter-api:5.6.0
+          +--- org.junit:junit-bom:5.6.0 (*)
+          +--- org.apiguardian:apiguardian-api:1.1.0
+          +--- org.opentest4j:opentest4j:1.2.0
+          \--- org.junit.platform:junit-platform-commons:1.6.0 (*)
+
+testCompileOnly - Compile only dependencies for compilation 'test' (target  (jvm)). (n)
+No dependencies
+
+testCompileOnlyDependenciesMetadata
+No dependencies
+
+testImplementation - Implementation only dependencies for compilation 'test' (target  (jvm)). (n)
++--- org.jetbrains.kotlin:kotlin-test:1.3.72 (n)
+\--- org.junit.jupiter:junit-jupiter-engine:5.6.0 (n)
+
+testImplementationDependenciesMetadata
++--- project :hurl-core
++--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.72
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72
+|    |    \--- org.jetbrains:annotations:13.0
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72
+|         \--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72 (*)
++--- commons-cli:commons-cli:1.4
++--- org.slf4j:slf4j-jdk14:1.7.29
+|    \--- org.slf4j:slf4j-api:1.7.29
++--- org.jetbrains.kotlin:kotlin-test:1.3.72
+|    +--- org.jetbrains.kotlin:kotlin-test-common:1.3.72
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72
+|    \--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72 (*)
+\--- org.junit.jupiter:junit-jupiter-engine:5.6.0
+     +--- org.junit:junit-bom:5.6.0
+     |    +--- org.junit.jupiter:junit-jupiter-api:5.6.0 (c)
+     |    +--- org.junit.jupiter:junit-jupiter-engine:5.6.0 (c)
+     |    +--- org.junit.platform:junit-platform-engine:1.6.0 (c)
+     |    \--- org.junit.platform:junit-platform-commons:1.6.0 (c)
+     +--- org.apiguardian:apiguardian-api:1.1.0
+     +--- org.junit.platform:junit-platform-engine:1.6.0
+     |    +--- org.junit:junit-bom:5.6.0 (*)
+     |    +--- org.apiguardian:apiguardian-api:1.1.0
+     |    +--- org.opentest4j:opentest4j:1.2.0
+     |    \--- org.junit.platform:junit-platform-commons:1.6.0
+     |         +--- org.junit:junit-bom:5.6.0 (*)
+     |         \--- org.apiguardian:apiguardian-api:1.1.0
+     \--- org.junit.jupiter:junit-jupiter-api:5.6.0
+          +--- org.junit:junit-bom:5.6.0 (*)
+          +--- org.apiguardian:apiguardian-api:1.1.0
+          +--- org.opentest4j:opentest4j:1.2.0
+          \--- org.junit.platform:junit-platform-commons:1.6.0 (*)
+
+testKotlinScriptDef - Script filename extensions discovery classpath configuration
+No dependencies
+
+testKotlinScriptDefExtensions
+No dependencies
+
+testRuntimeClasspath - Runtime classpath of compilation 'test' (target  (jvm)).
++--- project :hurl-core
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.72
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72
+|    |    |    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72
+|    |    |    \--- org.jetbrains:annotations:13.0
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72
+|    |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72 (*)
+|    +--- com.fasterxml.jackson.core:jackson-core:2.10.2
+|    +--- org.jsoup:jsoup:1.12.2
+|    +--- com.jayway.jsonpath:json-path:2.4.0
+|    |    +--- net.minidev:json-smart:2.3
+|    |    |    \--- net.minidev:accessors-smart:1.2
+|    |    |         \--- org.ow2.asm:asm:5.0.4
+|    |    \--- org.slf4j:slf4j-api:1.7.25 -> 1.7.30
+|    +--- org.apache.httpcomponents:httpclient:4.5.11
+|    |    +--- org.apache.httpcomponents:httpcore:4.4.13
+|    |    +--- commons-logging:commons-logging:1.2
+|    |    \--- commons-codec:commons-codec:1.11
+|    +--- org.apache.httpcomponents:httpmime:4.5.11
+|    |    \--- org.apache.httpcomponents:httpclient:4.5.11 (*)
+|    \--- org.slf4j:slf4j-api:1.7.30
++--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.72 (*)
++--- commons-cli:commons-cli:1.4
++--- org.slf4j:slf4j-jdk14:1.7.29
+|    \--- org.slf4j:slf4j-api:1.7.29 -> 1.7.30
++--- org.jetbrains.kotlin:kotlin-test:1.3.72
+|    +--- org.jetbrains.kotlin:kotlin-test-common:1.3.72
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72
+|    \--- org.jetbrains.kotlin:kotlin-stdlib:1.3.72 (*)
+\--- org.junit.jupiter:junit-jupiter-engine:5.6.0
+     +--- org.junit:junit-bom:5.6.0
+     |    +--- org.junit.jupiter:junit-jupiter-api:5.6.0 (c)
+     |    +--- org.junit.jupiter:junit-jupiter-engine:5.6.0 (c)
+     |    +--- org.junit.platform:junit-platform-engine:1.6.0 (c)
+     |    \--- org.junit.platform:junit-platform-commons:1.6.0 (c)
+     +--- org.apiguardian:apiguardian-api:1.1.0
+     +--- org.junit.platform:junit-platform-engine:1.6.0
+     |    +--- org.junit:junit-bom:5.6.0 (*)
+     |    +--- org.apiguardian:apiguardian-api:1.1.0
+     |    +--- org.opentest4j:opentest4j:1.2.0
+     |    \--- org.junit.platform:junit-platform-commons:1.6.0
+     |         +--- org.junit:junit-bom:5.6.0 (*)
+     |         \--- org.apiguardian:apiguardian-api:1.1.0
+     \--- org.junit.jupiter:junit-jupiter-api:5.6.0
+          +--- org.junit:junit-bom:5.6.0 (*)
+          +--- org.apiguardian:apiguardian-api:1.1.0
+          +--- org.opentest4j:opentest4j:1.2.0
+          \--- org.junit.platform:junit-platform-commons:1.6.0 (*)
+
+testRuntimeOnly - Runtime only dependencies for compilation 'test' (target  (jvm)). (n)
+No dependencies
+
+testRuntimeOnlyDependenciesMetadata
+No dependencies
+
+(c) - dependency constraint
+(*) - dependencies omitted (listed previously)
+
+(n) - Not resolved (configuration is not meant to be resolved)
+
+A web-based, searchable dependency report is available by adding the --scan option.
+
+BUILD SUCCESSFUL in 690ms
+1 actionable task: 1 executed
