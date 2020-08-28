@@ -20,7 +20,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.3.72" apply false
+    kotlin("jvm") version "1.4.0" apply false
     // Ajoute la task dependencyUpdates pour gérér les dépendances.
     id("com.github.ben-manes.versions") version "0.28.0"
     `maven-publish`
