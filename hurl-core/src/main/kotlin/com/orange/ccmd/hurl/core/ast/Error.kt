@@ -60,7 +60,7 @@ class EofError(position: Position) : Error("end of file", position) {
  */
 internal val List<Error>.singleDeepest : Error?
 get() {
-    val deepest = maxBy { it.position.offset }!!
+    val deepest = maxByOrNull { it.position.offset } ?: return null
     val allDeepest = filter { it.position.offset == deepest.position.offset }
     return if (allDeepest.size == 1) {
         allDeepest[0]

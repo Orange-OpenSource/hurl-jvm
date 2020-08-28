@@ -163,10 +163,7 @@ open class Parser(val text: String) {
      */
     val rootError: Error
         get() {
-            if (errors.isEmpty()) {
-                throw IllegalStateException("Empty syntax error list")
-            }
-            val deepest = errors.maxBy { it.position.offset }!!
+            val deepest = errors.maxByOrNull { it.position.offset } ?: throw IllegalStateException("Empty syntax error list")
             val allDeepest = errors.filter { it.position.offset == deepest.position.offset }
             return if (allDeepest.size == 1) {
                 allDeepest[0]
