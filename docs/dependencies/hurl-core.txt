@@ -40,12 +40,12 @@ compileClasspath - Compile classpath for compilation 'main' (target  (jvm)).
 |    |    \--- net.minidev:accessors-smart:1.2
 |    |         \--- org.ow2.asm:asm:5.0.4
 |    \--- org.slf4j:slf4j-api:1.7.25 -> 1.7.30
-+--- org.apache.httpcomponents:httpclient:4.5.11
++--- org.apache.httpcomponents:httpclient:4.5.12
 |    +--- org.apache.httpcomponents:httpcore:4.4.13
 |    +--- commons-logging:commons-logging:1.2
 |    \--- commons-codec:commons-codec:1.11
-+--- org.apache.httpcomponents:httpmime:4.5.11
-|    \--- org.apache.httpcomponents:httpclient:4.5.11 (*)
++--- org.apache.httpcomponents:httpmime:4.5.12
+|    \--- org.apache.httpcomponents:httpclient:4.5.12 (*)
 \--- org.slf4j:slf4j-api:1.7.30
 
 compileOnly - Compile only dependencies for compilation 'main' (target  (jvm)). (n)
@@ -68,12 +68,12 @@ default - Configuration for default artifacts.
 |    |    \--- net.minidev:accessors-smart:1.2
 |    |         \--- org.ow2.asm:asm:5.0.4
 |    \--- org.slf4j:slf4j-api:1.7.25 -> 1.7.30
-+--- org.apache.httpcomponents:httpclient:4.5.11
++--- org.apache.httpcomponents:httpclient:4.5.12
 |    +--- org.apache.httpcomponents:httpcore:4.4.13
 |    +--- commons-logging:commons-logging:1.2
 |    \--- commons-codec:commons-codec:1.11
-+--- org.apache.httpcomponents:httpmime:4.5.11
-|    \--- org.apache.httpcomponents:httpclient:4.5.11 (*)
++--- org.apache.httpcomponents:httpmime:4.5.12
+|    \--- org.apache.httpcomponents:httpclient:4.5.12 (*)
 \--- org.slf4j:slf4j-api:1.7.30
 
 implementation - Implementation only dependencies for compilation 'main' (target  (jvm)). (n)
@@ -81,8 +81,8 @@ implementation - Implementation only dependencies for compilation 'main' (target
 +--- com.fasterxml.jackson.core:jackson-core:2.11.2 (n)
 +--- org.jsoup:jsoup:1.12.2 (n)
 +--- com.jayway.jsonpath:json-path:2.4.0 (n)
-+--- org.apache.httpcomponents:httpclient:4.5.11 (n)
-+--- org.apache.httpcomponents:httpmime:4.5.11 (n)
++--- org.apache.httpcomponents:httpclient:4.5.12 (n)
++--- org.apache.httpcomponents:httpmime:4.5.12 (n)
 \--- org.slf4j:slf4j-api:1.7.30 (n)
 
 implementationDependenciesMetadata
@@ -99,12 +99,12 @@ implementationDependenciesMetadata
 |    |    \--- net.minidev:accessors-smart:1.2
 |    |         \--- org.ow2.asm:asm:5.0.4
 |    \--- org.slf4j:slf4j-api:1.7.25 -> 1.7.30
-+--- org.apache.httpcomponents:httpclient:4.5.11
++--- org.apache.httpcomponents:httpclient:4.5.12
 |    +--- org.apache.httpcomponents:httpcore:4.4.13
 |    +--- commons-logging:commons-logging:1.2
 |    \--- commons-codec:commons-codec:1.11
-+--- org.apache.httpcomponents:httpmime:4.5.11
-|    \--- org.apache.httpcomponents:httpclient:4.5.11 (*)
++--- org.apache.httpcomponents:httpmime:4.5.12
+|    \--- org.apache.httpcomponents:httpclient:4.5.12 (*)
 \--- org.slf4j:slf4j-api:1.7.30
 
 jacocoAgent - The Jacoco agent to use to get coverage data.
@@ -190,12 +190,12 @@ runtimeClasspath - Runtime classpath of compilation 'main' (target  (jvm)).
 |    |    \--- net.minidev:accessors-smart:1.2
 |    |         \--- org.ow2.asm:asm:5.0.4
 |    \--- org.slf4j:slf4j-api:1.7.25 -> 1.7.30
-+--- org.apache.httpcomponents:httpclient:4.5.11
++--- org.apache.httpcomponents:httpclient:4.5.12
 |    +--- org.apache.httpcomponents:httpcore:4.4.13
 |    +--- commons-logging:commons-logging:1.2
 |    \--- commons-codec:commons-codec:1.11
-+--- org.apache.httpcomponents:httpmime:4.5.11
-|    \--- org.apache.httpcomponents:httpclient:4.5.11 (*)
++--- org.apache.httpcomponents:httpmime:4.5.12
+|    \--- org.apache.httpcomponents:httpclient:4.5.12 (*)
 \--- org.slf4j:slf4j-api:1.7.30
 
 runtimeElements - Elements of runtime for main. (n)
@@ -233,12 +233,12 @@ testCompileClasspath - Compile classpath for compilation 'test' (target  (jvm)).
 |    |    \--- net.minidev:accessors-smart:1.2
 |    |         \--- org.ow2.asm:asm:5.0.4
 |    \--- org.slf4j:slf4j-api:1.7.25 -> 1.7.30
-+--- org.apache.httpcomponents:httpclient:4.5.11
++--- org.apache.httpcomponents:httpclient:4.5.12
 |    +--- org.apache.httpcomponents:httpcore:4.4.13
 |    +--- commons-logging:commons-logging:1.2
 |    \--- commons-codec:commons-codec:1.11
-+--- org.apache.httpcomponents:httpmime:4.5.11
-|    \--- org.apache.httpcomponents:httpclient:4.5.11 (*)
++--- org.apache.httpcomponents:httpmime:4.5.12
+|    \--- org.apache.httpcomponents:httpclient:4.5.12 (*)
 +--- org.slf4j:slf4j-api:1.7.30
 +--- org.jetbrains.kotlin:kotlin-test:1.4.0
 |    +--- org.jetbrains.kotlin:kotlin-test-common:1.4.0
@@ -291,12 +291,12 @@ testImplementationDependenciesMetadata
 |    |    \--- net.minidev:accessors-smart:1.2
 |    |         \--- org.ow2.asm:asm:5.0.4
 |    \--- org.slf4j:slf4j-api:1.7.25 -> 1.7.30
-+--- org.apache.httpcomponents:httpclient:4.5.11
++--- org.apache.httpcomponents:httpclient:4.5.12
 |    +--- org.apache.httpcomponents:httpcore:4.4.13
 |    +--- commons-logging:commons-logging:1.2
 |    \--- commons-codec:commons-codec:1.11
-+--- org.apache.httpcomponents:httpmime:4.5.11
-|    \--- org.apache.httpcomponents:httpclient:4.5.11 (*)
++--- org.apache.httpcomponents:httpmime:4.5.12
+|    \--- org.apache.httpcomponents:httpclient:4.5.12 (*)
 +--- org.slf4j:slf4j-api:1.7.30
 +--- org.jetbrains.kotlin:kotlin-test:1.4.0
 |    +--- org.jetbrains.kotlin:kotlin-test-common:1.4.0
@@ -344,12 +344,12 @@ testRuntimeClasspath - Runtime classpath of compilation 'test' (target  (jvm)).
 |    |    \--- net.minidev:accessors-smart:1.2
 |    |         \--- org.ow2.asm:asm:5.0.4
 |    \--- org.slf4j:slf4j-api:1.7.25 -> 1.7.30
-+--- org.apache.httpcomponents:httpclient:4.5.11
++--- org.apache.httpcomponents:httpclient:4.5.12
 |    +--- org.apache.httpcomponents:httpcore:4.4.13
 |    +--- commons-logging:commons-logging:1.2
 |    \--- commons-codec:commons-codec:1.11
-+--- org.apache.httpcomponents:httpmime:4.5.11
-|    \--- org.apache.httpcomponents:httpclient:4.5.11 (*)
++--- org.apache.httpcomponents:httpmime:4.5.12
+|    \--- org.apache.httpcomponents:httpclient:4.5.12 (*)
 +--- org.slf4j:slf4j-api:1.7.30
 +--- org.jetbrains.kotlin:kotlin-test:1.4.0
 |    +--- org.jetbrains.kotlin:kotlin-test-common:1.4.0
@@ -390,5 +390,5 @@ No dependencies
 
 A web-based, searchable dependency report is available by adding the --scan option.
 
-BUILD SUCCESSFUL in 3s
+BUILD SUCCESSFUL in 20s
 1 actionable task: 1 executed

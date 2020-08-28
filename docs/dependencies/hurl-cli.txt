@@ -59,12 +59,12 @@ default - Configuration for default artifacts.
 |    |    |    \--- net.minidev:accessors-smart:1.2
 |    |    |         \--- org.ow2.asm:asm:5.0.4
 |    |    \--- org.slf4j:slf4j-api:1.7.25 -> 1.7.30
-|    +--- org.apache.httpcomponents:httpclient:4.5.11
+|    +--- org.apache.httpcomponents:httpclient:4.5.12
 |    |    +--- org.apache.httpcomponents:httpcore:4.4.13
 |    |    +--- commons-logging:commons-logging:1.2
 |    |    \--- commons-codec:commons-codec:1.11
-|    +--- org.apache.httpcomponents:httpmime:4.5.11
-|    |    \--- org.apache.httpcomponents:httpclient:4.5.11 (*)
+|    +--- org.apache.httpcomponents:httpmime:4.5.12
+|    |    \--- org.apache.httpcomponents:httpclient:4.5.12 (*)
 |    \--- org.slf4j:slf4j-api:1.7.30
 +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.0 (*)
 +--- commons-cli:commons-cli:1.4
@@ -155,12 +155,12 @@ runtimeClasspath - Runtime classpath of compilation 'main' (target  (jvm)).
 |    |    |    \--- net.minidev:accessors-smart:1.2
 |    |    |         \--- org.ow2.asm:asm:5.0.4
 |    |    \--- org.slf4j:slf4j-api:1.7.25 -> 1.7.30
-|    +--- org.apache.httpcomponents:httpclient:4.5.11
+|    +--- org.apache.httpcomponents:httpclient:4.5.12
 |    |    +--- org.apache.httpcomponents:httpcore:4.4.13
 |    |    +--- commons-logging:commons-logging:1.2
 |    |    \--- commons-codec:commons-codec:1.11
-|    +--- org.apache.httpcomponents:httpmime:4.5.11
-|    |    \--- org.apache.httpcomponents:httpclient:4.5.11 (*)
+|    +--- org.apache.httpcomponents:httpmime:4.5.12
+|    |    \--- org.apache.httpcomponents:httpclient:4.5.12 (*)
 |    \--- org.slf4j:slf4j-api:1.7.30
 +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.0 (*)
 +--- commons-cli:commons-cli:1.4
@@ -289,12 +289,12 @@ testRuntimeClasspath - Runtime classpath of compilation 'test' (target  (jvm)).
 |    |    |    \--- net.minidev:accessors-smart:1.2
 |    |    |         \--- org.ow2.asm:asm:5.0.4
 |    |    \--- org.slf4j:slf4j-api:1.7.25 -> 1.7.30
-|    +--- org.apache.httpcomponents:httpclient:4.5.11
+|    +--- org.apache.httpcomponents:httpclient:4.5.12
 |    |    +--- org.apache.httpcomponents:httpcore:4.4.13
 |    |    +--- commons-logging:commons-logging:1.2
 |    |    \--- commons-codec:commons-codec:1.11
-|    +--- org.apache.httpcomponents:httpmime:4.5.11
-|    |    \--- org.apache.httpcomponents:httpclient:4.5.11 (*)
+|    +--- org.apache.httpcomponents:httpmime:4.5.12
+|    |    \--- org.apache.httpcomponents:httpclient:4.5.12 (*)
 |    \--- org.slf4j:slf4j-api:1.7.30
 +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.0 (*)
 +--- commons-cli:commons-cli:1.4
@@ -337,5 +337,5 @@ No dependencies
 
 A web-based, searchable dependency report is available by adding the --scan option.
 
-BUILD SUCCESSFUL in 749ms
+BUILD SUCCESSFUL in 2s
 1 actionable task: 1 executed
