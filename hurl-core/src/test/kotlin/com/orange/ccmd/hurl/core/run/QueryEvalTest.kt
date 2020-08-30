@@ -96,7 +96,7 @@ class QueryEvalTest {
             body = ByteArray(0)
         )
         val expected = QueryStringResult("a3fWa")
-        assertEquals(expected, query.eval(response))
+        assertEquals(expected, query.eval(response = response, variables = VariableJar()))
     }
 
     @Test
@@ -116,8 +116,8 @@ class QueryEvalTest {
             mimeType = "text/plain",
             body = ByteArray(0)
         )
-        val expected = QueryNoneResult()
-        assertEquals(expected, query.eval(response))
+        val expected = QueryNoneResult
+        assertEquals(expected, query.eval(response = response, variables = VariableJar()))
     }
 
     @Test
@@ -194,7 +194,7 @@ class QueryEvalTest {
         "$.{{field}}" to QueryBooleanResult(false),
         "$.errors" to QueryListResult(size = 2),
         "$.warnings" to QueryListResult(size = 0),
-        "$.toto" to QueryNoneResult(),
+        "$.toto" to QueryNoneResult,
         "$.errors[0].id" to QueryStringResult("error1"),
         "$.errors[0]['id']" to QueryStringResult("error1"),
         "$.count" to QueryNumberResult(13.5)

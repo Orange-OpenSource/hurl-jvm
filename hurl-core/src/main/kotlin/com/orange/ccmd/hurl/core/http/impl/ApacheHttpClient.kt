@@ -82,7 +82,7 @@ internal class ApacheHttpClient(
         }
 
         val globalConfig = RequestConfig.custom()
-            .setCookieSpec(CookieSpecs.DEFAULT)
+            .setCookieSpec(CookieSpecs.STANDARD)
             .build()
 
         builder = builder

@@ -17,10 +17,14 @@
  *
  */
 
-package com.orange.ccmd.hurl.core.query.jsonpath
+package com.orange.ccmd.hurl.core.query.cookiepath
 
-sealed class JsonPathResult
-
-data class JsonPathOk(val result: JsonType): JsonPathResult()
-
-object JsonPathNotFound: JsonPathResult()
+sealed class CookiePathAttribute
+object CookiePathAttributeValue : CookiePathAttribute()
+object CookiePathAttributeExpires : CookiePathAttribute()
+object CookiePathAttributeMaxAge : CookiePathAttribute()
+object CookiePathAttributeDomain : CookiePathAttribute()
+object CookiePathAttributePath : CookiePathAttribute()
+object CookiePathAttributeSecure : CookiePathAttribute()
+object CookiePathAttributeHttpOnly : CookiePathAttribute()
+object CookiePathAttributeSameSite : CookiePathAttribute()

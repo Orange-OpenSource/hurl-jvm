@@ -17,13 +17,9 @@
  *
  */
 
-package com.orange.ccmd.hurl.core.query
+package com.orange.ccmd.hurl.core.query.xpath
 
-import com.orange.ccmd.hurl.core.query.xpath.XPath
-import com.orange.ccmd.hurl.core.query.xpath.XPathBooleanResult
-import com.orange.ccmd.hurl.core.query.xpath.XPathNodeSetResult
-import com.orange.ccmd.hurl.core.query.xpath.XPathNumberResult
-import com.orange.ccmd.hurl.core.query.xpath.XPathStringResult
+import com.orange.ccmd.hurl.core.query.InvalidQueryException
 import com.orange.ccmd.hurl.safeName
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.Test

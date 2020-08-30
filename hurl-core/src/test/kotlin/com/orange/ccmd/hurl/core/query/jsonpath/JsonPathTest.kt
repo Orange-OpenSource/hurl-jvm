@@ -17,11 +17,8 @@
  *
  */
 
-package com.orange.ccmd.hurl.core.query
+package com.orange.ccmd.hurl.core.query.jsonpath
 
-import com.orange.ccmd.hurl.core.query.jsonpath.JsonPath
-import com.orange.ccmd.hurl.core.query.jsonpath.JsonPathOk
-import com.orange.ccmd.hurl.core.query.jsonpath.toJson
 import com.orange.ccmd.hurl.safeName
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
