@@ -30,6 +30,12 @@ import com.orange.ccmd.hurl.core.ast.VariableQuery
 import com.orange.ccmd.hurl.core.ast.XPathQuery
 import com.orange.ccmd.hurl.core.http.HttpResponse
 import com.orange.ccmd.hurl.core.query.InvalidQueryException
+import com.orange.ccmd.hurl.core.query.cookiepath.CookiePath
+import com.orange.ccmd.hurl.core.query.cookiepath.CookiePathBooleanResult
+import com.orange.ccmd.hurl.core.query.cookiepath.CookiePathFailed
+import com.orange.ccmd.hurl.core.query.cookiepath.CookiePathNumberResult
+import com.orange.ccmd.hurl.core.query.cookiepath.CookiePathResult
+import com.orange.ccmd.hurl.core.query.cookiepath.CookiePathStringResult
 import com.orange.ccmd.hurl.core.query.jsonpath.JsonArray
 import com.orange.ccmd.hurl.core.query.jsonpath.JsonBoolean
 import com.orange.ccmd.hurl.core.query.jsonpath.JsonNull
@@ -51,7 +57,7 @@ import java.net.HttpCookie
 fun Query.eval(response: HttpResponse, variables: VariableJar): QueryResult = when (this) {
     is StatusQuery -> this.eval(response = response)
     is HeaderQuery -> this.eval(response = response)
-    is CookieQuery -> this.eval(response = response)
+    is CookieQuery -> this.eval(response = response, variables = variables)
     is BodyQuery -> this.eval(response = response)
     is XPathQuery -> this.eval(response = response, variables = variables)
     is JsonPathQuery -> this.eval(response = response, variables = variables)
@@ -60,10 +66,10 @@ fun Query.eval(response: HttpResponse, variables: VariableJar): QueryResult = wh
 }
 
 fun XPathResult.toQueryResult(): QueryResult = when (this) {
-    is XPathBooleanResult -> QueryBooleanResult(value = this.value)
-    is XPathNumberResult -> QueryNumberResult(value = this.value)
-    is XPathStringResult -> QueryStringResult(value = this.value)
-    is XPathNodeSetResult -> QueryNodeSetResult(size = this.size)
+    is XPathBooleanResult -> QueryBooleanResult(value = value)
+    is XPathNumberResult -> QueryNumberResult(value = value)
+    is XPathStringResult -> QueryStringResult(value = value)
+    is XPathNodeSetResult -> QueryNodeSetResult(size = size)
 }
 
 fun JsonPathResult.toQueryResult(): QueryResult {
@@ -76,12 +82,17 @@ fun JsonPathResult.toQueryResult(): QueryResult {
             is JsonObject -> QueryObjectResult(value = result.value)
             is JsonNull -> QueryObjectResult(value = null)
         }
-    }
-    else {
-        QueryNoneResult()
+    } else {
+        QueryNoneResult
     }
 }
 
+fun CookiePathResult.toQueryResult(): QueryResult = when (this) {
+    is CookiePathStringResult -> QueryStringResult(value = value)
+    is CookiePathNumberResult -> QueryNumberResult(value = value)
+    is CookiePathBooleanResult -> QueryBooleanResult(value = value)
+    CookiePathFailed -> QueryNoneResult
+}
 
 /**
  * Evaluates a spec {%link StatusQuery} against a HTTP [response].
@@ -93,14 +104,13 @@ internal fun StatusQuery.eval(response: HttpResponse): QueryNumberResult = Query
 /**
  * Evaluates a spec {%link HeaderQuery} against a HTTP [response].
  * @param response an input HTTP response
- * @return a {%link QueryNumberResult} representing the query result, or null if
- * there is no corresponding.
+ * @return a {%link QueryResult} representing the query result
  */
 internal fun HeaderQuery.eval(response: HttpResponse): QueryResult {
     val name = headerName.value
     val headers = response.headers.filter { it.first.toLowerCase() == name.toLowerCase() }
     return when {
-        headers.isEmpty() -> QueryNoneResult()
+        headers.isEmpty() -> QueryNoneResult
         headers.size == 1 -> QueryStringResult(headers[0].second)
         else -> QueryListResult(size = headers.size)
     }
@@ -109,19 +119,11 @@ internal fun HeaderQuery.eval(response: HttpResponse): QueryResult {
 /**
  * Evaluates a spec {%link CookieQuery} against a HTTP [response].
  * @param response an input HTTP response
- * @return a {%link QueryStringResult} representing the query result, or null if
- * there is no corresponding `set-cookie` header.
+ * @return a {%link QueryResult} representing the query result
  */
-internal fun CookieQuery.eval(response: HttpResponse): QueryResult {
-    val setCookiesHeaders = response.headers.filter { (name, _) -> name.toLowerCase() == "set-cookie" }
-    val cookie = setCookiesHeaders
-        .flatMap { (_, value) -> HttpCookie.parse(value) }
-        .firstOrNull { it.name == cookieName.value }
-    return if (cookie != null) {
-        QueryStringResult(cookie.value)
-    } else {
-        QueryNoneResult()
-    }
+internal fun CookieQuery.eval(response: HttpResponse, variables: VariableJar): QueryResult {
+    val exprRendered = Template.render(text = expr.value, variables = variables, position = expr.begin)
+    return CookiePath.evaluate(expr = exprRendered, headers = response.headers).toQueryResult()
 }
 
 /**
@@ -172,7 +174,7 @@ internal fun RegexQuery.eval(response: HttpResponse, variables: VariableJar): Qu
     val regex = Regex(pattern = pattern)
     val matchResult = regex.find(body)
     if (matchResult == null || matchResult.groupValues.size <= 1) {
-        return QueryNoneResult()
+        return QueryNoneResult
     }
     return QueryStringResult(value = matchResult.groupValues[1])
 }
@@ -185,4 +187,4 @@ private val HttpResponse.bodyAsText: String
  * @param variables variables to use in templates
  * @return a {%link QueryResult} representing the query result
  */
-internal fun VariableQuery.eval(variables: VariableJar): QueryResult = variables[variable.value] ?: QueryNoneResult()
+internal fun VariableQuery.eval(variables: VariableJar): QueryResult = variables[variable.value] ?: QueryNoneResult

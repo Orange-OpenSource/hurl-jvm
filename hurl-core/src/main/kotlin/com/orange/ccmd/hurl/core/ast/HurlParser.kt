@@ -263,7 +263,7 @@ internal fun HurlParser.cookieQuery(): CookieQuery? {
     val spaces = oneOrMore { space() } ?: return null
     val cookieName = quotedString() ?: return null
 
-    return CookieQuery(begin = begin, end = position, type = type, spaces = spaces, cookieName = cookieName)
+    return CookieQuery(begin = begin, end = position, type = type, spaces = spaces, expr = cookieName)
 }
 
 internal fun HurlParser.cookiesSection(): CookiesSection? {

@@ -17,10 +17,14 @@
  *
  */
 
-package com.orange.ccmd.hurl.core.query.jsonpath
+package com.orange.ccmd.hurl.core.query.cookiepath
 
-sealed class JsonPathResult
+sealed class CookiePathResult
 
-data class JsonPathOk(val result: JsonType): JsonPathResult()
+data class CookiePathStringResult(val value: String) : CookiePathResult()
 
-object JsonPathNotFound: JsonPathResult()
+data class CookiePathNumberResult(val value: Number) : CookiePathResult()
+
+data class CookiePathBooleanResult(val value: Boolean) : CookiePathResult()
+
+object CookiePathFailed : CookiePathResult()

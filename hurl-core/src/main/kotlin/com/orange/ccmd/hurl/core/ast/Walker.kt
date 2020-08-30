@@ -95,7 +95,7 @@ fun walk(visitor: Visitor, node: Node?) {
         }
         is CookieQuery -> {
             node.spaces.forEach { walk(visitor, it) }
-            walk(visitor, node.cookieName)
+            walk(visitor, node.expr)
         }
         is CookiesSection -> {
             node.lts.forEach { walk(visitor, it) }

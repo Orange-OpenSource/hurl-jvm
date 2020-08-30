@@ -17,10 +17,10 @@
  *
  */
 
-package com.orange.ccmd.hurl.core.query.jsonpath
+package com.orange.ccmd.hurl.core.query.xpath
 
-sealed class JsonPathResult
-
-data class JsonPathOk(val result: JsonType): JsonPathResult()
-
-object JsonPathNotFound: JsonPathResult()
+sealed class XPathResult
+data class XPathBooleanResult(val value: Boolean) : XPathResult()
+data class XPathNumberResult(val value: Number) : XPathResult()
+data class XPathStringResult(val value: String) : XPathResult()
+data class XPathNodeSetResult(val size: Int): XPathResult()

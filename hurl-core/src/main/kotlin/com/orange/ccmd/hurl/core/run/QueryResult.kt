@@ -54,19 +54,8 @@ data class QueryObjectResult(val value: Any?): QueryResult() {
     override fun text(): String = "object <$value>"
 }
 
-class QueryNoneResult : QueryResult() {
-
+object QueryNoneResult : QueryResult() {
     override fun text(): String {
         return ""
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is QueryNoneResult) return false
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return javaClass.hashCode()
     }
 }

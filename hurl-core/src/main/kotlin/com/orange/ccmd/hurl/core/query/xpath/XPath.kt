@@ -28,16 +28,6 @@ import com.sun.org.apache.xpath.internal.objects.XString
 import org.jsoup.Jsoup
 
 
-sealed class XPathResult
-
-data class XPathBooleanResult(val value: Boolean) : XPathResult()
-
-data class XPathNumberResult(val value: Number) : XPathResult()
-
-data class XPathStringResult(val value: String) : XPathResult()
-
-data class XPathNodeSetResult(val size: Int): XPathResult()
-
 class XPath {
     companion object {
         fun evaluateHtml(expr: String, body: String): XPathResult {

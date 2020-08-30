@@ -133,7 +133,7 @@ class CookieQuery(
     end: Position,
     type: QueryType,
     val spaces: List<Space>,
-    val cookieName: HString
+    val expr: HString
 ) : Query(begin, end, type)
 
 class CookiesSection(

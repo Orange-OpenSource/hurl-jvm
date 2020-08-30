@@ -33,7 +33,7 @@ class JsonPath {
                 val conf = Configuration.defaultConfiguration().addOptions(Option.ALWAYS_RETURN_LIST)
                 JsonPath.using(conf).parse(json).read(expr)
             } catch (e: PathNotFoundException) {
-                return JsonPathNotFound()
+                return JsonPathNotFound
             } catch (e: Exception) {
                 throw InvalidQueryException("$e")
             }
