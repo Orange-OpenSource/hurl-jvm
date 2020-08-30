@@ -6,6 +6,7 @@ def form_params():
     assert request.form['param1'] == 'value1'
     assert request.form['param2'] == ''
     assert request.form['param3'] == 'a=b'
+    assert request.form['param4'] == 'a%3db'
     return ''
 
 
