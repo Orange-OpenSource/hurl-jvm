@@ -23,7 +23,7 @@ No dependencies
 apiElements - API elements for main. (n)
 No dependencies
 
-archives - Configuration for archive artifacts.
+archives - Configuration for archive artifacts. (n)
 No dependencies
 
 compileClasspath - Compile classpath for compilation 'main' (target  (jvm)).
@@ -44,32 +44,8 @@ No dependencies
 compileOnlyDependenciesMetadata
 No dependencies
 
-default - Configuration for default artifacts.
-+--- project :hurl-core
-|    +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.0
-|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.0
-|    |    |    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.0
-|    |    |    \--- org.jetbrains:annotations:13.0
-|    |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.0
-|    |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.4.0 (*)
-|    +--- com.fasterxml.jackson.core:jackson-core:2.11.2
-|    +--- org.jsoup:jsoup:1.12.2
-|    +--- com.jayway.jsonpath:json-path:2.4.0
-|    |    +--- net.minidev:json-smart:2.3
-|    |    |    \--- net.minidev:accessors-smart:1.2
-|    |    |         \--- org.ow2.asm:asm:5.0.4
-|    |    \--- org.slf4j:slf4j-api:1.7.25 -> 1.7.30
-|    +--- org.apache.httpcomponents:httpclient:4.5.12
-|    |    +--- org.apache.httpcomponents:httpcore:4.4.13
-|    |    +--- commons-logging:commons-logging:1.2
-|    |    \--- commons-codec:commons-codec:1.11
-|    +--- org.apache.httpcomponents:httpmime:4.5.12
-|    |    \--- org.apache.httpcomponents:httpclient:4.5.12 (*)
-|    \--- org.slf4j:slf4j-api:1.7.30
-+--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.0 (*)
-+--- commons-cli:commons-cli:1.4
-\--- org.slf4j:slf4j-jdk14:1.7.29
-     \--- org.slf4j:slf4j-api:1.7.29 -> 1.7.30
+default - Configuration for default artifacts. (n)
+No dependencies
 
 implementation - Implementation only dependencies for compilation 'main' (target  (jvm)). (n)
 +--- project hurl-core (n)
@@ -203,25 +179,25 @@ testCompileClasspath - Compile classpath for compilation 'test' (target  (jvm)).
 |    +--- org.jetbrains.kotlin:kotlin-test-common:1.4.0
 |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.0
 |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.4.0 (*)
-\--- org.junit.jupiter:junit-jupiter-engine:5.6.0
-     +--- org.junit:junit-bom:5.6.0
-     |    +--- org.junit.jupiter:junit-jupiter-api:5.6.0 (c)
-     |    +--- org.junit.jupiter:junit-jupiter-engine:5.6.0 (c)
-     |    +--- org.junit.platform:junit-platform-engine:1.6.0 (c)
-     |    \--- org.junit.platform:junit-platform-commons:1.6.0 (c)
+\--- org.junit.jupiter:junit-jupiter-engine:5.6.2
+     +--- org.junit:junit-bom:5.6.2
+     |    +--- org.junit.jupiter:junit-jupiter-api:5.6.2 (c)
+     |    +--- org.junit.jupiter:junit-jupiter-engine:5.6.2 (c)
+     |    +--- org.junit.platform:junit-platform-engine:1.6.2 (c)
+     |    \--- org.junit.platform:junit-platform-commons:1.6.2 (c)
      +--- org.apiguardian:apiguardian-api:1.1.0
-     +--- org.junit.platform:junit-platform-engine:1.6.0
-     |    +--- org.junit:junit-bom:5.6.0 (*)
+     +--- org.junit.platform:junit-platform-engine:1.6.2
+     |    +--- org.junit:junit-bom:5.6.2 (*)
      |    +--- org.apiguardian:apiguardian-api:1.1.0
      |    +--- org.opentest4j:opentest4j:1.2.0
-     |    \--- org.junit.platform:junit-platform-commons:1.6.0
-     |         +--- org.junit:junit-bom:5.6.0 (*)
+     |    \--- org.junit.platform:junit-platform-commons:1.6.2
+     |         +--- org.junit:junit-bom:5.6.2 (*)
      |         \--- org.apiguardian:apiguardian-api:1.1.0
-     \--- org.junit.jupiter:junit-jupiter-api:5.6.0
-          +--- org.junit:junit-bom:5.6.0 (*)
+     \--- org.junit.jupiter:junit-jupiter-api:5.6.2
+          +--- org.junit:junit-bom:5.6.2 (*)
           +--- org.apiguardian:apiguardian-api:1.1.0
           +--- org.opentest4j:opentest4j:1.2.0
-          \--- org.junit.platform:junit-platform-commons:1.6.0 (*)
+          \--- org.junit.platform:junit-platform-commons:1.6.2 (*)
 
 testCompileOnly - Compile only dependencies for compilation 'test' (target  (jvm)). (n)
 No dependencies
@@ -231,7 +207,7 @@ No dependencies
 
 testImplementation - Implementation only dependencies for compilation 'test' (target  (jvm)). (n)
 +--- org.jetbrains.kotlin:kotlin-test:1.4.0 (n)
-\--- org.junit.jupiter:junit-jupiter-engine:5.6.0 (n)
+\--- org.junit.jupiter:junit-jupiter-engine:5.6.2 (n)
 
 testImplementationDependenciesMetadata
 +--- project :hurl-core
@@ -248,25 +224,25 @@ testImplementationDependenciesMetadata
 |    +--- org.jetbrains.kotlin:kotlin-test-common:1.4.0
 |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.0
 |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.4.0 (*)
-\--- org.junit.jupiter:junit-jupiter-engine:5.6.0
-     +--- org.junit:junit-bom:5.6.0
-     |    +--- org.junit.jupiter:junit-jupiter-api:5.6.0 (c)
-     |    +--- org.junit.jupiter:junit-jupiter-engine:5.6.0 (c)
-     |    +--- org.junit.platform:junit-platform-engine:1.6.0 (c)
-     |    \--- org.junit.platform:junit-platform-commons:1.6.0 (c)
+\--- org.junit.jupiter:junit-jupiter-engine:5.6.2
+     +--- org.junit:junit-bom:5.6.2
+     |    +--- org.junit.jupiter:junit-jupiter-api:5.6.2 (c)
+     |    +--- org.junit.jupiter:junit-jupiter-engine:5.6.2 (c)
+     |    +--- org.junit.platform:junit-platform-engine:1.6.2 (c)
+     |    \--- org.junit.platform:junit-platform-commons:1.6.2 (c)
      +--- org.apiguardian:apiguardian-api:1.1.0
-     +--- org.junit.platform:junit-platform-engine:1.6.0
-     |    +--- org.junit:junit-bom:5.6.0 (*)
+     +--- org.junit.platform:junit-platform-engine:1.6.2
+     |    +--- org.junit:junit-bom:5.6.2 (*)
      |    +--- org.apiguardian:apiguardian-api:1.1.0
      |    +--- org.opentest4j:opentest4j:1.2.0
-     |    \--- org.junit.platform:junit-platform-commons:1.6.0
-     |         +--- org.junit:junit-bom:5.6.0 (*)
+     |    \--- org.junit.platform:junit-platform-commons:1.6.2
+     |         +--- org.junit:junit-bom:5.6.2 (*)
      |         \--- org.apiguardian:apiguardian-api:1.1.0
-     \--- org.junit.jupiter:junit-jupiter-api:5.6.0
-          +--- org.junit:junit-bom:5.6.0 (*)
+     \--- org.junit.jupiter:junit-jupiter-api:5.6.2
+          +--- org.junit:junit-bom:5.6.2 (*)
           +--- org.apiguardian:apiguardian-api:1.1.0
           +--- org.opentest4j:opentest4j:1.2.0
-          \--- org.junit.platform:junit-platform-commons:1.6.0 (*)
+          \--- org.junit.platform:junit-platform-commons:1.6.2 (*)
 
 testKotlinScriptDef - Script filename extensions discovery classpath configuration
 No dependencies
@@ -304,25 +280,25 @@ testRuntimeClasspath - Runtime classpath of compilation 'test' (target  (jvm)).
 |    +--- org.jetbrains.kotlin:kotlin-test-common:1.4.0
 |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.0
 |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.4.0 (*)
-\--- org.junit.jupiter:junit-jupiter-engine:5.6.0
-     +--- org.junit:junit-bom:5.6.0
-     |    +--- org.junit.jupiter:junit-jupiter-api:5.6.0 (c)
-     |    +--- org.junit.jupiter:junit-jupiter-engine:5.6.0 (c)
-     |    +--- org.junit.platform:junit-platform-engine:1.6.0 (c)
-     |    \--- org.junit.platform:junit-platform-commons:1.6.0 (c)
+\--- org.junit.jupiter:junit-jupiter-engine:5.6.2
+     +--- org.junit:junit-bom:5.6.2
+     |    +--- org.junit.jupiter:junit-jupiter-api:5.6.2 (c)
+     |    +--- org.junit.jupiter:junit-jupiter-engine:5.6.2 (c)
+     |    +--- org.junit.platform:junit-platform-engine:1.6.2 (c)
+     |    \--- org.junit.platform:junit-platform-commons:1.6.2 (c)
      +--- org.apiguardian:apiguardian-api:1.1.0
-     +--- org.junit.platform:junit-platform-engine:1.6.0
-     |    +--- org.junit:junit-bom:5.6.0 (*)
+     +--- org.junit.platform:junit-platform-engine:1.6.2
+     |    +--- org.junit:junit-bom:5.6.2 (*)
      |    +--- org.apiguardian:apiguardian-api:1.1.0
      |    +--- org.opentest4j:opentest4j:1.2.0
-     |    \--- org.junit.platform:junit-platform-commons:1.6.0
-     |         +--- org.junit:junit-bom:5.6.0 (*)
+     |    \--- org.junit.platform:junit-platform-commons:1.6.2
+     |         +--- org.junit:junit-bom:5.6.2 (*)
      |         \--- org.apiguardian:apiguardian-api:1.1.0
-     \--- org.junit.jupiter:junit-jupiter-api:5.6.0
-          +--- org.junit:junit-bom:5.6.0 (*)
+     \--- org.junit.jupiter:junit-jupiter-api:5.6.2
+          +--- org.junit:junit-bom:5.6.2 (*)
           +--- org.apiguardian:apiguardian-api:1.1.0
           +--- org.opentest4j:opentest4j:1.2.0
-          \--- org.junit.platform:junit-platform-commons:1.6.0 (*)
+          \--- org.junit.platform:junit-platform-commons:1.6.2 (*)
 
 testRuntimeOnly - Runtime only dependencies for compilation 'test' (target  (jvm)). (n)
 No dependencies
@@ -337,5 +313,5 @@ No dependencies
 
 A web-based, searchable dependency report is available by adding the --scan option.
 
-BUILD SUCCESSFUL in 2s
+BUILD SUCCESSFUL in 723ms
 1 actionable task: 1 executed

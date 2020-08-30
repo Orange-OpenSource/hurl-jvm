@@ -26,7 +26,7 @@ plugins {
     `maven-publish`
 }
 
-val jUnitVersion = "5.6.0"
+val jUnitVersion = "5.6.2"
 
 subprojects {
     apply(plugin = "kotlin")
