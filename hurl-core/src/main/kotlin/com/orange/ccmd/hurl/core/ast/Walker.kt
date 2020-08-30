@@ -94,6 +94,7 @@ fun walk(visitor: Visitor, node: Node?) {
             walk(visitor, node.lt)
         }
         is CookieQuery -> {
+            walk(visitor, node.type)
             node.spaces.forEach { walk(visitor, it) }
             walk(visitor, node.expr)
         }
