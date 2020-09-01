@@ -28,28 +28,30 @@ class RunnerLogger(val outputHeaders: Boolean, val verbose: Boolean) : BaseLogge
     private val logger: Logger = LoggerFactory.getLogger(javaClass)
 
     override fun logHttpRequestSpec(request: HttpRequest) {
-        if (verbose) {
-            logInfo("Request spec:")
-            logInfo("${request.method} ${request.url}")
-            request.headers.forEach { (k, v) -> logInfo("$k: $v") }
-            if (request.formParams.isNotEmpty()) {
-                logInfo("Form params:")
-                request.headers.forEach { (k, v) -> logInfo("$k: $v") }
-            }
-            if (request.queryStringParams.isNotEmpty()) {
-                logInfo("Query string params:")
-                request.queryStringParams.forEach { (k, v) -> logInfo("$k: $v") }
-            }
-            logInfo("")
+        if (!verbose) {
+            return
         }
+        logInfo("Request spec:")
+        logInfo("${request.method} ${request.url}")
+        request.headers.forEach { (k, v) -> logInfo("$k: $v") }
+        if (request.formParams.isNotEmpty()) {
+            logInfo("Form params:")
+            request.headers.forEach { (k, v) -> logInfo("$k: $v") }
+        }
+        if (request.queryStringParams.isNotEmpty()) {
+            logInfo("Query string params:")
+            request.queryStringParams.forEach { (k, v) -> logInfo("$k: $v") }
+        }
+        logInfo("")
     }
 
     override fun logHttpRequest(requestLog: HttpRequestLog) {
-        if (verbose) {
-            logInput("${requestLog.method} ${requestLog.url}")
-            requestLog.headers.forEach { (k, v) -> logInput("$k: $v") }
-            logInput("")
+        if (!verbose) {
+            return
         }
+        logInput("${requestLog.method} ${requestLog.url}")
+        requestLog.headers.forEach { (k, v) -> logInput("$k: $v") }
+        logInput("")
     }
 
     override fun logHttpResponse(response: HttpResponse) {
@@ -65,7 +67,6 @@ class RunnerLogger(val outputHeaders: Boolean, val verbose: Boolean) : BaseLogge
             response.headers.forEach { (k, v) -> log("$k: $v") }
             log("")
         }
-        log(response.text ?: "")
     }
 
     override fun logCookies(cookies: List<Cookie>) {

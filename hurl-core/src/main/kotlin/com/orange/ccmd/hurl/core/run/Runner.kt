@@ -125,7 +125,7 @@ class Runner(
         val responseSpec = entry.response
         val httpResponse = httpResult.response
         if (responseSpec == null) {
-            return EntryResult()
+            return EntryResult(httpResponse = httpResponse)
         }
 
         // First evaluate all capture results and update variable map accordingly.
@@ -144,6 +144,7 @@ class Runner(
         val assertsResults = responseSpec.getAssertsResults(variables = variableJar, httpResponse = httpResponse)
 
         return EntryResult(
+            httpResponse = httpResponse,
             captures = captureResults,
             asserts = listOfNotNull(
                 versionResult,

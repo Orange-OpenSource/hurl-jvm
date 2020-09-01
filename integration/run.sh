@@ -2,18 +2,24 @@
 set -u
 set -e
 
-echo "$HURL_BIN"
+echo "$hurl"
 
 for hurl_file in "$@"; do
     echo "$hurl_file";
     set +e
-    $HURL_BIN "$hurl_file"
+    $hurl "$hurl_file" >/tmp/test.stdout
     EXITCODE_ACTUAL=$?
     set -e
 
     EXITCODE_EXPECTED=$(cat "${hurl_file%.*}.exit")
 
     if [ "$EXITCODE_EXPECTED" == 0 ] && [ "$EXITCODE_ACTUAL" == 0 ]; then
+        expected=$(cat "${hurl_file%.*}.out")
+        actual=$(cat /tmp/test.stdout)
+        if [ "$actual" != "$expected" ]; then
+            diff  <(echo "$actual" ) <(echo "$expected")
+            exit 1
+        fi
         continue
     fi
 

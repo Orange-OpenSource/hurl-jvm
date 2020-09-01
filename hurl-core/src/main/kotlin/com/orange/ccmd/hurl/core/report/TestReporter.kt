@@ -21,24 +21,50 @@ package com.orange.ccmd.hurl.core.report
 
 import com.orange.ccmd.hurl.core.ast.Error
 import com.orange.ccmd.hurl.core.run.RunResult
+import com.orange.ccmd.hurl.core.run.InvalidVariableResult
+import com.orange.ccmd.hurl.core.utils.ansi
 import com.orange.ccmd.hurl.core.utils.lineAt
 import com.orange.ccmd.hurl.core.utils.logError
 
-class QuietReporter(val text: String, val fileName: String): Reporter {
+class TestReporter(val text: String, val fileName: String): Reporter {
 
     override fun reportStart() {
+        val file = "$fileName:".ansi.fg.bold
+        val state = "RUNNING".ansi.fg.blueBold
+        println("$file $state")
     }
 
     override fun reportSyntaxError(error: Error) {
         logError(
             fileName = fileName,
-            line = text.lineAt(error.position.line),
+            line =  text.lineAt(error.position.line),
             message = error.message,
             position = error.position,
             showPosition = true
         )
-    }
+     }
 
     override fun reportResult(result: RunResult) {
+        result.entryResults
+            .flatMap { it.results }
+            .filterNot { it.succeeded }
+            .forEach {
+                val line = text.lineAt(it.position.line)
+                logError(
+                    fileName = fileName,
+                    line = line,
+                    message = it.message,
+                    position = it.position,
+                    showPosition = it is InvalidVariableResult
+                )
+        }
+
+        val file = "$fileName:".ansi.fg.bold
+        val state = if (result.succeeded) {
+            "SUCCESS".ansi.fg.greenBold
+        } else {
+            "FAILED".ansi.fg.redBold
+        }
+        println("$file $state in ${result.duration.toMillis()} ms")
     }
 }
