@@ -26,6 +26,7 @@ import com.orange.ccmd.hurl.core.template.Template
 import com.orange.ccmd.hurl.core.template.InvalidVariableException
 import com.orange.ccmd.hurl.core.utils.shorten
 import java.io.File
+import java.io.FileNotFoundException
 
 /**
  * Check equality of a given [version] against an expected {@link Version}
@@ -126,8 +127,12 @@ internal fun Header.checkHeader(headers: List<Pair<String, String>>, variables: 
  * @param fileRoot root directory for File body node
  * @return the assert result
  */
-internal fun Body.checkBodyContent(body: ByteArray, variables: VariableJar, fileRoot: File): AssertResult {
-    val expectedBytes = bytes.toByteArray(fileRoot = fileRoot, variables = variables)
+internal fun Body.checkBodyContent(body: ByteArray, variables: VariableJar, fileRoot: File): EntryStepResult {
+    val expectedBytes = try {
+        bytes.toByteArray(fileRoot = fileRoot, variables = variables)
+    } catch (e: FileNotFoundException) {
+        return RuntimeErrorResult(position = bytes.begin, e)
+    }
     return if (body.contentEquals(expectedBytes)) {
         AssertResult(
             succeeded = true,

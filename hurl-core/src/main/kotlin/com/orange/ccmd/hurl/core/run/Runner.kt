@@ -27,6 +27,7 @@ import com.orange.ccmd.hurl.core.http.impl.ApacheHttpClient
 import com.orange.ccmd.hurl.core.run.log.RunnerLogger
 import com.orange.ccmd.hurl.core.template.InvalidVariableException
 import java.io.File
+import java.io.FileNotFoundException
 import java.time.Duration
 import java.time.Instant
 
@@ -105,6 +106,11 @@ class Runner(
             entry.request.toHttpRequestSpec(variables = variableJar, fileRoot = fileRoot)
         } catch (e: InvalidVariableException) {
             return EntryResult(errors = listOf(InvalidVariableResult(position = e.position, reason = e.reason)))
+        } catch (e: FileNotFoundException) {
+            // We catch this exception because the evaluation of a request can
+            // raise a FileNotFoundExeption when using a file body node.
+            // TODO: create and use here a custom RuntimeErrorException
+            return EntryResult(errors = listOf(RuntimeErrorResult(position = entry.request.begin, error = e)))
         }
 
         runLogger.logHttpRequestSpec(requestSpec)
@@ -140,8 +146,8 @@ class Runner(
         val versionResult = responseSpec.getCheckVersionResult(httpResponse = httpResponse)
         val statusResult = responseSpec.getCheckStatusCodeResult(httpResponse = httpResponse)
         val headersResults = responseSpec.getCheckHeadersResults(variables = variableJar, httpResponse = httpResponse)
-        val bodyResult = responseSpec.getCheckBodyResult(variables = variableJar, fileRoot = fileRoot, httpResponse = httpResponse)
         val assertsResults = responseSpec.getAssertsResults(variables = variableJar, httpResponse = httpResponse)
+        val bodyResult = responseSpec.getCheckBodyResult(variables = variableJar, fileRoot = fileRoot, httpResponse = httpResponse)
 
         return EntryResult(
             httpResponse = httpResponse,

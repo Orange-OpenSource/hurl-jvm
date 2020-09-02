@@ -20,8 +20,8 @@
 package com.orange.ccmd.hurl.cli
 
 import com.orange.ccmd.hurl.core.cli.run.CliHelper
-import com.orange.ccmd.hurl.core.utils.FAILED
-import com.orange.ccmd.hurl.core.utils.OK
+import com.orange.ccmd.hurl.core.cli.run.CliReturnCode.OPTIONS_PARSING_ERROR
+import com.orange.ccmd.hurl.core.cli.run.CliReturnCode.SUCCESS
 import com.orange.ccmd.hurl.core.utils.Properties
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -41,16 +41,16 @@ class App {
             parser.parse(args)
         } catch (e: IllegalArgumentException) {
             println(e.message)
-            return FAILED
+            return OPTIONS_PARSING_ERROR.value
         }
 
         if (parser.help) {
             parser.printHelp()
-            return OK
+            return SUCCESS.value
         }
         if (parser.version) {
             println("hurl (jar) $version")
-            return OK
+            return SUCCESS.value
         }
 
         val verbose = parser.verbose
@@ -71,7 +71,7 @@ class App {
         logger.debug("* allowsInsecure : $allowsInsecure")
         logger.debug("* proxy : $proxy")
 
-        var returnCode = OK
+        var returnCode = SUCCESS
 
         for (fileName in parser.args) {
             val file = File(fileName)
@@ -82,7 +82,7 @@ class App {
                 absoluteFile.parentFile
             }
 
-            val succeeded = CliHelper.run(
+            val ret = CliHelper.run(
                 file = absoluteFile,
                 variables = variables,
                 fileRoot = fileRoot,
@@ -91,12 +91,12 @@ class App {
                 allowsInsecure = allowsInsecure,
                 proxy = proxy
             )
-            if (!succeeded) {
-                returnCode = FAILED
+            if (ret != SUCCESS) {
+                returnCode = ret
             }
         }
 
-        return returnCode
+        return returnCode.value
     }
 
     internal val version: String

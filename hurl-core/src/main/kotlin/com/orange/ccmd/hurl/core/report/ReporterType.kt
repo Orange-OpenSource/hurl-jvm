@@ -1,4 +1,4 @@
-package com.orange.ccmd.hurl.core.cli.run
+package com.orange.ccmd.hurl.core.report
 
 
 /**

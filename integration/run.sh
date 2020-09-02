@@ -12,24 +12,20 @@ for hurl_file in "$@"; do
     set -e
 
     EXITCODE_EXPECTED=$(cat "${hurl_file%.*}.exit")
+    if [ "$EXITCODE_ACTUAL" != "$EXITCODE_EXPECTED" ]; then
+        echo "ERROR Exit Code"
+        echo "  Expected: $EXITCODE_EXPECTED"
+        echo "  Actual: $EXITCODE_ACTUAL"
+        exit 1
+    fi
 
-    if [ "$EXITCODE_EXPECTED" == 0 ] && [ "$EXITCODE_ACTUAL" == 0 ]; then
+    if [ "$EXITCODE_ACTUAL" == 0 ]; then
         expected=$(cat "${hurl_file%.*}.out")
         actual=$(cat /tmp/test.stdout)
         if [ "$actual" != "$expected" ]; then
             diff  <(echo "$actual" ) <(echo "$expected")
             exit 1
         fi
-        continue
     fi
-
-    if [ "$EXITCODE_EXPECTED" != 0 ] && [ "$EXITCODE_ACTUAL" != 0 ]; then
-        continue
-    fi
-
-    echo "ERROR Exit Code"
-    echo "  Expected: $EXITCODE_EXPECTED"
-    echo "  Actual: $EXITCODE_ACTUAL"
-    exit 1
 
 done
