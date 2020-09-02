@@ -20,18 +20,16 @@
 package com.orange.ccmd.hurl.fmt
 
 import com.orange.ccmd.hurl.core.ast.HurlParser
-import com.orange.ccmd.hurl.core.report.StdOutReporter
-import com.orange.ccmd.hurl.core.utils.FAILED
-import com.orange.ccmd.hurl.core.utils.OK
+import com.orange.ccmd.hurl.core.utils.*
 import com.orange.ccmd.hurl.core.utils.Properties
 import com.orange.ccmd.hurl.fmt.highlight.HtmlFormatter
 import com.orange.ccmd.hurl.fmt.highlight.TermFormatter
 import com.orange.ccmd.hurl.fmt.lint.LintFormatter
 import java.io.File
+import java.util.*
 import java.util.logging.ConsoleHandler
 import java.util.logging.Level
 import java.util.logging.Logger as JulLogger
-import java.util.*
 
 
 class App {
@@ -104,11 +102,17 @@ class App {
 
     internal fun formatFile(text: String, fileName: String, format: String, theme: String): String? {
 
-        val reporter = StdOutReporter(text = text, fileName = fileName)
         val parser = HurlParser(text = text)
         val hurl = parser.parse()
         if (hurl == null) {
-            reporter.reportSyntaxError(error = parser.rootError)
+            val error = parser.rootError
+            logError(
+                    fileName = fileName,
+                    line = text.lineAt(error.position.line),
+                    message = error.message,
+                    position = error.position,
+                    showPosition = true
+            )
             return null
         }
 

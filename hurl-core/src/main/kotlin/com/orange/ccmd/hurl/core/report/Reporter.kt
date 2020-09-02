@@ -19,9 +19,8 @@
 
 package com.orange.ccmd.hurl.core.report
 
-import com.orange.ccmd.hurl.core.ast.Parser
-import com.orange.ccmd.hurl.core.run.RunResult
 import com.orange.ccmd.hurl.core.ast.Error
+import com.orange.ccmd.hurl.core.run.RunResult
 
 interface Reporter {
     fun reportStart()

@@ -30,7 +30,7 @@ jobs:
       script:
         - bin/version.sh
         - export HURL_VERSION=$(grep version gradle.properties | cut -f2 -d"=")
-        - export HURL_BIN="java -jar $TRAVIS_BUILD_DIR/hurl-cli/build/libs/hurl-$HURL_VERSION.jar"
+        - export hurl="java -jar $TRAVIS_BUILD_DIR/hurl-cli/build/libs/hurl-$HURL_VERSION.jar"
         - bin/test-integration.sh
     - stage: "GitHub Release"
       script: skip

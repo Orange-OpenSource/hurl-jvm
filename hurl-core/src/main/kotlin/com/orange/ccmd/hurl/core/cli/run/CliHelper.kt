@@ -20,9 +20,13 @@
 package com.orange.ccmd.hurl.core.cli.run
 
 import com.orange.ccmd.hurl.core.ast.HurlParser
-import com.orange.ccmd.hurl.core.report.StdOutReporter
+import com.orange.ccmd.hurl.core.cli.run.ReporterType.SIMPLE
+import com.orange.ccmd.hurl.core.cli.run.ReporterType.TEST
+import com.orange.ccmd.hurl.core.report.SimpleReporter
+import com.orange.ccmd.hurl.core.report.TestReporter
 import com.orange.ccmd.hurl.core.run.Runner
 import java.io.File
+
 
 class CliHelper {
 
@@ -35,12 +39,17 @@ class CliHelper {
             outputHeaders: Boolean,
             verbose: Boolean,
             allowsInsecure: Boolean,
-            proxy: String?
+            proxy: String?,
+            reporterType: ReporterType = SIMPLE,
         ): Boolean {
 
             val fileName = file.absoluteFile.name
             val text = file.readText()
-            val reporter = StdOutReporter(text = text, fileName = fileName)
+
+            val reporter = when (reporterType) {
+                SIMPLE -> SimpleReporter(text = text, fileName = fileName)
+                TEST -> TestReporter(text = text, fileName = fileName)
+            }
 
             reporter.reportStart()
 

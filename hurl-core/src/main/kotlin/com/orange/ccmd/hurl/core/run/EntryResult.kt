@@ -19,10 +19,13 @@
 
 package com.orange.ccmd.hurl.core.run
 
+import com.orange.ccmd.hurl.core.http.HttpResponse
+
 data class EntryResult(
+    val httpResponse: HttpResponse? = null,
     val errors: List<EntryStepResult> = emptyList(),
     val captures: List<EntryStepResult> = emptyList(),
-    val asserts: List<EntryStepResult> = emptyList()
+    val asserts: List<EntryStepResult> = emptyList(),
 ) {
     val results: List<EntryStepResult> = listOf(errors, captures, asserts).flatten()
     val succeeded: Boolean = results.all { it.succeeded }
