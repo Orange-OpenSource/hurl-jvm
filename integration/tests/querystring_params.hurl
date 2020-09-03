@@ -3,12 +3,12 @@ GET http://localhost:8000/querystring-params
 param1: value1
 param2:
 param3: a=b
-
+param4: 1,2,3
 HTTP/1.0 200
 
 
 # same version as raw
-GET http://localhost:8000/querystring-params?param1=value1&param2=&param3=a%3db
+GET http://localhost:8000/querystring-params?param1=value1&param2=&param3=a%3db&param4=1,2,3
 
 HTTP/1.0 200
 
@@ -18,7 +18,7 @@ GET http://localhost:8000/querystring-params?param1=value1
 [QueryStringParams]
 param2:
 param3: a=b
-
+param4: 1,2,3
 HTTP/1.0 200
 
 
