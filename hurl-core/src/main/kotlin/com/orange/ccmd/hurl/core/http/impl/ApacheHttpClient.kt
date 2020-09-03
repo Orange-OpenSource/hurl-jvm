@@ -29,6 +29,7 @@ import com.orange.ccmd.hurl.core.http.HttpRequest
 import com.orange.ccmd.hurl.core.http.HttpResponse
 import com.orange.ccmd.hurl.core.http.HttpResult
 import com.orange.ccmd.hurl.core.http.JsonRequestBody
+import com.orange.ccmd.hurl.core.http.Mime
 import com.orange.ccmd.hurl.core.http.Proxy
 import com.orange.ccmd.hurl.core.http.TextFormData
 import com.orange.ccmd.hurl.core.http.USER_AGENT
