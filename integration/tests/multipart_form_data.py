@@ -9,7 +9,7 @@ def multipart_form_data():
 
     upload1 = request.files['upload1']
     assert upload1.filename == 'hello.txt'
-    assert upload1.content_type == 'application/octet-stream'
+    assert upload1.content_type == 'text/plain'
     assert upload1.read() == b'Hello World!'
 
     upload2 = request.files['upload2']
@@ -19,7 +19,7 @@ def multipart_form_data():
 
     upload3 = request.files['upload3']
     assert upload3.filename == 'hello.txt'
-    assert upload3.content_type == 'text/plain'
+    assert upload3.content_type == 'text/html'
     assert upload3.read() == b'Hello World!'
 
     return ''

@@ -232,10 +232,11 @@ internal fun HttpRequest.prepareBody(builder: RequestBuilder) = when {
                 // > the file data SHOULD be labeled with an appropriate media type, if
                 // > known, or "application/octet-stream".
                 is FileFormData -> {
-                    val contentType = if (it.contentType != null) {
-                        ContentType.create(it.contentType)
-                    } else {
-                        APPLICATION_OCTET_STREAM
+                    val knownContentType = Mime.getContentType(fileName = it.fileName)
+                    val contentType = when {
+                        it.contentType != null -> ContentType.create(it.contentType)
+                        knownContentType != null -> ContentType.create(knownContentType)
+                        else -> APPLICATION_OCTET_STREAM
                     }
                     entityBuilder.addBinaryBody(it.name, it.value, contentType, it.fileName)
                 }
