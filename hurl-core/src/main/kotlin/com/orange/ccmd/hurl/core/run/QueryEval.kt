@@ -53,6 +53,7 @@ import com.orange.ccmd.hurl.core.query.xpath.XPathResult
 import com.orange.ccmd.hurl.core.query.xpath.XPathStringResult
 import com.orange.ccmd.hurl.core.template.Template
 import java.net.HttpCookie
+import java.util.regex.PatternSyntaxException
 
 fun Query.eval(response: HttpResponse, variables: VariableJar): QueryResult = when (this) {
     is StatusQuery -> this.eval(response = response)
@@ -171,7 +172,11 @@ internal fun JsonPathQuery.eval(response: HttpResponse, variables: VariableJar):
 internal fun RegexQuery.eval(response: HttpResponse, variables: VariableJar): QueryResult {
     val body = response.bodyAsText
     val pattern = Template.render(text = expr.value, variables = variables, position = expr.begin)
-    val regex = Regex(pattern = pattern)
+    val regex = try {
+        Regex(pattern = pattern)
+    } catch (e : PatternSyntaxException) {
+        throw InvalidQueryException("invalid regex \"$pattern\"")
+    }
     val matchResult = regex.find(body)
     if (matchResult == null || matchResult.groupValues.size <= 1) {
         return QueryNoneResult

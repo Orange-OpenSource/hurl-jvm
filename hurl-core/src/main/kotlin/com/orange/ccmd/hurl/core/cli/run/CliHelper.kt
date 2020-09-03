@@ -20,8 +20,9 @@
 package com.orange.ccmd.hurl.core.cli.run
 
 import com.orange.ccmd.hurl.core.ast.HurlParser
-import com.orange.ccmd.hurl.core.cli.run.ReporterType.SIMPLE
-import com.orange.ccmd.hurl.core.cli.run.ReporterType.TEST
+import com.orange.ccmd.hurl.core.report.ReporterType
+import com.orange.ccmd.hurl.core.report.ReporterType.SIMPLE
+import com.orange.ccmd.hurl.core.report.ReporterType.TEST
 import com.orange.ccmd.hurl.core.report.SimpleReporter
 import com.orange.ccmd.hurl.core.report.TestReporter
 import com.orange.ccmd.hurl.core.run.Runner
@@ -33,15 +34,15 @@ class CliHelper {
     companion object {
 
         fun run(
-            file: File,
-            variables: Map<String, String>,
-            fileRoot: File,
-            outputHeaders: Boolean,
-            verbose: Boolean,
-            allowsInsecure: Boolean,
-            proxy: String?,
-            reporterType: ReporterType = SIMPLE,
-        ): Boolean {
+                file: File,
+                variables: Map<String, String>,
+                fileRoot: File,
+                outputHeaders: Boolean,
+                verbose: Boolean,
+                allowsInsecure: Boolean,
+                proxy: String?,
+                reporterType: ReporterType = SIMPLE,
+        ): CliReturnCode {
 
             val fileName = file.absoluteFile.name
             val text = file.readText()
@@ -58,7 +59,7 @@ class CliHelper {
             val hurl = parser.parse()
             if (hurl == null) {
                 reporter.reportSyntaxError(error = parser.rootError)
-                return false
+                return CliReturnCode.INPUT_FILE_PARSING_ERROR
             }
 
             // Run the file and report run results.
@@ -74,7 +75,12 @@ class CliHelper {
             val result = runner.run()
 
             reporter.reportResult(result = result)
-            return result.succeeded
+            return when {
+                result.succeeded -> CliReturnCode.SUCCESS
+                !result.succeeded && result.entryResults.flatMap { it.errors }.isNotEmpty() -> CliReturnCode.RUNTIME_ERROR
+                !result.succeeded && result.entryResults.flatMap { it.asserts }.any { !it.succeeded } -> CliReturnCode.ASSERT_ERROR
+                else -> CliReturnCode.UNKNOWN_ERROR
+            }
         }
     }
 }
