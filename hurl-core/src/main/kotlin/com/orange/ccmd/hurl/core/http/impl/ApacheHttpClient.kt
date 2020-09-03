@@ -29,6 +29,7 @@ import com.orange.ccmd.hurl.core.http.HttpRequest
 import com.orange.ccmd.hurl.core.http.HttpResponse
 import com.orange.ccmd.hurl.core.http.HttpResult
 import com.orange.ccmd.hurl.core.http.JsonRequestBody
+import com.orange.ccmd.hurl.core.http.Mime
 import com.orange.ccmd.hurl.core.http.Proxy
 import com.orange.ccmd.hurl.core.http.TextFormData
 import com.orange.ccmd.hurl.core.http.USER_AGENT
@@ -232,10 +233,11 @@ internal fun HttpRequest.prepareBody(builder: RequestBuilder) = when {
                 // > the file data SHOULD be labeled with an appropriate media type, if
                 // > known, or "application/octet-stream".
                 is FileFormData -> {
-                    val contentType = if (it.contentType != null) {
-                        ContentType.create(it.contentType)
-                    } else {
-                        APPLICATION_OCTET_STREAM
+                    val knownContentType = Mime.getContentType(fileName = it.fileName)
+                    val contentType = when {
+                        it.contentType != null -> ContentType.create(it.contentType)
+                        knownContentType != null -> ContentType.create(knownContentType)
+                        else -> APPLICATION_OCTET_STREAM
                     }
                     entityBuilder.addBinaryBody(it.name, it.value, contentType, it.fileName)
                 }
