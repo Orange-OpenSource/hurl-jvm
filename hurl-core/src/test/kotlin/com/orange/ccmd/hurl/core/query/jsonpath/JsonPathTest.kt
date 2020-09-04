@@ -26,7 +26,7 @@ import kotlin.test.assertEquals
 
 class JsonPathTest {
 
-    val json = """{
+    private val json = """{
     "store": {
         "book": [
             {
@@ -75,98 +75,94 @@ class JsonPathTest {
     @TestFactory
     fun `evaluate jsonpath expression`(): List<DynamicTest> {
         val tests = listOf(
-            "$.store.book[*].author" to JsonPathOk(
-                result = toJson(
-                    listOf(
-                        "Nigel Rees",
-                        "Evelyn Waugh",
-                        "Herman Melville",
-                        "J. R. R. Tolkien",
-                        null
-                    )
-                )
+            "$.store.book[*].author" to listOf(
+                "Nigel Rees",
+                "Evelyn Waugh",
+                "Herman Melville",
+                "J. R. R. Tolkien",
+                null
             ),
-            "$..author" to JsonPathOk(
-                result = toJson(
-                    listOf(
-                        "Nigel Rees",
-                        "Evelyn Waugh",
-                        "Herman Melville",
-                        "J. R. R. Tolkien",
-                        null
-                    )
-                )
-            )/*,
-            "$.store.*" to JsonPathListResult(
-                value =
+            "$..author" to listOf(
+                "Nigel Rees",
+                "Evelyn Waugh",
+                "Herman Melville",
+                "J. R. R. Tolkien",
+                null
+            ),
+            "$.store.*" to listOf(
                 listOf(
-                    listOf(
-                        mapOf(
-                            "category" to "reference",
-                            "author" to "Nigel Rees",
-                            "title" to "Sayings of the Century",
-                            "price" to 8.95
-                        ),
-                        mapOf(
-                            "category" to "fiction",
-                            "author" to "Evelyn Waugh",
-                            "title" to "Sword of Honour",
-                            "price" to 12.99
-                        ),
-                        mapOf(
-                            "category" to "fiction",
-                            "author" to "Herman Melville",
-                            "title" to "Moby Dick",
-                            "isbn" to "0-553-21311-3",
-                            "price" to 8.99
-                        ),
-                        mapOf(
-                            "category" to "fiction",
-                            "author" to "J. R. R. Tolkien",
-                            "title" to "The Lord of the Rings",
-                            "isbn" to "0-395-19395-83",
-                            "price" to 22.99
-                        ),
-                        mapOf(
-                            "category" to "fiction",
-                            "author" to null,
-                            "title" to "undefined",
-                            "isbn" to "x-xxx-xxxxx-x",
-                            "price" to 1000
-                        )
+                    mapOf(
+                        "category" to "reference",
+                        "author" to "Nigel Rees",
+                        "title" to "Sayings of the Century",
+                        "price" to 8.95
                     ),
                     mapOf(
-                        "color" to "red",
-                        "price" to 19.95
+                        "category" to "fiction",
+                        "author" to "Evelyn Waugh",
+                        "title" to "Sword of Honour",
+                        "price" to 12.99
+                    ),
+                    mapOf(
+                        "category" to "fiction",
+                        "author" to "Herman Melville",
+                        "title" to "Moby Dick",
+                        "isbn" to "0-553-21311-3",
+                        "price" to 8.99
+                    ),
+                    mapOf(
+                        "category" to "fiction",
+                        "author" to "J. R. R. Tolkien",
+                        "title" to "The Lord of the Rings",
+                        "isbn" to "0-395-19395-8",
+                        "price" to 22.99
+                    ),
+                    mapOf(
+                        "category" to "fiction",
+                        "author" to null,
+                        "title" to "undefined",
+                        "isbn" to "x-xxx-xxxxx-x",
+                        "price" to 1000
                     )
+                ),
+                mapOf(
+                    "color" to "red",
+                    "price" to 19.95
                 )
             ),
-            "$.store..price" to JsonPathListResult(value = listOf()),
-            "$..book[2]" to JsonPathObjectResult(
-                value = mapOf(
+            "$.store..price" to listOf(8.95, 12.99, 8.99, 22.99, 1000, 19.95),
+            "$..book[2]" to mapOf(
                     "category" to "fiction",
                     "author" to "Herman Melville",
                     "title" to "Moby Dick",
                     "isbn" to "0-553-21311-3",
                     "price" to 8.99
-                )
-            ),
-            "$..book[2].title" to JsonPathStringResult(value = "Moby Dick"),
-            "$.store.book[2].title" to JsonPathStringResult(
-                value = "Moby Dick"
-            ),
-            "$.store.book[2].price" to JsonPathNumberResult(
-                value = 8.99
-            ),
-            "$.expensive" to JsonPathBooleanResult(value = true),
-            "$.store.book[?(@.price < 10)]" to JsonPathListResult(
-                value = listOf()
-            )*/
+                ),
+            "$..book[2].title" to "Moby Dick",
+            "$.store.book[2].title" to "Moby Dick",
+            "$.store.book[2].price" to 8.99,
+            "$.expensive" to true,
+            "$.store.book[?(@.price < 10)]" to listOf(
+                mapOf(
+                    "category" to "reference",
+                    "author" to "Nigel Rees",
+                    "title" to "Sayings of the Century",
+                    "price" to 8.95
+                ),
+                mapOf(
+                    "category" to "fiction",
+                    "author" to "Herman Melville",
+                    "title" to "Moby Dick",
+                    "isbn" to "0-553-21311-3",
+                    "price" to 8.99
+                ),
+            )
         )
         return tests.map { (expr, expectedValue) ->
             DynamicTest.dynamicTest(expr.safeName()) {
                 val ret = JsonPath.evaluate(expr = expr, json = json)
-                assertEquals(expectedValue, ret)
+                require(ret is JsonPathOk)
+                assertEquals(expectedValue, ret.result.toValue())
             }
         }
     }
