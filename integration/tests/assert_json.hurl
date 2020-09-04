@@ -17,7 +17,8 @@ jsonpath "$.duration" equals 1.5
   "success": false,
   "errors": [{"id":"error1"},{"id":"error2"}],
   "warnings": [],
-  "duration": 1.5
+  "duration": 1.5,
+  "tags": ["test"]
 }
 
 GET http://localhost:8000/assert-json/index
@@ -29,3 +30,6 @@ GET http://localhost:8000/assert-json
 HTTP/1.0 200
 [Asserts]
 jsonpath "$.errors[{{index}}].id" equals "error2"
+jsonpath "$.tags" includes "test"
+jsonpath "$.tags" not includes "prod"
+

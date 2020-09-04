@@ -144,7 +144,7 @@ internal fun HurlParser.bool(): Bool? {
 }
 
 internal fun HurlParser.bytes(): Bytes? {
-    val node = choice(listOf<ParseFunc<Bytes>>(
+    val node = choice(listOf(
         { json() },
         { xml() },
         { rawString() },
@@ -323,6 +323,14 @@ internal fun HurlParser.entry(): Entry? {
     return Entry(begin = begin, end = position, request = request, response = response)
 }
 
+internal fun HurlParser.equalPredicate(): PredicateFunc? {
+    return choice(listOf(
+        { equalNumberPredicate() },
+        { equalBoolPredicate() },
+        { equalStringPredicate() },
+    ))
+}
+
 internal fun HurlParser.equalBoolPredicate(): EqualBoolPredicate? {
     val begin = position.copy()
     val type = predicateType("equals") ?: return null
@@ -335,7 +343,7 @@ internal fun HurlParser.equalNumberPredicate(): EqualNumberPredicate? {
     val begin = position.copy()
     val type = predicateType("equals") ?: return null
     val spaces = zeroOrMore { space() }
-    val expr = choice(listOf<ParseFunc<Number>>(
+    val expr = choice(listOf(
         { float() },
         { integer() }
     )) ?: return null
@@ -530,6 +538,41 @@ internal fun HurlParser.hurlFile(): HurlFile? {
     )
 }
 
+internal fun HurlParser.includePredicate(): PredicateFunc? {
+    return choice(listOf(
+        { includeBoolPredicate() },
+        { includeNumberPredicate() },
+        { includeStringPredicate() },
+    ))
+}
+
+internal fun HurlParser.includeBoolPredicate(): IncludeBoolPredicate? {
+    val begin = position.copy()
+    val type = predicateType("includes") ?: return null
+    val spaces = zeroOrMore { space() }
+    val expr = bool() ?: return null
+    return IncludeBoolPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+}
+
+internal fun HurlParser.includeNumberPredicate(): IncludeNumberPredicate? {
+    val begin = position.copy()
+    val type = predicateType("includes") ?: return null
+    val spaces = zeroOrMore { space() }
+    val expr = choice(listOf(
+        { float() },
+        { integer() }
+    )) ?: return null
+    return IncludeNumberPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+}
+
+internal fun HurlParser.includeStringPredicate(): IncludeStringPredicate? {
+    val begin = position.copy()
+    val type = predicateType("includes") ?: return null
+    val spaces = zeroOrMore { space() }
+    val expr = quotedString() ?: return null
+    return IncludeStringPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+}
+
 internal fun HurlParser.integer(): Number? {
     val begin = position.copy()
 
@@ -665,7 +708,7 @@ internal fun HurlParser.literal(literal: String): Literal? {
     val begin = position.copy()
 
     val cps = literal.codePoints().toArray()
-    for (i in 0 until cps.size) {
+    for (i in cps.indices) {
         val c = peek()
         if (c == null) {
             val message = "'$literal' is expected, invalid eof instead of '${cps[i].codePointToString()}'"
@@ -773,12 +816,11 @@ internal fun HurlParser.not(): Not? {
 internal fun HurlParser.newLine(): NewLine? {
     val begin = position.copy()
 
-    val cp0 = read()
-    when (cp0) {
+    when (read()) {
         '\n'.toInt() -> { }
         '\r'.toInt() -> {
-            val cp1 = read()
-            if (cp1 == null || cp1 != '\n'.toInt()) {
+            val cp = read()
+            if (cp == null || cp != '\n'.toInt()) {
                 error = SyntaxError("\\n is expected", begin)
                 return null
             }
@@ -843,15 +885,14 @@ internal fun HurlParser.predicate(): Predicate? {
 }
 
 internal fun HurlParser.predicateFunc(): PredicateFunc? {
-    return choice(listOf<ParseFunc<PredicateFunc>>(
-        { equalNumberPredicate() },
-        { equalBoolPredicate() },
-        { equalStringPredicate() },
+    return choice(listOf(
+        { equalPredicate() },
         { countPredicate() },
         { startWithPredicate() },
         { containPredicate() },
+        { includePredicate() },
         { matchPredicate() },
-        { existPredicate() }
+        { existPredicate() },
     ))
 }
 
@@ -862,7 +903,7 @@ internal fun HurlParser.predicateType(type: String): PredicateType? {
 }
 
 internal fun HurlParser.query(): Query? {
-    return choice(listOf<ParseFunc<Query>>(
+    return choice(listOf(
         { statusQuery() },
         { headerQuery() },
         { cookieQuery() },
@@ -870,7 +911,7 @@ internal fun HurlParser.query(): Query? {
         { xPathQuery() },
         { jsonPathQuery() },
         { regexQuery() },
-        { variableQuery() }
+        { variableQuery() },
     ))
 }
 
@@ -963,7 +1004,7 @@ internal fun HurlParser.rawString(): RawString? {
     literal(multilineMarker) ?: return null
     val text = buffer.slice(begin.offset, position.offset).string()
 
-    return RawString(begin = begin, end = position, value = value, text = text);
+    return RawString(begin = begin, end = position, value = value, text = text)
 }
 
 internal fun HurlParser.regexQuery(): RegexQuery? {
@@ -1015,7 +1056,7 @@ internal fun HurlParser.request(): Request? {
 }
 
 internal fun HurlParser.requestSection(): RequestSection? {
-    return choice(listOf<ParseFunc<RequestSection>>(
+    return choice(listOf(
         { queryStringParamsSection() },
         { formParamsSection() },
         { cookiesSection() },
@@ -1052,7 +1093,7 @@ internal fun HurlParser.response(): Response? {
 }
 
 internal fun HurlParser.responseSection(): ResponseSection? {
-    return choice(listOf<ParseFunc<ResponseSection>>(
+    return choice(listOf(
         { capturesSection() },
         { assertsSection() }
     ))

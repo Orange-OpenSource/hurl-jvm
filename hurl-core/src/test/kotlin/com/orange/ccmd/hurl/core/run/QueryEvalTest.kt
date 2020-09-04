@@ -192,8 +192,10 @@ class QueryEvalTest {
     fun `evaluate json-query against a http response failed because of bad charset`() = listOf(
         "$.success" to QueryBooleanResult(false),
         "$.{{field}}" to QueryBooleanResult(false),
-        "$.errors" to QueryListResult(size = 2),
-        "$.warnings" to QueryListResult(size = 0),
+        "$.errors" to QueryListResult(listOf(
+            mapOf("id" to "error1"), mapOf("id" to "error2")
+        )),
+        "$.warnings" to QueryListResult(emptyList()),
         "$.toto" to QueryNoneResult,
         "$.errors[0].id" to QueryStringResult("error1"),
         "$.errors[0]['id']" to QueryStringResult("error1"),

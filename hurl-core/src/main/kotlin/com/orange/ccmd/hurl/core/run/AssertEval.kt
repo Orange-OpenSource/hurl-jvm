@@ -170,18 +170,24 @@ internal fun Assert.eval(response: HttpResponse, variables: VariableJar): EntryS
     val predicateFunc = predicate.predicateFunc
     val result = try {
         when (predicateFunc) {
+            is EqualBoolPredicate -> predicateFunc.eval(not = not, first = first, second = predicateFunc.expr.value)
+            is EqualNumberPredicate -> predicateFunc.eval(not = not, first = first, second = predicateFunc.expr.value)
             is EqualStringPredicate -> {
                 val second = predicateFunc.valueToString(variables = variables)
                 predicateFunc.eval(not = not, first = first, second = second)
             }
-            is EqualBoolPredicate -> predicateFunc.eval(not = not, first = first, second = predicateFunc.expr.value)
-            is EqualNumberPredicate -> predicateFunc.eval(not = not, first = first, second = predicateFunc.expr.value)
             is StartWithPredicate -> {
                 val second = predicateFunc.valueToString(variables = variables)
                 predicateFunc.eval(not = not, first = first, second = second)
             }
             is CountPredicate -> predicateFunc.eval(not = not, first = first, second = predicateFunc.expr.value)
             is ContainPredicate -> {
+                val second = predicateFunc.valueToString(variables = variables)
+                predicateFunc.eval(not = not, first = first, second = second)
+            }
+            is IncludeBoolPredicate -> predicateFunc.eval(not = not, first = first, second = predicateFunc.expr.value)
+            is IncludeNumberPredicate -> predicateFunc.eval(not = not, first = first, second = predicateFunc.expr.value)
+            is IncludeStringPredicate -> {
                 val second = predicateFunc.valueToString(variables = variables)
                 predicateFunc.eval(not = not, first = first, second = second)
             }

@@ -259,6 +259,30 @@ class HurlFile(
     val lts: List<LineTerminator>
 ) : Node(begin, end)
 
+class IncludeBoolPredicate(
+    begin: Position,
+    end: Position,
+    type: PredicateType,
+    val spaces: List<Space>,
+    val expr: Bool
+) : PredicateFunc(begin, end, type)
+
+class IncludeNumberPredicate(
+    begin: Position,
+    end: Position,
+    type: PredicateType,
+    val spaces: List<Space>,
+    val expr: Number
+) : PredicateFunc(begin, end, type)
+
+class IncludeStringPredicate(
+    begin: Position,
+    end: Position,
+    type: PredicateType,
+    val spaces: List<Space>,
+    val expr: HString
+) : PredicateFunc(begin, end, type)
+
 class Json(begin: Position, end: Position, val text: String) : Bytes(begin, end)
 
 class JsonPathQuery(
@@ -339,12 +363,15 @@ class Predicate(
     val predicateFunc: PredicateFunc
 ) : Node(begin, end) {
     val expr: Any? = when (predicateFunc) {
-        is EqualStringPredicate -> predicateFunc.expr.value
-        is EqualNumberPredicate -> predicateFunc.expr.value
         is EqualBoolPredicate -> predicateFunc.expr.value
+        is EqualNumberPredicate -> predicateFunc.expr.value
+        is EqualStringPredicate -> predicateFunc.expr.value
         is CountPredicate -> predicateFunc.expr.value
         is StartWithPredicate -> predicateFunc.expr.value
         is ContainPredicate -> predicateFunc.expr.value
+        is IncludeBoolPredicate -> predicateFunc.expr.value
+        is IncludeNumberPredicate -> predicateFunc.expr.value
+        is IncludeStringPredicate -> predicateFunc.expr.value
         is MatchPredicate -> predicateFunc.expr.value
         is ExistPredicate -> null
     }

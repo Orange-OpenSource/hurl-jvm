@@ -236,12 +236,12 @@ internal class AssertTest {
     fun `evaluate assert jsonpath exist`() = listOf(
         Triple("""jsonpath "$.warnings" exists""", true, """
                                                             assert jsonpath exists succeeded
-                                                              actual:   list(size=0)
+                                                              actual:   list()
                                                               expected: anything
                                                             """.trimIndent()),
         Triple("""jsonpath "$.warnings" not exists""", false, """
                                                             assert jsonpath not exists failed
-                                                              actual:   list(size=0)
+                                                              actual:   list()
                                                               expected: 
                                                             """.trimIndent()),
         Triple("""jsonpath "$.state" exists""", true, """
@@ -287,7 +287,7 @@ internal class AssertTest {
     }
 
     @TestFactory
-    fun `evaluate assert xmlpath exist`() = listOf(
+    fun `evaluate assert xpath exist`() = listOf(
         Triple("""xpath "//h1" exists""", true, """
                                                     assert xpath exists succeeded
                                                       actual:   nodeset(size=1)
@@ -335,12 +335,12 @@ internal class AssertTest {
     fun `evaluate assert jsonpath matches`() = listOf(
         Triple("""jsonpath "$.warnings" matches ".*"""", false, """
                                                             assert jsonpath matches failed
-                                                              actual:   list(size=0)
+                                                              actual:   list()
                                                               expected: matches string <.*>
                                                             """.trimIndent()),
         Triple("""jsonpath "$.warnings" not matches ".*"""", true, """
                                                             assert jsonpath not matches succeeded
-                                                              actual:   list(size=0)
+                                                              actual:   list()
                                                               expected: doesn't match string <.*>
                                                             """.trimIndent()),
         Triple("""jsonpath "$.state" matches "run"""", true, """
@@ -394,12 +394,12 @@ internal class AssertTest {
     fun `evaluate assert jsonpath starts with`() = listOf(
         Triple("""jsonpath "$.warnings" startsWith "something"""", false, """
                                                             assert jsonpath startsWith failed
-                                                              actual:   list(size=0)
+                                                              actual:   list()
                                                               expected: starts with string <something>
                                                             """.trimIndent()),
         Triple("""jsonpath "$.warnings" not startsWith "something"""", true, """
                                                             assert jsonpath not startsWith succeeded
-                                                              actual:   list(size=0)
+                                                              actual:   list()
                                                               expected: doesn't start with string <something>
                                                             """.trimIndent()),
         Triple("""jsonpath "$.state" startsWith "run"""", true, """
@@ -453,12 +453,12 @@ internal class AssertTest {
     fun `evaluate assert jsonpath contains`() = listOf(
         Triple("""jsonpath "$.warnings" contains "something"""", false, """
                                                             assert jsonpath contains failed
-                                                              actual:   list(size=0)
+                                                              actual:   list()
                                                               expected: contains string <something>
                                                             """.trimIndent()),
         Triple("""jsonpath "$.warnings" not contains "something"""", true, """
                                                             assert jsonpath not contains succeeded
-                                                              actual:   list(size=0)
+                                                              actual:   list()
                                                               expected: doesn't contain string <something>
                                                             """.trimIndent()),
         Triple("""jsonpath "$.state" contains "unni"""", true, """
@@ -512,12 +512,12 @@ internal class AssertTest {
     fun `evaluate assert jsonpath count equals`() = listOf(
         Triple("""jsonpath "$.warnings" countEquals 0""", true, """
                                                             assert jsonpath countEquals succeeded
-                                                              actual:   list(size=0)
+                                                              actual:   list()
                                                               expected: count equals 0.0
                                                             """.trimIndent()),
         Triple("""jsonpath "$.errors" not countEquals 3""", true, """
                                                             assert jsonpath not countEquals succeeded
-                                                              actual:   list(size=2)
+                                                              actual:   list({id=error1}, {id=error2})
                                                               expected: count doesn't equals 3.0
                                                             """.trimIndent()),
         Triple("""jsonpath "$.state" countEquals 1""", false, """
@@ -563,7 +563,60 @@ internal class AssertTest {
     }
 
     @TestFactory
-    fun `evaluate assert xmlpath count equals`() = listOf(
+    fun `evaluate assert jsonpath includes`() = listOf(
+        Triple("""jsonpath "$.fruits" includes "lemon"""", true, """
+                                                            assert jsonpath includes succeeded
+                                                              actual:   list(apple, banana, lemon)
+                                                              expected: include string <lemon>
+                                                            """.trimIndent()),
+        Triple("""jsonpath "$.warnings" not includes 3""", true, """
+                                                            assert jsonpath not includes succeeded
+                                                              actual:   list()
+                                                              expected: doesn't include number <3.0>
+                                                            """.trimIndent()),
+        Triple("""jsonpath "$.ids" includes 567""", true, """
+                                                            assert jsonpath includes succeeded
+                                                              actual:   list(234, 567, 45, 789)
+                                                              expected: include number <567.0>
+                                                            """.trimIndent()),
+        Triple("""jsonpath "$.ids" includes 1""", false, """
+                                                            assert jsonpath includes failed
+                                                              actual:   list(234, 567, 45, 789)
+                                                              expected: include number <1.0>
+                                                            """.trimIndent()),
+        Triple("""jsonpath "$.states" not includes true""", false, """
+                                                            assert jsonpath not includes failed
+                                                              actual:   list(true, true, true)
+                                                              expected: doesn't include boolean <true>
+                                                            """.trimIndent()),
+    ).map { (expr, succeeded, message) ->
+        DynamicTest.dynamicTest(expr) {
+            val assert = assert(expr)
+            assertNotNull(assert)
+            val response = HttpResponse(
+                version = "HTTP/1.1",
+                code = 200,
+                headers = emptyList(),
+                charset = Charset.forName("UTF-8"),
+                mimeType = "application/json",
+                body = """
+                    {
+                        "fruits": ["apple", "banana", "lemon"],
+                        "warnings": [],
+                        "ids": [234, 567, 45, 789],
+                        "states": [true, true, true]
+                    }
+                """.trimIndent().toByteArray()
+            )
+
+            val result = assert.eval(response = response, variables = VariableJar())
+            assertEquals(succeeded, result.succeeded)
+            assertEquals(message, result.message)
+        }
+    }
+
+    @TestFactory
+    fun `evaluate assert xpath count equals`() = listOf(
         Triple("""xpath "//div" countEquals 3""", true, """
                                                             assert xpath countEquals succeeded
                                                               actual:   nodeset(size=3)
@@ -620,12 +673,12 @@ internal class AssertTest {
                                                             """.trimIndent()),
         Triple("""jsonpath "$.warnings" equals "something"""", false, """
                                                             assert jsonpath equals failed
-                                                              actual:   list(size=0)
+                                                              actual:   list()
                                                               expected: equals string <something>
                                                             """.trimIndent()),
         Triple("""jsonpath "$.warnings" not equals "something"""", true, """
                                                             assert jsonpath not equals succeeded
-                                                              actual:   list(size=0)
+                                                              actual:   list()
                                                               expected: doesn't equal string <something>
                                                             """.trimIndent()),
         Triple("""jsonpath "$.toto" equals "anything"""", false, """
