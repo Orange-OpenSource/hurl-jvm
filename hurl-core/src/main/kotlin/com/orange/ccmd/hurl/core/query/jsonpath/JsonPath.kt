@@ -41,9 +41,9 @@ class JsonPath {
             // If the jsonpath expression return only one element, we try coerce this result
             // into a string, number of boolean if it possible.
             return if (ret.size == 1) {
-                JsonPathOk(result = toJson(ret[0]))
+                JsonPathOk(result = JsonType.toJson(ret[0]))
             } else {
-                JsonPathOk(result = toJson(ret))
+                JsonPathOk(result = JsonType.toJson(ret))
             }
         }
     }
