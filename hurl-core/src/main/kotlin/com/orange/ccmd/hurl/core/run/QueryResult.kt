@@ -35,8 +35,8 @@ data class QueryStringResult(val value: String): QueryResult() {
     override fun text(): String = "string <$value>"
 }
 
-data class QueryListResult(val size: Int): QueryResult() {
-    override fun text(): String = "list(size=$size)"
+data class QueryListResult(val value: List<Any?>): QueryResult() {
+    override fun text(): String = "list(${value.joinToString()})"
 }
 
 data class QueryNodeSetResult(val size: Int): QueryResult() {

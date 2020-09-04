@@ -52,7 +52,6 @@ import com.orange.ccmd.hurl.core.query.xpath.XPathNumberResult
 import com.orange.ccmd.hurl.core.query.xpath.XPathResult
 import com.orange.ccmd.hurl.core.query.xpath.XPathStringResult
 import com.orange.ccmd.hurl.core.template.Template
-import java.net.HttpCookie
 import java.util.regex.PatternSyntaxException
 
 fun Query.eval(response: HttpResponse, variables: VariableJar): QueryResult = when (this) {
@@ -79,7 +78,7 @@ fun JsonPathResult.toQueryResult(): QueryResult {
             is JsonBoolean -> QueryBooleanResult(value = result.value)
             is JsonNumber -> QueryNumberResult(value = result.value)
             is JsonString -> QueryStringResult(value = result.value)
-            is JsonArray -> QueryListResult(size = result.value.size)
+            is JsonArray -> QueryListResult(value = result.toValue())
             is JsonObject -> QueryObjectResult(value = result.value)
             is JsonNull -> QueryObjectResult(value = null)
         }
@@ -113,7 +112,7 @@ internal fun HeaderQuery.eval(response: HttpResponse): QueryResult {
     return when {
         headers.isEmpty() -> QueryNoneResult
         headers.size == 1 -> QueryStringResult(headers[0].second)
-        else -> QueryListResult(size = headers.size)
+        else -> QueryListResult(value = headers.map { it.second })
     }
 }
 

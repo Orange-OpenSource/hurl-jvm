@@ -19,10 +19,23 @@
 
 package com.orange.ccmd.hurl.core.ast
 
+/**
+ * A Visitor's visit method is invoked for each node encountered by [walk].
+ * [walk] visits each of the children of node with the visitor.
+ */
 interface Visitor {
     fun visit(node: Node): Boolean
 }
 
+/**
+ * Traverses an AST in depth-first order.
+ *
+ * It starts by calling visitor.visit(node); node must not be null.
+ * If visitor.visit(node) is true, [walk] is invoked recursively
+ * with visitor for each of the non-nil children of node.
+ * @param visitor
+ * @param node
+ */
 fun walk(visitor: Visitor, node: Node?) {
     if (node == null || !visitor.visit(node)) {
         return
@@ -179,6 +192,21 @@ fun walk(visitor: Visitor, node: Node?) {
         is HurlFile -> {
             node.entries.forEach { walk(visitor, it) }
             node.lts.forEach { walk(visitor, it) }
+        }
+        is IncludeBoolPredicate -> {
+            walk(visitor, node.type)
+            node.spaces.forEach { walk(visitor, it) }
+            walk(visitor, node.expr)
+        }
+        is IncludeNumberPredicate -> {
+            walk(visitor, node.type)
+            node.spaces.forEach { walk(visitor, it) }
+            walk(visitor, node.expr)
+        }
+        is IncludeStringPredicate -> {
+            walk(visitor, node.type)
+            node.spaces.forEach { walk(visitor, it) }
+            walk(visitor, node.expr)
         }
         is JsonPathQuery -> {
             walk(visitor, node.type)

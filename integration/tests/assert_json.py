@@ -7,7 +7,8 @@ def assert_json():
   "success": false,
   "errors": [{"id":"error1"},{"id":"error2"}],
   "warnings": [],
-  "duration": 1.5
+  "duration": 1.5,
+  "tags": ["test"]
 }''', mimetype='application/json')
 
 

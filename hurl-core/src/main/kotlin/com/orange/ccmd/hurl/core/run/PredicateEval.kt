@@ -19,14 +19,7 @@
 
 package com.orange.ccmd.hurl.core.run
 
-import com.orange.ccmd.hurl.core.ast.ContainPredicate
-import com.orange.ccmd.hurl.core.ast.CountPredicate
-import com.orange.ccmd.hurl.core.ast.EqualBoolPredicate
-import com.orange.ccmd.hurl.core.ast.EqualNumberPredicate
-import com.orange.ccmd.hurl.core.ast.EqualStringPredicate
-import com.orange.ccmd.hurl.core.ast.ExistPredicate
-import com.orange.ccmd.hurl.core.ast.MatchPredicate
-import com.orange.ccmd.hurl.core.ast.StartWithPredicate
+import com.orange.ccmd.hurl.core.ast.*
 
 /**
  * Evaluates if query result [first] equals string [second].
@@ -109,6 +102,68 @@ internal fun ContainPredicate.eval(not: Boolean, first: QueryResult, second: Str
 }
 
 /**
+ * Evaluates if query result [first] is a container including number [second].
+ * @param not boolean, true to inverse the predicate, false otherwise
+ * @param first query result to be tested
+ * @param second number to test
+ * @return the result of predicate
+ */
+internal fun IncludeNumberPredicate.eval(not: Boolean, first: QueryResult, second: Double): PredicateResult {
+    val succeeded = when (first) {
+        is QueryListResult -> second in first.value
+            .filterIsInstance<Number>()
+            .map { it.toDouble() }
+        else -> false
+    }
+    val secondText = if (not) { "doesn't include number <$second>" } else { "include number <$second>" }
+    return PredicateResult(
+        succeeded = succeeded xor not,
+        first = first.text(),
+        second = secondText
+    )
+}
+
+/**
+ * Evaluates if query result [first] is a container including boolean [second].
+ * @param not boolean, true to inverse the predicate, false otherwise
+ * @param first query result to be tested
+ * @param second boolean to test
+ * @return the result of predicate
+ */
+internal fun IncludeBoolPredicate.eval(not: Boolean, first: QueryResult, second: Boolean): PredicateResult {
+    val succeeded = when (first) {
+        is QueryListResult -> second in first.value
+        else -> false
+    }
+    val secondText = if (not) { "doesn't include boolean <$second>" } else { "include boolean <$second>" }
+    return PredicateResult(
+        succeeded = succeeded xor not,
+        first = first.text(),
+        second = secondText
+    )
+}
+
+/**
+ * Evaluates if query result [first] is a container including string [second].
+ * @param not boolean, true to inverse the predicate, false otherwise
+ * @param first query result to be tested
+ * @param second string to test
+ * @return the result of predicate
+ */
+internal fun IncludeStringPredicate.eval(not: Boolean, first: QueryResult, second: String): PredicateResult {
+    val succeeded = when (first) {
+        is QueryListResult -> second in first.value
+        else -> false
+    }
+    val secondText = if (not) { "doesn't include string <$second>" } else { "include string <$second>" }
+    return PredicateResult(
+        succeeded = succeeded xor not,
+        first = first.text(),
+        second = secondText
+    )
+}
+
+/**
  * Evaluates if query result [first] is a container of size [second].
  * @param not boolean, true to inverse the predicate, false otherwise
  * @param first query result to be tested
@@ -117,7 +172,7 @@ internal fun ContainPredicate.eval(not: Boolean, first: QueryResult, second: Str
  */
 internal fun CountPredicate.eval(not: Boolean, first: QueryResult, second: Double): PredicateResult {
     val succeeded = when (first) {
-        is QueryListResult -> first.size == second.toInt()
+        is QueryListResult -> first.value.size == second.toInt()
         is QueryNodeSetResult -> first.size == second.toInt()
         else -> false
     }

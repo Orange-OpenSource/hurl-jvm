@@ -25,6 +25,7 @@ import com.orange.ccmd.hurl.core.ast.ContainPredicate
 import com.orange.ccmd.hurl.core.ast.Cookie as CookieNode
 import com.orange.ccmd.hurl.core.ast.EqualStringPredicate
 import com.orange.ccmd.hurl.core.ast.FileParam
+import com.orange.ccmd.hurl.core.ast.IncludeStringPredicate
 import com.orange.ccmd.hurl.core.ast.Header as HeaderNode
 import com.orange.ccmd.hurl.core.ast.Json
 import com.orange.ccmd.hurl.core.ast.MatchPredicate
@@ -185,6 +186,13 @@ internal fun CookieNode.toCookie(variables: VariableJar): Cookie {
  * @return a string representing the value of this predicate function.
  */
 internal fun EqualStringPredicate.valueToString(variables: VariableJar): String = Template.render(text = expr.value, variables = variables, position = expr.begin)
+
+/**
+ * Renders a {@link IncludeStringPredicate} value to a string using [variables].
+ * @param variables variables to use in templates
+ * @return a string representing the value of this predicate function.
+ */
+internal fun IncludeStringPredicate.valueToString(variables: VariableJar): String = Template.render(text = expr.value, variables = variables, position = expr.begin)
 
 /**
  * Renders a {@link StartWithPredicate} value to a string using [variables].
