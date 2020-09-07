@@ -19,7 +19,17 @@
 
 package com.orange.ccmd.hurl.core.run
 
-import com.orange.ccmd.hurl.core.ast.*
+import com.orange.ccmd.hurl.core.ast.ContainPredicate
+import com.orange.ccmd.hurl.core.ast.CountPredicate
+import com.orange.ccmd.hurl.core.ast.EqualBoolPredicate
+import com.orange.ccmd.hurl.core.ast.EqualNumberPredicate
+import com.orange.ccmd.hurl.core.ast.EqualStringPredicate
+import com.orange.ccmd.hurl.core.ast.ExistPredicate
+import com.orange.ccmd.hurl.core.ast.IncludeBoolPredicate
+import com.orange.ccmd.hurl.core.ast.IncludeNumberPredicate
+import com.orange.ccmd.hurl.core.ast.IncludeStringPredicate
+import com.orange.ccmd.hurl.core.ast.MatchPredicate
+import com.orange.ccmd.hurl.core.ast.StartWithPredicate
 
 /**
  * Evaluates if query result [first] equals string [second].

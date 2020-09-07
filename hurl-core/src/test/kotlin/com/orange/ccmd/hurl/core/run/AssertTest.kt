@@ -21,13 +21,13 @@ package com.orange.ccmd.hurl.core.run
 
 import com.orange.ccmd.hurl.core.ast.Assert
 import com.orange.ccmd.hurl.core.ast.HurlParser
-import com.orange.ccmd.hurl.core.ast.Position.Companion.zero
 import com.orange.ccmd.hurl.core.ast.Status
 import com.orange.ccmd.hurl.core.ast.Version
 import com.orange.ccmd.hurl.core.ast.assert
 import com.orange.ccmd.hurl.core.ast.body
 import com.orange.ccmd.hurl.core.ast.header
 import com.orange.ccmd.hurl.core.http.HttpResponse
+import com.orange.ccmd.hurl.core.parser.Position.Companion.zero
 import com.orange.ccmd.hurl.core.run.VariableJar.Companion.from
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.Test

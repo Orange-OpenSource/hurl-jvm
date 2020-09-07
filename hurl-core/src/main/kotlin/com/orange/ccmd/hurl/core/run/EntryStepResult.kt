@@ -19,7 +19,7 @@
 
 package com.orange.ccmd.hurl.core.run
 
-import com.orange.ccmd.hurl.core.ast.Position
+import com.orange.ccmd.hurl.core.parser.Position
 import java.lang.Exception
 
 

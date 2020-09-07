@@ -17,7 +17,7 @@
  *
  */
 
-package com.orange.ccmd.hurl.core.ast
+package com.orange.ccmd.hurl.core.parser
 
 sealed class Error(val message: String, val position: Position) {
     override fun equals(other: Any?): Boolean {

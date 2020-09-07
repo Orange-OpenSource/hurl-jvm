@@ -19,7 +19,7 @@
 
 package com.orange.ccmd.hurl.core.template
 
-import com.orange.ccmd.hurl.core.ast.Position
+import com.orange.ccmd.hurl.core.parser.Position
 import com.orange.ccmd.hurl.core.run.QueryBooleanResult
 import com.orange.ccmd.hurl.core.run.QueryNumberResult
 import com.orange.ccmd.hurl.core.run.QueryStringResult

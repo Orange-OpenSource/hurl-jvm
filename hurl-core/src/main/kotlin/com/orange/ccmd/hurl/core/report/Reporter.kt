@@ -19,7 +19,7 @@
 
 package com.orange.ccmd.hurl.core.report
 
-import com.orange.ccmd.hurl.core.ast.Error
+import com.orange.ccmd.hurl.core.parser.Error
 import com.orange.ccmd.hurl.core.run.RunResult
 
 interface Reporter {

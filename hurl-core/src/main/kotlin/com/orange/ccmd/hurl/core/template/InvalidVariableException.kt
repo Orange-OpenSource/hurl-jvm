@@ -19,7 +19,7 @@
 
 package com.orange.ccmd.hurl.core.template
 
-import com.orange.ccmd.hurl.core.ast.Position
+import com.orange.ccmd.hurl.core.parser.Position
 
 class InvalidVariableException(val name: String, val position: Position, val reason: String) :
     Exception("variable $name ${position.text} invalid cause $reason")

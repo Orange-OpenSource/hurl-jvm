@@ -19,8 +19,28 @@
 
 package com.orange.ccmd.hurl.fmt.highlight
 
-import com.orange.ccmd.hurl.core.ast.*
+import com.orange.ccmd.hurl.core.ast.Base64String
+import com.orange.ccmd.hurl.core.ast.Bool
+import com.orange.ccmd.hurl.core.ast.Comment
+import com.orange.ccmd.hurl.core.ast.CookieValue
+import com.orange.ccmd.hurl.core.ast.HString
+import com.orange.ccmd.hurl.core.ast.Json
+import com.orange.ccmd.hurl.core.ast.Literal
+import com.orange.ccmd.hurl.core.ast.Method
+import com.orange.ccmd.hurl.core.ast.NewLine
+import com.orange.ccmd.hurl.core.ast.Node
+import com.orange.ccmd.hurl.core.ast.Not
 import com.orange.ccmd.hurl.core.ast.Number
+import com.orange.ccmd.hurl.core.ast.PredicateType
+import com.orange.ccmd.hurl.core.ast.QueryType
+import com.orange.ccmd.hurl.core.ast.RawString
+import com.orange.ccmd.hurl.core.ast.SectionHeader
+import com.orange.ccmd.hurl.core.ast.Space
+import com.orange.ccmd.hurl.core.ast.Status
+import com.orange.ccmd.hurl.core.ast.Url
+import com.orange.ccmd.hurl.core.ast.Version
+import com.orange.ccmd.hurl.core.ast.Visitor
+import com.orange.ccmd.hurl.core.ast.Xml
 
 class HighlightingVisitor(
     val commentFunc: (String) -> String,

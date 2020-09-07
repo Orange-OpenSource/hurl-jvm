@@ -17,7 +17,7 @@
  *
  */
 
-package com.orange.ccmd.hurl.core.ast
+package com.orange.ccmd.hurl.core.parser
 
 import com.orange.ccmd.hurl.core.utils.string
 import org.junit.jupiter.api.Test

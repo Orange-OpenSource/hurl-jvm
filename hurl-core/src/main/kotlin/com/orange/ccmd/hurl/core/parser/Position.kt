@@ -17,13 +17,17 @@
  *
  */
 
-package com.orange.ccmd.hurl.fmt.lint
+package com.orange.ccmd.hurl.core.parser
 
-import com.orange.ccmd.hurl.core.ast.HurlFile
-import com.orange.ccmd.hurl.fmt.Formatter
+data class Position(
+    var offset: Int = 0, // Offset in code points, starting at 0
+    var line: Int = 1,   // Line number in code points, starting at 1
+    var column: Int = 1  // Column number in code points, starting at 1
+) {
+    val text: String
+        get() = "[$line:$column]"
 
-class LintFormatter : Formatter {
-
-    override fun format(hurlFile: HurlFile): String = hurlFile.lint()
-
+    companion object {
+        val zero: Position = Position()
+    }
 }

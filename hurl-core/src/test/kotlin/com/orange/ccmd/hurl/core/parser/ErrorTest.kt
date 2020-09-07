@@ -17,8 +17,11 @@
  *
  */
 
-package com.orange.ccmd.hurl.core.ast
+package com.orange.ccmd.hurl.core.parser
 
+import com.orange.ccmd.hurl.core.parser.Position
+import com.orange.ccmd.hurl.core.parser.SyntaxError
+import com.orange.ccmd.hurl.core.parser.singleDeepest
 import org.junit.jupiter.api.Test
 import kotlin.test.*
 

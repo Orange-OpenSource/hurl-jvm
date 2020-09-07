@@ -19,7 +19,8 @@
 
 package com.orange.ccmd.hurl.fmt.highlight
 
-import com.orange.ccmd.hurl.core.ast.*
+import com.orange.ccmd.hurl.core.ast.HurlFile
+import com.orange.ccmd.hurl.core.ast.walk
 import com.orange.ccmd.hurl.fmt.Formatter
 
 class HtmlFormatter(val theme: String = "dark256") : Formatter {
