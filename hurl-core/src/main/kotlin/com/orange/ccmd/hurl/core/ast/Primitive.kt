@@ -406,6 +406,12 @@ internal fun HurlParser.newLine(): NewLine? {
     return NewLine(begin = begin, end = position, value = eol.string())
 }
 
+internal fun HurlParser.`null`(): Null? {
+    val begin = position.copy()
+    literal("null") ?: return null
+    return Null(begin = begin, end = position)
+}
+
 internal fun HurlParser.param(): Param? {
     val begin = position.copy()
 

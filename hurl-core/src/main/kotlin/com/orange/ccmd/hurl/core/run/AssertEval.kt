@@ -24,11 +24,13 @@ import com.orange.ccmd.hurl.core.ast.Body
 import com.orange.ccmd.hurl.core.ast.ContainPredicate
 import com.orange.ccmd.hurl.core.ast.CountPredicate
 import com.orange.ccmd.hurl.core.ast.EqualBoolPredicate
+import com.orange.ccmd.hurl.core.ast.EqualNullPredicate
 import com.orange.ccmd.hurl.core.ast.EqualNumberPredicate
 import com.orange.ccmd.hurl.core.ast.EqualStringPredicate
 import com.orange.ccmd.hurl.core.ast.ExistPredicate
 import com.orange.ccmd.hurl.core.ast.Header
 import com.orange.ccmd.hurl.core.ast.IncludeBoolPredicate
+import com.orange.ccmd.hurl.core.ast.IncludeNullPredicate
 import com.orange.ccmd.hurl.core.ast.IncludeNumberPredicate
 import com.orange.ccmd.hurl.core.ast.IncludeStringPredicate
 import com.orange.ccmd.hurl.core.ast.MatchPredicate
@@ -187,6 +189,7 @@ internal fun Assert.eval(response: HttpResponse, variables: VariableJar): EntryS
         when (predicateFunc) {
             is EqualBoolPredicate -> predicateFunc.eval(not = not, first = first, second = predicateFunc.expr.value)
             is EqualNumberPredicate -> predicateFunc.eval(not = not, first = first, second = predicateFunc.expr.value)
+            is EqualNullPredicate -> predicateFunc.eval(not = not, first = first)
             is EqualStringPredicate -> {
                 val second = predicateFunc.valueToString(variables = variables)
                 predicateFunc.eval(not = not, first = first, second = second)
@@ -201,6 +204,7 @@ internal fun Assert.eval(response: HttpResponse, variables: VariableJar): EntryS
                 predicateFunc.eval(not = not, first = first, second = second)
             }
             is IncludeBoolPredicate -> predicateFunc.eval(not = not, first = first, second = predicateFunc.expr.value)
+            is IncludeNullPredicate -> predicateFunc.eval(not = not, first = first)
             is IncludeNumberPredicate -> predicateFunc.eval(not = not, first = first, second = predicateFunc.expr.value)
             is IncludeStringPredicate -> {
                 val second = predicateFunc.valueToString(variables = variables)

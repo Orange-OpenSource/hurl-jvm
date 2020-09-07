@@ -54,6 +54,7 @@ data class QueryObjectResult(val value: Any?): QueryResult() {
     override fun text(): String = "object <$value>"
 }
 
+
 object QueryNoneResult : QueryResult() {
     override fun text(): String {
         return ""
