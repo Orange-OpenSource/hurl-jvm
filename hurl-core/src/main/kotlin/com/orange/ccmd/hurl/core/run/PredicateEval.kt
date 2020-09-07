@@ -22,10 +22,12 @@ package com.orange.ccmd.hurl.core.run
 import com.orange.ccmd.hurl.core.ast.ContainPredicate
 import com.orange.ccmd.hurl.core.ast.CountPredicate
 import com.orange.ccmd.hurl.core.ast.EqualBoolPredicate
+import com.orange.ccmd.hurl.core.ast.EqualNullPredicate
 import com.orange.ccmd.hurl.core.ast.EqualNumberPredicate
 import com.orange.ccmd.hurl.core.ast.EqualStringPredicate
 import com.orange.ccmd.hurl.core.ast.ExistPredicate
 import com.orange.ccmd.hurl.core.ast.IncludeBoolPredicate
+import com.orange.ccmd.hurl.core.ast.IncludeNullPredicate
 import com.orange.ccmd.hurl.core.ast.IncludeNumberPredicate
 import com.orange.ccmd.hurl.core.ast.IncludeStringPredicate
 import com.orange.ccmd.hurl.core.ast.MatchPredicate
@@ -72,6 +74,25 @@ internal fun EqualBoolPredicate.eval(not: Boolean, first: QueryResult, second: B
 }
 
 /**
+ * Evaluates if query result [first] equals null.
+ * @param not boolean, true to inverse the predicate, false otherwise
+ * @param first query result to be evaluated
+ * @return the result of predicate
+ */
+internal fun EqualNullPredicate.eval(not: Boolean, first: QueryResult): PredicateResult {
+    val succeeded = when (first) {
+        is QueryObjectResult -> first.value == null
+        else -> false
+    }
+    val secondText = if (not) { "doesn't equal <null>" } else { "equals number <null>" }
+    return PredicateResult(
+        succeeded = succeeded xor not,
+        first = first.text(),
+        second = secondText
+    )
+}
+
+/**
  * Evaluates if query result [first] equals number [second].
  * @param not boolean, true to inverse the predicate, false otherwise
  * @param first query result to be evaluated
@@ -104,6 +125,25 @@ internal fun ContainPredicate.eval(not: Boolean, first: QueryResult, second: Str
         else -> false
     }
     val secondText = if (not) { "doesn't contain string <$second>" } else { "contains string <$second>" }
+    return PredicateResult(
+        succeeded = succeeded xor not,
+        first = first.text(),
+        second = secondText
+    )
+}
+
+/**
+ * Evaluates if query result [first] is a container including null.
+ * @param not boolean, true to inverse the predicate, false otherwise
+ * @param first query result to be tested
+ * @return the result of predicate
+ */
+internal fun IncludeNullPredicate.eval(not: Boolean, first: QueryResult): PredicateResult {
+    val succeeded = when (first) {
+        is QueryListResult -> null in first.value
+        else -> false
+    }
+    val secondText = if (not) { "doesn't include <null>" } else { "include <null>" }
     return PredicateResult(
         succeeded = succeeded xor not,
         first = first.text(),

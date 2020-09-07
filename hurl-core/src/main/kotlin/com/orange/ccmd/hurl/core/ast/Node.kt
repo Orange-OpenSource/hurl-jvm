@@ -166,6 +166,14 @@ class EqualBoolPredicate(
     val expr: Bool
 ) : PredicateFunc(begin, end, type)
 
+class EqualNullPredicate(
+    begin: Position,
+    end: Position,
+    type: PredicateType,
+    val spaces: List<Space>,
+    val expr: Null
+) : PredicateFunc(begin, end, type)
+
 class EqualNumberPredicate(
     begin: Position,
     end: Position,
@@ -267,6 +275,14 @@ class IncludeBoolPredicate(
     val expr: Bool
 ) : PredicateFunc(begin, end, type)
 
+class IncludeNullPredicate(
+    begin: Position,
+    end: Position,
+    type: PredicateType,
+    val spaces: List<Space>,
+    val expr: Null
+) : PredicateFunc(begin, end, type)
+
 class IncludeNumberPredicate(
     begin: Position,
     end: Position,
@@ -338,6 +354,11 @@ class NewLine(begin: Position, end: Position, val value: String) : Node(begin, e
 
 class Not(begin: Position, end: Position, val text: Literal) : Node(begin, end)
 
+class Null(begin: Position, end: Position): Node(begin, end) {
+    val text = "null"
+    val value: Any? = null
+}
+
 class Number(begin: Position, end: Position, val value: Double, val text: String) : Node(begin, end)
 
 class Param(
@@ -364,12 +385,14 @@ class Predicate(
 ) : Node(begin, end) {
     val expr: Any? = when (predicateFunc) {
         is EqualBoolPredicate -> predicateFunc.expr.value
+        is EqualNullPredicate -> predicateFunc.expr.value
         is EqualNumberPredicate -> predicateFunc.expr.value
         is EqualStringPredicate -> predicateFunc.expr.value
         is CountPredicate -> predicateFunc.expr.value
         is StartWithPredicate -> predicateFunc.expr.value
         is ContainPredicate -> predicateFunc.expr.value
         is IncludeBoolPredicate -> predicateFunc.expr.value
+        is IncludeNullPredicate -> predicateFunc.expr.value
         is IncludeNumberPredicate -> predicateFunc.expr.value
         is IncludeStringPredicate -> predicateFunc.expr.value
         is MatchPredicate -> predicateFunc.expr.value
