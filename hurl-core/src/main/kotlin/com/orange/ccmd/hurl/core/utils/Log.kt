@@ -19,7 +19,7 @@
 
 package com.orange.ccmd.hurl.core.utils
 
-import com.orange.ccmd.hurl.core.ast.Position
+import com.orange.ccmd.hurl.core.parser.Position
 
 fun logError(
     fileName: String,

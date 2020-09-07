@@ -19,7 +19,10 @@
 
 package com.orange.ccmd.hurl.core.run.log
 
-import com.orange.ccmd.hurl.core.http.*
+import com.orange.ccmd.hurl.core.http.Cookie
+import com.orange.ccmd.hurl.core.http.HttpRequest
+import com.orange.ccmd.hurl.core.http.HttpRequestLog
+import com.orange.ccmd.hurl.core.http.HttpResponse
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 

@@ -27,17 +27,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
-internal class HurlParserTest {
-
-    @Test
-    fun `parse method with success`() {
-        val text = "DELETE http://example.org"
-        val parser = HurlParser(text)
-        val node = parser.method()
-        assertNotNull(node)
-        assertNull(parser.error)
-        assertEquals("DELETE", node.value)
-    }
+internal class PrimitiveTest {
 
     @TestFactory
     fun `parse comment with success`() = listOf(
@@ -117,22 +107,6 @@ internal class HurlParserTest {
         }
     }
 
-    @TestFactory
-    fun `parse url with success`() = listOf(
-        "http://acmecorp.org",
-        "http://sample.com?toto=tata&tutu=12",
-        "http://sample.com?search=some%20value",
-        "{{root_url}}/path"
-    ).map { text ->
-        DynamicTest.dynamicTest(text.safeName()) {
-            val parser = HurlParser(text)
-            val node = parser.url()
-            assertNotNull(node)
-            assertEquals(node.value, text)
-            assertNull(parser.error)
-        }
-    }
-
     @Test
     fun `parse section-header with success`() {
         val text = "[Cookies]"
@@ -141,29 +115,6 @@ internal class HurlParserTest {
         assertNotNull(node)
         assertNull(parser.error)
         assertEquals("[Cookies]", node.value)
-    }
-
-    @TestFactory
-    fun `parse query-params-section with success`() = listOf(
-        """
-            
-            [QueryStringParams]
-            	q : valueA # Some comment on query param A
-            	id : valueB
-            """.trimIndent() to 2,
-        """
-            # Some comment on query param.
-            [QueryStringParams]
-            a: b
-            """.trimIndent() to 1
-    ).map { (text, count) ->
-        DynamicTest.dynamicTest(text.safeName()) {
-            val parser = HurlParser(text)
-            val node = parser.queryStringParamsSection()
-            assertNotNull(node)
-            assertNull(parser.error)
-            assertEquals(count, node.params.size)
-        }
     }
 
     @TestFactory
@@ -181,109 +132,6 @@ internal class HurlParserTest {
             assertEquals(expectedKey, node.name.value)
             assertEquals(expectedValue, node.value.value)
         }
-    }
-
-    @TestFactory
-    fun `parse json with success`() = listOf(
-        Triple("\"simple string\"", 15, 0),
-        Triple("true\nxxx", 4, 4),
-        Triple("""{"id": 0,"selected": true}""", 26, 0),
-        Triple(
-            """
-                {
-                    "user": {
-                        "name": "toto",
-                        "authentified":true,
-                        "id": "abcedf"
-                    }
-                }12345678
-            """.trimIndent(), 99, 8
-        ),
-        Triple(
-            """
-            {
-                "id": 0,
-                "name": "Frieda",
-                "picture": "images/scottish-terrier.jpeg",
-                "age": 3,
-                "breed": "Scottish Terrier",
-                "location": "Lisco, Alabama"
-            }abcdef
-            """.trimIndent(), 165, 6
-        ),
-        Triple("""[1, 2, 3, 4]true""", 12, 4),
-        Triple("{\"id\": \"cafe\u0301\"}012345", 16, 6)
-    ).map { (text, expectedBytes, expectedLeft) ->
-        DynamicTest.dynamicTest(text.safeName()) {
-            val parser = HurlParser(text)
-            val node = parser.json()
-            assertNotNull(node)
-            assertNull(parser.error)
-            assertEquals(expectedBytes, node.text.toByteArray().size)
-            assertEquals(expectedLeft, parser.left())
-        }
-    }
-
-    @TestFactory
-    fun `parse raw-string with success`() = listOf(
-        "```   \nline1\nline2\nline3\n```" to "line1\nline2\nline3\n",
-        "```\n\nline1\n```" to "\nline1\n",
-        "```abcdef\n12345678\ntoto```xxx" to "abcdef\n12345678\ntoto"
-    ).map { (text, expectedValue) ->
-        DynamicTest.dynamicTest(text.safeName()) {
-            val parser = HurlParser(text)
-            val node = parser.rawString()
-            assertNotNull(node)
-            assertNull(parser.error)
-            assertEquals(expectedValue, node.value)
-        }
-    }
-
-    @Test
-    fun `fail to parse raw-string`() {
-        val text = "```0123456789``"
-        val parser = HurlParser(text)
-        val node = parser.rawString()
-        assertNull(node)
-        assertNotNull(parser.error)
-    }
-
-    @TestFactory
-    fun `parse xml with success`() = listOf(
-        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<drink>café</drink>" to "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<drink>café</drink>",
-        """
-            <?xml version="1.0" encoding="UTF-8"?>
-             <note>
-                 <to>Tove</to>
-                 <from>Jani</from>
-                 <heading>Reminder</heading>
-                 <body>Don't forget me this weekend!</body>
-             </note>xxx""".trimIndent() to """
-                    <?xml version="1.0" encoding="UTF-8"?>
-                     <note>
-                         <to>Tove</to>
-                         <from>Jani</from>
-                         <heading>Reminder</heading>
-                         <body>Don't forget me this weekend!</body>
-                     </note>""".trimIndent(),
-        """<?xml version="1.0" encoding="UTF-8"?><root/>123456789""" to """<?xml version="1.0" encoding="UTF-8"?><root/>"""
-    ).map { (text, xml) ->
-        DynamicTest.dynamicTest(text.safeName()) {
-            val parser = HurlParser(text)
-            val node = parser.xml()
-            assertNotNull(node)
-            assertNull(parser.error)
-            assertEquals(xml, node.text)
-        }
-    }
-
-    @Test
-    fun `fail to parse xml`() {
-        val text = "toto"
-        val parser = HurlParser(text)
-        val node = parser.xml()
-        assertNull(node)
-        assertNotNull(parser.error)
     }
 
     @TestFactory
@@ -308,49 +156,6 @@ internal class HurlParserTest {
             assertNull(parser.error)
             assertEquals(expectedDecoded, String(node.value))
         }
-    }
-
-    @Test
-    fun `parse base64 with success`() {
-        val text = "base64,V2VsY29tZSBodXJsIQ==;xxxxx"
-        val expectedValue = "Welcome hurl!"
-        val parser = HurlParser(text)
-        val node = parser.base64()
-        assertNotNull(node)
-        assertNull(parser.error)
-        assertEquals(expectedValue, String(node.base64String.value))
-    }
-
-    @Test
-    fun `fail to parse base64`() {
-        val text = "base64,V2VsY29tZSBodXJsIQ=="
-        val parser = HurlParser(text)
-        val node = parser.base64()
-        assertNull(node)
-        assertNotNull(parser.error)
-    }
-
-    @TestFactory
-    fun `parse file with success`() = listOf(
-        "file,tmp/tata.bin;" to "tmp/tata.bin",
-        "file,  test12345678;xxxx" to "test12345678"
-    ).map { (text, fileName) ->
-        DynamicTest.dynamicTest(text) {
-            val parser = HurlParser(text)
-            val node = parser.file()
-            assertNotNull(node)
-            assertNull(parser.error)
-            assertEquals(fileName, node.fileName.value)
-        }
-    }
-
-    @Test
-    fun `fail to parse file`() {
-        val text = "file,../../secret.key;"
-        val parser = HurlParser(text)
-        val node = parser.file()
-        assertNull(node)
-        assertNotNull(parser.error)
     }
 
     @TestFactory
@@ -380,86 +185,6 @@ Year,Make,Model,Description,Price
             assertNotNull(node)
             assertNull(parser.error)
         }
-    }
-
-    @TestFactory
-    fun `parse request with success`() = listOf(
-        """
-            GET http://example.com
-            """.trimIndent(),
-        """
-            # Some comments
-            # Bla bla bal
-            
-            POST https://example.com?id=1234 # Nothing to say
-            toto: tata
-            tutu: tata
-            {
-                "enabled": true
-            }
-            """.trimIndent(),
-        """
-            POST http://{{host}}
-            [1,2,3]
-        """.trimIndent()
-    ).map { text ->
-        DynamicTest.dynamicTest(text.safeName()) {
-            val parser = HurlParser(text)
-            val node = parser.request()
-            assertNotNull(node)
-            assertNull(parser.error)
-        }
-    }
-
-    @Test
-    fun `parse status with success`() {
-        val text = "200xxx"
-        val expectedValue = 200
-        val expectedText = "200"
-        val parser = HurlParser(text)
-        val node = parser.status()
-        assertNotNull(node)
-        assertNull(parser.error)
-        assertEquals(expectedValue, node.value)
-        assertEquals(expectedText, node.text)
-    }
-
-    @Test
-    fun `fail to parse status`() {
-        val text = "abcd"
-        val parser = HurlParser(text)
-        val node = parser.status()
-        assertNull(node)
-        assertNotNull(parser.error)
-    }
-
-    @Test
-    fun `parse version with success`() {
-        val text = "HTTP/1.1xxx"
-        val parser = HurlParser(text)
-        val node = parser.version()
-        assertNotNull(node)
-        assertNull(parser.error)
-        assertEquals("HTTP/1.1", node.value)
-    }
-
-    @Test
-    fun `parse captures-section with success`() {
-        val text = """
-            [Captures]
-            token: xpath "string(//body/@data-token)" # Some dummy comments
-            redirect_url_recap: header "Location"
-            body: body
-            test: regex "^abs$"
-            toto\ tata : jsonpath "${'$'}.phoneNumbers[:1].type"
-            var1: header "Location" regex "token=(.*)"  # bla bla bla
-            var2: header "Content-Type"
-            """.trimIndent()
-        val parser = HurlParser(text)
-        val node = parser.capturesSection()
-        assertNotNull(node)
-        assertNull(parser.error)
-        assertEquals(7, node.captures.size)
     }
 
     @TestFactory
@@ -523,42 +248,6 @@ Year,Make,Model,Description,Price
     }
 
     @TestFactory
-    fun `parse predicate with success`() = listOf(
-        "equals \"06 15 63 36 79\"" to "equals",
-        "equals true" to "equals",
-        "contains \"toto\"" to "contains",
-        "equals 123.0" to "equals",
-        "equals 12" to "equals",
-        "startsWith \"something dummy\"xxx" to "startsWith",
-        "countEquals 4" to "countEquals",
-        "existsxxx" to "exists"
-    ).map { (text, type) ->
-        DynamicTest.dynamicTest(text) {
-            val parser = HurlParser(text)
-            val node = parser.predicateFunc()
-            assertNotNull(node)
-            assertNull(parser.error)
-            assertEquals(type, node.type.value)
-        }
-    }
-
-    @TestFactory
-    fun `parse assert with success`() = listOf(
-        "jsonpath \"\$['statusCode']\" equals 200",
-        "jsonpath \"\$['statusCode']\" not equals 200",
-        "xpath \"boolean(count(//div[@id='tutu']))\" equals false # Some comment",
-        "xpath \"//div[@id='tutu']\" not exists",
-        "header \"Location\" startsWith \"{{url}}/back\""
-    ).map { text ->
-        DynamicTest.dynamicTest(text) {
-            val parser = HurlParser(text)
-            val node = parser.assert()
-            assertNotNull(node)
-            assertNull(parser.error)
-        }
-    }
-
-    @TestFactory
     fun `parse quoted-string with success`() = listOf(
         Triple("\"toto 12345\"xxx", "\"toto 12345\"", "toto 12345"),
         Triple("\"caf\\u{E9}\"", "\"caf\\u{E9}\"", "café")
@@ -608,33 +297,6 @@ Year,Make,Model,Description,Price
             assertEquals(expectedText, node.text)
             assertEquals(expectedValue, node.value)
         }
-    }
-
-    @Test
-    fun `parse cookie-section with success`() {
-        val text = """
-            [Cookies]
-            cookie1: valueA
-            HTTP/1.0 200
-            """.trimIndent()
-        val parser = HurlParser(text)
-        val node = parser.cookiesSection()
-        assertNotNull(node)
-        assertNull(parser.error)
-    }
-
-    @Test
-    fun `parse response with success`() {
-        val text = """
-            HTTP/1.0 200
-            GET http://localhost:8000
-            
-            """.trimIndent()
-        val parser = HurlParser(text)
-        val node = parser.response()
-        assertNotNull(node)
-        assertEquals(node.headers.size, 0)
-        assertNull(parser.error)
     }
 
     @TestFactory
@@ -720,24 +382,5 @@ Year,Make,Model,Description,Price
         }
     }
 
-    @Test
-    fun `multipart-form-data-section`() {
-        val text = """
-            [MultipartFormData]
-            a: toto
-            filea: file,/tmp/tata/toto.bin; # some comments
-            b: tutu
-            c: tata
-            # sime comments
-            fileb: file,/tmp/toto.bin; text/plain # some comments
-            HTTP/1.0 200
-            """.trimIndent()
-        val parser = HurlParser(text)
-        val node = parser.multipartFormDataSection()
-        assertNotNull(node)
-        assertNull(parser.error)
-        assertEquals(node.params.size, 3)
-        assertEquals(node.fileParams.size, 2)
-    }
 
 }

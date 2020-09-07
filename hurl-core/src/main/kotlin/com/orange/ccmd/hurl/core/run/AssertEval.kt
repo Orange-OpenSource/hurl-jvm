@@ -19,11 +19,26 @@
 
 package com.orange.ccmd.hurl.core.run
 
-import com.orange.ccmd.hurl.core.ast.*
+import com.orange.ccmd.hurl.core.ast.Assert
+import com.orange.ccmd.hurl.core.ast.Body
+import com.orange.ccmd.hurl.core.ast.ContainPredicate
+import com.orange.ccmd.hurl.core.ast.CountPredicate
+import com.orange.ccmd.hurl.core.ast.EqualBoolPredicate
+import com.orange.ccmd.hurl.core.ast.EqualNumberPredicate
+import com.orange.ccmd.hurl.core.ast.EqualStringPredicate
+import com.orange.ccmd.hurl.core.ast.ExistPredicate
+import com.orange.ccmd.hurl.core.ast.Header
+import com.orange.ccmd.hurl.core.ast.IncludeBoolPredicate
+import com.orange.ccmd.hurl.core.ast.IncludeNumberPredicate
+import com.orange.ccmd.hurl.core.ast.IncludeStringPredicate
+import com.orange.ccmd.hurl.core.ast.MatchPredicate
+import com.orange.ccmd.hurl.core.ast.StartWithPredicate
+import com.orange.ccmd.hurl.core.ast.Status
+import com.orange.ccmd.hurl.core.ast.Version
 import com.orange.ccmd.hurl.core.http.HttpResponse
 import com.orange.ccmd.hurl.core.query.InvalidQueryException
-import com.orange.ccmd.hurl.core.template.Template
 import com.orange.ccmd.hurl.core.template.InvalidVariableException
+import com.orange.ccmd.hurl.core.template.Template
 import com.orange.ccmd.hurl.core.utils.shorten
 import java.io.File
 import java.io.FileNotFoundException

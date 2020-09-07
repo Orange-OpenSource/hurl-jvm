@@ -25,8 +25,8 @@ import com.orange.ccmd.hurl.core.ast.Header as HeaderNode
 import com.orange.ccmd.hurl.core.ast.HurlParser
 import com.orange.ccmd.hurl.core.ast.Json
 import com.orange.ccmd.hurl.core.ast.Param
-import com.orange.ccmd.hurl.core.ast.Position
-import com.orange.ccmd.hurl.core.ast.Position.Companion.zero
+import com.orange.ccmd.hurl.core.parser.Position
+import com.orange.ccmd.hurl.core.parser.Position.Companion.zero
 import com.orange.ccmd.hurl.core.ast.RawString
 import com.orange.ccmd.hurl.core.ast.Url
 import com.orange.ccmd.hurl.core.ast.Xml

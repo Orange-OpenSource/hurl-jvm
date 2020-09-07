@@ -19,9 +19,9 @@
 
 package com.orange.ccmd.hurl.fmt.lint
 
-import com.orange.ccmd.hurl.core.ast.*
+import com.orange.ccmd.hurl.core.ast.HurlParser
 import org.junit.jupiter.api.Test
-import kotlin.test.*
+import kotlin.test.assertNotNull
 
 internal class LintFormatterTest {
 

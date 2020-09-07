@@ -19,7 +19,7 @@
 
 package com.orange.ccmd.hurl.fmt.lint
 
-import com.orange.ccmd.hurl.core.ast.*
+import com.orange.ccmd.hurl.core.ast.HurlFile
 
 /*
 internal fun HurlFile.lint(): String {

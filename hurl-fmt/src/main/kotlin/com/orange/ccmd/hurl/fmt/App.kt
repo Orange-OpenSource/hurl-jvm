@@ -20,8 +20,11 @@
 package com.orange.ccmd.hurl.fmt
 
 import com.orange.ccmd.hurl.core.ast.HurlParser
-import com.orange.ccmd.hurl.core.utils.*
+import com.orange.ccmd.hurl.core.utils.FAILED
+import com.orange.ccmd.hurl.core.utils.OK
 import com.orange.ccmd.hurl.core.utils.Properties
+import com.orange.ccmd.hurl.core.utils.lineAt
+import com.orange.ccmd.hurl.core.utils.logError
 import com.orange.ccmd.hurl.fmt.highlight.HtmlFormatter
 import com.orange.ccmd.hurl.fmt.highlight.TermFormatter
 import com.orange.ccmd.hurl.fmt.lint.LintFormatter

@@ -19,7 +19,7 @@
 
 package com.orange.ccmd.hurl.core.ast
 
-import java.io.File
+import com.orange.ccmd.hurl.core.parser.Position
 
 sealed class Node(val begin: Position, val end: Position)
 

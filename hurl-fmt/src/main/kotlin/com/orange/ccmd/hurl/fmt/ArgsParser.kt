@@ -19,8 +19,12 @@
 
 package com.orange.ccmd.hurl.fmt
 
-import org.apache.commons.cli.*
-import java.lang.IllegalArgumentException
+import org.apache.commons.cli.CommandLine
+import org.apache.commons.cli.DefaultParser
+import org.apache.commons.cli.HelpFormatter
+import org.apache.commons.cli.Option
+import org.apache.commons.cli.Options
+import org.apache.commons.cli.ParseException
 
 class ArgsParser {
     private var line: CommandLine? = null

@@ -20,7 +20,7 @@
 package com.orange.ccmd.hurl.core.run
 
 import com.orange.ccmd.hurl.core.ast.HurlParser
-import com.orange.ccmd.hurl.core.ast.Position
+import com.orange.ccmd.hurl.core.parser.Position
 import com.orange.ccmd.hurl.core.ast.Response
 import com.orange.ccmd.hurl.core.ast.response
 import com.orange.ccmd.hurl.core.http.HttpResponse

@@ -19,9 +19,10 @@
 
 package com.orange.ccmd.hurl.fmt.highlight
 
-import com.orange.ccmd.hurl.core.ast.*
+import com.orange.ccmd.hurl.core.ast.HurlParser
 import org.junit.jupiter.api.Test
-import kotlin.test.*
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 internal class TermFormatterTest {
 
