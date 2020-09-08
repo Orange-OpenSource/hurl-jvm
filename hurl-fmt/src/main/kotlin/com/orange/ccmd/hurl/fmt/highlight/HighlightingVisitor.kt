@@ -30,6 +30,7 @@ import com.orange.ccmd.hurl.core.ast.Method
 import com.orange.ccmd.hurl.core.ast.NewLine
 import com.orange.ccmd.hurl.core.ast.Node
 import com.orange.ccmd.hurl.core.ast.Not
+import com.orange.ccmd.hurl.core.ast.Null
 import com.orange.ccmd.hurl.core.ast.Number
 import com.orange.ccmd.hurl.core.ast.PredicateType
 import com.orange.ccmd.hurl.core.ast.QueryType
@@ -47,6 +48,7 @@ class HighlightingVisitor(
     val stringFunc: (String) -> String,
     val numberFunc: (String) -> String,
     val booleanFunc: (String) -> String,
+    val nullFunc: (String) -> String,
     val urlFunc: (String) -> String,
     val methodFunc: (String) -> String,
     val versionFunc: (String) -> String,
@@ -75,6 +77,7 @@ class HighlightingVisitor(
             // Primitives nodes.
             is Number -> text += numberFunc(node.text)
             is Bool -> text += booleanFunc(node.text)
+            is Null -> text += nullFunc(node.text)
 
             // Plain.
             is Literal -> text += node.value

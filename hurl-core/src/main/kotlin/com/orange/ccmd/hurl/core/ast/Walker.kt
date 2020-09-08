@@ -137,6 +137,11 @@ fun walk(visitor: Visitor, node: Node?) {
             node.spaces.forEach { walk(visitor, it) }
             walk(visitor, node.expr)
         }
+        is EqualNullPredicate -> {
+            walk(visitor, node.type)
+            node.spaces.forEach { walk(visitor, it) }
+            walk(visitor, node.expr)
+        }
         is EqualStringPredicate -> {
             walk(visitor, node.type)
             node.spaces.forEach { walk(visitor, it) }
@@ -194,6 +199,11 @@ fun walk(visitor: Visitor, node: Node?) {
             node.lts.forEach { walk(visitor, it) }
         }
         is IncludeBoolPredicate -> {
+            walk(visitor, node.type)
+            node.spaces.forEach { walk(visitor, it) }
+            walk(visitor, node.expr)
+        }
+        is IncludeNullPredicate -> {
             walk(visitor, node.type)
             node.spaces.forEach { walk(visitor, it) }
             walk(visitor, node.expr)
