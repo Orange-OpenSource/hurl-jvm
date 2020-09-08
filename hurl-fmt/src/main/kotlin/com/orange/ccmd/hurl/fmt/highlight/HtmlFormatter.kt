@@ -30,6 +30,7 @@ class HtmlFormatter(val theme: String = "dark256") : Formatter {
         stringFunc = { span(text = it, `class` = "string") },
         numberFunc = { span(text = it, `class` = "number") },
         booleanFunc = { span(text = it, `class` = "boolean") },
+        nullFunc = { span(text = it, `class` = "null") },
         sectionHeaderFunc = { span(text = it, `class` = "section-header") },
         queryTypeFunc = { span(text = it, `class` = "query-type") },
         predicateTypeFunc = { span(text = it, `class` = "predicate-type") },
@@ -47,6 +48,7 @@ class HtmlFormatter(val theme: String = "dark256") : Formatter {
             string = "green",
             number = "blue",
             boolean = "blue",
+            `null` = "blue",
             url = "cyan",
             method = "yellow",
             version = "white",
@@ -62,6 +64,7 @@ class HtmlFormatter(val theme: String = "dark256") : Formatter {
             string = "forestgreen",
             number = "dodgerblue",
             boolean = "dodgerblue",
+            `null` = "dodgerblue",
             url = "cyan",
             method = "orange",
             version = "white",
@@ -77,6 +80,7 @@ class HtmlFormatter(val theme: String = "dark256") : Formatter {
             string = "darkgreen",
             number = "blue",
             boolean = "blue",
+            `null` = "blue",
             url = "darkblue",
             method = "black",
             version = "black",
@@ -103,6 +107,7 @@ class HtmlFormatter(val theme: String = "dark256") : Formatter {
                 "theme.string" to theme.string,
                 "theme.number" to theme.number,
                 "theme.boolean" to theme.boolean,
+                "theme.null" to theme.`null`,
                 "theme.url" to theme.url,
                 "theme.method" to theme.method,
                 "theme.version" to theme.version,
@@ -110,7 +115,7 @@ class HtmlFormatter(val theme: String = "dark256") : Formatter {
                 "theme.queryType" to theme.queryType,
                 "theme.predicateType" to theme.predicateType,
                 "theme.comment" to theme.comment,
-                "body" to body
+                "body" to body,
             )
         )
     }

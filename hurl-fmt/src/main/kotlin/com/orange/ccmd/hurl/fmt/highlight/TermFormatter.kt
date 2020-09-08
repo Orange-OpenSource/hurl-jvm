@@ -31,6 +31,7 @@ class TermFormatter(val showWhitespaces: Boolean) : Formatter {
         stringFunc = { it.ansi.fg.green },
         numberFunc = { it.ansi.fg.cyan },
         booleanFunc = { it.ansi.fg.cyan },
+        nullFunc = { it.ansi.fg.cyan },
         sectionHeaderFunc = { it.ansi.fg.magenta },
         queryTypeFunc = { it.ansi.fg.brightCyan },
         predicateTypeFunc = { it.ansi.fg.brightYellow },
@@ -41,12 +42,8 @@ class TermFormatter(val showWhitespaces: Boolean) : Formatter {
     )
 
     override fun format(hurlFile: HurlFile): String {
-
         walk(highlightingVisitor, hurlFile)
-
-        val text = highlightingVisitor.text
-
-        return text
+        return highlightingVisitor.text
     }
 
     private fun String.whitespace(): String {

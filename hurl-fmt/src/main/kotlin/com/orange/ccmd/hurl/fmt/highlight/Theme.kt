@@ -26,6 +26,7 @@ data class Theme(
     val string: String,
     val number: String,
     val boolean: String,
+    val `null`: String,
     val url: String,
     val method: String,
     val version: String,
