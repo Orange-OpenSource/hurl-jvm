@@ -39,6 +39,7 @@ import com.orange.ccmd.hurl.core.ast.Status
 import com.orange.ccmd.hurl.core.ast.Version
 import com.orange.ccmd.hurl.core.http.HttpResponse
 import com.orange.ccmd.hurl.core.query.InvalidQueryException
+import com.orange.ccmd.hurl.core.variable.VariableJar
 import com.orange.ccmd.hurl.core.template.InvalidVariableException
 import com.orange.ccmd.hurl.core.template.Template
 import com.orange.ccmd.hurl.core.utils.shorten

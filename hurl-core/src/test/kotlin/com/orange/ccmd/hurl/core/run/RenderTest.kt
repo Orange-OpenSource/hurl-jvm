@@ -41,7 +41,8 @@ import com.orange.ccmd.hurl.core.http.Cookie
 import com.orange.ccmd.hurl.core.http.FormParam
 import com.orange.ccmd.hurl.core.http.Header
 import com.orange.ccmd.hurl.core.http.TextFormData
-import com.orange.ccmd.hurl.core.run.VariableJar.Companion.from
+import com.orange.ccmd.hurl.core.variable.VariableJar
+import com.orange.ccmd.hurl.core.variable.VariableJar.Companion.from
 import com.orange.ccmd.hurl.core.utils.string
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.Test

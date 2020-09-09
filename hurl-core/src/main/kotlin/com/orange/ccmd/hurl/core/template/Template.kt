@@ -20,10 +20,10 @@
 package com.orange.ccmd.hurl.core.template
 
 import com.orange.ccmd.hurl.core.parser.Position
-import com.orange.ccmd.hurl.core.run.QueryBooleanResult
-import com.orange.ccmd.hurl.core.run.QueryNumberResult
-import com.orange.ccmd.hurl.core.run.QueryStringResult
-import com.orange.ccmd.hurl.core.run.VariableJar
+import com.orange.ccmd.hurl.core.variable.BoolVar
+import com.orange.ccmd.hurl.core.variable.NumberVar
+import com.orange.ccmd.hurl.core.variable.StringVar
+import com.orange.ccmd.hurl.core.variable.VariableJar
 
 class Template {
 
@@ -49,13 +49,13 @@ class Template {
                     reason = "undefined variable"
                 )
                 val value = when (variable) {
-                    is QueryBooleanResult -> variable.value.toString()
-                    is QueryNumberResult -> variable.value.toString()
-                    is QueryStringResult -> variable.value
+                    is BoolVar -> variable.value.toString()
+                    is NumberVar -> variable.value.toString()
+                    is StringVar -> variable.value
                     else -> throw throw InvalidVariableException(
                         name = name,
                         position = position,
-                        reason = "invalid variable ${variable.text()}"
+                        reason = "invalid variable ${variable}"
                     )
                 }
                 output = output.replaceRange(

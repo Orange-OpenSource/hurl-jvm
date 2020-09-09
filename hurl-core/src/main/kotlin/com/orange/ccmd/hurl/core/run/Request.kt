@@ -26,6 +26,7 @@ import com.orange.ccmd.hurl.core.http.BinaryRequestBody
 import com.orange.ccmd.hurl.core.http.HttpRequest
 import com.orange.ccmd.hurl.core.http.JsonRequestBody
 import com.orange.ccmd.hurl.core.http.XmlRequestBody
+import com.orange.ccmd.hurl.core.variable.VariableJar
 import java.io.File
 
 /**

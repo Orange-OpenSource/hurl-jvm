@@ -24,7 +24,8 @@ import com.orange.ccmd.hurl.core.parser.Position
 import com.orange.ccmd.hurl.core.ast.Response
 import com.orange.ccmd.hurl.core.ast.response
 import com.orange.ccmd.hurl.core.http.HttpResponse
-import com.orange.ccmd.hurl.core.run.VariableJar.Companion.from
+import com.orange.ccmd.hurl.core.variable.VariableJar
+import com.orange.ccmd.hurl.core.variable.VariableJar.Companion.from
 import org.junit.jupiter.api.Test
 import java.io.File
 import java.nio.charset.Charset

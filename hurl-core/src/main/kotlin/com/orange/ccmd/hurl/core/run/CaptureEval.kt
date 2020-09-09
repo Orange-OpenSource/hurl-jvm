@@ -22,6 +22,7 @@ package com.orange.ccmd.hurl.core.run
 import com.orange.ccmd.hurl.core.ast.Capture
 import com.orange.ccmd.hurl.core.http.HttpResponse
 import com.orange.ccmd.hurl.core.query.InvalidQueryException
+import com.orange.ccmd.hurl.core.variable.VariableJar
 import com.orange.ccmd.hurl.core.template.InvalidVariableException
 
 

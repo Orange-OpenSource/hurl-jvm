@@ -25,6 +25,7 @@ import com.orange.ccmd.hurl.core.http.HttpClient
 import com.orange.ccmd.hurl.core.http.Proxy
 import com.orange.ccmd.hurl.core.http.impl.ApacheHttpClient
 import com.orange.ccmd.hurl.core.run.log.RunnerLogger
+import com.orange.ccmd.hurl.core.variable.VariableJar
 import com.orange.ccmd.hurl.core.template.InvalidVariableException
 import java.io.File
 import java.io.FileNotFoundException
@@ -140,7 +141,19 @@ class Runner(
             httpResponse = httpResponse
         )
         val captureVariables = captureResults.getCaptureVariables()
-        variableJar.addAll(captureVariables)
+        for ((name, queryResult) in captureVariables) {
+            when (queryResult) {
+                is QueryStringResult -> variableJar.add(name = name, value = queryResult.value)
+                is QueryBooleanResult -> variableJar.add(name = name, value = queryResult.value)
+                is QueryNumberResult -> variableJar.add(name = name, value = queryResult.value)
+                is QueryListResult -> variableJar.add(name = name, value = queryResult.value)
+                is QueryObjectResult -> variableJar.add(name = name, value = queryResult.value)
+                // For node set, as we currently don't have any QueryNodeSetResult.values,
+                // we directly add the node set result to the variable jar.
+                is QueryNodeSetResult -> variableJar.add(name = name, value = queryResult)
+                is QueryNoneResult -> {}
+            }
+        }
 
         // Then, evaluate HTTP, status, header, body and assert.
         val versionResult = responseSpec.getCheckVersionResult(httpResponse = httpResponse)

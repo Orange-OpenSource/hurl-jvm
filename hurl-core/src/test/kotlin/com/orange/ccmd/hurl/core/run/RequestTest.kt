@@ -23,7 +23,7 @@ import com.orange.ccmd.hurl.core.ast.HurlParser
 import com.orange.ccmd.hurl.core.ast.Request
 import com.orange.ccmd.hurl.core.ast.request
 import com.orange.ccmd.hurl.core.http.Header
-import com.orange.ccmd.hurl.core.run.VariableJar.Companion.from
+import com.orange.ccmd.hurl.core.variable.VariableJar.Companion.from
 import org.junit.jupiter.api.Test
 import java.io.File
 import kotlin.test.assertEquals

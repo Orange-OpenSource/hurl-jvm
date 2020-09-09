@@ -21,6 +21,7 @@ package com.orange.ccmd.hurl.core.run
 
 import com.orange.ccmd.hurl.core.ast.Response
 import com.orange.ccmd.hurl.core.http.HttpResponse
+import com.orange.ccmd.hurl.core.variable.VariableJar
 import java.io.File
 
 /**
