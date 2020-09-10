@@ -42,6 +42,7 @@ import com.orange.ccmd.hurl.core.http.FormParam
 import com.orange.ccmd.hurl.core.http.Header
 import com.orange.ccmd.hurl.core.http.QueryStringParam
 import com.orange.ccmd.hurl.core.http.TextFormData
+import com.orange.ccmd.hurl.core.variable.VariableJar
 import com.orange.ccmd.hurl.core.template.Template
 import java.io.File
 

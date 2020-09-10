@@ -20,7 +20,7 @@
 package com.orange.ccmd.hurl.core.template
 
 import com.orange.ccmd.hurl.core.parser.Position
-import com.orange.ccmd.hurl.core.run.VariableJar.Companion.from
+import com.orange.ccmd.hurl.core.variable.VariableJar.Companion.from
 import com.orange.ccmd.hurl.safeName
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory

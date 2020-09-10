@@ -51,6 +51,11 @@ import com.orange.ccmd.hurl.core.query.xpath.XPathNodeSetResult
 import com.orange.ccmd.hurl.core.query.xpath.XPathNumberResult
 import com.orange.ccmd.hurl.core.query.xpath.XPathResult
 import com.orange.ccmd.hurl.core.query.xpath.XPathStringResult
+import com.orange.ccmd.hurl.core.variable.BoolVar
+import com.orange.ccmd.hurl.core.variable.NumberVar
+import com.orange.ccmd.hurl.core.variable.ObjectVar
+import com.orange.ccmd.hurl.core.variable.StringVar
+import com.orange.ccmd.hurl.core.variable.VariableJar
 import com.orange.ccmd.hurl.core.template.Template
 import java.util.regex.PatternSyntaxException
 
@@ -191,4 +196,12 @@ private val HttpResponse.bodyAsText: String
  * @param variables variables to use in templates
  * @return a {%link QueryResult} representing the query result
  */
-internal fun VariableQuery.eval(variables: VariableJar): QueryResult = variables[variable.value] ?: QueryNoneResult
+internal fun VariableQuery.eval(variables: VariableJar): QueryResult {
+    val variable = variables[variable.value] ?: return QueryNoneResult
+    return when (variable) {
+        is StringVar -> QueryStringResult(value = variable.value)
+        is NumberVar -> QueryNumberResult(value = variable.value)
+        is BoolVar -> QueryBooleanResult(value = variable.value)
+        is ObjectVar -> QueryObjectResult(value = variable.value)
+    }
+}

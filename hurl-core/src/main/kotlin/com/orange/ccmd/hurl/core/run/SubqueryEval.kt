@@ -21,6 +21,7 @@ package com.orange.ccmd.hurl.core.run
 
 import com.orange.ccmd.hurl.core.ast.RegexSubquery
 import com.orange.ccmd.hurl.core.ast.Subquery
+import com.orange.ccmd.hurl.core.variable.VariableJar
 import com.orange.ccmd.hurl.core.template.Template
 
 class InvalidSubqueryException(message: String) : Exception(message)

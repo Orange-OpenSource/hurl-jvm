@@ -28,7 +28,8 @@ import com.orange.ccmd.hurl.core.ast.body
 import com.orange.ccmd.hurl.core.ast.header
 import com.orange.ccmd.hurl.core.http.HttpResponse
 import com.orange.ccmd.hurl.core.parser.Position.Companion.zero
-import com.orange.ccmd.hurl.core.run.VariableJar.Companion.from
+import com.orange.ccmd.hurl.core.variable.VariableJar
+import com.orange.ccmd.hurl.core.variable.VariableJar.Companion.from
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestFactory
