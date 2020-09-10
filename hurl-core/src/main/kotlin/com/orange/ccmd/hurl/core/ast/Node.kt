@@ -21,65 +21,68 @@ package com.orange.ccmd.hurl.core.ast
 
 import com.orange.ccmd.hurl.core.parser.Position
 
-sealed class Node(val begin: Position, val end: Position)
+sealed class Node {
+    abstract val begin: Position
+    abstract val end: Position
+}
 
 /**
  * From https://hurl.dev/docs/grammar.html.
  */
 
-class Assert(
-    begin: Position,
-    end: Position,
+data class Assert(
+    override val begin: Position,
+    override val end: Position,
     val lts: List<LineTerminator>,
     val spaces0: List<Space>,
     val query: Query,
     val spaces1: List<Space>,
     val predicate: Predicate,
     val lt: LineTerminator
-) : Node(begin, end)
+) : Node()
 
-class AssertsSection(
-    begin: Position,
-    end: Position,
+data class AssertsSection(
+    override val begin: Position,
+    override val end: Position,
     val lts: List<LineTerminator>,
     val spaces: List<Space>,
     val header: SectionHeader,
     val lt: LineTerminator,
     val asserts: List<Assert>
-) : ResponseSection(begin, end)
+) : ResponseSection()
 
-class Base64(
-    begin: Position,
-    end: Position,
+data class Base64(
+    override val begin: Position,
+    override val end: Position,
     val prefix: Literal,
     val spaces0: List<Space>,
     val base64String: Base64String,
     val spaces1: List<Space>,
     val suffix: Literal
-) : Bytes(begin, end)
+) : Bytes()
 
-class Body(
-    begin: Position,
-    end: Position,
+data class Body(
+    override val begin: Position,
+    override val end: Position,
     val lts: List<LineTerminator>,
     val spaces: List<Space>,
     val bytes: Bytes,
     val lt: LineTerminator
-) : Node(begin, end)
+) : Node()
 
-class BodyQuery(
-    begin: Position,
-    end: Position,
-    type: QueryType
-) : Query(begin, end, type)
+data class BodyQuery(
+    override val begin: Position,
+    override val end: Position,
+    override val type: QueryType
+) : Query()
 
-class Bool(begin: Position, end: Position, val value: Boolean, val text: String) : Node(begin, end)
+data class Bool(override val begin: Position, override val end: Position, val value: Boolean, val text: String) : Node()
 
-sealed class Bytes(begin: Position, end: Position): Node(begin, end)
+sealed class Bytes: Node()
 
-class Capture(
-    begin: Position,
-    end: Position,
+data class Capture(
+    override val begin: Position,
+    override val end: Position,
     val lts: List<LineTerminator>,
     val spaces0: List<Space>,
     val name: HString,
@@ -90,31 +93,31 @@ class Capture(
     val spaces3: List<Space>,
     val subquery: Subquery?,
     val lt: LineTerminator
-) : Node(begin, end)
+) : Node()
 
-class CapturesSection(
-    begin: Position,
-    end: Position,
+data class CapturesSection(
+    override val begin: Position,
+    override val end: Position,
     val lts: List<LineTerminator>,
     val spaces: List<Space>,
     val header: SectionHeader,
     val lt: LineTerminator,
     val captures: List<Capture>
-) : ResponseSection(begin, end)
+) : ResponseSection()
 
-class Comment(begin: Position, end: Position, val value: String) : Node(begin, end)
+data class Comment(override val begin: Position, override val end: Position, val value: String) : Node()
 
-class ContainPredicate(
-    begin: Position,
-    end: Position,
-    type: PredicateType,
+data class ContainPredicate(
+    override val begin: Position,
+    override val end: Position,
+    override val type: PredicateType,
     val spaces: List<Space>,
     val expr: HString
-) : PredicateFunc(begin, end, type)
+) : PredicateFunc()
 
-class Cookie(
-    begin: Position,
-    end: Position,
+data class Cookie(
+    override val begin: Position,
+    override val end: Position,
     val lts: List<LineTerminator>,
     val spaces0: List<Space>,
     val name: HString,
@@ -123,88 +126,88 @@ class Cookie(
     val spaces2: List<Space>,
     val value: CookieValue,
     val lt: LineTerminator
-) : Node(begin, end) {
+) : Node() {
 
     fun toPair(): Pair<String, String> = name.value to value.value
 }
 
-class CookieQuery(
-    begin: Position,
-    end: Position,
-    type: QueryType,
+data class CookieQuery(
+    override val begin: Position,
+    override val end: Position,
+    override val type: QueryType,
     val spaces: List<Space>,
     val expr: HString
-) : Query(begin, end, type)
+) : Query()
 
-class CookiesSection(
-    begin: Position,
-    end: Position,
+data class CookiesSection(
+    override val begin: Position,
+    override val end: Position,
     val lts: List<LineTerminator>,
     val spaces: List<Space>,
     val header: SectionHeader,
     val lt: LineTerminator,
     val cookies: List<Cookie>
-) : RequestSection(begin, end)
+) : RequestSection()
 
-class CookieValue(begin: Position, end: Position, val value: String) : Node(begin, end)
+data class CookieValue(override val begin: Position, override val end: Position, val value: String) : Node()
 
-class CountPredicate(
-    begin: Position,
-    end: Position,
-    type: PredicateType,
+data class CountPredicate(
+    override val begin: Position,
+    override val end: Position,
+    override val type: PredicateType,
     val spaces: List<Space>,
     val expr: Number
-) : PredicateFunc(begin, end, type)
+) : PredicateFunc()
 
-class Entry(begin: Position, end: Position, val request: Request, val response: Response?) : Node(begin, end)
+data class Entry(override val begin: Position, override val end: Position, val request: Request, val response: Response?) : Node()
 
-class EqualBoolPredicate(
-    begin: Position,
-    end: Position,
-    type: PredicateType,
+data class EqualBoolPredicate(
+    override val begin: Position,
+    override val end: Position,
+    override val type: PredicateType,
     val spaces: List<Space>,
     val expr: Bool
-) : PredicateFunc(begin, end, type)
+) : PredicateFunc()
 
-class EqualNullPredicate(
-    begin: Position,
-    end: Position,
-    type: PredicateType,
+data class EqualNullPredicate(
+    override val begin: Position,
+    override val end: Position,
+    override val type: PredicateType,
     val spaces: List<Space>,
     val expr: Null
-) : PredicateFunc(begin, end, type)
+) : PredicateFunc()
 
-class EqualNumberPredicate(
-    begin: Position,
-    end: Position,
-    type: PredicateType,
+data class EqualNumberPredicate(
+    override val begin: Position,
+    override val end: Position,
+    override val type: PredicateType,
     val spaces: List<Space>,
     val expr: Number
-) : PredicateFunc(begin, end, type)
+) : PredicateFunc()
 
-class EqualStringPredicate(
-    begin: Position,
-    end: Position,
-    type: PredicateType,
+data class EqualStringPredicate(
+    override val begin: Position,
+    override val end: Position,
+    override val type: PredicateType,
     val spaces: List<Space>,
     val expr: HString
-) : PredicateFunc(begin, end, type)
+) : PredicateFunc()
 
-class ExistPredicate(begin: Position, end: Position, type: PredicateType) : PredicateFunc(begin, end, type)
+data class ExistPredicate(override val begin: Position, override val end: Position, override val type: PredicateType) : PredicateFunc()
 
-class File(
-    begin: Position,
-    end: Position,
+data class File(
+    override val begin: Position,
+    override val end: Position,
     val prefix: Literal,
     val spaces0: List<Space>,
     val fileName: HString,
     val spaces1: List<Space>,
     val suffix: Literal
-) : Bytes(begin, end)
+) : Bytes()
 
-class FileParam(
-    begin: Position,
-    end: Position,
+data class FileParam(
+    override val begin: Position,
+    override val end: Position,
     val lts: List<LineTerminator>,
     val spaces0: List<Space>,
     val key: HString,
@@ -213,11 +216,11 @@ class FileParam(
     val spaces2: List<Space>,
     val file: FileValue,
     val lt: LineTerminator
-) : Node(begin, end)
+) : Node()
 
-class FileValue(
-    begin: Position,
-    end: Position,
+data class FileValue(
+    override val begin: Position,
+    override val end: Position,
     val prefix: Literal,
     val spaces0: List<Space>,
     val fileName: HString,
@@ -225,26 +228,26 @@ class FileValue(
     val suffix: Literal,
     val spaces2: List<Space>,
     val contentType: HString?
-) : Node(begin, end)
+) : Node()
 
-class FormParamsSection(
-    begin: Position,
-    end: Position,
+data class FormParamsSection(
+    override val begin: Position,
+    override val end: Position,
     val lts: List<LineTerminator>,
     val spaces: List<Space>,
     val header: SectionHeader,
     val lt: LineTerminator,
     val params: List<Param>
-) : RequestSection(begin, end)
+) : RequestSection()
 
-class Header(
-    begin: Position,
-    end: Position,
+data class Header(
+    override val begin: Position,
+    override val end: Position,
     val lts: List<LineTerminator>,
     val spaces: List<Space>,
     val keyValue: KeyValue,
     val lt: LineTerminator
-) : Node(begin, end) {
+) : Node() {
 
     val name: String = keyValue.key.value
     val value: String = keyValue.value.value
@@ -252,123 +255,123 @@ class Header(
     fun toPair(): Pair<String, String> = name to value
 }
 
-class HeaderQuery(
-    begin: Position,
-    end: Position,
-    type: QueryType,
+data class HeaderQuery(
+    override val begin: Position,
+    override val end: Position,
+    override val type: QueryType,
     val spaces: List<Space>,
     val headerName: HString
-) : Query(begin, end, type)
+) : Query()
 
-class HurlFile(
-    begin: Position,
-    end: Position,
+data class HurlFile(
+    override val begin: Position,
+    override val end: Position,
     val entries: List<Entry>,
     val lts: List<LineTerminator>
-) : Node(begin, end)
+) : Node()
 
-class IncludeBoolPredicate(
-    begin: Position,
-    end: Position,
-    type: PredicateType,
+data class IncludeBoolPredicate(
+    override val begin: Position,
+    override val end: Position,
+    override val type: PredicateType,
     val spaces: List<Space>,
     val expr: Bool
-) : PredicateFunc(begin, end, type)
+) : PredicateFunc()
 
-class IncludeNullPredicate(
-    begin: Position,
-    end: Position,
-    type: PredicateType,
+data class IncludeNullPredicate(
+    override val begin: Position,
+    override val end: Position,
+    override val type: PredicateType,
     val spaces: List<Space>,
     val expr: Null
-) : PredicateFunc(begin, end, type)
+) : PredicateFunc()
 
-class IncludeNumberPredicate(
-    begin: Position,
-    end: Position,
-    type: PredicateType,
+data class IncludeNumberPredicate(
+    override val begin: Position,
+    override val end: Position,
+    override val type: PredicateType,
     val spaces: List<Space>,
     val expr: Number
-) : PredicateFunc(begin, end, type)
+) : PredicateFunc()
 
-class IncludeStringPredicate(
-    begin: Position,
-    end: Position,
-    type: PredicateType,
+data class IncludeStringPredicate(
+    override val begin: Position,
+    override val end: Position,
+    override val type: PredicateType,
     val spaces: List<Space>,
     val expr: HString
-) : PredicateFunc(begin, end, type)
+) : PredicateFunc()
 
-class Json(begin: Position, end: Position, val text: String) : Bytes(begin, end)
+data class Json(override val begin: Position, override val end: Position, val text: String) : Bytes()
 
-class JsonPathQuery(
-    begin: Position,
-    end: Position,
-    type: QueryType,
+data class JsonPathQuery(
+    override val begin: Position,
+    override val end: Position,
+    override val type: QueryType,
     val spaces: List<Space>,
     val expr: HString
-) : Query(begin, end, type)
+) : Query()
 
-class KeyValue(
-    begin: Position,
-    end: Position,
+data class KeyValue(
+    override val begin: Position,
+    override val end: Position,
     val key: HString,
     val spaces0: List<Space>,
     val colon: Literal,
     val spaces1: List<Space>,
     val value: HString
-) : Node(begin, end)
+) : Node()
 
-class Literal(begin: Position, end: Position, val value: String) : Node(begin, end)
+data class Literal(override val begin: Position, override val end: Position, val value: String) : Node()
 
-class LineTerminator(
-    begin: Position,
-    end: Position,
+data class LineTerminator(
+    override val begin: Position,
+    override val end: Position,
     val spaces: List<Space>,
     val comment: Comment?,
     val newLine: NewLine?
-) : Node(begin, end)
+) : Node()
 
-class MatchPredicate(
-    begin: Position,
-    end: Position,
-    type: PredicateType,
+data class MatchPredicate(
+    override val begin: Position,
+    override val end: Position,
+    override val type: PredicateType,
     val spaces: List<Space>,
     val expr: HString
-) : PredicateFunc(begin, end, type)
+) : PredicateFunc()
 
-class Method(begin: Position, end: Position, val value: String) : Node(begin, end)
+data class Method(override val begin: Position, override val end: Position, val value: String) : Node()
 
-class MultipartFormDataSection(
-    begin: Position,
-    end: Position,
+data class MultipartFormDataSection(
+    override val begin: Position,
+    override val end: Position,
     val lts: List<LineTerminator>,
     val spaces: List<Space>,
     val header: SectionHeader,
     val lt: LineTerminator,
     val params: List<Param>,
     val fileParams: List<FileParam>
-) : RequestSection(begin, end)
+) : RequestSection()
 
-class NewLine(begin: Position, end: Position, val value: String) : Node(begin, end)
+data class NewLine(override val begin: Position, override val end: Position, val value: String) : Node()
 
-class Not(begin: Position, end: Position, val text: Literal) : Node(begin, end)
+data class Not(override val begin: Position, override val end: Position, val text: Literal) : Node()
 
-class Null(begin: Position, end: Position): Node(begin, end) {
+data class Null(override val begin: Position, override val end: Position): Node() {
     val text = "null"
     val value: Any? = null
 }
 
-class Number(begin: Position, end: Position, val value: Double, val text: String) : Node(begin, end)
+data class Number(override val begin: Position, override val end: Position, val value: Double, val text: String) : Node()
 
-class Param(
-    begin: Position,
-    end: Position,
+data class Param(
+    override val begin: Position,
+    override val end: Position,
     val lts: List<LineTerminator>,
     val spaces: List<Space>,
     val keyValue: KeyValue,
     val lt: LineTerminator
-) : Node(begin, end) {
+) : Node() {
 
     val name: String = keyValue.key.value
     val value: String = keyValue.value.value
@@ -376,13 +379,13 @@ class Param(
     fun toPair(): Pair<String, String> = name to value
 }
 
-class Predicate(
-    begin: Position,
-    end: Position,
+data class Predicate(
+    override val begin: Position,
+    override val end: Position,
     val not: Not?,
     val spaces: List<Space>,
     val predicateFunc: PredicateFunc
-) : Node(begin, end) {
+) : Node() {
     val expr: Any? = when (predicateFunc) {
         is EqualBoolPredicate -> predicateFunc.expr.value
         is EqualNullPredicate -> predicateFunc.expr.value
@@ -401,50 +404,54 @@ class Predicate(
 
 }
 
-sealed class PredicateFunc(begin: Position, end: Position, val type: PredicateType) : Node(begin, end)
+sealed class PredicateFunc : Node() {
+    abstract val type: PredicateType
+}
 
-class PredicateType(begin: Position, end: Position, val value: String) : Node(begin, end)
+data class PredicateType(override val begin: Position, override val end: Position, val value: String) : Node()
 
-sealed class Query(begin: Position, end: Position, val type: QueryType) : Node(begin, end)
+sealed class Query : Node() {
+    abstract val type: QueryType
+}
 
-class QueryType(begin: Position, end: Position, val value: String) : Node(begin, end)
+data class QueryType(override val begin: Position, override val end: Position, val value: String) : Node()
 
-class QueryStringParamsSection(
-    begin: Position,
-    end: Position,
+data class QueryStringParamsSection(
+    override val begin: Position,
+    override val end: Position,
     val lts: List<LineTerminator>,
     val spaces: List<Space>,
     val header: SectionHeader,
     val lt: LineTerminator,
     val params: List<Param>
-) : RequestSection(begin, end)
+) : RequestSection()
 
-class RawString(
-    begin: Position,
-    end: Position,
+data class RawString(
+    override val begin: Position,
+    override val end: Position,
     val value: String,
     val text: String
-) : Bytes(begin, end)
+) : Bytes()
 
-class RegexQuery(
-    begin: Position,
-    end: Position,
-    type: QueryType,
+data class RegexQuery(
+    override val begin: Position,
+    override val end: Position,
+    override val type: QueryType,
     val spaces: List<Space>,
     val expr: HString
-) : Query(begin, end, type)
+) : Query()
 
-class RegexSubquery(
-    begin: Position,
-    end: Position,
-    type: SubqueryType,
+data class RegexSubquery(
+    override val begin: Position,
+    override val end: Position,
+    override val type: SubqueryType,
     val spaces: List<Space>,
     val expr: HString
-) : Subquery(begin, end, type)
+) : Subquery()
 
-class Request(
-    begin: Position,
-    end: Position,
+data class Request(
+    override val begin: Position,
+    override val end: Position,
     val lts: List<LineTerminator>,
     val spaces0: List<Space>,
     val method: Method,
@@ -454,7 +461,7 @@ class Request(
     val headers: List<Header>,
     val sections: List<RequestSection>,
     val body: Body?
-) : Node(begin, end) {
+) : Node() {
     val queryStringParamsSection: QueryStringParamsSection? =
         sections.filterIsInstance<QueryStringParamsSection>().firstOrNull()
     val formParamsSection: FormParamsSection? = sections.filterIsInstance<FormParamsSection>().firstOrNull()
@@ -462,11 +469,11 @@ class Request(
     val multipartFormDataSection: MultipartFormDataSection? = sections.filterIsInstance<MultipartFormDataSection>().firstOrNull()
 }
 
-sealed class RequestSection(begin: Position, end: Position): Node(begin, end)
+sealed class RequestSection: Node()
 
-class Response(
-    begin: Position,
-    end: Position,
+data class Response(
+    override val begin: Position,
+    override val end: Position,
     val lts: List<LineTerminator>,
     val spaces0: List<Space>,
     val version: Version,
@@ -476,40 +483,54 @@ class Response(
     val headers: List<Header>,
     val sections: List<ResponseSection>,
     val body: Body?
-) : Node(begin, end) {
+) : Node() {
     val assertsSection: AssertsSection? = sections.filterIsInstance<AssertsSection>().firstOrNull()
     val capturesSection: CapturesSection? = sections.filterIsInstance<CapturesSection>().firstOrNull()
 }
 
-sealed class ResponseSection(begin: Position, end: Position): Node(begin, end)
+sealed class ResponseSection(): Node()
 
-class Space(begin: Position, end: Position, val value: String) : Node(begin, end)
+data class Space(override val begin: Position, override val end: Position, val value: String) : Node()
 
-class StartWithPredicate(
-    begin: Position,
-    end: Position,
-    type: PredicateType,
+data class StartWithPredicate(
+    override val begin: Position,
+    override val end: Position,
+    override val type: PredicateType,
     val spaces: List<Space>,
     val expr: HString
-) : PredicateFunc(begin, end, type)
+) : PredicateFunc()
 
-class Status(begin: Position, end: Position, val value: Int, val text: String) : Node(begin, end)
+data class Status(override val begin: Position, override val end: Position, val value: Int, val text: String) : Node()
 
-class StatusQuery(begin: Position, end: Position, type: QueryType) : Query(begin, end, type)
+data class StatusQuery(override val begin: Position, override val end: Position, override val type: QueryType) : Query()
 
-sealed class Subquery(begin: Position, end: Position, val type: SubqueryType) : Node(begin, end)
+sealed class Subquery : Node() {
+    abstract val type: SubqueryType
+}
 
-class SubqueryType(begin: Position, end: Position, val value: String) : Node(begin, end)
+data class SubqueryType(override val begin: Position, override val end: Position, val value: String) : Node()
 
-class Url(begin: Position, end: Position, val value: String) : Node(begin, end)
+data class Url(override val begin: Position, override val end: Position, val value: String) : Node()
 
-class VariableQuery(begin: Position, end: Position, type: QueryType, val spaces: List<Space>, val variable: HString): Query(begin, end, type)
+data class VariableQuery(
+    override val begin: Position,
+    override val end: Position,
+    override val type: QueryType,
+    val spaces: List<Space>,
+    val variable: HString
+): Query()
 
-class Version(begin: Position, end: Position, val value: String): Node(begin, end)
+data class Version(override val begin: Position, override val end: Position, val value: String): Node()
 
-class Xml(begin: Position, end: Position, val text: String) : Bytes(begin, end)
+data class Xml(override val begin: Position, override val end: Position, val text: String) : Bytes()
 
-class XPathQuery(begin: Position, end: Position, type: QueryType, val spaces: List<Space>, val expr: HString): Query(begin, end, type)
+data class XPathQuery(
+    override val begin: Position,
+    override val end: Position,
+    override val type: QueryType,
+    val spaces: List<Space>,
+    val expr: HString
+): Query()
 
 // Node that are not defined in Hurl grammar, used to facilitate parsing.
 /**
@@ -517,15 +538,15 @@ class XPathQuery(begin: Position, end: Position, type: QueryType, val spaces: Li
  * - value: the String value of this string
  * - text: the exact string representation of this string (maybe different from the value)
  */
-class HString(begin: Position, end: Position, val value: String, val text: String) : Node(begin, end) {
+data class HString(override val begin: Position, override val end: Position, val value: String, val text: String) : Node() {
     override fun toString(): String = value
 }
 
-class Base64String(
-    begin: Position,
-    end: Position,
+data class Base64String(
+    override val begin: Position,
+    override val end: Position,
     val value: ByteArray,
     val text: String
-) : Node(begin, end)
+) : Node()
 
-class SectionHeader(begin: Position, end: Position, val value: String) : Node(begin, end)
+data class SectionHeader(override val begin: Position, override val end: Position, val value: String) : Node()
