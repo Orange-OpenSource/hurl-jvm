@@ -22,6 +22,7 @@ package com.orange.ccmd.hurl.core.run
 import com.orange.ccmd.hurl.core.ast.Base64
 import com.orange.ccmd.hurl.core.ast.Bytes
 import com.orange.ccmd.hurl.core.ast.ContainPredicate
+import com.orange.ccmd.hurl.core.ast.EqualExprPredicate
 import com.orange.ccmd.hurl.core.ast.Cookie as CookieNode
 import com.orange.ccmd.hurl.core.ast.EqualStringPredicate
 import com.orange.ccmd.hurl.core.ast.FileParam
@@ -44,6 +45,7 @@ import com.orange.ccmd.hurl.core.http.QueryStringParam
 import com.orange.ccmd.hurl.core.http.TextFormData
 import com.orange.ccmd.hurl.core.variable.VariableJar
 import com.orange.ccmd.hurl.core.template.Template
+import com.orange.ccmd.hurl.core.variable.Var
 import java.io.File
 
 /**
@@ -188,6 +190,8 @@ internal fun CookieNode.toCookie(variables: VariableJar): Cookie {
  */
 internal fun EqualStringPredicate.valueToString(variables: VariableJar): String = Template.render(text = expr.value, variables = variables, position = expr.begin)
 
+internal fun EqualExprPredicate.value(variables: VariableJar): Var = Template.expr(name = expr.name.value, variables = variables, position = expr.begin)
+
 /**
  * Renders a {@link IncludeStringPredicate} value to a string using [variables].
  * @param variables variables to use in templates
@@ -215,3 +219,4 @@ internal fun ContainPredicate.valueToString(variables: VariableJar): String = Te
  * @return a string representing the value of this predicate function.
  */
 internal fun MatchPredicate.valueToString(variables: VariableJar): String = Template.render(text = expr.value, variables = variables, position = expr.begin)
+

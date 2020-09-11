@@ -132,6 +132,11 @@ fun walk(visitor: Visitor, node: Node?) {
             node.spaces.forEach { walk(visitor, it) }
             walk(visitor, node.expr)
         }
+        is EqualExprPredicate -> {
+            walk(visitor, node.type)
+            node.spaces.forEach { walk(visitor, it) }
+            walk(visitor, node.expr)
+        }
         is EqualNumberPredicate -> {
             walk(visitor, node.type)
             node.spaces.forEach { walk(visitor, it) }
@@ -149,6 +154,11 @@ fun walk(visitor: Visitor, node: Node?) {
         }
         is ExistPredicate -> {
             walk(visitor, node.type)
+        }
+        is Expr -> {
+            walk(visitor, node.prefix)
+            walk(visitor, node.name)
+            walk(visitor, node.suffix)
         }
         is File -> {
             walk(visitor, node.prefix)

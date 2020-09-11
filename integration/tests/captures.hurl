@@ -30,4 +30,11 @@ all:        jsonpath "$"
 [Asserts]
 variable "a_null" exists
 variable "undefined" not exists
+variable "a_null" equals {{a_null}}
+variable "an_integer" equals {{an_integer}}
+variable "a_float" equals {{a_float}}
+variable "a_bool" equals {{a_bool}}
+variable "a_string" equals {{a_string}}
+#variable "a_list" equals {{a_list}}
+
 
