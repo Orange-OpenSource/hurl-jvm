@@ -23,6 +23,7 @@ import com.orange.ccmd.hurl.core.parser.Position
 import com.orange.ccmd.hurl.core.variable.BoolVar
 import com.orange.ccmd.hurl.core.variable.NumberVar
 import com.orange.ccmd.hurl.core.variable.StringVar
+import com.orange.ccmd.hurl.core.variable.Var
 import com.orange.ccmd.hurl.core.variable.VariableJar
 
 class Template {
@@ -52,7 +53,7 @@ class Template {
                     is BoolVar -> variable.value.toString()
                     is NumberVar -> variable.value.toString()
                     is StringVar -> variable.value
-                    else -> throw throw InvalidVariableException(
+                    else -> throw InvalidVariableException(
                         name = name,
                         position = position,
                         reason = "invalid variable ${variable}"
@@ -65,5 +66,12 @@ class Template {
             }
         }
 
+        fun expr(name: String, variables: VariableJar, position: Position): Var {
+            return variables[name] ?: throw InvalidVariableException(
+                name = name,
+                position = position,
+                reason = "invalid variable ${name}"
+            )
+        }
     }
 }

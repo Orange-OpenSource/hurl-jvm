@@ -41,6 +41,7 @@ internal fun HurlParser.equalPredicate(): PredicateFunc? {
         { equalBoolPredicate() },
         { equalStringPredicate() },
         { equalNullPredicate() },
+        { equalExprPredicate() },
     ))
 }
 
@@ -77,6 +78,14 @@ internal fun HurlParser.equalStringPredicate(): EqualStringPredicate? {
     val spaces = zeroOrMore { space() }
     val expr = quotedString() ?: return null
     return EqualStringPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+}
+
+internal fun HurlParser.equalExprPredicate(): EqualExprPredicate? {
+    val begin = position.copy()
+    val type = predicateType("equals") ?: return null
+    val spaces = zeroOrMore { space() }
+    val expr = expr() ?: return null
+    return EqualExprPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.existPredicate(): ExistPredicate? {

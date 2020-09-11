@@ -132,6 +132,17 @@ internal fun HurlParser.cookieValue(): CookieValue? {
     return CookieValue(begin = begin, end = position, value = cookies.string())
 }
 
+internal fun HurlParser.expr(): Expr? {
+    val begin = position.copy()
+
+    val prefix = literal("{{") ?: return null
+    val name = variableName() ?: return null
+    val suffix = literal("}}") ?: return null
+    val text = buffer.slice(begin.offset, position.offset).string()
+
+    return Expr(begin = begin, end = position, prefix = prefix, name = name, suffix = suffix, text = text)
+}
+
 internal fun HurlParser.fileParam(): FileParam? {
     val begin = position.copy()
 
@@ -591,3 +602,18 @@ internal fun HurlParser.valueString(): HString? {
     return HString(begin = begin, end = position, value = value, text = text)
 }
 
+internal fun HurlParser.variableName(): VariableName? {
+    val begin = position.copy()
+
+    val name = readWhile {
+            it.isAsciiLetter ||
+            it.isAsciiDigit ||
+            it == '_'.toInt() ||
+            it == '-'.toInt()
+    }
+    if (name == null || name.isEmpty()) {
+        error = SyntaxError("[A-Za-z0-9_-] char is expected in variable-name", position)
+        return null
+    }
+    return VariableName(begin = begin, end = position, value = name.string())
+}

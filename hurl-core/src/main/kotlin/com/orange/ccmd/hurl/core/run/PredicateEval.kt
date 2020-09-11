@@ -19,20 +19,6 @@
 
 package com.orange.ccmd.hurl.core.run
 
-import com.orange.ccmd.hurl.core.ast.ContainPredicate
-import com.orange.ccmd.hurl.core.ast.CountPredicate
-import com.orange.ccmd.hurl.core.ast.EqualBoolPredicate
-import com.orange.ccmd.hurl.core.ast.EqualNullPredicate
-import com.orange.ccmd.hurl.core.ast.EqualNumberPredicate
-import com.orange.ccmd.hurl.core.ast.EqualStringPredicate
-import com.orange.ccmd.hurl.core.ast.ExistPredicate
-import com.orange.ccmd.hurl.core.ast.IncludeBoolPredicate
-import com.orange.ccmd.hurl.core.ast.IncludeNullPredicate
-import com.orange.ccmd.hurl.core.ast.IncludeNumberPredicate
-import com.orange.ccmd.hurl.core.ast.IncludeStringPredicate
-import com.orange.ccmd.hurl.core.ast.MatchPredicate
-import com.orange.ccmd.hurl.core.ast.StartWithPredicate
-
 /**
  * Evaluates if query result [first] equals string [second].
  * @param not boolean, true to inverse the predicate, false otherwise
@@ -40,7 +26,7 @@ import com.orange.ccmd.hurl.core.ast.StartWithPredicate
  * @param second string to match
  * @return the result of predicate
  */
-internal fun EqualStringPredicate.eval(not: Boolean, first: QueryResult, second: String): PredicateResult {
+internal fun equalString(not: Boolean, first: QueryResult, second: String): PredicateResult {
     val succeeded = when (first) {
         is QueryStringResult -> first.value == second
         else -> false
@@ -60,7 +46,7 @@ internal fun EqualStringPredicate.eval(not: Boolean, first: QueryResult, second:
  * @param second boolean to match
  * @return the result of predicate
  */
-internal fun EqualBoolPredicate.eval(not: Boolean, first: QueryResult, second: Boolean): PredicateResult {
+internal fun equalBool(not: Boolean, first: QueryResult, second: Boolean): PredicateResult {
     val succeeded = when (first) {
         is QueryBooleanResult -> first.value == second
         else -> false
@@ -79,7 +65,7 @@ internal fun EqualBoolPredicate.eval(not: Boolean, first: QueryResult, second: B
  * @param first query result to be evaluated
  * @return the result of predicate
  */
-internal fun EqualNullPredicate.eval(not: Boolean, first: QueryResult): PredicateResult {
+internal fun equalNull(not: Boolean, first: QueryResult): PredicateResult {
     val succeeded = when (first) {
         is QueryObjectResult -> first.value == null
         else -> false
@@ -99,7 +85,7 @@ internal fun EqualNullPredicate.eval(not: Boolean, first: QueryResult): Predicat
  * @param second number to match
  * @return the result of predicate
  */
-internal fun EqualNumberPredicate.eval(not: Boolean, first: QueryResult, second: Double): PredicateResult {
+internal fun equalDouble(not: Boolean, first: QueryResult, second: Double): PredicateResult {
     val succeeded = when (first) {
         is QueryNumberResult -> first.value.toDouble() == second
         else -> false
@@ -112,6 +98,16 @@ internal fun EqualNumberPredicate.eval(not: Boolean, first: QueryResult, second:
     )
 }
 
+internal fun equal(not: Boolean, first: QueryResult, second: Any?): PredicateResult {
+    return when (second) {
+        is String -> equalString(not = not, first = first, second = second)
+        is Number -> equalDouble(not = not, first = first, second = second.toDouble())
+        is Boolean -> equalBool(not = not, first = first, second = second)
+        null -> equalNull(not = not, first = first)
+        else -> TODO()
+    }
+}
+
 /**
  * Evaluates if query result [first] contains the string [second].
  * @param not boolean, true to inverse the predicate, false otherwise
@@ -119,7 +115,7 @@ internal fun EqualNumberPredicate.eval(not: Boolean, first: QueryResult, second:
  * @param second substring
  * @return the result of predicate
  */
-internal fun ContainPredicate.eval(not: Boolean, first: QueryResult, second: String): PredicateResult {
+internal fun contain(not: Boolean, first: QueryResult, second: String): PredicateResult {
     val succeeded = when (first) {
         is QueryStringResult -> first.value.contains(second)
         else -> false
@@ -138,7 +134,7 @@ internal fun ContainPredicate.eval(not: Boolean, first: QueryResult, second: Str
  * @param first query result to be tested
  * @return the result of predicate
  */
-internal fun IncludeNullPredicate.eval(not: Boolean, first: QueryResult): PredicateResult {
+internal fun includeNull(not: Boolean, first: QueryResult): PredicateResult {
     val succeeded = when (first) {
         is QueryListResult -> null in first.value
         else -> false
@@ -158,7 +154,7 @@ internal fun IncludeNullPredicate.eval(not: Boolean, first: QueryResult): Predic
  * @param second number to test
  * @return the result of predicate
  */
-internal fun IncludeNumberPredicate.eval(not: Boolean, first: QueryResult, second: Double): PredicateResult {
+internal fun includeNumber(not: Boolean, first: QueryResult, second: Double): PredicateResult {
     val succeeded = when (first) {
         is QueryListResult -> second in first.value
             .filterIsInstance<Number>()
@@ -180,7 +176,7 @@ internal fun IncludeNumberPredicate.eval(not: Boolean, first: QueryResult, secon
  * @param second boolean to test
  * @return the result of predicate
  */
-internal fun IncludeBoolPredicate.eval(not: Boolean, first: QueryResult, second: Boolean): PredicateResult {
+internal fun includeBool(not: Boolean, first: QueryResult, second: Boolean): PredicateResult {
     val succeeded = when (first) {
         is QueryListResult -> second in first.value
         else -> false
@@ -200,7 +196,7 @@ internal fun IncludeBoolPredicate.eval(not: Boolean, first: QueryResult, second:
  * @param second string to test
  * @return the result of predicate
  */
-internal fun IncludeStringPredicate.eval(not: Boolean, first: QueryResult, second: String): PredicateResult {
+internal fun includeString(not: Boolean, first: QueryResult, second: String): PredicateResult {
     val succeeded = when (first) {
         is QueryListResult -> second in first.value
         else -> false
@@ -220,7 +216,7 @@ internal fun IncludeStringPredicate.eval(not: Boolean, first: QueryResult, secon
  * @param second size of the container
  * @return the result of predicate
  */
-internal fun CountPredicate.eval(not: Boolean, first: QueryResult, second: Double): PredicateResult {
+internal fun count(not: Boolean, first: QueryResult, second: Double): PredicateResult {
     val succeeded = when (first) {
         is QueryListResult -> first.value.size == second.toInt()
         is QueryNodeSetResult -> first.size == second.toInt()
@@ -241,7 +237,7 @@ internal fun CountPredicate.eval(not: Boolean, first: QueryResult, second: Doubl
  * @param second prefix
  * @return the result of predicate
  */
-internal fun StartWithPredicate.eval(not: Boolean, first: QueryResult, second: String): PredicateResult {
+internal fun startWith(not: Boolean, first: QueryResult, second: String): PredicateResult {
     val succeeded = when (first) {
         is QueryStringResult -> first.value.startsWith(second)
         else -> false
@@ -261,7 +257,7 @@ internal fun StartWithPredicate.eval(not: Boolean, first: QueryResult, second: S
  * @param second regex
  * @return the result of predicate
  */
-internal fun MatchPredicate.eval(not: Boolean, first: QueryResult, second: String): PredicateResult {
+internal fun match(not: Boolean, first: QueryResult, second: String): PredicateResult {
     val succeeded = when (first) {
         is QueryStringResult -> Regex(pattern = second).containsMatchIn(first.value)
         else -> false
@@ -280,7 +276,7 @@ internal fun MatchPredicate.eval(not: Boolean, first: QueryResult, second: Strin
  * @param first query result to be evaluated
  * @return the result of predicate
  */
-internal fun ExistPredicate.eval(not: Boolean, first: QueryResult): PredicateResult {
+internal fun exist(not: Boolean, first: QueryResult): PredicateResult {
     val succeeded =  when (first) {
         is QueryNoneResult -> false
         is QueryNodeSetResult -> first.size > 0

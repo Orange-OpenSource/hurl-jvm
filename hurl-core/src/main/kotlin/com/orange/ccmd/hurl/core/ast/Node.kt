@@ -193,7 +193,24 @@ data class EqualStringPredicate(
     val expr: HString
 ) : PredicateFunc()
 
+data class EqualExprPredicate(
+    override val begin: Position,
+    override val end: Position,
+    override val type: PredicateType,
+    val spaces: List<Space>,
+    val expr: Expr
+) : PredicateFunc()
+
 data class ExistPredicate(override val begin: Position, override val end: Position, override val type: PredicateType) : PredicateFunc()
+
+data class Expr(
+    override val begin: Position,
+    override val end: Position,
+    val prefix: Literal,
+    val name: VariableName,
+    val suffix: Literal,
+    val text: String,
+) : Node()
 
 data class File(
     override val begin: Position,
@@ -385,24 +402,7 @@ data class Predicate(
     val not: Not?,
     val spaces: List<Space>,
     val predicateFunc: PredicateFunc
-) : Node() {
-    val expr: Any? = when (predicateFunc) {
-        is EqualBoolPredicate -> predicateFunc.expr.value
-        is EqualNullPredicate -> predicateFunc.expr.value
-        is EqualNumberPredicate -> predicateFunc.expr.value
-        is EqualStringPredicate -> predicateFunc.expr.value
-        is CountPredicate -> predicateFunc.expr.value
-        is StartWithPredicate -> predicateFunc.expr.value
-        is ContainPredicate -> predicateFunc.expr.value
-        is IncludeBoolPredicate -> predicateFunc.expr.value
-        is IncludeNullPredicate -> predicateFunc.expr.value
-        is IncludeNumberPredicate -> predicateFunc.expr.value
-        is IncludeStringPredicate -> predicateFunc.expr.value
-        is MatchPredicate -> predicateFunc.expr.value
-        is ExistPredicate -> null
-    }
-
-}
+) : Node()
 
 sealed class PredicateFunc : Node() {
     abstract val type: PredicateType
@@ -531,6 +531,8 @@ data class XPathQuery(
     val spaces: List<Space>,
     val expr: HString
 ): Query()
+
+data class VariableName(override val begin: Position, override val end: Position, val value: String): Node()
 
 // Node that are not defined in Hurl grammar, used to facilitate parsing.
 /**
