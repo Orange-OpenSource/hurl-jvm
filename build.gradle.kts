@@ -24,6 +24,7 @@ plugins {
     // Ajoute la task dependencyUpdates pour gérér les dépendances.
     id("com.github.ben-manes.versions") version "0.28.0"
     `maven-publish`
+    signing
 }
 
 val jUnitVersion = "5.6.2"
@@ -31,6 +32,7 @@ val jUnitVersion = "5.6.2"
 subprojects {
     apply(plugin = "kotlin")
     apply(plugin = "maven-publish")
+    apply(plugin = "signing")
 
     repositories {
         mavenCentral()
@@ -55,14 +57,57 @@ subprojects {
     }
 
     publishing {
+
         publications {
             create<MavenPublication>("maven") {
                 from(components["java"])
                 artifact(tasks["sourcesJar"])
             }
+            .pom {
+                packaging = "jar"
+                url.set("https://hurl.dev")
+                licenses {
+                    license {
+                        name.set("The Apache License, Version 2.0")
+                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                    }
+                }
+                scm {
+                    url.set("https://github.com/Orange-OpenSource/hurl-jvm")
+                    connection.set("scm:git:git://github.com/Orange-OpenSource/hurl-jvm.git")
+                    developerConnection.set("scm:git:ssh://git@github.com/Orange-OpenSource/hurl-jvm.git")
+                }
+                developers {
+                    developer {
+                        name.set("Jean-Christophe Amiel")
+                        email.set("jeanchristophe.amiel@orange.com")
+                    }
+                }
+            }
+        }
+        repositories {
+            maven {
+                val releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+                val snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+                url = uri(if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl)
+                credentials {
+                    username = System.getenv("SONATYPE_USERNAME")
+                    password = System.getenv("SONATYPE_PASSWORD")
+                }
+            }
         }
     }
+
+    signing {
+        val signingKeyId = System.getenv("GNUGP_SIGNING_KEYID")
+        val signingKey = System.getenv("GNUGP_SIGNING_KEY")
+        val signingPassword = System.getenv("GNUGP_SIGNING_PASSWORD")
+        useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+        sign(publishing.publications["maven"])
+    }
+
 }
+
 
 project(":hurl-cli") {
     dependencies {

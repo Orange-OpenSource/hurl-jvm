@@ -47,3 +47,16 @@ tasks.jacocoTestReport {
     }
 }
 
+
+publishing {
+    publications {
+        val maven = get("maven") as MavenPublication
+        maven.pom {
+            description.set("Core library for Hurl client.")
+        }
+    }
+}
+
+
+
+
