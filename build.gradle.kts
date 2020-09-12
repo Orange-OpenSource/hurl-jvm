@@ -21,6 +21,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.4.0" apply false
+    id("org.jetbrains.dokka") version "1.4.0"
     // Ajoute la task dependencyUpdates pour gérér les dépendances.
     id("com.github.ben-manes.versions") version "0.28.0"
     `maven-publish`
@@ -33,9 +34,11 @@ subprojects {
     apply(plugin = "kotlin")
     apply(plugin = "maven-publish")
     apply(plugin = "signing")
+    apply(plugin= "org.jetbrains.dokka")
 
     repositories {
         mavenCentral()
+        jcenter()
     }
 
     dependencies {
@@ -55,6 +58,7 @@ subprojects {
         from(project.the<SourceSetContainer>()["main"].allSource)
         archiveClassifier.set("sources")
     }
+
 
     publishing {
 
