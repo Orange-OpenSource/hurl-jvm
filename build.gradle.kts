@@ -59,6 +59,10 @@ subprojects {
         archiveClassifier.set("sources")
     }
 
+    tasks.register<Jar>("javadocJar") {
+        archiveClassifier.set("javadoc")
+        dependsOn("dokkaJavadoc")
+    }
 
     publishing {
 
@@ -66,6 +70,7 @@ subprojects {
             create<MavenPublication>("maven") {
                 from(components["java"])
                 artifact(tasks["sourcesJar"])
+                artifact(tasks["javadocJar"])
             }
             .pom {
                 packaging = "jar"
