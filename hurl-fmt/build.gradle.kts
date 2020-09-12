@@ -62,5 +62,9 @@ publishing {
     publications {
         val maven = get("maven") as MavenPublication
         maven.artifactId = "hurlfmt"
+        maven.pom {
+            name.set("hurlfmt")
+            description.set("Colorizer for Hurl")
+        }
     }
 }

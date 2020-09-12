@@ -63,5 +63,9 @@ publishing {
     publications {
         val maven = get("maven") as MavenPublication
         maven.artifactId = "hurl"
+        maven.pom {
+            name.set("hurl")
+            description.set("Hurl is a command line tool that performs HTTP requests defined in a simple plain text format.")
+        }
     }
 }

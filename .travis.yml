@@ -32,7 +32,18 @@ jobs:
         - export HURL_VERSION=$(grep version gradle.properties | cut -f2 -d"=")
         - export hurl="java -jar $TRAVIS_BUILD_DIR/hurl-cli/build/libs/hurl-$HURL_VERSION.jar"
         - bin/test-integration.sh
-    - stage: "GitHub Release"
+    - stage: "Publish"
+      name: "Maven"
+      script: skip
+      before_deploy:
+        - bin/version.sh
+        - export HURL_VERSION=$(grep version gradle.properties | cut -f2 -d"=")
+      deploy:
+        provider: script
+        script: bash ./gradlew publish
+        on:
+          tags: true
+    - name: "GitHub Release"
       script: skip
       before_deploy:
         - bin/version.sh
