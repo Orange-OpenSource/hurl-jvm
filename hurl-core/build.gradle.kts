@@ -52,6 +52,7 @@ publishing {
     publications {
         val maven = get("maven") as MavenPublication
         maven.pom {
+            name.set("hurl-core")
             description.set("Core library for Hurl client.")
         }
     }
