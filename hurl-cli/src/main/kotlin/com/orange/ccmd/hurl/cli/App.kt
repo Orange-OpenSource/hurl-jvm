@@ -33,10 +33,8 @@ import java.util.logging.Logger as JulLogger
 
 class App {
 
-    private val logger: Logger = LoggerFactory.getLogger(javaClass)
-
     fun main(args: Array<String>): Int {
-        val parser = ArgsParser()
+        val parser = OptionsParser()
         try {
             parser.parse(args)
         } catch (e: IllegalArgumentException) {
@@ -53,29 +51,15 @@ class App {
             return SUCCESS.value
         }
 
-        val verbose = parser.verbose
-        val variables = parser.variables
-        val allowsInsecure = parser.insecure
-        val fileRootName = parser.fileRoot
-        val proxy = parser.proxy
-        val include = parser.include
-
-        configureLogging(verbose = verbose)
-
-        logger.debug("* version : $version")
-        logger.debug("* verbose : $verbose")
-        logger.debug("* include : $include")
-        logger.debug("* variables :")
-        variables.forEach { (k, v) -> logger.info("*   $k -> $v") }
-        logger.debug("* fileRootName : $fileRootName")
-        logger.debug("* allowsInsecure : $allowsInsecure")
-        logger.debug("* proxy : $proxy")
+        configureLogging(verbose = parser.verbose)
+        parser.logOptions()
 
         var returnCode = SUCCESS
 
         for (fileName in parser.args) {
             val file = File(fileName)
             val absoluteFile = file.absoluteFile
+            val fileRootName = parser.fileRoot
             val fileRoot = if (fileRootName != null) {
                 File(fileRootName)
             } else {
@@ -84,12 +68,13 @@ class App {
 
             val ret = CliHelper.run(
                 file = absoluteFile,
-                variables = variables,
+                variables = parser.variables,
                 fileRoot = fileRoot,
-                outputHeaders = include,
-                verbose = verbose,
-                allowsInsecure = allowsInsecure,
-                proxy = proxy
+                outputHeaders = parser.include,
+                verbose = parser.verbose,
+                allowsInsecure = parser.include,
+                proxy = parser.proxy,
+                followsRedirect = parser.followRedirect,
             )
             if (ret != SUCCESS) {
                 returnCode = ret

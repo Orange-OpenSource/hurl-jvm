@@ -2,4 +2,5 @@
 
 ./gradlew build -x check
 
-integration/run.sh integration/tests/*.hurl
+cd integration
+./run.sh tests/*.hurl

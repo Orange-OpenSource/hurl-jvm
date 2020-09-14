@@ -50,9 +50,9 @@ class InvalidVariableResult(position: Position, val reason: String) :
         message = reason
     )
 
-class RuntimeErrorResult(position: Position, error: Exception) :
+class RuntimeErrorResult(position: Position, message: String?) :
     EntryStepResult(
         succeeded = false,
         position = position,
-        message = "runtime error ${error.message}"
+        message = "runtime error $message"
     )
