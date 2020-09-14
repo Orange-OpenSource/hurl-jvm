@@ -49,20 +49,56 @@ To test and produce a coverage report:
 
 ## Importing Hurl JVM modules in a Gradle Project  
 
-### hurl-core 
+### Gradle Groovy DSL
 
-```kotlin
-implementation("com.orange.ccmd:hurl-core:1.0.28")
+```
+implementation 'com.orange.ccmd:hurl-core:1.0.39'
 ```
 
-### hurl-cli
-
-```kotlin
-implementation("com.orange.ccmd:hurl:1.0.28")
+```
+implementation 'com.orange.ccmd:hurl:1.0.39'
 ```
 
-### hurl-fmt
+```
+implementation 'com.orange.ccmd:hurlfmt:1.0.39'
+```
 
-```kotlin
-implementation("com.orange.ccmd:hurl-fmt:1.0.28")
+### Gradle Kotlin DSL
+
+```
+implementation("com.orange.ccmd:hurl-core:1.0.39")
+```
+
+```
+implementation("com.orange.ccmd:hurl:1.0.39")
+```
+
+```
+implementation("com.orange.ccmd:hurlfmt:1.0.39")
+```
+
+### Apache Maven
+
+```xml
+<dependency>
+  <groupId>com.orange.ccmd</groupId>
+  <artifactId>hurl-core</artifactId>
+  <version>1.0.39</version>
+</dependency>
+```
+
+```xml
+<dependency>
+  <groupId>com.orange.ccmd</groupId>
+  <artifactId>hurl</artifactId>
+  <version>1.0.39</version>
+</dependency>
+```
+
+```xml
+<dependency>
+  <groupId>com.orange.ccmd</groupId>
+  <artifactId>hurlfmt</artifactId>
+  <version>1.0.39</version>
+</dependency>
 ```
