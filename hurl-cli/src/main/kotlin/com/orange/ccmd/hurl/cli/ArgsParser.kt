@@ -25,9 +25,16 @@ import org.apache.commons.cli.HelpFormatter
 import org.apache.commons.cli.Option
 import org.apache.commons.cli.Options
 import org.apache.commons.cli.ParseException
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 
-class ArgsParser {
+/**
+ * Parse the options of Hurl cli.
+ */
+class OptionsParser {
+
+    private val logger: Logger = LoggerFactory.getLogger(javaClass)
 
     private var line: CommandLine? = null
     private val helpOption: Option = Option.builder("h")
@@ -35,10 +42,25 @@ class ArgsParser {
         .hasArg(false)
         .desc("This help text")
         .build()
+    private val colorOption: Option = Option.builder()
+        .longOpt("color")
+        .hasArg(false)
+        .desc("Colorize output (not yet implemented)")
+        .build()
+    private val noColorOption: Option = Option.builder()
+        .longOpt("no-color")
+        .hasArg(false)
+        .desc("Do not colorize output (not yet implemented)")
+        .build()
     private val variableOption: Option = Option.builder()
         .longOpt("variable")
         .hasArg()
         .desc("Define variable (example: --variable answer=42)")
+        .build()
+    private val followRedirectOption: Option = Option.builder("L")
+        .longOpt("location")
+        .hasArg(false)
+        .desc("Follow redirect")
         .build()
     private val fileRootOption: Option = Option.builder()
         .longOpt("file-root")
@@ -78,6 +100,9 @@ class ArgsParser {
             addOption(helpOption)
             addOption(versionOption)
             addOption(verboseOption)
+            addOption(colorOption)
+            addOption(noColorOption)
+            addOption(followRedirectOption)
             addOption(insecureOption)
             addOption(proxyOption)
             addOption(variableOption)
@@ -103,6 +128,9 @@ class ArgsParser {
 
     val version: Boolean
         get() = line?.hasOption(versionOption.longOpt) ?: false
+
+    val followRedirect: Boolean
+        get() = line?.hasOption(followRedirectOption.longOpt) ?: false
 
     val insecure: Boolean
         get() = line?.hasOption(insecureOption.longOpt) ?: false
@@ -150,6 +178,19 @@ class ArgsParser {
         val formatter = HelpFormatter()
         formatter.printHelp("java -jar hurl.jar file", options)
     }
+
+    fun logOptions() {
+        logger.debug("* version : $version")
+        logger.debug("* verbose : $verbose")
+        logger.debug("* include : $include")
+        logger.debug("* variables :")
+        variables.forEach { (k, v) -> logger.info("*   $k -> $v") }
+        logger.debug("* fileRoot : $fileRoot")
+        logger.debug("* insecure : $insecure")
+        logger.debug("* proxy : $proxy")
+    }
+
+
 
 
 }

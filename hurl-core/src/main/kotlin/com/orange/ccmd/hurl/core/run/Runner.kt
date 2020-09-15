@@ -22,6 +22,8 @@ package com.orange.ccmd.hurl.core.run
 import com.orange.ccmd.hurl.core.ast.Entry
 import com.orange.ccmd.hurl.core.ast.HurlFile
 import com.orange.ccmd.hurl.core.http.HttpClient
+import com.orange.ccmd.hurl.core.http.HttpRequest
+import com.orange.ccmd.hurl.core.http.HttpResult
 import com.orange.ccmd.hurl.core.http.Proxy
 import com.orange.ccmd.hurl.core.http.impl.ApacheHttpClient
 import com.orange.ccmd.hurl.core.run.log.RunnerLogger
@@ -35,23 +37,29 @@ import java.time.Instant
 
 /**
  * Hurl HTTP runner.
+ *
+ * This class take a parsed Hurl file, and run all entries.
+ *
  * @property hurlFile hurl file describing requests and response of this session
  * @property variables map of variable (pair of string for name and value), that are injected in the
- *                      construction of a runner, and latter augmented by captures during the execution
- *                      of a session.
+ * construction of a runner, and latter augmented by captures during the execution
+ * of a session.
  * @property fileRoot root directory for body file includes. Default is hurlFile directory.
  * @property allowsInsecure allow connections to SSL sites without certs. Default is false.
  * @property proxy use proxy on given port (ex: localhost:3128)
  * @property outputHeaders include protocol headers in the output. Default is false.
+ * @property followsRedirect follow redirect (HTTP 3xx status code). Default is false.
+ * @property verbose turn off/on verbosity on log message
  */
-class Runner(
+data class Runner(
     val hurlFile: HurlFile,
-    variables: Map<String, String> = emptyMap(),
+    val variables: Map<String, String> = emptyMap(),
     val fileRoot: File,
     val outputHeaders: Boolean = false,
     val verbose: Boolean = false,
     val allowsInsecure: Boolean = false,
     val proxy: String? = null,
+    val followsRedirect: Boolean = false,
     val runLogger: RunnerLogger = RunnerLogger(outputHeaders = outputHeaders, verbose = verbose)
 ) {
     private val httpClient: HttpClient
@@ -103,30 +111,43 @@ class Runner(
     private fun runEntry(entry: Entry): EntryResult {
 
         // First, we construct the HTTP request.
-        val requestSpec = try {
+        var requestSpec = try {
             entry.request.toHttpRequestSpec(variables = variableJar, fileRoot = fileRoot)
         } catch (e: InvalidVariableException) {
             return EntryResult(errors = listOf(InvalidVariableResult(position = e.position, reason = e.reason)))
         } catch (e: FileNotFoundException) {
             // We catch this exception because the evaluation of a request can
-            // raise a FileNotFoundExeption when using a file body node.
+            // raise a FileNotFoundException when using a file body node.
             // TODO: create and use here a custom RuntimeErrorException
-            return EntryResult(errors = listOf(RuntimeErrorResult(position = entry.request.begin, error = e)))
+            return EntryResult(errors = listOf(RuntimeErrorResult(position = entry.request.begin, message = e.message)))
         }
 
-        runLogger.logHttpRequestSpec(requestSpec)
 
-        // Then, execute the HTTP request.
-        val httpResult = try {
-            httpClient.execute(requestSpec)
-        } catch (e: Exception) {
-            return EntryResult(errors = listOf(RuntimeErrorResult(position = entry.request.method.begin, error = e)))
-        }
+        var httpResult: HttpResult
 
-        with (httpResult) {
-            runLogger.logHttpRequest(requestLog)
-            runLogger.logHttpResponse(response)
-            runLogger.logCookies(cookies)
+        // Executes request, follow redirection if necessary.
+        while (true) {
+
+            runLogger.logHttpRequestSpec(requestSpec)
+
+            httpResult = try {
+                httpClient.execute(requestSpec)
+            } catch (e: Exception) {
+                return EntryResult(errors = listOf(RuntimeErrorResult(position = entry.request.method.begin, message = e.message)))
+            }
+
+            runLogger.logHttpRequest(httpResult.requestLog)
+            runLogger.logHttpResponse(httpResult.response)
+            runLogger.logCookies(httpResult.cookies)
+
+            if (followsRedirect && httpResult.response.code >= 300 && httpResult.response.code < 400) {
+                val header = httpResult.response.headers
+                    .firstOrNull { (k, _) -> k.toLowerCase() == "location" }
+                    ?: return EntryResult(errors = listOf(RuntimeErrorResult(position = entry.request.method.begin, message = "Unable to get Location header")))
+                requestSpec = HttpRequest(method = "GET", url = header.second)
+                continue
+            }
+            break
         }
 
         val responseSpec = entry.response
@@ -174,6 +195,4 @@ class Runner(
             )
         )
     }
-
-
 }

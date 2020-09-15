@@ -4,7 +4,7 @@
 
 Hurl JVM is a [Hurl](https://hurl.dev) client for the JVM platform, written in Kotlin. 
 Hurl JVM is available as a standalone jar, launchable in a shell (ex: `java -jar hurl.jar test.hurl`).
-Hurl JVM try to have the same functionnality as the official [Hurl client](https://github.com/Orange-OpenSource/hurl).
+Hurl JVM try to have the same functionality as the official [Hurl client](https://github.com/Orange-OpenSource/hurl).
 
 [![deploy status](https://travis-ci.org/Orange-OpenSource/hurl-jvm.svg?branch=master)](https://travis-ci.org/Orange-OpenSource/hurl-jvm/)
 
@@ -13,9 +13,13 @@ Hurl JVM try to have the same functionnality as the official [Hurl client](https
 
 ```
 usage: java -jar hurl.jar file
+    --color             Colorize output (not implemented yet)
     --file-root <arg>   Specify the root directory for file inclusions
  -h,--help              This help text
+ -i,--include           Include HTTP headers in the output
  -k,--insecure          Allow connections to SSL sites without certs
+ -L,--location          Follow redirect
+    --no-color          Do not colorize output (not implemented yet)
  -V,--version           Show version number and quit
  -v,--verbose           Make the operation more talkative
     --variable <arg>    Define variable (example: --variable answer=42)

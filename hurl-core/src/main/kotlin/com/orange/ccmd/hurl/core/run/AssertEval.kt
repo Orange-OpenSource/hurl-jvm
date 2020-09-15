@@ -150,7 +150,7 @@ internal fun Body.checkBodyContent(body: ByteArray, variables: VariableJar, file
     val expectedBytes = try {
         bytes.toByteArray(fileRoot = fileRoot, variables = variables)
     } catch (e: FileNotFoundException) {
-        return RuntimeErrorResult(position = bytes.begin, e)
+        return RuntimeErrorResult(position = bytes.begin, message = e.message)
     }
     return if (body.contentEquals(expectedBytes)) {
         AssertResult(

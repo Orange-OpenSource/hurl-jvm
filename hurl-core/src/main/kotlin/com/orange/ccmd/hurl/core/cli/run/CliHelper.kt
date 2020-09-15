@@ -34,14 +34,15 @@ class CliHelper {
     companion object {
 
         fun run(
-                file: File,
-                variables: Map<String, String>,
-                fileRoot: File,
-                outputHeaders: Boolean,
-                verbose: Boolean,
-                allowsInsecure: Boolean,
-                proxy: String?,
-                reporterType: ReporterType = SIMPLE,
+            file: File,
+            variables: Map<String, String>,
+            fileRoot: File,
+            outputHeaders: Boolean,
+            verbose: Boolean,
+            allowsInsecure: Boolean,
+            proxy: String?,
+            followsRedirect: Boolean,
+            reporterType: ReporterType = SIMPLE,
         ): CliReturnCode {
 
             val fileName = file.absoluteFile.name
@@ -70,7 +71,8 @@ class CliHelper {
                 outputHeaders = outputHeaders,
                 verbose = verbose,
                 allowsInsecure = allowsInsecure,
-                proxy = proxy
+                proxy = proxy,
+                followsRedirect = followsRedirect
             )
             val result = runner.run()
 
