@@ -21,7 +21,7 @@ package com.orange.ccmd.hurl.core.http
 
 data class HttpResult(
     val request: HttpRequest,
-    val requestLog: HttpRequestLog,
+    val finalizedRequest: HttpRequest,
     val response: HttpResponse,
     val cookies: List<Cookie>
 )

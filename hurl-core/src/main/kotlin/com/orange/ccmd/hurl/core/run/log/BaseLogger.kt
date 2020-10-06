@@ -20,7 +20,6 @@
 package com.orange.ccmd.hurl.core.run.log
 
 import com.orange.ccmd.hurl.core.http.Cookie
-import com.orange.ccmd.hurl.core.http.HttpRequestLog
 import com.orange.ccmd.hurl.core.http.HttpRequest
 import com.orange.ccmd.hurl.core.http.HttpResponse
 
@@ -30,8 +29,8 @@ interface BaseLogger {
         println(request)
     }
 
-    fun logHttpRequest(requestLog: HttpRequestLog) {
-        println(requestLog)
+    fun logHttpRequest(request: HttpRequest) {
+        println(request)
     }
 
     fun logHttpResponse(response: HttpResponse) {

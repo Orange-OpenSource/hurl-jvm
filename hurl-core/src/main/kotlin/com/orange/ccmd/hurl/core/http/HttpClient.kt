@@ -19,6 +19,21 @@
 
 package com.orange.ccmd.hurl.core.http
 
+
+/**
+ * Interface for http client.
+ *
+ * An HttpClient can execute HTTP request, returns an HTTP response, modify cookie storage
+ * through addCookie method.
+ */
 interface HttpClient{
+
+    /**
+     * Execute an HTTP request.
+     */
     fun execute(request: HttpRequest): HttpResult
+
+    fun addCookie(cookie: Cookie)
+
+    fun clearCookieStorage()
 }

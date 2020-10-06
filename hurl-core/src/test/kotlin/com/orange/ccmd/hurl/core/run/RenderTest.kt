@@ -215,10 +215,42 @@ internal class RenderTest {
 
     @TestFactory
     fun `rendering of a cookie`() = listOf(
-        cookie("cookie1" to "abcdef") to Cookie("cookie1", "abcdef"),
-        cookie("cookie2" to "{{value2}}") to Cookie("cookie2", "red"),
-        cookie("cookie2" to "{{value3}}") to Cookie("cookie2", "yellow"),
-        cookie("cookie3" to "cookievalue") to Cookie("cookie3", "cookievalue")
+        cookie("cookie1" to "abcdef") to
+            Cookie(
+                domain = "",
+                path = "/",
+                secure = null,
+                expires = null,
+                name = "cookie1",
+                value = "abcdef",
+            ),
+        cookie("cookie2" to "{{value2}}") to
+            Cookie(
+                domain = "",
+                path = "/",
+                secure = null,
+                expires = null,
+                name = "cookie2",
+                value = "red",
+            ),
+        cookie("cookie2" to "{{value3}}") to
+            Cookie(
+                domain = "",
+                path = "/",
+                secure = null,
+                expires = null,
+                name = "cookie2",
+                value = "yellow",
+            ),
+        cookie("cookie3" to "cookievalue") to
+            Cookie(
+                domain = "",
+                path = "/",
+                secure = null,
+                expires = null,
+                name = "cookie3",
+                value = "cookievalue",
+            )
     ).map { (cookie, expected) ->
         DynamicTest.dynamicTest(cookie.name.value) {
             val variables = from(mapOf("value2" to "red", "value3" to "yellow"))

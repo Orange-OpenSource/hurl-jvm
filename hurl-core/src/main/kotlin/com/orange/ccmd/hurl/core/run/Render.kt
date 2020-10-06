@@ -180,7 +180,14 @@ internal fun FileParam.toFormData(fileRoot: File): FormData {
 internal fun CookieNode.toCookie(variables: VariableJar): Cookie {
     val (name, rawValue) = toPair()
     val value = Template.render(text = rawValue, variables = variables, position = value.begin)
-    return Cookie(name = name, value = value)
+    return Cookie(
+        domain = "",
+        path = "/",
+        secure = null,
+        expires = null,
+        name = name,
+        value = value,
+    )
 }
 
 /**

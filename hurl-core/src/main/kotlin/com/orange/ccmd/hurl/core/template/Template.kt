@@ -56,7 +56,7 @@ class Template {
                     else -> throw InvalidVariableException(
                         name = name,
                         position = position,
-                        reason = "invalid variable ${variable}"
+                        reason = "invalid variable $variable"
                     )
                 }
                 output = output.replaceRange(
@@ -70,7 +70,7 @@ class Template {
             return variables[name] ?: throw InvalidVariableException(
                 name = name,
                 position = position,
-                reason = "invalid variable ${name}"
+                reason = "invalid variable $name"
             )
         }
     }

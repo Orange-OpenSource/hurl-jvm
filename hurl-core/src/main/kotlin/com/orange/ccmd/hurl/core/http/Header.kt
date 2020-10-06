@@ -19,9 +19,12 @@
 
 package com.orange.ccmd.hurl.core.http
 
-const val USER_AGENT = "User-Agent"
-const val CONTENT_TYPE = "Content-Type"
-const val CONTENT_LENGTH = "Content-Length"
+object HeaderNames {
+    const val CONTENT_TYPE = "Content-Type"
+    const val CONTENT_LENGTH = "Content-Length"
+    const val COOKIE = "Cookie"
+    const val USER_AGENT = "User-Agent"
+}
 
 data class Header(
     val name: String,

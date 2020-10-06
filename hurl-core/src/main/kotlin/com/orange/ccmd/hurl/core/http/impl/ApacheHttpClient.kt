@@ -20,10 +20,9 @@
 package com.orange.ccmd.hurl.core.http.impl
 
 import com.orange.ccmd.hurl.core.http.BinaryRequestBody
-import com.orange.ccmd.hurl.core.http.CONTENT_LENGTH
-import com.orange.ccmd.hurl.core.http.CONTENT_TYPE
 import com.orange.ccmd.hurl.core.http.Cookie
 import com.orange.ccmd.hurl.core.http.FileFormData
+import com.orange.ccmd.hurl.core.http.HeaderNames
 import com.orange.ccmd.hurl.core.http.HttpClient
 import com.orange.ccmd.hurl.core.http.HttpRequest
 import com.orange.ccmd.hurl.core.http.HttpResponse
@@ -32,7 +31,6 @@ import com.orange.ccmd.hurl.core.http.JsonRequestBody
 import com.orange.ccmd.hurl.core.http.Mime
 import com.orange.ccmd.hurl.core.http.Proxy
 import com.orange.ccmd.hurl.core.http.TextFormData
-import com.orange.ccmd.hurl.core.http.USER_AGENT
 import com.orange.ccmd.hurl.core.http.XmlRequestBody
 import org.apache.http.HttpHost
 import org.apache.http.client.CookieStore
@@ -52,6 +50,7 @@ import org.apache.http.impl.client.CloseableHttpClient
 import org.apache.http.impl.client.HttpClients
 import org.apache.http.impl.conn.DefaultProxyRoutePlanner
 import org.apache.http.impl.cookie.BasicClientCookie
+import org.apache.http.impl.cookie.RFC6265StrictSpec
 import org.apache.http.message.BasicNameValuePair
 import org.apache.http.ssl.SSLContextBuilder
 import java.nio.charset.Charset
@@ -65,10 +64,11 @@ import java.nio.charset.StandardCharsets.UTF_8
 internal class ApacheHttpClient(
     val allowsInsecure: Boolean = false,
     val httpProxy: Proxy? = null
-): HttpClient {
+) : HttpClient {
     private val client: CloseableHttpClient
     private val cookieStore: CookieStore
-    private val preparedRequestInterceptor: PreparedRequestInterceptor = PreparedRequestInterceptor()
+    private val requestInterceptor: CapturedRequestInterceptor = CapturedRequestInterceptor()
+
 
     init {
         cookieStore = BasicCookieStore()
@@ -97,9 +97,12 @@ internal class ApacheHttpClient(
             builder = builder.setRoutePlanner(routePlanner)
         }
 
+        // Add interceptor to merged multiple Cookie header in one cookie
+        builder.addInterceptorLast(CookieRequestInterceptor())
+
         // Add interceptor to the client so we can fully log the request
         // (for instance, all headers set by the Apache implementation).
-        builder.addInterceptorLast(preparedRequestInterceptor)
+        builder.addInterceptorLast(requestInterceptor)
 
         client = builder.build()
     }
@@ -111,7 +114,7 @@ internal class ApacheHttpClient(
         request.prepareUri(builder = builder)
         request.prepareHeaders(builder = builder)
         request.prepareBody(builder = builder)
-        request.prepareCookies(builder = builder, cookieStore = cookieStore)
+        request.prepareCookies(builder = builder)
 
         val resp = if (httpProxy == null) {
             val req = builder.build()
@@ -125,7 +128,8 @@ internal class ApacheHttpClient(
 
         // We get the request log to have the final real list of HTTP headers,
         // specified by the spec, and added by the http client.
-        val requestLog = preparedRequestInterceptor.preparedRequestLog ?: throw IllegalStateException("HTTP request not executed")
+        val finalizedRequest =
+            requestInterceptor.capturedRequest ?: throw IllegalStateException("HTTP request not executed")
 
         // Construct the HttpResponse from the apache response object.
         val contentType = ContentType.getOrDefault(resp.entity)
@@ -144,11 +148,45 @@ internal class ApacheHttpClient(
             body = respBody
         )
 
-        val cookies = cookieStore.cookies.map { Cookie(it.name, it.value) }
+        val cookies = cookieStore.cookies.map {
+            Cookie(
+                domain = it.domain,
+                path = it.value,
+                secure = it.isSecure,
+                expires = it.expiryDate,
+                name = it.name,
+                value = it.value,
+                )
+        }
 
-        return HttpResult(request = request, requestLog = requestLog, response = response, cookies = cookies)
+
+        return HttpResult(
+            request = request,
+            finalizedRequest = finalizedRequest,
+            response = response,
+            cookies = cookies
+        )
+    }
+
+
+    override fun addCookie(cookie: Cookie) {
+        val cookieImp = BasicClientCookie(cookie.name, cookie.value)
+        cookieImp.domain = cookie.domain
+        cookieImp.path = cookie.path
+        if (cookie.secure != null) {
+            cookieImp.isSecure = cookie.secure
+        }
+        if (cookie.expires != null) {
+            cookieImp.expiryDate = cookie.expires
+        }
+        cookieStore.addCookie(cookieImp)
+    }
+
+    override fun clearCookieStorage() {
+        cookieStore.clear()
     }
 }
+
 
 internal fun HttpRequest.prepareUri(builder: RequestBuilder) {
     var url = url
@@ -174,7 +212,7 @@ internal fun HttpRequest.prepareUri(builder: RequestBuilder) {
 
 internal fun HttpRequest.prepareHeaders(builder: RequestBuilder) {
     // TODO: Add default HTTP headers: User-Agent, Host, etc...
-    builder.addHeader(USER_AGENT, "hurl-jvm/x.x.x")
+    builder.addHeader(HeaderNames.USER_AGENT, "hurl-jvm/x.x.x")
 
     headers.forEach {
         // TODO: header in hurl can be any UTF-8 string. Usually, you can't
@@ -189,16 +227,21 @@ internal fun HttpRequest.prepareHeaders(builder: RequestBuilder) {
     // We add default Content-Length HTTP header only if request has no specified body.
     if (body == null && formParams.isEmpty() && multipartFormDatas.isEmpty()) {
         val contentLength = body?.data?.size ?: 0
-        builder.addHeader(CONTENT_LENGTH, "$contentLength")
+        builder.addHeader(HeaderNames.CONTENT_LENGTH, "$contentLength")
     }
 
     // If no header Content-Type has been specified, we infer a default Content-Type
     // header depending on the body type specified.
-    if (headersForName(CONTENT_TYPE).isEmpty()) {
+    if (headersForName(HeaderNames.CONTENT_TYPE).isEmpty()) {
         when (body) {
-            is JsonRequestBody -> { builder.addHeader(CONTENT_TYPE, "application/json") }
-            is XmlRequestBody -> { builder.addHeader(CONTENT_TYPE, "text/xml") }
-            is BinaryRequestBody -> {}
+            is JsonRequestBody -> {
+                builder.addHeader(HeaderNames.CONTENT_TYPE, "application/json")
+            }
+            is XmlRequestBody -> {
+                builder.addHeader(HeaderNames.CONTENT_TYPE, "text/xml")
+            }
+            is BinaryRequestBody -> {
+            }
         }
     }
 }
@@ -259,11 +302,20 @@ internal fun HttpRequest.prepareBody(builder: RequestBuilder) = when {
     }
 }
 
-internal fun HttpRequest.prepareCookies(builder: RequestBuilder, cookieStore: CookieStore) {
-    cookies.forEach {
-        val cookie = BasicClientCookie(it.name, it.value)
-        cookie.domain = builder.uri.host
-        cookie.path = "/"
-        cookieStore.addCookie(cookie)
+/**
+ * Add request cookies on existent cookie store.
+ *
+ * The cookies are only added for this request, and are not part of the cookie store.
+ */
+internal fun HttpRequest.prepareCookies(builder: RequestBuilder) {
+
+    val overriddenCookies = cookies.map { BasicClientCookie(it.name, it.value) }
+    if (overriddenCookies.isEmpty()) {
+        return
+    }
+    val spec = RFC6265StrictSpec()
+    val headers = spec.formatCookies(overriddenCookies)
+    headers.forEach {
+        builder.addHeader(HeaderNames.COOKIE, it.value)
     }
 }

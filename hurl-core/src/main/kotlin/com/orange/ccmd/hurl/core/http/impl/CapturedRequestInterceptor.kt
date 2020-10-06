@@ -19,22 +19,27 @@
 
 package com.orange.ccmd.hurl.core.http.impl
 
-import com.orange.ccmd.hurl.core.http.HttpRequestLog
+import com.orange.ccmd.hurl.core.http.Header
+import com.orange.ccmd.hurl.core.http.HttpRequest
 import org.apache.http.HttpRequestInterceptor
 import org.apache.http.client.methods.HttpUriRequest
 import org.apache.http.protocol.HttpContext
 
-class PreparedRequestInterceptor : HttpRequestInterceptor {
 
-    var preparedRequestLog: HttpRequestLog? = null
+/**
+ * Interceptor to capture a request state.
+ */
+class CapturedRequestInterceptor : HttpRequestInterceptor {
+
+    var capturedRequest: HttpRequest? = null
 
     override fun process(request: org.apache.http.HttpRequest?, context: HttpContext?) {
-        if (request is HttpUriRequest) {
-
-            val method = request.method
-            val url = request.uri.toASCIIString()
-            val headers = request.allHeaders.map { it.name to it.value }
-            preparedRequestLog = HttpRequestLog(method = method, url = url, headers = headers)
+        if (request !is HttpUriRequest) {
+            return
         }
+        val method = request.method
+        val url = request.uri.toASCIIString()
+        val headers = request.allHeaders.map { Header(it.name, it.value) }
+        capturedRequest = HttpRequest(method = method, url = url, headers = headers)
     }
 }

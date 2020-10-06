@@ -19,4 +19,13 @@
 
 package com.orange.ccmd.hurl.core.http
 
-data class Cookie(val name: String, val value: String)
+import java.util.Date
+
+data class Cookie(
+    val domain: String,
+    val path: String,
+    val secure: Boolean?,
+    val expires: Date?,
+    val name: String,
+    val value: String
+)

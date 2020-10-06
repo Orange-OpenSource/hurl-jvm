@@ -21,7 +21,6 @@ package com.orange.ccmd.hurl.core.run.log
 
 import com.orange.ccmd.hurl.core.http.Cookie
 import com.orange.ccmd.hurl.core.http.HttpRequest
-import com.orange.ccmd.hurl.core.http.HttpRequestLog
 import com.orange.ccmd.hurl.core.http.HttpResponse
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -48,12 +47,12 @@ class RunnerLogger(val outputHeaders: Boolean, val verbose: Boolean) : BaseLogge
         logInfo("")
     }
 
-    override fun logHttpRequest(requestLog: HttpRequestLog) {
+    override fun logHttpRequest(request: HttpRequest) {
         if (!verbose) {
             return
         }
-        logInput("${requestLog.method} ${requestLog.url}")
-        requestLog.headers.forEach { (k, v) -> logInput("$k: $v") }
+        logInput("${request.method} ${request.url}")
+        request.headers.forEach { (k, v) -> logInput("$k: $v") }
         logInput("")
     }
 
