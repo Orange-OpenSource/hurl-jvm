@@ -25,6 +25,6 @@ data class CookiePathStringResult(val value: String) : CookiePathResult()
 
 data class CookiePathNumberResult(val value: Number) : CookiePathResult()
 
-data class CookiePathBooleanResult(val value: Boolean) : CookiePathResult()
+object CookiePathUnitResult : CookiePathResult()
 
 object CookiePathFailed : CookiePathResult()

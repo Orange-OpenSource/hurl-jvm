@@ -57,8 +57,8 @@ class CookiePath {
                 attribute is CookiePathAttributeMaxAge && cookie.maxAge != null -> CookiePathNumberResult(value = cookie.maxAge)
                 attribute is CookiePathAttributeDomain && cookie.domain != null -> CookiePathStringResult(value = cookie.domain)
                 attribute is CookiePathAttributePath && cookie.path != null -> CookiePathStringResult(value = cookie.path)
-                attribute is CookiePathAttributeSecure && cookie.secure != null -> CookiePathBooleanResult(value = cookie.secure)
-                attribute is CookiePathAttributeHttpOnly && cookie.httpOnly != null -> CookiePathBooleanResult(value = cookie.httpOnly)
+                attribute is CookiePathAttributeSecure && cookie.secure != null -> CookiePathUnitResult
+                attribute is CookiePathAttributeHttpOnly && cookie.httpOnly != null -> CookiePathUnitResult
                 attribute is CookiePathAttributeSameSite && cookie.sameSite != null -> CookiePathStringResult(value = cookie.sameSite)
                 else -> CookiePathFailed
             }

@@ -114,7 +114,7 @@ internal class CookiePathTest {
                     "Set-Cookie" to "LSID=DQAAAKEaem_vYg; Expires=Wed, 13 Jan 2021 22:23:01 GMT; Secure; HttpOnly; Path=/accounts",
                     "Set-Cookie" to "HSID=AYQEVnDKrdst; Domain=.localhost; Expires=Wed, 13 Jan 2021 22:23:01 GMT; HttpOnly; Path=/; Max-Age=2592000",
                 ),
-                result = CookiePathBooleanResult(value = true)
+                result = CookiePathUnitResult
             ),
             Test(
                 expr = "LSID[HttpOnly]",
@@ -124,7 +124,7 @@ internal class CookiePathTest {
                     "Set-Cookie" to "LSID=DQAAAKEaem_vYg; Expires=Wed, 13 Jan 2021 22:23:01 GMT; Secure; HttpOnly; Path=/accounts",
                     "Set-Cookie" to "HSID=AYQEVnDKrdst; Domain=.localhost; Expires=Wed, 13 Jan 2021 22:23:01 GMT; HttpOnly; Path=/; Max-Age=2592000",
                 ),
-                result = CookiePathBooleanResult(value = true)
+                result = CookiePathUnitResult
             ),
             Test(
                 expr = "LSID[SameSite]",

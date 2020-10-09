@@ -23,6 +23,7 @@ import com.orange.ccmd.hurl.core.ast.Json
 import com.orange.ccmd.hurl.core.ast.Request
 import com.orange.ccmd.hurl.core.ast.Xml
 import com.orange.ccmd.hurl.core.http.BinaryRequestBody
+import com.orange.ccmd.hurl.core.http.Cookie
 import com.orange.ccmd.hurl.core.http.HttpRequest
 import com.orange.ccmd.hurl.core.http.JsonRequestBody
 import com.orange.ccmd.hurl.core.http.XmlRequestBody
@@ -49,7 +50,9 @@ internal fun Request.toHttpRequestSpec(variables: VariableJar, fileRoot: File): 
     }
     val formParams = formParamsSection?.params?.map { it.toFormParam(variables) } ?: emptyList()
     val multipartFormDatas = multipartFormDataSection?.toFormDatas(variables = variables, fileRoot = fileRoot) ?: emptyList()
+
     val cookies = cookiesSection?.cookies?.map { it.toCookie(variables) } ?: emptyList()
+
     return HttpRequest(
         method = method,
         url = url,

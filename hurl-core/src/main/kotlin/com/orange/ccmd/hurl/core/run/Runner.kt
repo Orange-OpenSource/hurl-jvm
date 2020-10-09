@@ -26,6 +26,7 @@ import com.orange.ccmd.hurl.core.http.HttpRequest
 import com.orange.ccmd.hurl.core.http.HttpResult
 import com.orange.ccmd.hurl.core.http.Proxy
 import com.orange.ccmd.hurl.core.http.impl.ApacheHttpClient
+import com.orange.ccmd.hurl.core.run.experimental.Command
 import com.orange.ccmd.hurl.core.run.log.RunnerLogger
 import com.orange.ccmd.hurl.core.variable.VariableJar
 import com.orange.ccmd.hurl.core.template.InvalidVariableException
@@ -110,6 +111,8 @@ data class Runner(
      */
     private fun runEntry(entry: Entry): EntryResult {
 
+        runExperimentalCommands(entry)
+
         // First, we construct the HTTP request.
         var requestSpec = try {
             entry.request.toHttpRequestSpec(variables = variableJar, fileRoot = fileRoot)
@@ -136,7 +139,7 @@ data class Runner(
                 return EntryResult(errors = listOf(RuntimeErrorResult(position = entry.request.method.begin, message = e.message)))
             }
 
-            runLogger.logHttpRequest(httpResult.requestLog)
+            runLogger.logHttpRequest(httpResult.finalizedRequest)
             runLogger.logHttpResponse(httpResult.response)
             runLogger.logCookies(httpResult.cookies)
 
@@ -194,5 +197,19 @@ data class Runner(
                 *assertsResults.toTypedArray()
             )
         )
+    }
+
+    /**
+     * (Experimental) Parse and run commands for a given entry.
+     *
+     * Experimental commands are not part of the ast; for the moment
+     * we try to parse comment and run commands.
+     * @param entry entry that contain commands
+     */
+    private fun runExperimentalCommands(entry: Entry) {
+        entry.request.lts
+            .mapNotNull { it.comment }
+            .mapNotNull { Command.fromString(it.value) }
+            .forEach { it.run(httpClient) }
     }
 }

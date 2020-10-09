@@ -51,7 +51,13 @@ data class QueryNodeSetResult(val size: Int): QueryResult() {
  *  jsonpath $['a_null'] return a QueryObjectResult whose value is null
  */
 data class QueryObjectResult(val value: Any?): QueryResult() {
-    override fun text(): String = "object <$value>"
+    override fun text(): String {
+        return if (value is Unit) {
+            "object"
+        } else {
+            "object <$value>"
+        }
+    }
 }
 
 

@@ -31,7 +31,7 @@ import com.orange.ccmd.hurl.core.ast.XPathQuery
 import com.orange.ccmd.hurl.core.http.HttpResponse
 import com.orange.ccmd.hurl.core.query.InvalidQueryException
 import com.orange.ccmd.hurl.core.query.cookiepath.CookiePath
-import com.orange.ccmd.hurl.core.query.cookiepath.CookiePathBooleanResult
+import com.orange.ccmd.hurl.core.query.cookiepath.CookiePathUnitResult
 import com.orange.ccmd.hurl.core.query.cookiepath.CookiePathFailed
 import com.orange.ccmd.hurl.core.query.cookiepath.CookiePathNumberResult
 import com.orange.ccmd.hurl.core.query.cookiepath.CookiePathResult
@@ -95,7 +95,7 @@ fun JsonPathResult.toQueryResult(): QueryResult {
 fun CookiePathResult.toQueryResult(): QueryResult = when (this) {
     is CookiePathStringResult -> QueryStringResult(value = value)
     is CookiePathNumberResult -> QueryNumberResult(value = value)
-    is CookiePathBooleanResult -> QueryBooleanResult(value = value)
+    is CookiePathUnitResult -> QueryObjectResult(value = Unit)
     CookiePathFailed -> QueryNoneResult
 }
 
