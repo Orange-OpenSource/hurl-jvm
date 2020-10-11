@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+set -eux
 
 ./gradlew build -x check
 
