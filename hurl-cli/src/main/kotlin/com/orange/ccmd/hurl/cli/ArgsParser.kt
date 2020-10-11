@@ -19,24 +19,18 @@
 
 package com.orange.ccmd.hurl.cli
 
-import org.apache.commons.cli.CommandLine
 import org.apache.commons.cli.DefaultParser
 import org.apache.commons.cli.HelpFormatter
 import org.apache.commons.cli.Option
 import org.apache.commons.cli.Options
 import org.apache.commons.cli.ParseException
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
-
+import com.orange.ccmd.hurl.cli.Options as HurlOptions
 
 /**
- * Parse the options of Hurl cli.
+ * Parse positional and optional arguments of hurl cli.
  */
-class OptionsParser {
+class ArgsParser {
 
-    private val logger: Logger = LoggerFactory.getLogger(javaClass)
-
-    private var line: CommandLine? = null
     private val helpOption: Option = Option.builder("h")
         .longOpt("help")
         .hasArg(false)
@@ -111,86 +105,49 @@ class OptionsParser {
         }
     }
 
-    fun parse(args: Array<String>) {
+    /**
+     * Parse args and return positional and optional arguments.
+     *
+     * @return a pair of positional arguments (list of string) and options
+     */
+    fun parse(args: Array<String>): Pair<List<String>, HurlOptions> {
         val parser = DefaultParser()
-        line = try {
+        val line = try {
             parser.parse(options, args)
         } catch (e: ParseException) {
             throw IllegalArgumentException(e.message)
-        }
-    }
+        } ?: throw IllegalArgumentException("Invalid arguments line")
 
-    val verbose: Boolean
-        get() = line?.hasOption(verboseOption.longOpt) ?: false
+        val defaultOptions = HurlOptions()
 
-    val help: Boolean
-        get() = line?.hasOption(helpOption.longOpt) ?: false
-
-    val version: Boolean
-        get() = line?.hasOption(versionOption.longOpt) ?: false
-
-    val followRedirect: Boolean
-        get() = line?.hasOption(followRedirectOption.longOpt) ?: false
-
-    val insecure: Boolean
-        get() = line?.hasOption(insecureOption.longOpt) ?: false
-
-    val proxy: String?
-        get() {
-            val curLine = line
-            if (curLine == null || !curLine.hasOption(proxyOption.longOpt)) {
-                return null
-            }
-            return curLine.getOptionValue(proxyOption.longOpt)
-        }
-
-    val variables: Map<String, String>
-        get() {
-            val curLine = line
-            if (curLine == null || !curLine.hasOption(variableOption.longOpt)) {
-                return emptyMap()
-            }
-            return curLine.getOptionValues(variableOption.longOpt).map {
+        val variables = line.getOptionValues(variableOption.longOpt)
+            ?.map {
                 val index = it.indexOf("=")
                 if (index == -1) {
-                    throw ParseException("variable $it not valid")
+                    throw IllegalArgumentException("variable $it not valid")
                 }
                 it.substring(startIndex = 0, endIndex = index) to it.substring(index + 1)
-            }.toMap()
-        }
+            }?.toMap()
 
-    val fileRoot: String?
-        get() {
-            val curLine = line
-            if (curLine == null || !curLine.hasOption(fileRootOption.longOpt)) {
-                return null
-            }
-            return curLine.getOptionValue(fileRootOption.longOpt)
-        }
+        val positional = line.args?.toList() ?: emptyList()
+        val options = HurlOptions(
+            help = if (line.hasOption(helpOption.longOpt)) true else defaultOptions.help,
+            version = if (line.hasOption(versionOption.longOpt)) true else defaultOptions.version,
+            verbose = if (line.hasOption(verboseOption.longOpt)) true else defaultOptions.verbose,
+            followRedirect = if (line.hasOption(followRedirectOption.longOpt)) true else defaultOptions.followRedirect,
+            insecure = if (line.hasOption(insecureOption.longOpt)) true else defaultOptions.insecure,
+            proxy = line.getOptionValue(proxyOption.longOpt, defaultOptions.proxy),
+            variables = variables ?: defaultOptions.variables,
+            fileRoot = line.getOptionValue(fileRootOption.longOpt, defaultOptions.fileRoot),
+            include = if (line.hasOption(includeOption.longOpt)) true else defaultOptions.include,
+        )
+        return positional to options
+    }
 
-    val include: Boolean
-        get() = line?.hasOption(includeOption.longOpt) ?: false
-
-    val args: List<String>
-        get() = line?.args?.toList() ?: emptyList()
 
     fun printHelp() {
         val formatter = HelpFormatter()
         formatter.printHelp("java -jar hurl.jar file", options)
     }
-
-    fun logOptions() {
-        logger.debug("* version : $version")
-        logger.debug("* verbose : $verbose")
-        logger.debug("* include : $include")
-        logger.debug("* variables :")
-        variables.forEach { (k, v) -> logger.info("*   $k -> $v") }
-        logger.debug("* fileRoot : $fileRoot")
-        logger.debug("* insecure : $insecure")
-        logger.debug("* proxy : $proxy")
-    }
-
-
-
 
 }
