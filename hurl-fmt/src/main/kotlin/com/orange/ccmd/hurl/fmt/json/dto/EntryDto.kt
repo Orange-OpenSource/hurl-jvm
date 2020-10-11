@@ -17,18 +17,21 @@
  *
  */
 
-package com.orange.ccmd.hurl.fmt
+package com.orange.ccmd.hurl.fmt.json.dto
+
+import kotlinx.serialization.Serializable
+import com.orange.ccmd.hurl.core.ast.Entry as EntryNode
+
+@Serializable
+data class EntryDto(
+    val request: RequestDto,
+    val response: ResponseDto? = null
+)
 
 
-
-data class Options(
-    val help: Boolean = false,
-    val version: Boolean = false,
-    val verbose: Boolean = false,
-    val format: String = "termws",
-    val theme: String = "dark256",
-    val inplace: Boolean = false,
-    ) {
-    val formatValues = listOf("termws", "term", "lint", "html", "json")
-    val themeValues = listOf("dark16", "dark256", "light256")
+fun EntryNode.toEntry(): EntryDto {
+    return EntryDto(
+        request = request.toRequest(),
+        response = response?.toResponse(),
+    )
 }

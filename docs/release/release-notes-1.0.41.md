@@ -9,6 +9,7 @@
 - Add `--connect-timeout` cli option (<https://hurl.dev/docs/man-page.html#connect-timeout>)
 - Add `--max-time` cli option (<https://hurl.dev/docs/man-page.html#max-time>)
 - Simplify log management and remove sl4j dependency
+- Add Hurl file JSON export with hurlfmt.
 
 ## 🐞 Bug Fixes
 
@@ -18,8 +19,9 @@
  
 ## 📔 Documentation
 
-## 🔨 Dependency Upgrades
+## 🔨 Dependency Added / Upgrades
 
+- Added Kotlinx Serialization 1.4.10
 - Upgrade to Kotlin 1.4.10
 - Upgrade to Junit 5.7.0
 - Upgrade to SL4J 1.7.30

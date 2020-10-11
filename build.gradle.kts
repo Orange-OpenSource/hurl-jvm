@@ -21,8 +21,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.4.10" apply false
+    kotlin("plugin.serialization") version "1.4.10" apply false
     id("org.jetbrains.dokka") version "1.4.10"
-    // Ajoute la task dependencyUpdates pour gérér les dépendances.
+    // Ajoute la task dependencyUpdates pour gérer les dépendances.
     id("com.github.ben-manes.versions") version "0.33.0"
     `maven-publish`
     signing
