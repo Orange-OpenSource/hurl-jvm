@@ -28,7 +28,7 @@ plugins {
     signing
 }
 
-val jUnitVersion = "5.6.2"
+val jUnitVersion = "5.7.0"
 
 subprojects {
     apply(plugin = "kotlin")

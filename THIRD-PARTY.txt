@@ -9,7 +9,7 @@ Copyright © FasterXML
 jackson-core is distributed under the terms and conditions of the Apache Software License 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
 You may download the source code on the following website: https://github.com/FasterXML/jackson-core
 //-----//
-jsoup - version 1.12.2
+jsoup - version 1.13.1
 Copyright © 2009-2020 Jonathan Hedley
 jsoup is distributed under the terms and conditions ot the MIT License (http://opensource.org/licenses/MIT)
 You may download the source code on the following website: https://github.com/jhy/jsoup
@@ -34,7 +34,7 @@ Copyright © 2002-2019 The Apache Software Foundation.
 Apache HttpComponents Client is distributed under the terms and conditions of the Apache Software License 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
 You may download the source code on the following website: http://commons.apache.org/proper/commons-cli/
 //-----//
-JUnit - version 5.6.0
+JUnit - version 5.7.0
 Copyright © 2020 The JUnit Team
 JUnit is distributed under the terms and conditions ot the Eclipse Public License 2.0 (https://www.eclipse.org/legal/epl-2.0/)
 You may download the source code on the following website: https://github.com/junit-team/junit5/
