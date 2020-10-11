@@ -518,5 +518,4 @@ No dependencies
 
 A web-based, searchable dependency report is available by adding the --scan option.
 
-BUILD SUCCESSFUL in 772ms
 1 actionable task: 1 executed
