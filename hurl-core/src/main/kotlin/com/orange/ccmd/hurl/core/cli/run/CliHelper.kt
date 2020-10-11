@@ -25,6 +25,7 @@ import com.orange.ccmd.hurl.core.report.ReporterType.SIMPLE
 import com.orange.ccmd.hurl.core.report.ReporterType.TEST
 import com.orange.ccmd.hurl.core.report.SimpleReporter
 import com.orange.ccmd.hurl.core.report.TestReporter
+import com.orange.ccmd.hurl.core.run.Options
 import com.orange.ccmd.hurl.core.run.Runner
 import java.io.File
 
@@ -66,21 +67,25 @@ class CliHelper {
             // Run the file and report run results.
             val runner = Runner(
                 hurlFile = hurl,
-                variables = variables,
-                fileRoot = fileRoot,
-                outputHeaders = outputHeaders,
-                verbose = verbose,
-                allowsInsecure = allowsInsecure,
-                proxy = proxy,
-                followsRedirect = followsRedirect
+                options = Options(
+                    variables = variables,
+                    fileRoot = fileRoot,
+                    outputHeaders = outputHeaders,
+                    verbose = verbose,
+                    allowsInsecure = allowsInsecure,
+                    proxy = proxy,
+                    followsRedirect = followsRedirect,
+                )
             )
             val result = runner.run()
 
             reporter.reportResult(result = result)
             return when {
                 result.succeeded -> CliReturnCode.SUCCESS
-                !result.succeeded && result.entryResults.flatMap { it.errors }.isNotEmpty() -> CliReturnCode.RUNTIME_ERROR
-                !result.succeeded && result.entryResults.flatMap { it.asserts }.any { !it.succeeded } -> CliReturnCode.ASSERT_ERROR
+                !result.succeeded && result.entryResults.flatMap { it.errors }
+                    .isNotEmpty() -> CliReturnCode.RUNTIME_ERROR
+                !result.succeeded && result.entryResults.flatMap { it.asserts }
+                    .any { !it.succeeded } -> CliReturnCode.ASSERT_ERROR
                 else -> CliReturnCode.UNKNOWN_ERROR
             }
         }

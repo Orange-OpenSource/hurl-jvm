@@ -41,47 +41,34 @@ import java.time.Instant
  *
  * This class take a parsed Hurl file, and run all entries.
  *
- * @property hurlFile hurl file describing requests and response of this session
- * @property variables map of variable (pair of string for name and value), that are injected in the
- * construction of a runner, and latter augmented by captures during the execution
- * of a session.
- * @property fileRoot root directory for body file includes. Default is hurlFile directory.
- * @property allowsInsecure allow connections to SSL sites without certs. Default is false.
- * @property proxy use proxy on given port (ex: localhost:3128)
- * @property outputHeaders include protocol headers in the output. Default is false.
- * @property followsRedirect follow redirect (HTTP 3xx status code). Default is false.
- * @property verbose turn off/on verbosity on log message
+ * @property hurlFile Hurl file describing requests and response of this session
+ * @property options options for this runner
+ * @property runLogger logger that output run debug informations
  */
 data class Runner(
     val hurlFile: HurlFile,
-    val variables: Map<String, String> = emptyMap(),
-    val fileRoot: File,
-    val outputHeaders: Boolean = false,
-    val verbose: Boolean = false,
-    val allowsInsecure: Boolean = false,
-    val proxy: String? = null,
-    val followsRedirect: Boolean = false,
-    val runLogger: RunnerLogger = RunnerLogger(outputHeaders = outputHeaders, verbose = verbose)
+    val options: Options,
+    val runLogger: RunnerLogger = RunnerLogger(outputHeaders = options.outputHeaders, verbose = options.verbose)
 ) {
     private val httpClient: HttpClient
     private val variableJar: VariableJar
 
     init {
-        val httpProxy = if (proxy != null) {
-            Proxy.fromString(proxy)
+        val httpProxy = if (options.proxy != null) {
+            Proxy.fromString(options.proxy)
         } else {
             null
         }
         httpClient = ApacheHttpClient(
-            allowsInsecure = allowsInsecure,
+            allowsInsecure = options.allowsInsecure,
             httpProxy = httpProxy
         )
 
-        variableJar = VariableJar.from(variables)
+        variableJar = VariableJar.from(options.variables)
     }
 
     /**
-     * Run the hurl file [hurlFile], with the [variables] context.
+     * Run the Hurl file [hurlFile], with the [variables] context.
      * @return a {@link RunResult} for this session.
      */
     fun run(): RunResult {
@@ -115,7 +102,7 @@ data class Runner(
 
         // First, we construct the HTTP request.
         var requestSpec = try {
-            entry.request.toHttpRequestSpec(variables = variableJar, fileRoot = fileRoot)
+            entry.request.toHttpRequestSpec(variables = variableJar, fileRoot = options.fileRoot)
         } catch (e: InvalidVariableException) {
             return EntryResult(errors = listOf(InvalidVariableResult(position = e.position, reason = e.reason)))
         } catch (e: FileNotFoundException) {
@@ -143,7 +130,7 @@ data class Runner(
             runLogger.logHttpResponse(httpResult.response)
             runLogger.logCookies(httpResult.cookies)
 
-            if (followsRedirect && httpResult.response.code >= 300 && httpResult.response.code < 400) {
+            if (options.followsRedirect && httpResult.response.code >= 300 && httpResult.response.code < 400) {
                 val header = httpResult.response.headers
                     .firstOrNull { (k, _) -> k.toLowerCase() == "location" }
                     ?: return EntryResult(errors = listOf(RuntimeErrorResult(position = entry.request.method.begin, message = "Unable to get Location header")))
@@ -184,7 +171,7 @@ data class Runner(
         val statusResult = responseSpec.getCheckStatusCodeResult(httpResponse = httpResponse)
         val headersResults = responseSpec.getCheckHeadersResults(variables = variableJar, httpResponse = httpResponse)
         val assertsResults = responseSpec.getAssertsResults(variables = variableJar, httpResponse = httpResponse)
-        val bodyResult = responseSpec.getCheckBodyResult(variables = variableJar, fileRoot = fileRoot, httpResponse = httpResponse)
+        val bodyResult = responseSpec.getCheckBodyResult(variables = variableJar, fileRoot = options.fileRoot, httpResponse = httpResponse)
 
         return EntryResult(
             httpResponse = httpResponse,
