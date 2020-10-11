@@ -19,36 +19,35 @@
 
 package com.orange.ccmd.hurl.fmt
 
-import org.apache.commons.cli.CommandLine
 import org.apache.commons.cli.DefaultParser
 import org.apache.commons.cli.HelpFormatter
 import org.apache.commons.cli.Option
 import org.apache.commons.cli.Options
 import org.apache.commons.cli.ParseException
+import com.orange.ccmd.hurl.fmt.Options as HurlFmtOptions
 
+/**
+ * Parse positional and optional arguments of hurlfmt cli.
+ */
 class ArgsParser {
-    private var line: CommandLine? = null
+
+    private val defaultOptions = HurlFmtOptions()
+
     private val helpOption: Option = Option.builder("h")
         .longOpt("help")
         .hasArg(false)
         .desc("This help text")
         .build()
-    private val helpDefault = false
-    private val formatValues: List<String> = listOf("termws", "term", "lint", "html")
-    private val formatDefault = "termws"
     private val formatOption: Option = Option.builder("f")
         .longOpt("format")
         .hasArg()
-        .desc("Type of the formatter, values are [${formatValues.joinToString(", ")}], default is $formatDefault")
+        .desc("Type of the formatter, values are [${defaultOptions.formatValues.joinToString()}], default is ${defaultOptions.format}")
         .build()
-    private val themeValues: List<String> = listOf("dark16", "dark256", "light256")
-    private val themeDefault = "dark256"
     private val themeOption: Option = Option.builder("t")
         .longOpt("theme")
         .hasArg()
-        .desc("Type of the html theme, values are [${themeValues.joinToString(", ")}], default is $themeDefault")
+        .desc("Type of the html theme, values are [${defaultOptions.themeValues.joinToString()}], default is ${defaultOptions.theme}")
         .build()
-
     private val versionOption: Option = Option.builder("V")
         .longOpt("version")
         .hasArg(false)
@@ -81,60 +80,42 @@ class ArgsParser {
         }
     }
 
-    fun parse(args: Array<String>) {
+
+    /**
+     * Parse args and return positional and optional arguments.
+     *
+     * @return a pair of positional arguments (list of string) and options
+     */
+    fun parse(args: Array<String>): Pair<List<String>, HurlFmtOptions> {
         val parser = DefaultParser()
-        line = try {
+        val line = try {
             parser.parse(options, args)
         } catch (e: ParseException) {
             throw IllegalArgumentException(e.message)
+        } ?: throw IllegalArgumentException("Invalid arguments line")
+
+        val format = line.getOptionValue(formatOption.longOpt, defaultOptions.format)
+        val formats = defaultOptions.formatValues
+        if (format !in formats) {
+            throw IllegalArgumentException("$format is not a valid value, choices are [${formats.joinToString()}]")
         }
 
-        // Test enum format
-        if (format !in formatValues) {
-            throw IllegalArgumentException("$format is not a valid value, choices are [${formatValues.joinToString(", ")}]")
+        val theme = line.getOptionValue(themeOption.longOpt, defaultOptions.theme)
+        val themes = defaultOptions.themeValues
+        if (theme !in themes) {
+            throw IllegalArgumentException("$theme is not a valid value, choices are [${themes.joinToString()}]")
         }
 
-        // Test enum theme
-        if (theme !in themeValues) {
-            throw IllegalArgumentException("$theme is not a valid value, choices are [${themeValues.joinToString(", ")}]")
-        }
-
+        val positional = line.args?.toList() ?: emptyList()
+        val options = HurlFmtOptions(
+            help = if (line.hasOption(helpOption.longOpt)) true else defaultOptions.help,
+            version = if (line.hasOption(versionOption.longOpt)) true else defaultOptions.version,
+            verbose = if (line.hasOption(verboseOption.longOpt)) true else defaultOptions.verbose,
+            format = format,
+            theme = theme,
+        )
+        return positional to options
     }
-
-    val verbose: Boolean
-        get() = line?.hasOption("verbose") ?: verboseDefault
-
-    val help: Boolean
-        get() = line?.hasOption("help") ?: helpDefault
-
-    val format: String
-        get() {
-            val l = line
-            return if (l != null && l.hasOption("format")) {
-                l.getOptionValue("format")
-            } else {
-                formatDefault
-            }
-        }
-
-    val theme: String
-        get() {
-            val l = line
-            return if (l != null && l.hasOption("theme")) {
-                l.getOptionValue("theme")
-            } else {
-                themeDefault
-            }
-        }
-
-    val version: Boolean
-        get() = line?.hasOption("version") ?: versionDefault
-
-    val args: List<String>
-        get() = line?.args?.toList() ?: emptyList()
-
-    val inplace: Boolean
-        get() = line?.hasOption("inplace") ?: inplaceDefault
 
     fun printHelp() {
         val formatter = HelpFormatter()

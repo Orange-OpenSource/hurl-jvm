@@ -33,33 +33,48 @@ import java.util.logging.Logger as JulLogger
 
 class App {
 
+    private val logger: Logger = LoggerFactory.getLogger(javaClass)
+
+    /**
+     * Entry point for the cli.
+     *
+     * The return code can be:
+     * - 0: SUCCESS,
+     * - 1: OPTIONS_PARSING_ERROR,
+     * - 2: INPUT_FILE_PARSING_ERROR,
+     * - 3: RUNTIME_ERROR,
+     * - 4: ASSERT_ERROR,
+     * - 5: UNKNOWN_ERROR
+     *
+     * @return an Int representing an error code
+     */
     fun main(args: Array<String>): Int {
-        val parser = OptionsParser()
-        try {
+        val parser = ArgsParser()
+        val (positional, options) = try {
             parser.parse(args)
         } catch (e: IllegalArgumentException) {
             println(e.message)
             return OPTIONS_PARSING_ERROR.value
         }
 
-        if (parser.help) {
+        if (options.help) {
             parser.printHelp()
             return SUCCESS.value
         }
-        if (parser.version) {
+        if (options.version) {
             println("hurl (jar) $version")
             return SUCCESS.value
         }
 
-        configureLogging(verbose = parser.verbose)
-        parser.logOptions()
+        configureLogging(verbose = options.verbose)
+        logger.debug("$options")
 
         var returnCode = SUCCESS
 
-        for (fileName in parser.args) {
+        for (fileName in positional) {
             val file = File(fileName)
             val absoluteFile = file.absoluteFile
-            val fileRootName = parser.fileRoot
+            val fileRootName = options.fileRoot
             val fileRoot = if (fileRootName != null) {
                 File(fileRootName)
             } else {
@@ -68,13 +83,13 @@ class App {
 
             val ret = CliHelper.run(
                 file = absoluteFile,
-                variables = parser.variables,
+                variables = options.variables,
                 fileRoot = fileRoot,
-                outputHeaders = parser.include,
-                verbose = parser.verbose,
-                allowsInsecure = parser.include,
-                proxy = parser.proxy,
-                followsRedirect = parser.followRedirect,
+                outputHeaders = options.include,
+                verbose = options.verbose,
+                allowsInsecure = options.include,
+                proxy = options.proxy,
+                followsRedirect = options.followRedirect,
             )
             if (ret != SUCCESS) {
                 returnCode = ret
@@ -84,10 +99,10 @@ class App {
         return returnCode.value
     }
 
-    internal val version: String
+    private val version: String
         get() = Properties("application.properties").get["version"] ?: "undefined"
 
-    internal fun configureLogging(verbose: Boolean) {
+    private fun configureLogging(verbose: Boolean) {
         System.setProperty("java.util.logging.SimpleFormatter.format", "%5\$s%n")
         val julLogger = JulLogger.getLogger("com.orange.ccmd.hurl")
         julLogger.level = Level.FINE
@@ -98,7 +113,4 @@ class App {
         handler.level = if (verbose) { Level.FINE } else { Level.INFO }
         julLogger.addHandler(handler)
     }
-
-
-
 }

@@ -37,45 +37,51 @@ import java.util.logging.Logger as JulLogger
 
 class App {
 
+    /**
+     * Entry point for the cli.
+     *
+     * The return code can be:
+     * - 0: OK,
+     * - 1: FAILED,
+     *
+     * @return an Int representing an error code
+     */
     fun main(args: Array<String>): Int {
 
         val parser = ArgsParser()
-        try {
+        val (positional, options) = try {
             parser.parse(args)
         } catch (e: IllegalArgumentException) {
             println(e.message)
             return FAILED
         }
-        if (parser.help) {
+        if (options.help) {
             parser.printHelp()
             return OK
         }
-        if (parser.version) {
+        if (options.version) {
             println("hurlfmt (jar) $version")
             return OK
         }
 
-        val verbose = parser.verbose
-        val format = parser.format
-        val theme = parser.theme
-        val inplace = parser.inplace
-        val stdin = "-"
-        configureLogging(verbose = verbose)
 
-        if (inplace && stdin in parser.args) {
+        val stdin = "-"
+        configureLogging(verbose = options.verbose)
+
+        if (options.inplace && stdin in positional) {
             println("inplace option not compatible with stdin (-).")
             return FAILED
         }
 
-        for (f in parser.args) {
+        for (f in positional) {
             val input = if (f == stdin) {
                 stdIn()
             } else {
                 // TODO: catch exception if file doesnt exist
                 File(f).readText()
             }
-            val output = formatFile(text = input, fileName = f, format = format, theme = theme) ?: return FAILED
-            if (!inplace) {
+            val output = formatFile(text = input, fileName = f, format = options.format, theme = options.theme) ?: return FAILED
+            if (!options.inplace) {
                 println(output)
             } else {
                 File(f).writeText(output)
