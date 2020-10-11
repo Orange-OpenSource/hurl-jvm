@@ -34,7 +34,7 @@ compileClasspath - Compile classpath for compilation 'main' (target  (jvm)).
 |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10
 |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
 +--- com.fasterxml.jackson.core:jackson-core:2.11.2
-+--- org.jsoup:jsoup:1.12.2
++--- org.jsoup:jsoup:1.13.1
 +--- com.jayway.jsonpath:json-path:2.4.0
 |    +--- net.minidev:json-smart:2.3
 |    |    \--- net.minidev:accessors-smart:1.2
@@ -262,7 +262,7 @@ No dependencies
 implementation - Implementation only dependencies for compilation 'main' (target  (jvm)). (n)
 +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.10 (n)
 +--- com.fasterxml.jackson.core:jackson-core:2.11.2 (n)
-+--- org.jsoup:jsoup:1.12.2 (n)
++--- org.jsoup:jsoup:1.13.1 (n)
 +--- com.jayway.jsonpath:json-path:2.4.0 (n)
 +--- org.apache.httpcomponents:httpclient:4.5.12 (n)
 +--- org.apache.httpcomponents:httpmime:4.5.12 (n)
@@ -276,7 +276,7 @@ implementationDependenciesMetadata
 |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10
 |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
 +--- com.fasterxml.jackson.core:jackson-core:2.11.2
-+--- org.jsoup:jsoup:1.12.2
++--- org.jsoup:jsoup:1.13.1
 +--- com.jayway.jsonpath:json-path:2.4.0
 |    +--- net.minidev:json-smart:2.3
 |    |    \--- net.minidev:accessors-smart:1.2
@@ -367,7 +367,7 @@ runtimeClasspath - Runtime classpath of compilation 'main' (target  (jvm)).
 |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10
 |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
 +--- com.fasterxml.jackson.core:jackson-core:2.11.2
-+--- org.jsoup:jsoup:1.12.2
++--- org.jsoup:jsoup:1.13.1
 +--- com.jayway.jsonpath:json-path:2.4.0
 |    +--- net.minidev:json-smart:2.3
 |    |    \--- net.minidev:accessors-smart:1.2
@@ -413,7 +413,7 @@ testCompileClasspath - Compile classpath for compilation 'test' (target  (jvm)).
 |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10
 |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
 +--- com.fasterxml.jackson.core:jackson-core:2.11.2
-+--- org.jsoup:jsoup:1.12.2
++--- org.jsoup:jsoup:1.13.1
 +--- com.jayway.jsonpath:json-path:2.4.0
 |    +--- net.minidev:json-smart:2.3
 |    |    \--- net.minidev:accessors-smart:1.2
@@ -471,7 +471,7 @@ testImplementationDependenciesMetadata
 |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10
 |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
 +--- com.fasterxml.jackson.core:jackson-core:2.11.2
-+--- org.jsoup:jsoup:1.12.2
++--- org.jsoup:jsoup:1.13.1
 +--- com.jayway.jsonpath:json-path:2.4.0
 |    +--- net.minidev:json-smart:2.3
 |    |    \--- net.minidev:accessors-smart:1.2
@@ -524,7 +524,7 @@ testRuntimeClasspath - Runtime classpath of compilation 'test' (target  (jvm)).
 |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10
 |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
 +--- com.fasterxml.jackson.core:jackson-core:2.11.2
-+--- org.jsoup:jsoup:1.12.2
++--- org.jsoup:jsoup:1.13.1
 +--- com.jayway.jsonpath:json-path:2.4.0
 |    +--- net.minidev:json-smart:2.3
 |    |    \--- net.minidev:accessors-smart:1.2
