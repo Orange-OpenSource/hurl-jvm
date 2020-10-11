@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -eux
 
 if [[ -n "$TRAVIS_TAG" ]]; then
   echo ">>> Updating gradle.properties to release"
