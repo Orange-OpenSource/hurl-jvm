@@ -35,8 +35,8 @@ compileClasspath - Compile classpath for compilation 'main' (target  (jvm)).
 |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10
 |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
 +--- commons-cli:commons-cli:1.4
-\--- org.slf4j:slf4j-jdk14:1.7.29
-     \--- org.slf4j:slf4j-api:1.7.29
+\--- org.slf4j:slf4j-jdk14:1.7.30
+     \--- org.slf4j:slf4j-api:1.7.30
 
 compileOnly - Compile only dependencies for compilation 'main' (target  (jvm)). (n)
 No dependencies
@@ -253,7 +253,7 @@ implementation - Implementation only dependencies for compilation 'main' (target
 +--- project hurl-core (n)
 +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.10 (n)
 +--- commons-cli:commons-cli:1.4 (n)
-\--- org.slf4j:slf4j-jdk14:1.7.29 (n)
+\--- org.slf4j:slf4j-jdk14:1.7.30 (n)
 
 implementationDependenciesMetadata
 +--- project :hurl-core
@@ -264,8 +264,8 @@ implementationDependenciesMetadata
 |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10
 |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
 +--- commons-cli:commons-cli:1.4
-\--- org.slf4j:slf4j-jdk14:1.7.29
-     \--- org.slf4j:slf4j-api:1.7.29
+\--- org.slf4j:slf4j-jdk14:1.7.30
+     \--- org.slf4j:slf4j-api:1.7.30
 
 kotlinCompilerClasspath
 \--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.4.10
@@ -342,8 +342,8 @@ runtimeClasspath - Runtime classpath of compilation 'main' (target  (jvm)).
 |    \--- org.slf4j:slf4j-api:1.7.30
 +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.10 (*)
 +--- commons-cli:commons-cli:1.4
-\--- org.slf4j:slf4j-jdk14:1.7.29
-     \--- org.slf4j:slf4j-api:1.7.29 -> 1.7.30
+\--- org.slf4j:slf4j-jdk14:1.7.30
+     \--- org.slf4j:slf4j-api:1.7.30
 
 runtimeElements - Elements of runtime for main. (n)
 No dependencies
@@ -378,8 +378,8 @@ testCompileClasspath - Compile classpath for compilation 'test' (target  (jvm)).
 |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10
 |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
 +--- commons-cli:commons-cli:1.4
-+--- org.slf4j:slf4j-jdk14:1.7.29
-|    \--- org.slf4j:slf4j-api:1.7.29
++--- org.slf4j:slf4j-jdk14:1.7.30
+|    \--- org.slf4j:slf4j-api:1.7.30
 +--- org.jetbrains.kotlin:kotlin-test:1.4.10
 |    +--- org.jetbrains.kotlin:kotlin-test-common:1.4.10
 |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
@@ -423,8 +423,8 @@ testImplementationDependenciesMetadata
 |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10
 |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
 +--- commons-cli:commons-cli:1.4
-+--- org.slf4j:slf4j-jdk14:1.7.29
-|    \--- org.slf4j:slf4j-api:1.7.29
++--- org.slf4j:slf4j-jdk14:1.7.30
+|    \--- org.slf4j:slf4j-api:1.7.30
 +--- org.jetbrains.kotlin:kotlin-test:1.4.10
 |    +--- org.jetbrains.kotlin:kotlin-test-common:1.4.10
 |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
@@ -479,8 +479,8 @@ testRuntimeClasspath - Runtime classpath of compilation 'test' (target  (jvm)).
 |    \--- org.slf4j:slf4j-api:1.7.30
 +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.10 (*)
 +--- commons-cli:commons-cli:1.4
-+--- org.slf4j:slf4j-jdk14:1.7.29
-|    \--- org.slf4j:slf4j-api:1.7.29 -> 1.7.30
++--- org.slf4j:slf4j-jdk14:1.7.30
+|    \--- org.slf4j:slf4j-api:1.7.30
 +--- org.jetbrains.kotlin:kotlin-test:1.4.10
 |    +--- org.jetbrains.kotlin:kotlin-test-common:1.4.10
 |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
