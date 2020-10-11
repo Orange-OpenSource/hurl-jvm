@@ -25,7 +25,7 @@ plugins {
 val jacksonVersion = "2.11.3"
 val jsoupVersion = "1.13.1"
 val jsonPathVersion = "2.4.0"
-val apacheHttpVersion = "4.5.12"
+val apacheHttpVersion = "4.5.13"
 val sl4jVersion = "1.7.30"
 
 dependencies {

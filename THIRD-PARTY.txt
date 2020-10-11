@@ -19,7 +19,7 @@ Copyright © 2017 Jayway
 Jayway JsonPath is distributed under the terms and conditions of the Apache Software License 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
 You may download the source code on the following website: https://github.com/json-path/JsonPath
 //-----//
-Apache HttpComponents Client - version 4.5.12
+Apache HttpComponents Client - version 4.5.13
 Copyright © 1999–2020 The Apache Software Foundation.
 Apache HttpComponents Client is distributed under the terms and conditions of the Apache Software License 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
 You may download the source code on the following website: http://hc.apache.org/httpcomponents-client-ga/
