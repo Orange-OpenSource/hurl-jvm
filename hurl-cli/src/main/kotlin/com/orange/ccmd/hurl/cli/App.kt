@@ -90,6 +90,7 @@ class App {
                 allowsInsecure = options.include,
                 proxy = options.proxy,
                 followsRedirect = options.followRedirect,
+                toEntry = options.toEntry,
             )
             if (ret != SUCCESS) {
                 returnCode = ret

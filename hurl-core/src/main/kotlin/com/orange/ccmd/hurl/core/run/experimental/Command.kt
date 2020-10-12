@@ -61,6 +61,10 @@ object CookieStorageClearCommand : Command() {
         httpClient.clearCookieStorage()
         return true
     }
+
+    override fun toString(): String {
+        return "cookie_storage_clear"
+    }
 }
 
 data class CookieStorageSetCommand(
@@ -91,4 +95,9 @@ data class CookieStorageSetCommand(
         httpClient.addCookie(cookie = cookie)
         return true
     }
+
+    override fun toString(): String {
+        return "cookie_storage_set(domain='$domain', includeSubDomains=$includeSubDomains, path='$path', httpOnly=$httpOnly, expires=$expires, name='$name', value='$value')"
+    }
+
 }

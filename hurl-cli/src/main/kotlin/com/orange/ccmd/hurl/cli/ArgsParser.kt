@@ -86,6 +86,11 @@ class ArgsParser {
         .hasArg(false)
         .desc("Include HTTP headers in the output")
         .build()
+    private val toEntryOption: Option = Option.builder()
+        .longOpt("to-entry")
+        .hasArg()
+        .desc("Execute Hurl file to ENTRY_NUMBER (starting at 1). Ignore the remaining of the file. It is useful for debugging a session.")
+        .build()
 
     private val options: Options = Options()
 
@@ -102,6 +107,7 @@ class ArgsParser {
             addOption(variableOption)
             addOption(fileRootOption)
             addOption(includeOption)
+            addOption(toEntryOption)
         }
     }
 
@@ -129,6 +135,12 @@ class ArgsParser {
                 it.substring(startIndex = 0, endIndex = index) to it.substring(index + 1)
             }?.toMap()
 
+        val toEntry = try {
+            line.getOptionValue(toEntryOption.longOpt)?.toInt()
+        } catch (e: NumberFormatException) {
+            throw IllegalArgumentException("Invalid to-entry parameter")
+        }
+
         val positional = line.args?.toList() ?: emptyList()
         val options = HurlOptions(
             help = if (line.hasOption(helpOption.longOpt)) true else defaultOptions.help,
@@ -140,6 +152,7 @@ class ArgsParser {
             variables = variables ?: defaultOptions.variables,
             fileRoot = line.getOptionValue(fileRootOption.longOpt, defaultOptions.fileRoot),
             include = if (line.hasOption(includeOption.longOpt)) true else defaultOptions.include,
+            toEntry = toEntry ?: defaultOptions.toEntry,
         )
         return positional to options
     }

@@ -29,16 +29,18 @@ data class Options(
     val variables: Map<String, String> = emptyMap(),
     val fileRoot: String? = null,
     val include: Boolean = false,
+    val toEntry: Int? = null,
 ) {
     override fun toString(): String {
-        var string = "* version : $version\n"
-        string += "* verbose : $verbose\n"
-        string += "* include : $include\n"
-        string += "* variables :\n"
+        var string = "* version: $version\n"
+        string += "* verbose: $verbose\n"
+        string += "* include: $include\n"
+        string += "* variables:\n"
         variables.forEach { (k, v) -> string += "*   $k -> $v\n" }
-        string += "* fileRoot : $fileRoot\n"
-        string += "* insecure : $insecure\n"
-        string += "* proxy : $proxy\n"
+        string += "* fileRoot: ${fileRoot ?: ""}\n"
+        string += "* insecure: $insecure\n"
+        string += "* proxy: ${proxy ?: ""}\n"
+        string += "* toEntry: ${toEntry ?: ""}\n"
         return string
     }
 }

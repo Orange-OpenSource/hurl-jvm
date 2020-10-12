@@ -13,13 +13,16 @@ Hurl JVM try to have the same functionality as the official [Hurl client](https:
 
 ```
 usage: java -jar hurl.jar file
-    --color             Colorize output (not implemented yet)
+    --color             Colorize output (not yet implemented)
     --file-root <arg>   Specify the root directory for file inclusions
  -h,--help              This help text
  -i,--include           Include HTTP headers in the output
  -k,--insecure          Allow connections to SSL sites without certs
  -L,--location          Follow redirect
-    --no-color          Do not colorize output (not implemented yet)
+    --no-color          Do not colorize output (not yet implemented)
+    --to-entry <arg>    Execute Hurl file to ENTRY_NUMBER (starting at 1).
+                        Ignore the remaining of the file. It is useful for
+                        debugging a session.
  -V,--version           Show version number and quit
  -v,--verbose           Make the operation more talkative
     --variable <arg>    Define variable (example: --variable answer=42)
@@ -56,29 +59,29 @@ To test and produce a coverage report:
 ### Gradle Groovy DSL
 
 ```
-implementation 'com.orange.ccmd:hurl-core:1.0.39'
+implementation 'com.orange.ccmd:hurl-core:1.0.40'
 ```
 
 ```
-implementation 'com.orange.ccmd:hurl:1.0.39'
+implementation 'com.orange.ccmd:hurl:1.0.40'
 ```
 
 ```
-implementation 'com.orange.ccmd:hurlfmt:1.0.39'
+implementation 'com.orange.ccmd:hurlfmt:1.0.40'
 ```
 
 ### Gradle Kotlin DSL
 
 ```
-implementation("com.orange.ccmd:hurl-core:1.0.39")
+implementation("com.orange.ccmd:hurl-core:1.0.40")
 ```
 
 ```
-implementation("com.orange.ccmd:hurl:1.0.39")
+implementation("com.orange.ccmd:hurl:1.0.40")
 ```
 
 ```
-implementation("com.orange.ccmd:hurlfmt:1.0.39")
+implementation("com.orange.ccmd:hurlfmt:1.0.40")
 ```
 
 ### Apache Maven
@@ -87,7 +90,7 @@ implementation("com.orange.ccmd:hurlfmt:1.0.39")
 <dependency>
   <groupId>com.orange.ccmd</groupId>
   <artifactId>hurl-core</artifactId>
-  <version>1.0.39</version>
+  <version>1.0.40</version>
 </dependency>
 ```
 
@@ -95,7 +98,7 @@ implementation("com.orange.ccmd:hurlfmt:1.0.39")
 <dependency>
   <groupId>com.orange.ccmd</groupId>
   <artifactId>hurl</artifactId>
-  <version>1.0.39</version>
+  <version>1.0.40</version>
 </dependency>
 ```
 
@@ -103,6 +106,6 @@ implementation("com.orange.ccmd:hurlfmt:1.0.39")
 <dependency>
   <groupId>com.orange.ccmd</groupId>
   <artifactId>hurlfmt</artifactId>
-  <version>1.0.39</version>
+  <version>1.0.40</version>
 </dependency>
 ```
