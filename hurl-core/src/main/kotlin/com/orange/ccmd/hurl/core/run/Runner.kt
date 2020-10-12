@@ -78,13 +78,16 @@ data class Runner(
 
         // Process each entry in the hurlFile, and stop at
         // the first failure.
-        for (entry in entries) {
-            val result = runEntry(entry)
+        for ((index, entry) in entries.withIndex()) {
+            val entryIndex = index + 1
+            val result = runEntry(entry = entry, index = entryIndex)
             results.add(result)
 
-            // Stop if the current entry has any failure.
-            if (!result.succeeded) {
-                return RunResult(duration = Duration.between(start, Instant.now()), entryResults = results)
+            // Stop if the current entry has any failure, or if a ending index has
+            // been reached.
+            if (!result.succeeded ||
+                (options.toEntry != null && options.toEntry == entryIndex)) {
+                break
             }
         }
 
@@ -94,9 +97,14 @@ data class Runner(
 
     /**
      * Run the [entry].
-     * @return
+     *
+     * @param entry Entry to be executed
+     * @param index one-based entry index
+     * @return an Entry
      */
-    private fun runEntry(entry: Entry): EntryResult {
+    private fun runEntry(entry: Entry, index: Int): EntryResult {
+
+        runLogger.logStart(index = index)
 
         runExperimentalCommands(entry)
 
@@ -197,6 +205,9 @@ data class Runner(
         entry.request.lts
             .mapNotNull { it.comment }
             .mapNotNull { Command.fromString(it.value) }
-            .forEach { it.run(httpClient) }
+            .forEach {
+                runLogger.logCommand(it)
+                it.run(httpClient)
+            }
     }
 }

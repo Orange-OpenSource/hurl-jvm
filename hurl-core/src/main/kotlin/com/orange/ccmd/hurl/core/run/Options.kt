@@ -44,4 +44,5 @@ data class Options(
     val allowsInsecure: Boolean = false,
     val proxy: String? = null,
     val followsRedirect: Boolean = false,
+    val toEntry: Int? = null
 )

@@ -22,8 +22,14 @@ package com.orange.ccmd.hurl.core.run.log
 import com.orange.ccmd.hurl.core.http.Cookie
 import com.orange.ccmd.hurl.core.http.HttpRequest
 import com.orange.ccmd.hurl.core.http.HttpResponse
+import com.orange.ccmd.hurl.core.run.experimental.Command
 
 interface BaseLogger {
+
+    fun logStart(index: Int) {
+        println("-".repeat(80))
+        println("Entry $index")
+    }
 
     fun logHttpRequestSpec(request: HttpRequest) {
         println(request)
@@ -39,5 +45,9 @@ interface BaseLogger {
 
     fun logCookies(cookies: List<Cookie>) {
         println(cookies)
+    }
+
+    fun logCommand(command: Command) {
+        println(command)
     }
 }

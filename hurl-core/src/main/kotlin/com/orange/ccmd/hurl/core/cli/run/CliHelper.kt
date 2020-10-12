@@ -43,6 +43,7 @@ class CliHelper {
             allowsInsecure: Boolean,
             proxy: String?,
             followsRedirect: Boolean,
+            toEntry: Int?,
             reporterType: ReporterType = SIMPLE,
         ): CliReturnCode {
 
@@ -75,6 +76,7 @@ class CliHelper {
                     allowsInsecure = allowsInsecure,
                     proxy = proxy,
                     followsRedirect = followsRedirect,
+                    toEntry = toEntry,
                 )
             )
             val result = runner.run()

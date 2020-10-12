@@ -22,12 +22,21 @@ package com.orange.ccmd.hurl.core.run.log
 import com.orange.ccmd.hurl.core.http.Cookie
 import com.orange.ccmd.hurl.core.http.HttpRequest
 import com.orange.ccmd.hurl.core.http.HttpResponse
+import com.orange.ccmd.hurl.core.run.experimental.Command
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 class RunnerLogger(val outputHeaders: Boolean, val verbose: Boolean) : BaseLogger {
 
     private val logger: Logger = LoggerFactory.getLogger(javaClass)
+
+    override fun logStart(index: Int) {
+        if (!verbose) {
+            return
+        }
+        logInfo("-".repeat(80))
+        logInfo("Entry $index")
+    }
 
     override fun logHttpRequestSpec(request: HttpRequest) {
         if (!verbose) {
@@ -76,6 +85,13 @@ class RunnerLogger(val outputHeaders: Boolean, val verbose: Boolean) : BaseLogge
             logInfo("Cookie store:")
             cookies.forEach { (k, v) -> logInfo("$k: $v") }
         }
+    }
+
+    override fun logCommand(command: Command) {
+        if (!verbose) {
+            return
+        }
+        logInfo("[Experimental] Run command $command")
     }
 
     private fun log(text: String) {
