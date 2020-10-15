@@ -44,6 +44,7 @@ class CliHelper {
             proxy: String?,
             followsRedirect: Boolean,
             toEntry: Int?,
+            compressed: Boolean,
             outputFile: File?,
             reporterType: ReporterType = SIMPLE,
         ): CliReturnCode {
@@ -52,8 +53,8 @@ class CliHelper {
             val text = file.readText()
 
             val reporter = when (reporterType) {
-                SIMPLE -> SimpleReporter(text = text, fileName = fileName, outputFile = outputFile)
-                TEST -> TestReporter(text = text, fileName = fileName, outputFile = outputFile)
+                SIMPLE -> SimpleReporter(text = text, fileName = fileName)
+                TEST -> TestReporter(text = text, fileName = fileName)
             }
 
             reporter.reportStart()
@@ -78,13 +79,37 @@ class CliHelper {
                     proxy = proxy,
                     followsRedirect = followsRedirect,
                     toEntry = toEntry,
+                    compressed = compressed
                 )
             )
             val result = runner.run()
 
             reporter.reportResult(result = result)
             return when {
-                result.succeeded -> CliReturnCode.SUCCESS
+                result.succeeded -> {
+                    // If the run is successful, we dump the bytes body response
+                    val lastHttpResponse = result.entryResults.lastOrNull()?.httpResponse ?: return CliReturnCode.SUCCESS
+                    val body = if (compressed) {
+                        try {
+                            lastHttpResponse.getDecompressedBody()
+                        } catch (e: IllegalArgumentException) {
+                            return CliReturnCode.RUNTIME_ERROR
+                        }
+                    } else {
+                        lastHttpResponse.body
+                    }
+
+                    if (outputFile != null) {
+                        // To support /dev/null on all platform, including Windows one,
+                        // we explicitly disable writing on /dev/null (and nul https://gcc.gnu.org/legacy-ml/gcc-patches/2005-05/msg01793.html)
+                        if (outputFile.path != "/dev/null" && outputFile.path != "nul") {
+                            outputFile.writeBytes(body)
+                        }
+                    } else {
+                        System.out.write(body)
+                    }
+                    CliReturnCode.SUCCESS
+                }
                 !result.succeeded && result.entryResults.flatMap { it.errors }
                     .isNotEmpty() -> CliReturnCode.RUNTIME_ERROR
                 !result.succeeded && result.entryResults.flatMap { it.asserts }

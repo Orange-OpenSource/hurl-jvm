@@ -91,6 +91,7 @@ class App {
                 proxy = options.proxy,
                 followsRedirect = options.followRedirect,
                 toEntry = options.toEntry,
+                compressed = options.compressed,
                 outputFile = options.outputFile?.let { File(options.outputFile) },
             )
             if (ret != SUCCESS) {

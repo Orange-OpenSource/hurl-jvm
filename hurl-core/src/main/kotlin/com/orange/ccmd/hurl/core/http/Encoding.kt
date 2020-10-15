@@ -19,16 +19,23 @@
 
 package com.orange.ccmd.hurl.core.http
 
-object HeaderNames {
-    const val ACCEPT_ENCODING = "Accept-Encoding"
-    const val CONTENT_TYPE = "Content-Type"
-    const val CONTENT_ENCODING = "Content-Encoding"
-    const val CONTENT_LENGTH = "Content-Length"
-    const val COOKIE = "Cookie"
-    const val USER_AGENT = "User-Agent"
-}
+/**
+ * https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Encoding
+ *
+ * The Content-Encoding entity header is used to compress the media-type. When
+ * present, its value indicates which encodings were applied to the entity-body.
+ * It lets the client know how to decode in order to obtain the media-type referenced by the Content-Type header.
+ */
+enum class Encoding(val value: String) {
+    GZIP("gzip"),
+    COMPRESS("compress"),
+    DEFLATE("deflate"),
+    IDENTITY("identity"),
+    BR("br");
 
-data class Header(
-    val name: String,
-    val value: String
-)
+    companion object {
+        fun fromValue(value: String): Encoding? {
+            return values().firstOrNull { it.value == value }
+        }
+    }
+}

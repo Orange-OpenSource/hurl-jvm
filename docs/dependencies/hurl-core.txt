@@ -46,7 +46,8 @@ compileClasspath - Compile classpath for compilation 'main' (target  (jvm)).
 |    \--- commons-codec:commons-codec:1.11
 +--- org.apache.httpcomponents:httpmime:4.5.13
 |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
-\--- org.slf4j:slf4j-api:1.7.30
++--- org.slf4j:slf4j-api:1.7.30
+\--- org.brotli:dec:0.1.2
 
 compileOnly - Compile only dependencies for compilation 'main' (target  (jvm)). (n)
 No dependencies
@@ -266,7 +267,8 @@ implementation - Implementation only dependencies for compilation 'main' (target
 +--- com.jayway.jsonpath:json-path:2.4.0 (n)
 +--- org.apache.httpcomponents:httpclient:4.5.13 (n)
 +--- org.apache.httpcomponents:httpmime:4.5.13 (n)
-\--- org.slf4j:slf4j-api:1.7.30 (n)
++--- org.slf4j:slf4j-api:1.7.30 (n)
+\--- org.brotli:dec:0.1.2 (n)
 
 implementationDependenciesMetadata
 +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.10
@@ -288,7 +290,8 @@ implementationDependenciesMetadata
 |    \--- commons-codec:commons-codec:1.11
 +--- org.apache.httpcomponents:httpmime:4.5.13
 |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
-\--- org.slf4j:slf4j-api:1.7.30
++--- org.slf4j:slf4j-api:1.7.30
+\--- org.brotli:dec:0.1.2
 
 jacocoAgent - The Jacoco agent to use to get coverage data.
 \--- org.jacoco:org.jacoco.agent:0.8.5
@@ -379,7 +382,8 @@ runtimeClasspath - Runtime classpath of compilation 'main' (target  (jvm)).
 |    \--- commons-codec:commons-codec:1.11
 +--- org.apache.httpcomponents:httpmime:4.5.13
 |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
-\--- org.slf4j:slf4j-api:1.7.30
++--- org.slf4j:slf4j-api:1.7.30
+\--- org.brotli:dec:0.1.2
 
 runtimeElements - Elements of runtime for main. (n)
 No dependencies
@@ -426,6 +430,7 @@ testCompileClasspath - Compile classpath for compilation 'test' (target  (jvm)).
 +--- org.apache.httpcomponents:httpmime:4.5.13
 |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
 +--- org.slf4j:slf4j-api:1.7.30
++--- org.brotli:dec:0.1.2
 +--- org.jetbrains.kotlin:kotlin-test:1.4.10
 |    +--- org.jetbrains.kotlin:kotlin-test-common:1.4.10
 |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
@@ -484,6 +489,7 @@ testImplementationDependenciesMetadata
 +--- org.apache.httpcomponents:httpmime:4.5.13
 |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
 +--- org.slf4j:slf4j-api:1.7.30
++--- org.brotli:dec:0.1.2
 +--- org.jetbrains.kotlin:kotlin-test:1.4.10
 |    +--- org.jetbrains.kotlin:kotlin-test-common:1.4.10
 |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
@@ -537,6 +543,7 @@ testRuntimeClasspath - Runtime classpath of compilation 'test' (target  (jvm)).
 +--- org.apache.httpcomponents:httpmime:4.5.13
 |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
 +--- org.slf4j:slf4j-api:1.7.30
++--- org.brotli:dec:0.1.2
 +--- org.jetbrains.kotlin:kotlin-test:1.4.10
 |    +--- org.jetbrains.kotlin:kotlin-test-common:1.4.10
 |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10

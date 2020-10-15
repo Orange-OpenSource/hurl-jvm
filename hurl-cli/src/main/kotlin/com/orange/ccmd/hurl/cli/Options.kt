@@ -30,6 +30,7 @@ data class Options(
     val fileRoot: String? = null,
     val include: Boolean = false,
     val toEntry: Int? = null,
+    val compressed: Boolean = false,
     val outputFile: String? = null,
 ) {
     override fun toString(): String {
@@ -42,6 +43,7 @@ data class Options(
         string += "* insecure: $insecure\n"
         string += "* proxy: ${proxy ?: ""}\n"
         string += "* toEntry: ${toEntry ?: ""}\n"
+        string += "* compressed: $compressed\n"
         string += "* outputFile: ${outputFile ?: ""}\n"
         return string
     }

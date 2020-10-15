@@ -80,8 +80,16 @@ internal fun Response.getCheckHeadersResults(
  * @return a {@link EntryResult}
  */
 internal fun Response.getCheckBodyResult(variables: VariableJar, fileRoot: File, httpResponse: HttpResponse): EntryStepResult? {
-    return body?.checkBodyContent(
-        body = httpResponse.body,
+    if (body == null) {
+        return null
+    }
+    val responseBody = try {
+        httpResponse.getDecompressedBody()
+    } catch (ex: IllegalArgumentException) {
+        return RuntimeErrorResult(position = body.begin, message = ex.message)
+    }
+    return body.checkBodyContent(
+        body = responseBody,
         variables = variables,
         fileRoot = fileRoot
     )

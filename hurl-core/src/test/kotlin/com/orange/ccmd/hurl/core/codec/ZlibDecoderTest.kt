@@ -17,15 +17,24 @@
  *
  */
 
-package com.orange.ccmd.hurl.core.utils
+package com.orange.ccmd.hurl.core.codec
 
-// TODO: better formatting
-internal fun ByteArray.toHexString() = joinToString("") { "%02x".format(it) }
+import com.orange.ccmd.hurl.core.utils.byteArray
+import com.orange.ccmd.hurl.core.utils.string
+import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
 
-internal fun ByteArray.string() = String(this, 0, size)
+class ZlibDecoderTest {
 
-internal fun ByteArray.slice(from: Int, to:Int) = sliceArray(from until to)
+    @Test
+    fun `decode a zlib compressed byte stream`() {
 
-internal fun ByteArray.slice(from: Int) = sliceArray(from until size)
+        val coded = listOf(
+            0x78, 0x9c, 0xf3, 0x48, 0xcd, 0xc9, 0xc9, 0x2f, 0xcf, 0x2f, 0xca, 0x49, 0x51, 0x04, 0x00, 0x1a,
+            0x34, 0x04, 0x3e
+        ).byteArray()
 
-internal fun List<Int>.byteArray() = ByteArray(size) { pos -> this[pos].toByte() }
+        val decoded = ZlibDecoder.decode(bytes = coded)
+        assertEquals("Helloworld!", decoded.string())
+    }
+}

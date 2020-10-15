@@ -189,7 +189,9 @@ internal fun RegexQuery.eval(response: HttpResponse, variables: VariableJar): Qu
 }
 
 private val HttpResponse.bodyAsText: String
-    get() = text ?: throw InvalidQueryException("body can not be decoded with charset $charset")
+    get()  {
+        return getBodyAsText() ?: throw InvalidQueryException("body can not be decoded as text charset: $charset encodings: $encodings")
+    }
 
 /**
  * Evaluates a spec {%link VariableQuery} against a variable jar [variables].

@@ -22,6 +22,7 @@ plugins {
     jacoco
 }
 
+val brotliVersion = "0.1.2"
 val jacksonVersion = "2.11.3"
 val jsoupVersion = "1.13.1"
 val jsonPathVersion = "2.4.0"
@@ -36,6 +37,7 @@ dependencies {
     implementation("org.apache.httpcomponents:httpclient:$apacheHttpVersion")
     implementation("org.apache.httpcomponents:httpmime:$apacheHttpVersion")
     implementation("org.slf4j:slf4j-api:$sl4jVersion")
+    implementation("org.brotli:dec:$brotliVersion")
 
     testImplementation("org.slf4j:slf4j-nop:$sl4jVersion")
 }

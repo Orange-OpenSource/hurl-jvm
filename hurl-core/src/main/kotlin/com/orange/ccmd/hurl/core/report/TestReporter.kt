@@ -27,7 +27,7 @@ import com.orange.ccmd.hurl.core.utils.lineAt
 import com.orange.ccmd.hurl.core.utils.logError
 import java.io.File
 
-class TestReporter(val text: String, val fileName: String,  val outputFile: File?): Reporter {
+class TestReporter(val text: String, val fileName: String): Reporter {
 
     override fun reportStart() {
         val file = "$fileName:".ansi.fg.bold

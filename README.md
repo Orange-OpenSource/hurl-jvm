@@ -15,6 +15,10 @@ Hurl JVM try to have the same functionality as the official [Hurl client](https:
 usage: java -jar hurl.jar file
     --color                              Colorize output (not yet
                                          implemented)
+    --compressed                         Request a compressed response
+                                         using one of the algorithms br,
+                                         gzip, deflate and automatically
+                                         decompress the content
     --file-root <file>                   Specify the root directory for
                                          file inclusions
  -h,--help                               This help text
@@ -29,9 +33,7 @@ usage: java -jar hurl.jar file
                                          stdout
     --to-entry <entry-number>            Execute Hurl file to
                                          <entry-number> (starting at 1).
-                                         Ignore the remaining of the file.
-                                         It is useful for debugging a
-                                         session.
+                                         Ignore the remaining of the file
  -V,--version                            Show version number and quit
  -v,--verbose                            Make the operation more talkative
     --variable <name=value>              Define variable (example:

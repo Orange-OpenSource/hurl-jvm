@@ -110,7 +110,11 @@ data class Runner(
 
         // First, we construct the HTTP request.
         var requestSpec = try {
-            entry.request.toHttpRequestSpec(variables = variableJar, fileRoot = options.fileRoot)
+            entry.request.toHttpRequestSpec(
+                variables = variableJar,
+                fileRoot = options.fileRoot,
+                compressed = options.compressed
+            )
         } catch (e: InvalidVariableException) {
             return EntryResult(errors = listOf(InvalidVariableResult(position = e.position, reason = e.reason)))
         } catch (e: FileNotFoundException) {
