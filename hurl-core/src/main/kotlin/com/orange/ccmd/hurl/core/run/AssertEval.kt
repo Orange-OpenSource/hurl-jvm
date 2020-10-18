@@ -39,6 +39,35 @@ import com.orange.ccmd.hurl.core.ast.StartWithPredicate
 import com.orange.ccmd.hurl.core.ast.Status
 import com.orange.ccmd.hurl.core.ast.Version
 import com.orange.ccmd.hurl.core.http.HttpResponse
+import com.orange.ccmd.hurl.core.predicate.PredicateResult
+import com.orange.ccmd.hurl.core.predicate.contain
+import com.orange.ccmd.hurl.core.predicate.count
+import com.orange.ccmd.hurl.core.predicate.equal
+import com.orange.ccmd.hurl.core.predicate.equalBool
+import com.orange.ccmd.hurl.core.predicate.equalDouble
+import com.orange.ccmd.hurl.core.predicate.equalNull
+import com.orange.ccmd.hurl.core.predicate.equalString
+import com.orange.ccmd.hurl.core.predicate.exist
+import com.orange.ccmd.hurl.core.predicate.includeBool
+import com.orange.ccmd.hurl.core.predicate.includeNull
+import com.orange.ccmd.hurl.core.predicate.includeNumber
+import com.orange.ccmd.hurl.core.predicate.includeString
+import com.orange.ccmd.hurl.core.predicate.match
+import com.orange.ccmd.hurl.core.predicate.notContain
+import com.orange.ccmd.hurl.core.predicate.notCount
+import com.orange.ccmd.hurl.core.predicate.notEqual
+import com.orange.ccmd.hurl.core.predicate.notEqualBool
+import com.orange.ccmd.hurl.core.predicate.notEqualDouble
+import com.orange.ccmd.hurl.core.predicate.notEqualNull
+import com.orange.ccmd.hurl.core.predicate.notEqualString
+import com.orange.ccmd.hurl.core.predicate.notExist
+import com.orange.ccmd.hurl.core.predicate.notIncludeBool
+import com.orange.ccmd.hurl.core.predicate.notIncludeNull
+import com.orange.ccmd.hurl.core.predicate.notIncludeNumber
+import com.orange.ccmd.hurl.core.predicate.notIncludeString
+import com.orange.ccmd.hurl.core.predicate.notMatch
+import com.orange.ccmd.hurl.core.predicate.notStartWith
+import com.orange.ccmd.hurl.core.predicate.startWith
 import com.orange.ccmd.hurl.core.query.InvalidQueryException
 import com.orange.ccmd.hurl.core.variable.VariableJar
 import com.orange.ccmd.hurl.core.template.InvalidVariableException
@@ -189,38 +218,110 @@ internal fun Assert.eval(response: HttpResponse, variables: VariableJar): EntryS
     val predicateFunc = predicate.predicateFunc
     val result = try {
         when (predicateFunc) {
-            is EqualBoolPredicate -> equalBool(not = not, first = first, second = predicateFunc.expr.value)
-            is EqualNumberPredicate -> equalDouble(not = not, first = first, second = predicateFunc.expr.value)
-            is EqualNullPredicate -> equalNull(not = not, first = first)
+            is EqualBoolPredicate -> {
+                if (not) {
+                    notEqualBool(first = first, second = predicateFunc.expr.value)
+                } else {
+                    equalBool(first = first, second = predicateFunc.expr.value)
+                }
+            }
+            is EqualNumberPredicate -> {
+                if (not) {
+                    notEqualDouble(first = first, second = predicateFunc.expr.value)
+                } else {
+                    equalDouble(first = first, second = predicateFunc.expr.value)
+                }
+            }
+            is EqualNullPredicate -> {
+                if (not) {
+                    notEqualNull(first = first)
+                } else {
+                    equalNull(first = first)
+                }
+            }
             is EqualStringPredicate -> {
                 val second = predicateFunc.valueToString(variables = variables)
-                equalString(not = not, first = first, second = second)
+                if (not) {
+                    notEqualString(first = first, second = second)
+                } else {
+                    equalString(first = first, second = second)
+                }
             }
             is EqualExprPredicate -> {
                 val second = predicateFunc.value(variables = variables)
-                equal(not = not, first = first, second = second.value)
+                if (not) {
+                    notEqual(first = first, second = second.value)
+                } else {
+                    equal(first = first, second = second.value)
+                }
             }
             is StartWithPredicate -> {
                 val second = predicateFunc.valueToString(variables = variables)
-                startWith(not = not, first = first, second = second)
+                if (not) {
+                    notStartWith(first = first, second = second)
+                } else {
+                    startWith(first = first, second = second)
+                }
             }
-            is CountPredicate -> count(not = not, first = first, second = predicateFunc.expr.value)
+            is CountPredicate -> {
+                if (not) {
+                    notCount(first = first, second = predicateFunc.expr.value)
+                } else {
+                    count(first = first, second = predicateFunc.expr.value)
+                }
+            }
             is ContainPredicate -> {
                 val second = predicateFunc.valueToString(variables = variables)
-                contain(not = not, first = first, second = second)
+                if (not) {
+                    notContain(first = first, second = second)
+                } else {
+                    contain(first = first, second = second)
+                }
             }
-            is IncludeBoolPredicate -> includeBool(not = not, first = first, second = predicateFunc.expr.value)
-            is IncludeNullPredicate -> includeNull(not = not, first = first)
-            is IncludeNumberPredicate -> includeNumber(not = not, first = first, second = predicateFunc.expr.value)
+            is IncludeBoolPredicate -> {
+                if (not) {
+                    notIncludeBool(first = first, second = predicateFunc.expr.value)
+                } else {
+                    includeBool(first = first, second = predicateFunc.expr.value)
+                }
+            }
+            is IncludeNullPredicate -> {
+                if (not) {
+                    notIncludeNull(first = first)
+                } else {
+                    includeNull(first = first)
+                }
+            }
+            is IncludeNumberPredicate -> {
+                if (not) {
+                    notIncludeNumber(first = first, second = predicateFunc.expr.value)
+                } else {
+                    includeNumber(first = first, second = predicateFunc.expr.value)
+                }
+            }
             is IncludeStringPredicate -> {
                 val second = predicateFunc.valueToString(variables = variables)
-                includeString(not = not, first = first, second = second)
+                if (not) {
+                    notIncludeString(first = first, second = second)
+                } else {
+                    includeString(first = first, second = second)
+                }
             }
             is MatchPredicate -> {
                 val second = predicateFunc.valueToString(variables = variables)
-                match(not = not, first = first, second = second)
+                if (not) {
+                    notMatch(first = first, second = second)
+                } else {
+                    match(first = first, second = second)
+                }
             }
-            is ExistPredicate -> exist(not = not, first = first)
+            is ExistPredicate -> {
+                if (not) {
+                    notExist(first = first)
+                } else {
+                    exist(first = first)
+                }
+            }
         }
     } catch (e: InvalidVariableException) {
         return InvalidVariableResult(position = e.position, reason = e.reason)

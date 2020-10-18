@@ -17,7 +17,7 @@
  *
  */
 
-package com.orange.ccmd.hurl.core.run
+package com.orange.ccmd.hurl.core.predicate
 
 
 data class PredicateResult(

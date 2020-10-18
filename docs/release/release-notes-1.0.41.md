@@ -6,6 +6,8 @@
 
 ## 🐞 Bug Fixes
 
+- Fix predicates with not qualifier <https://github.com/Orange-OpenSource/hurl/issues/39> 
+
 ## 📔 Documentation
 
 ## 🔨 Dependency Upgrades
@@ -15,4 +17,4 @@
 - Upgrade to SL4J 1.7.30
 - Upgrade to Jackson 2.11.3
 - Upgrade to jsoup 1.13.1
-- Upgrade Apache HttpComponents 4.5.13 
+- Upgrade to Apache HttpComponents 4.5.13 
