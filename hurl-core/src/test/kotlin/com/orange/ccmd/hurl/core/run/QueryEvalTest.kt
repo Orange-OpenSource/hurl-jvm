@@ -39,7 +39,7 @@ import java.nio.charset.Charset
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
-class QueryEvalTest {
+internal class QueryEvalTest {
 
     @Test
     fun `evaluate status-query against a http response`() {

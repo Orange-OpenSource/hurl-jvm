@@ -339,8 +339,8 @@ internal class AssertTest {
                                                               actual:   list()
                                                               expected: matches string <.*>
                                                             """.trimIndent()),
-        Triple("""jsonpath "$.warnings" not matches ".*"""", true, """
-                                                            assert jsonpath not matches succeeded
+        Triple("""jsonpath "$.warnings" not matches ".*"""", false, """
+                                                            assert jsonpath not matches failed
                                                               actual:   list()
                                                               expected: doesn't match string <.*>
                                                             """.trimIndent()),
@@ -398,8 +398,8 @@ internal class AssertTest {
                                                               actual:   list()
                                                               expected: starts with string <something>
                                                             """.trimIndent()),
-        Triple("""jsonpath "$.warnings" not startsWith "something"""", true, """
-                                                            assert jsonpath not startsWith succeeded
+        Triple("""jsonpath "$.warnings" not startsWith "something"""", false, """
+                                                            assert jsonpath not startsWith failed
                                                               actual:   list()
                                                               expected: doesn't start with string <something>
                                                             """.trimIndent()),
@@ -457,8 +457,8 @@ internal class AssertTest {
                                                               actual:   list()
                                                               expected: contains string <something>
                                                             """.trimIndent()),
-        Triple("""jsonpath "$.warnings" not contains "something"""", true, """
-                                                            assert jsonpath not contains succeeded
+        Triple("""jsonpath "$.warnings" not contains "something"""", false, """
+                                                            assert jsonpath not contains failed
                                                               actual:   list()
                                                               expected: doesn't contain string <something>
                                                             """.trimIndent()),
