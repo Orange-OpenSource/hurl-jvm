@@ -2,13 +2,12 @@
 from flask import request,make_response
 from tests import app
 
-
 @app.route("/default-headers")
 def default_headers():
     print('> host:' + request.headers['Host'] + "'")
     assert 'hurl' in request.headers['User-Agent']
-    assert 'localhost' in request.headers['Host']
-    assert int(request.headers['Content-Length']) == 0
+    assert request.headers['Host'] == 'localhost:8000'
+    assert 'Content-Length' not in request.headers
     return ''
 
 

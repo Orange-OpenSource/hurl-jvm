@@ -224,12 +224,6 @@ internal fun HttpRequest.prepareHeaders(builder: RequestBuilder) {
         builder.addHeader(it.name, headerValue)
     }
 
-    // We add default Content-Length HTTP header only if request has no specified body.
-    if (body == null && formParams.isEmpty() && multipartFormDatas.isEmpty()) {
-        val contentLength = body?.data?.size ?: 0
-        builder.addHeader(HeaderNames.CONTENT_LENGTH, "$contentLength")
-    }
-
     // If no header Content-Type has been specified, we infer a default Content-Type
     // header depending on the body type specified.
     if (headersForName(HeaderNames.CONTENT_TYPE).isEmpty()) {

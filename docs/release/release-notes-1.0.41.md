@@ -7,7 +7,8 @@
 ## 🐞 Bug Fixes
 
 - Fix predicates with not qualifier <https://github.com/Orange-OpenSource/hurl/issues/39> 
-
+- Remove `Content-Length` request header when request body is empty.
+ 
 ## 📔 Documentation
 
 ## 🔨 Dependency Upgrades
