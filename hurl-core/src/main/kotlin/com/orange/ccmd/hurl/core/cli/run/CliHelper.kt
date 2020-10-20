@@ -44,6 +44,7 @@ class CliHelper {
             proxy: String?,
             followsRedirect: Boolean,
             toEntry: Int?,
+            outputFile: File?,
             reporterType: ReporterType = SIMPLE,
         ): CliReturnCode {
 
@@ -51,8 +52,8 @@ class CliHelper {
             val text = file.readText()
 
             val reporter = when (reporterType) {
-                SIMPLE -> SimpleReporter(text = text, fileName = fileName)
-                TEST -> TestReporter(text = text, fileName = fileName)
+                SIMPLE -> SimpleReporter(text = text, fileName = fileName, outputFile = outputFile)
+                TEST -> TestReporter(text = text, fileName = fileName, outputFile = outputFile)
             }
 
             reporter.reportStart()

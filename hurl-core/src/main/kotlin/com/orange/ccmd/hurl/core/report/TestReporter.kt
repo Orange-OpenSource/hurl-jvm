@@ -25,8 +25,9 @@ import com.orange.ccmd.hurl.core.run.InvalidVariableResult
 import com.orange.ccmd.hurl.core.utils.ansi
 import com.orange.ccmd.hurl.core.utils.lineAt
 import com.orange.ccmd.hurl.core.utils.logError
+import java.io.File
 
-class TestReporter(val text: String, val fileName: String): Reporter {
+class TestReporter(val text: String, val fileName: String,  val outputFile: File?): Reporter {
 
     override fun reportStart() {
         val file = "$fileName:".ansi.fg.bold

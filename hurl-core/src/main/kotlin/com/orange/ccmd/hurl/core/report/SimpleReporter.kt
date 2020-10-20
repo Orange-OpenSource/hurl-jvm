@@ -24,43 +24,46 @@ import com.orange.ccmd.hurl.core.run.InvalidVariableResult
 import com.orange.ccmd.hurl.core.run.RunResult
 import com.orange.ccmd.hurl.core.utils.lineAt
 import com.orange.ccmd.hurl.core.utils.logError
+import java.io.File
 
 
-class SimpleReporter(val text: String, val fileName: String): Reporter {
+class SimpleReporter(val text: String, val fileName: String, val outputFile: File?) : Reporter {
 
     override fun reportStart() {
     }
 
     override fun reportSyntaxError(error: Error) {
         logError(
-                fileName = fileName,
-                line = text.lineAt(error.position.line),
-                message = error.message,
-                position = error.position,
-                showPosition = true
+            fileName = fileName,
+            line = text.lineAt(error.position.line),
+            message = error.message,
+            position = error.position,
+            showPosition = true
         )
     }
 
     override fun reportResult(result: RunResult) {
         // Print any failed asserts or captures.
         result.entryResults
-                .flatMap { it.results }
-                .filterNot { it.succeeded }
-                .forEach {
-                    val line = text.lineAt(it.position.line)
-                    logError(
-                            fileName = fileName,
-                            line = line,
-                            message = it.message,
-                            position = it.position,
-                            showPosition = it is InvalidVariableResult
-                    )
-                }
+            .flatMap { it.results }
+            .filterNot { it.succeeded }
+            .forEach {
+                val line = text.lineAt(it.position.line)
+                logError(
+                    fileName = fileName,
+                    line = line,
+                    message = it.message,
+                    position = it.position,
+                    showPosition = it is InvalidVariableResult
+                )
+            }
 
         // If the run is successful, we dump the bytes body response
         if (result.succeeded) {
-            val lastResponseBody = result.entryResults.lastOrNull()?.httpResponse?.body
-            if (lastResponseBody != null) {
+            val lastResponseBody = result.entryResults.lastOrNull()?.httpResponse?.body ?: return
+            if (outputFile != null) {
+                outputFile.writeBytes(lastResponseBody)
+            } else {
                 System.out.write(lastResponseBody)
             }
         }
