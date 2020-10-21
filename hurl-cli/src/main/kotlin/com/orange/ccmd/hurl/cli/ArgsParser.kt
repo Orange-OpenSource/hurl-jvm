@@ -49,6 +49,7 @@ class ArgsParser {
     private val variableOption: Option = Option.builder()
         .longOpt("variable")
         .hasArg()
+        .argName("name=value")
         .desc("Define variable (example: --variable answer=42)")
         .build()
     private val followRedirectOption: Option = Option.builder("L")
@@ -59,6 +60,7 @@ class ArgsParser {
     private val fileRootOption: Option = Option.builder()
         .longOpt("file-root")
         .hasArg()
+        .argName("file")
         .desc("Specify the root directory for file inclusions")
         .build()
     private val versionOption: Option = Option.builder("V")
@@ -79,7 +81,8 @@ class ArgsParser {
     private val proxyOption: Option = Option.builder("x")
         .longOpt("proxy")
         .hasArg()
-        .desc("[PROTOCOL://]HOST[:PORT] Use proxy on given port, only http proxy is supported")
+        .argName("[protocol://]host[:port]")
+        .desc("Use proxy on given port, only http proxy is supported")
         .build()
     private val includeOption: Option = Option.builder("i")
         .longOpt("include")
@@ -89,7 +92,14 @@ class ArgsParser {
     private val toEntryOption: Option = Option.builder()
         .longOpt("to-entry")
         .hasArg()
-        .desc("Execute Hurl file to ENTRY_NUMBER (starting at 1). Ignore the remaining of the file. It is useful for debugging a session.")
+        .argName("entry-number")
+        .desc("Execute Hurl file to <entry-number> (starting at 1). Ignore the remaining of the file. It is useful for debugging a session.")
+        .build()
+    private val outputFileOption: Option = Option.builder("o")
+        .longOpt("output")
+        .hasArg()
+        .argName("file")
+        .desc("Write output to <file> instead of stdout")
         .build()
 
     private val options: Options = Options()
@@ -108,6 +118,7 @@ class ArgsParser {
             addOption(fileRootOption)
             addOption(includeOption)
             addOption(toEntryOption)
+            addOption(outputFileOption)
         }
     }
 
@@ -153,6 +164,7 @@ class ArgsParser {
             fileRoot = line.getOptionValue(fileRootOption.longOpt, defaultOptions.fileRoot),
             include = if (line.hasOption(includeOption.longOpt)) true else defaultOptions.include,
             toEntry = toEntry ?: defaultOptions.toEntry,
+            outputFile = line.getOptionValue(outputFileOption.longOpt, defaultOptions.outputFile),
         )
         return positional to options
     }

@@ -30,6 +30,7 @@ data class Options(
     val fileRoot: String? = null,
     val include: Boolean = false,
     val toEntry: Int? = null,
+    val outputFile: String? = null,
 ) {
     override fun toString(): String {
         var string = "* version: $version\n"
@@ -41,6 +42,7 @@ data class Options(
         string += "* insecure: $insecure\n"
         string += "* proxy: ${proxy ?: ""}\n"
         string += "* toEntry: ${toEntry ?: ""}\n"
+        string += "* outputFile: ${outputFile ?: ""}\n"
         return string
     }
 }
