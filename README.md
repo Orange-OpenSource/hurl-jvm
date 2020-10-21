@@ -13,21 +13,31 @@ Hurl JVM try to have the same functionality as the official [Hurl client](https:
 
 ```
 usage: java -jar hurl.jar file
-    --color             Colorize output (not yet implemented)
-    --file-root <arg>   Specify the root directory for file inclusions
- -h,--help              This help text
- -i,--include           Include HTTP headers in the output
- -k,--insecure          Allow connections to SSL sites without certs
- -L,--location          Follow redirect
-    --no-color          Do not colorize output (not yet implemented)
-    --to-entry <arg>    Execute Hurl file to ENTRY_NUMBER (starting at 1).
-                        Ignore the remaining of the file. It is useful for
-                        debugging a session.
- -V,--version           Show version number and quit
- -v,--verbose           Make the operation more talkative
-    --variable <arg>    Define variable (example: --variable answer=42)
- -x,--proxy <arg>       [PROTOCOL://]HOST[:PORT] Use proxy on given port,
-                        only http proxy is supported
+    --color                              Colorize output (not yet
+                                         implemented)
+    --file-root <file>                   Specify the root directory for
+                                         file inclusions
+ -h,--help                               This help text
+ -i,--include                            Include HTTP headers in the
+                                         output
+ -k,--insecure                           Allow connections to SSL sites
+                                         without certs
+ -L,--location                           Follow redirect
+    --no-color                           Do not colorize output (not yet
+                                         implemented)
+ -o,--output <file>                      Write output to <file> instead of
+                                         stdout
+    --to-entry <entry-number>            Execute Hurl file to
+                                         <entry-number> (starting at 1).
+                                         Ignore the remaining of the file.
+                                         It is useful for debugging a
+                                         session.
+ -V,--version                            Show version number and quit
+ -v,--verbose                            Make the operation more talkative
+    --variable <name=value>              Define variable (example:
+                                         --variable answer=42)
+ -x,--proxy <[protocol://]host[:port]>   Use proxy on given port, only
+                                         http proxy is supported
 ```
 
 ## Build
