@@ -106,6 +106,12 @@ class ArgsParser {
         .argName("file")
         .desc("Write output to <file> instead of stdout")
         .build()
+    private val userOption: Option = Option.builder("u")
+        .longOpt("user")
+        .hasArg()
+        .argName("user:password")
+        .desc("Specify the user name and password to use for server authentication (currently only Basic Authentication is supported)")
+        .build()
 
     private val options: Options = Options()
 
@@ -125,6 +131,7 @@ class ArgsParser {
             addOption(toEntryOption)
             addOption(compressedOption)
             addOption(outputFileOption)
+            addOption(userOption)
         }
     }
 
@@ -158,6 +165,11 @@ class ArgsParser {
             throw IllegalArgumentException("Invalid to-entry parameter")
         }
 
+        val user = line.getOptionValue(userOption.longOpt)
+        if (user != null && ":" !in user) {
+            throw IllegalArgumentException("user option should be <user:password>")
+        }
+
         val positional = line.args?.toList() ?: emptyList()
         val options = HurlOptions(
             help = if (line.hasOption(helpOption.longOpt)) true else defaultOptions.help,
@@ -172,6 +184,7 @@ class ArgsParser {
             toEntry = toEntry ?: defaultOptions.toEntry,
             compressed = if (line.hasOption(compressedOption.longOpt)) true else defaultOptions.compressed,
             outputFile = line.getOptionValue(outputFileOption.longOpt, defaultOptions.outputFile),
+            user = user ?: defaultOptions.user
         )
         return positional to options
     }

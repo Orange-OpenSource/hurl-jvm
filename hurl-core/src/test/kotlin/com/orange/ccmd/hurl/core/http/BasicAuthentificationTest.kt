@@ -19,17 +19,14 @@
 
 package com.orange.ccmd.hurl.core.http
 
-object HeaderNames {
-    const val ACCEPT_ENCODING = "Accept-Encoding"
-    const val AUTHORIZATION = "Authorization"
-    const val CONTENT_TYPE = "Content-Type"
-    const val CONTENT_ENCODING = "Content-Encoding"
-    const val CONTENT_LENGTH = "Content-Length"
-    const val COOKIE = "Cookie"
-    const val USER_AGENT = "User-Agent"
-}
+import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
 
-data class Header(
-    val name: String,
-    val value: String
-)
+class BasicAuthentificationTest {
+
+    @Test
+    fun `http header is valid`() {
+        val auth = BasicAuthentification(user = "bob", password = "secret")
+        assertEquals("Basic Ym9iOnNlY3JldA==", auth.headerValue)
+    }
+}

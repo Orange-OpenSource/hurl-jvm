@@ -34,6 +34,11 @@ usage: java -jar hurl.jar file
     --to-entry <entry-number>            Execute Hurl file to
                                          <entry-number> (starting at 1).
                                          Ignore the remaining of the file
+ -u,--user <user:password>               Specify the user name and
+                                         password to use for server
+                                         authentication (currently only
+                                         Basic Authentication is
+                                         supported)
  -V,--version                            Show version number and quit
  -v,--verbose                            Make the operation more talkative
     --variable <name=value>              Define variable (example:

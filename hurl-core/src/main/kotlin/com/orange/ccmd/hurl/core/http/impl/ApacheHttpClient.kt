@@ -19,11 +19,17 @@
 
 package com.orange.ccmd.hurl.core.http.impl
 
+import com.orange.ccmd.hurl.core.http.BasicAuthentification
 import com.orange.ccmd.hurl.core.http.BinaryRequestBody
 import com.orange.ccmd.hurl.core.http.Cookie
 import com.orange.ccmd.hurl.core.http.Encoding
 import com.orange.ccmd.hurl.core.http.FileFormData
-import com.orange.ccmd.hurl.core.http.HeaderNames
+import com.orange.ccmd.hurl.core.http.HeaderNames.ACCEPT_ENCODING
+import com.orange.ccmd.hurl.core.http.HeaderNames.AUTHORIZATION
+import com.orange.ccmd.hurl.core.http.HeaderNames.CONTENT_ENCODING
+import com.orange.ccmd.hurl.core.http.HeaderNames.CONTENT_TYPE
+import com.orange.ccmd.hurl.core.http.HeaderNames.COOKIE
+import com.orange.ccmd.hurl.core.http.HeaderNames.USER_AGENT
 import com.orange.ccmd.hurl.core.http.HttpClient
 import com.orange.ccmd.hurl.core.http.HttpRequest
 import com.orange.ccmd.hurl.core.http.HttpResponse
@@ -64,7 +70,9 @@ import java.nio.charset.StandardCharsets.UTF_8
  */
 internal class ApacheHttpClient(
     val allowsInsecure: Boolean = false,
-    val httpProxy: Proxy? = null
+    val httpProxy: Proxy? = null,
+    val authentification: BasicAuthentification? = null,
+    val compressed: Boolean = false
 ) : HttpClient {
     private val client: CloseableHttpClient
     private val cookieStore: CookieStore
@@ -114,7 +122,7 @@ internal class ApacheHttpClient(
         val builder = RequestBuilder.create(request.method)
 
         request.prepareUri(builder = builder)
-        request.prepareHeaders(builder = builder)
+        request.prepareHeaders(builder = builder, authentification = authentification, compressed = compressed, )
         request.prepareBody(builder = builder)
         request.prepareCookies(builder = builder)
 
@@ -141,7 +149,7 @@ internal class ApacheHttpClient(
         val version = resp.statusLine.protocolVersion.toString()
         resp.close()
 
-        val contentEncodingHeader = getHeader(headers = respHeaders, name = HeaderNames.CONTENT_ENCODING)
+        val contentEncodingHeader = getHeader(headers = respHeaders, name = CONTENT_ENCODING)
         val encodings = contentEncodingHeader
             ?.second
             ?.split(",")
@@ -222,9 +230,20 @@ internal fun HttpRequest.prepareUri(builder: RequestBuilder) {
     builder.uri = uri
 }
 
-internal fun HttpRequest.prepareHeaders(builder: RequestBuilder) {
+/**
+ * Add HTTP headers to a request builder
+ * @param builder a request builder
+ * @param authentification an optional basic authentification
+ * @param compressed request a compressed response
+ */
+internal fun HttpRequest.prepareHeaders(
+    builder: RequestBuilder,
+    authentification: BasicAuthentification? = null,
+    compressed: Boolean = false
+) {
+
     // TODO: Add default HTTP headers: User-Agent, Host, etc...
-    builder.addHeader(HeaderNames.USER_AGENT, "hurl-jvm/x.x.x")
+    builder.addHeader(USER_AGENT, "hurl-jvm/x.x.x")
 
     headers.forEach {
         // TODO: header in hurl can be any UTF-8 string. Usually, you can't
@@ -238,17 +257,25 @@ internal fun HttpRequest.prepareHeaders(builder: RequestBuilder) {
 
     // If no header Content-Type has been specified, we infer a default Content-Type
     // header depending on the body type specified.
-    if (headersForName(HeaderNames.CONTENT_TYPE).isEmpty()) {
+    if (headersForName(CONTENT_TYPE).isEmpty()) {
         when (body) {
             is JsonRequestBody -> {
-                builder.addHeader(HeaderNames.CONTENT_TYPE, "application/json")
+                builder.addHeader(CONTENT_TYPE, "application/json")
             }
             is XmlRequestBody -> {
-                builder.addHeader(HeaderNames.CONTENT_TYPE, "text/xml")
+                builder.addHeader(CONTENT_TYPE, "text/xml")
             }
             is BinaryRequestBody -> {
             }
         }
+    }
+
+    if (compressed) {
+        builder.addHeader(ACCEPT_ENCODING, "br, gzip, deflate")
+    }
+
+    if (authentification != null) {
+        builder.addHeader(AUTHORIZATION, authentification.headerValue)
     }
 }
 
@@ -322,6 +349,6 @@ internal fun HttpRequest.prepareCookies(builder: RequestBuilder) {
     val spec = RFC6265StrictSpec()
     val headers = spec.formatCookies(overriddenCookies)
     headers.forEach {
-        builder.addHeader(HeaderNames.COOKIE, it.value)
+        builder.addHeader(COOKIE, it.value)
     }
 }

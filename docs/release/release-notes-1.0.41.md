@@ -5,6 +5,7 @@
 - Add `--to-entry` cli option (<https://hurl.dev/docs/man-page.html#to-entry>)
 - Add `--compress` cli option
 - Add decoding support for Brotli, GZIP, Deflate encoder
+- Add `--user` cli option
 
 ## 🐞 Bug Fixes
 
@@ -20,4 +21,4 @@
 - Upgrade to SL4J 1.7.30
 - Upgrade to Jackson 2.11.3
 - Upgrade to jsoup 1.13.1
-- Upgrade to Apache HttpComponents 4.5.13 
+- Upgrade to Apache HttpComponents 4.5.13

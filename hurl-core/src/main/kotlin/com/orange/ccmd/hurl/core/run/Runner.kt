@@ -21,6 +21,7 @@ package com.orange.ccmd.hurl.core.run
 
 import com.orange.ccmd.hurl.core.ast.Entry
 import com.orange.ccmd.hurl.core.ast.HurlFile
+import com.orange.ccmd.hurl.core.http.BasicAuthentification
 import com.orange.ccmd.hurl.core.http.HttpClient
 import com.orange.ccmd.hurl.core.http.HttpRequest
 import com.orange.ccmd.hurl.core.http.HttpResult
@@ -28,9 +29,8 @@ import com.orange.ccmd.hurl.core.http.Proxy
 import com.orange.ccmd.hurl.core.http.impl.ApacheHttpClient
 import com.orange.ccmd.hurl.core.run.experimental.Command
 import com.orange.ccmd.hurl.core.run.log.RunnerLogger
-import com.orange.ccmd.hurl.core.variable.VariableJar
 import com.orange.ccmd.hurl.core.template.InvalidVariableException
-import java.io.File
+import com.orange.ccmd.hurl.core.variable.VariableJar
 import java.io.FileNotFoundException
 import java.time.Duration
 import java.time.Instant
@@ -59,9 +59,16 @@ data class Runner(
         } else {
             null
         }
+        val authentification = if (options.user != null) {
+            BasicAuthentification.fromString(options.user)
+        } else {
+            null
+        }
         httpClient = ApacheHttpClient(
             allowsInsecure = options.allowsInsecure,
-            httpProxy = httpProxy
+            httpProxy = httpProxy,
+            authentification = authentification,
+            compressed = options.compressed
         )
 
         variableJar = VariableJar.from(options.variables)
@@ -112,8 +119,7 @@ data class Runner(
         var requestSpec = try {
             entry.request.toHttpRequestSpec(
                 variables = variableJar,
-                fileRoot = options.fileRoot,
-                compressed = options.compressed
+                fileRoot = options.fileRoot
             )
         } catch (e: InvalidVariableException) {
             return EntryResult(errors = listOf(InvalidVariableResult(position = e.position, reason = e.reason)))
