@@ -32,6 +32,7 @@ data class Options(
     val toEntry: Int? = null,
     val compressed: Boolean = false,
     val outputFile: String? = null,
+    val user: String? = null,
 ) {
     override fun toString(): String {
         var string = "* version: $version\n"
@@ -45,6 +46,7 @@ data class Options(
         string += "* toEntry: ${toEntry ?: ""}\n"
         string += "* compressed: $compressed\n"
         string += "* outputFile: ${outputFile ?: ""}\n"
+        string += "* user: ${user ?: ""}\n"
         return string
     }
 }

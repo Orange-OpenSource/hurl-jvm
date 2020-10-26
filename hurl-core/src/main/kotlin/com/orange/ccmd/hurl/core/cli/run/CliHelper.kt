@@ -46,6 +46,7 @@ class CliHelper {
             toEntry: Int?,
             compressed: Boolean,
             outputFile: File?,
+            user: String?,
             reporterType: ReporterType = SIMPLE,
         ): CliReturnCode {
 
@@ -79,7 +80,8 @@ class CliHelper {
                     proxy = proxy,
                     followsRedirect = followsRedirect,
                     toEntry = toEntry,
-                    compressed = compressed
+                    compressed = compressed,
+                    user = user
                 )
             )
             val result = runner.run()
@@ -99,7 +101,7 @@ class CliHelper {
                         lastHttpResponse.body
                     }
 
-                    if (outputFile != null) {
+                        if (outputFile != null) {
                         // To support /dev/null on all platform, including Windows one,
                         // we explicitly disable writing on /dev/null (and nul https://gcc.gnu.org/legacy-ml/gcc-patches/2005-05/msg01793.html)
                         if (outputFile.path != "/dev/null" && outputFile.path != "nul") {
