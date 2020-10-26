@@ -19,31 +19,58 @@
 
 package com.orange.ccmd.hurl.core.http
 
+import com.orange.ccmd.hurl.core.codec.BrotliDecoder
+import com.orange.ccmd.hurl.core.codec.GzipDecoder
+import com.orange.ccmd.hurl.core.codec.ZlibDecoder
 import java.nio.ByteBuffer
 import java.nio.charset.CharacterCodingException
 import java.nio.charset.Charset
-import java.nio.charset.StandardCharsets
+import java.util.zip.ZipException
 
 
+// TODO: remplacer header Pair<String, String> par Header
 class HttpResponse(
     val version: String,
     val code: Int,
     val headers: List<Pair<String, String>>,
     val charset: Charset,
     val mimeType: String,
-    val body: ByteArray
+    val body: ByteArray,
+    val encodings: List<Encoding>
 ) {
 
-    val text: String?
+    fun getDecompressedBody(): ByteArray {
+        var buffer = body
+        for (encoding in encodings.reversed()) {
+            buffer = when (encoding) {
+                Encoding.GZIP -> try {
+                    GzipDecoder.decode(buffer)
+                } catch (e: ZipException) {
+                    throw IllegalArgumentException("invalid GZIP data")
+                }
+                Encoding.COMPRESS -> throw IllegalArgumentException("compress encoding not supported")
+                Encoding.DEFLATE -> ZlibDecoder.decode(buffer)
+                Encoding.IDENTITY -> buffer
+                Encoding.BR -> BrotliDecoder.decode(buffer)
+            }
+        }
+        return buffer
+    }
 
-    init {
-        val decoder = charset.newDecoder()
-        text = try {
-            decoder.decode(ByteBuffer.wrap(body)).toString()
+    fun getBodyAsText(): String? {
+        val decompressedBody = try {
+            getDecompressedBody()
+        } catch (ex: IllegalArgumentException) {
+            return null
+        }
+        val textDecoder = charset.newDecoder()
+        return try {
+            textDecoder.decode(ByteBuffer.wrap(decompressedBody)).toString()
         } catch (ex: CharacterCodingException) {
             null
         }
     }
+
 
     override fun toString(): String {
         return "HttpResponse(version='$version', code=$code, headers=$headers)"

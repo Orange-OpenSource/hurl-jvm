@@ -52,7 +52,8 @@ internal class QueryEvalTest {
             headers = emptyList(),
             charset = Charset.forName("utf-8"),
             mimeType = "text/plain",
-            body = ByteArray(0)
+            body = ByteArray(0),
+            encodings = emptyList()
         )
         val expected = QueryNumberResult(500)
         assertEquals(expected, query.eval(response))
@@ -69,7 +70,8 @@ internal class QueryEvalTest {
             headers = listOf("key1" to "value1", "key2" to "value2", "key3" to "value3", "key3" to "value3bis"),
             charset = Charset.forName("utf-8"),
             mimeType = "text/plain",
-            body = ByteArray(0)
+            body = ByteArray(0),
+            encodings = emptyList()
         )
         val expected = QueryStringResult("value2")
         assertEquals(expected, query.eval(response))
@@ -94,7 +96,8 @@ internal class QueryEvalTest {
             ),
             charset = Charset.forName("utf-8"),
             mimeType = "text/plain",
-            body = ByteArray(0)
+            body = ByteArray(0),
+            encodings = emptyList()
         )
         val expected = QueryStringResult("a3fWa")
         assertEquals(expected, query.eval(response = response, variables = VariableJar()))
@@ -115,7 +118,8 @@ internal class QueryEvalTest {
             ),
             charset = Charset.forName("utf-8"),
             mimeType = "text/plain",
-            body = ByteArray(0)
+            body = ByteArray(0),
+            encodings = emptyList()
         )
         val expected = QueryNoneResult
         assertEquals(expected, query.eval(response = response, variables = VariableJar()))
@@ -132,7 +136,8 @@ internal class QueryEvalTest {
             headers = emptyList(),
             charset = Charset.forName("UTF-8"),
             mimeType = "text/plain",
-            body = "café".trimIndent().toByteArray()
+            body = "café".trimIndent().toByteArray(),
+            encodings = emptyList()
         )
         val expected = QueryStringResult("café")
         assertEquals(expected, query.eval(response))
@@ -149,7 +154,8 @@ internal class QueryEvalTest {
             headers = emptyList(),
             charset = Charset.forName("UTF-8"),
             mimeType = "text/plain",
-            body = "café".toByteArray(charset = Charset.forName("ISO-8859-1"))
+            body = "café".toByteArray(charset = Charset.forName("ISO-8859-1")),
+            encodings = emptyList()
         )
         assertThrows<InvalidQueryException> { query.eval(response) }
     }
@@ -183,7 +189,8 @@ internal class QueryEvalTest {
                 headers = emptyList(),
                 charset = Charset.forName("UTF-8"),
                 mimeType = "text/html",
-                body = html.toByteArray()
+                body = html.toByteArray(),
+                encodings = emptyList()
             )
             assertEquals(expectedResult, query.eval(response = response, variables = variables))
         }
@@ -221,7 +228,8 @@ internal class QueryEvalTest {
                 headers = emptyList(),
                 charset = Charset.forName("UTF-8"),
                 mimeType = "application/json",
-                body = json.toByteArray()
+                body = json.toByteArray(),
+                encodings = emptyList()
             )
             assertEquals(expectedResult, query.eval(response = response, variables = variables))
         }
@@ -252,7 +260,8 @@ internal class QueryEvalTest {
                 headers = emptyList(),
                 charset = Charset.forName("UTF-8"),
                 mimeType = "text/html",
-                body = html.toByteArray()
+                body = html.toByteArray(),
+                encodings = emptyList()
             )
             assertEquals(expectedResult, query.eval(response = response, variables = variables))
         }

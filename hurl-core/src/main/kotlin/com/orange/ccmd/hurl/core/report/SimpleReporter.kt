@@ -27,7 +27,7 @@ import com.orange.ccmd.hurl.core.utils.logError
 import java.io.File
 
 
-class SimpleReporter(val text: String, val fileName: String, val outputFile: File?) : Reporter {
+class SimpleReporter(val text: String, val fileName: String) : Reporter {
 
     override fun reportStart() {
     }
@@ -58,14 +58,5 @@ class SimpleReporter(val text: String, val fileName: String, val outputFile: Fil
                 )
             }
 
-        // If the run is successful, we dump the bytes body response
-        if (result.succeeded) {
-            val lastResponseBody = result.entryResults.lastOrNull()?.httpResponse?.body ?: return
-            if (outputFile != null) {
-                outputFile.writeBytes(lastResponseBody)
-            } else {
-                System.out.write(lastResponseBody)
-            }
-        }
     }
 }

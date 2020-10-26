@@ -23,7 +23,8 @@ import com.orange.ccmd.hurl.core.ast.Json
 import com.orange.ccmd.hurl.core.ast.Request
 import com.orange.ccmd.hurl.core.ast.Xml
 import com.orange.ccmd.hurl.core.http.BinaryRequestBody
-import com.orange.ccmd.hurl.core.http.Cookie
+import com.orange.ccmd.hurl.core.http.Header
+import com.orange.ccmd.hurl.core.http.HeaderNames.ACCEPT_ENCODING
 import com.orange.ccmd.hurl.core.http.HttpRequest
 import com.orange.ccmd.hurl.core.http.JsonRequestBody
 import com.orange.ccmd.hurl.core.http.XmlRequestBody
@@ -34,13 +35,17 @@ import java.io.File
  * Create a HTTP spec request from a {%link Request%} node.
  * @param variables variables to use in templates
  * @param fileRoot root directory for File body node
- * @returna a spec request
+ * @param compressed request a compressed response using one of the algorithms br, gzip, deflate and automatically decompress the content.
+ * @return a a spec request
  */
-internal fun Request.toHttpRequestSpec(variables: VariableJar, fileRoot: File): HttpRequest {
+internal fun Request.toHttpRequestSpec(variables: VariableJar, fileRoot: File, compressed: Boolean): HttpRequest {
     val method = method.value
     val url = url.toUrl(variables)
     val queryStringParams = queryStringParamsSection?.params?.map { it.toQueryStringParam(variables) } ?: emptyList()
-    val headers = headers.map { it.toHeader(variables) }
+    val headers = headers.map { it.toHeader(variables) }.toMutableList()
+    if (compressed) {
+        headers.add(Header(name = ACCEPT_ENCODING, value = "br, gzip, deflate"))
+    }
     val data = body?.bytes?.toByteArray(variables = variables, fileRoot = fileRoot)
     val requestBody  = when {
         body == null || data == null -> { null }

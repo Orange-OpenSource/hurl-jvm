@@ -278,7 +278,8 @@ internal class AssertTest {
                         "warnings": [],
                         "state": "running"
                     }
-                """.trimIndent().toByteArray()
+                """.trimIndent().toByteArray(),
+                encodings = emptyList()
             )
 
             val result = assert.eval(response = response, variables = VariableJar())
@@ -323,7 +324,8 @@ internal class AssertTest {
                     <p></p>
                     <p></p>
                 </body>
-            """.trimIndent().toByteArray()
+            """.trimIndent().toByteArray(),
+                encodings = emptyList()
             )
 
             val result = assert.eval(response = response, variables = VariableJar())
@@ -382,7 +384,8 @@ internal class AssertTest {
                         "warnings": [],
                         "state": "running"
                     }
-                """.trimIndent().toByteArray()
+                """.trimIndent().toByteArray(),
+                encodings = emptyList()
             )
 
             val result = assert.eval(response = response, variables = VariableJar())
@@ -441,7 +444,8 @@ internal class AssertTest {
                         "warnings": [],
                         "state": "running"
                     }
-                """.trimIndent().toByteArray()
+                """.trimIndent().toByteArray(),
+                encodings = emptyList()
             )
 
             val result = assert.eval(response = response, variables = VariableJar())
@@ -500,7 +504,8 @@ internal class AssertTest {
                         "warnings": [],
                         "state": "running"
                     }
-                """.trimIndent().toByteArray()
+                """.trimIndent().toByteArray(),
+                encodings = emptyList()
             )
 
             val result = assert.eval(response = response, variables = VariableJar())
@@ -554,7 +559,8 @@ internal class AssertTest {
                         "warnings": [],
                         "state": "running"
                     }
-                """.trimIndent().toByteArray()
+                """.trimIndent().toByteArray(),
+                encodings = emptyList()
             )
 
             val result = assert.eval(response = response, variables = VariableJar())
@@ -607,7 +613,8 @@ internal class AssertTest {
                         "ids": [234, 567, 45, 789],
                         "states": [true, true, true]
                     }
-                """.trimIndent().toByteArray()
+                """.trimIndent().toByteArray(),
+                encodings = emptyList()
             )
 
             val result = assert.eval(response = response, variables = VariableJar())
@@ -656,7 +663,8 @@ internal class AssertTest {
                     <p></p>
                     <p></p>
                 </body>
-            """.trimIndent().toByteArray()
+            """.trimIndent().toByteArray(),
+                encodings = emptyList()
             )
 
             val result = assert.eval(response = response, variables = VariableJar())
@@ -731,7 +739,8 @@ internal class AssertTest {
                         "warnings": [],
                         "state": "running"
                     }
-                """.trimIndent().toByteArray()
+                """.trimIndent().toByteArray(),
+                encodings = emptyList()
             )
 
             val result = assert.eval(response = response, variables = VariableJar())

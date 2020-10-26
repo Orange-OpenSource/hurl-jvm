@@ -17,15 +17,26 @@
  *
  */
 
-package com.orange.ccmd.hurl.core.utils
+package com.orange.ccmd.hurl.core.codec
 
-// TODO: better formatting
-internal fun ByteArray.toHexString() = joinToString("") { "%02x".format(it) }
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.util.zip.GZIPInputStream
 
-internal fun ByteArray.string() = String(this, 0, size)
+object GzipDecoder : Decoder {
 
-internal fun ByteArray.slice(from: Int, to:Int) = sliceArray(from until to)
-
-internal fun ByteArray.slice(from: Int) = sliceArray(from until size)
-
-internal fun List<Int>.byteArray() = ByteArray(size) { pos -> this[pos].toByte() }
+    override fun decode(bytes: ByteArray): ByteArray {
+        val out = ByteArrayOutputStream()
+        val gis = GZIPInputStream(ByteArrayInputStream(bytes))
+        val buffer = ByteArray(1024)
+        while (true) {
+            val n = gis.read(buffer)
+            if (n < 0) {
+                break
+            }
+            out.write(buffer, 0, n)
+        }
+        out.close()
+        return out.toByteArray()
+    }
+}

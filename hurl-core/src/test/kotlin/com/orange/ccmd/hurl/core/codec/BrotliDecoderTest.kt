@@ -17,15 +17,24 @@
  *
  */
 
-package com.orange.ccmd.hurl.core.utils
+package com.orange.ccmd.hurl.core.codec
 
-// TODO: better formatting
-internal fun ByteArray.toHexString() = joinToString("") { "%02x".format(it) }
+import com.orange.ccmd.hurl.core.utils.byteArray
+import com.orange.ccmd.hurl.core.utils.string
+import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
 
-internal fun ByteArray.string() = String(this, 0, size)
 
-internal fun ByteArray.slice(from: Int, to:Int) = sliceArray(from until to)
+class BrotliDecoderTest {
 
-internal fun ByteArray.slice(from: Int) = sliceArray(from until size)
+    @Test
+    fun `decode a brotli compressed byte stream`() {
 
-internal fun List<Int>.byteArray() = ByteArray(size) { pos -> this[pos].toByte() }
+        val coded = listOf(
+           0x8f, 0x05, 0x80, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x20, 0x77, 0x6f, 0x72, 0x6c, 0x64, 0x21, 0x03,
+        ).byteArray()
+
+        val decoded = BrotliDecoder.decode(bytes = coded)
+        assertEquals("Hello world!", decoded.string())
+    }
+}

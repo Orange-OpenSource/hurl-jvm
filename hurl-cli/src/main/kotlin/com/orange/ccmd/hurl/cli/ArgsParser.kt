@@ -93,7 +93,12 @@ class ArgsParser {
         .longOpt("to-entry")
         .hasArg()
         .argName("entry-number")
-        .desc("Execute Hurl file to <entry-number> (starting at 1). Ignore the remaining of the file. It is useful for debugging a session.")
+        .desc("Execute Hurl file to <entry-number> (starting at 1). Ignore the remaining of the file")
+        .build()
+    private val compressedOption: Option = Option.builder()
+        .longOpt("compressed")
+        .hasArg(false)
+        .desc("Request a compressed response using one of the algorithms br, gzip, deflate and automatically decompress the content")
         .build()
     private val outputFileOption: Option = Option.builder("o")
         .longOpt("output")
@@ -118,6 +123,7 @@ class ArgsParser {
             addOption(fileRootOption)
             addOption(includeOption)
             addOption(toEntryOption)
+            addOption(compressedOption)
             addOption(outputFileOption)
         }
     }
@@ -164,6 +170,7 @@ class ArgsParser {
             fileRoot = line.getOptionValue(fileRootOption.longOpt, defaultOptions.fileRoot),
             include = if (line.hasOption(includeOption.longOpt)) true else defaultOptions.include,
             toEntry = toEntry ?: defaultOptions.toEntry,
+            compressed = if (line.hasOption(compressedOption.longOpt)) true else defaultOptions.compressed,
             outputFile = line.getOptionValue(outputFileOption.longOpt, defaultOptions.outputFile),
         )
         return positional to options

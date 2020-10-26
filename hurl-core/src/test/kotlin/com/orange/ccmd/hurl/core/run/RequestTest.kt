@@ -52,7 +52,8 @@ internal class RequestTest {
         val request = request(hurl)
         val specRequest = request.toHttpRequestSpec(
             variables = from(mapOf("c" to "yellow")),
-            fileRoot = File("")
+            fileRoot = File(""),
+            compressed = false,
         )
 
         assertEquals("POST", specRequest.method)

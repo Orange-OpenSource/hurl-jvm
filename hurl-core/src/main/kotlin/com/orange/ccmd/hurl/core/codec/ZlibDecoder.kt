@@ -17,15 +17,23 @@
  *
  */
 
-package com.orange.ccmd.hurl.core.utils
+package com.orange.ccmd.hurl.core.codec
 
-// TODO: better formatting
-internal fun ByteArray.toHexString() = joinToString("") { "%02x".format(it) }
+import java.io.ByteArrayOutputStream
+import java.util.zip.Inflater
 
-internal fun ByteArray.string() = String(this, 0, size)
+object ZlibDecoder : Decoder {
 
-internal fun ByteArray.slice(from: Int, to:Int) = sliceArray(from until to)
-
-internal fun ByteArray.slice(from: Int) = sliceArray(from until size)
-
-internal fun List<Int>.byteArray() = ByteArray(size) { pos -> this[pos].toByte() }
+    override fun decode(bytes: ByteArray): ByteArray {
+        val inflater = Inflater()
+        inflater.setInput(bytes)
+        val out = ByteArrayOutputStream()
+        val buffer = ByteArray(1024)
+        while (!inflater.finished()) {
+            val count = inflater.inflate(buffer);
+            out.write(buffer, 0, count);
+        }
+        out.close()
+        return out.toByteArray()
+    }
+}

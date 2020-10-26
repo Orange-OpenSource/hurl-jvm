@@ -339,7 +339,8 @@ runtimeClasspath - Runtime classpath of compilation 'main' (target  (jvm)).
 |    |    \--- commons-codec:commons-codec:1.11
 |    +--- org.apache.httpcomponents:httpmime:4.5.13
 |    |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
-|    \--- org.slf4j:slf4j-api:1.7.30
+|    +--- org.slf4j:slf4j-api:1.7.30
+|    \--- org.brotli:dec:0.1.2
 +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.10 (*)
 +--- commons-cli:commons-cli:1.4
 \--- org.slf4j:slf4j-jdk14:1.7.30
@@ -476,7 +477,8 @@ testRuntimeClasspath - Runtime classpath of compilation 'test' (target  (jvm)).
 |    |    \--- commons-codec:commons-codec:1.11
 |    +--- org.apache.httpcomponents:httpmime:4.5.13
 |    |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
-|    \--- org.slf4j:slf4j-api:1.7.30
+|    +--- org.slf4j:slf4j-api:1.7.30
+|    \--- org.brotli:dec:0.1.2
 +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.10 (*)
 +--- commons-cli:commons-cli:1.4
 +--- org.slf4j:slf4j-jdk14:1.7.30

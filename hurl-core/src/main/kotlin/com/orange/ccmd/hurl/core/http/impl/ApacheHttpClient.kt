@@ -21,6 +21,7 @@ package com.orange.ccmd.hurl.core.http.impl
 
 import com.orange.ccmd.hurl.core.http.BinaryRequestBody
 import com.orange.ccmd.hurl.core.http.Cookie
+import com.orange.ccmd.hurl.core.http.Encoding
 import com.orange.ccmd.hurl.core.http.FileFormData
 import com.orange.ccmd.hurl.core.http.HeaderNames
 import com.orange.ccmd.hurl.core.http.HttpClient
@@ -89,6 +90,7 @@ internal class ApacheHttpClient(
         builder = builder
             .setDefaultCookieStore(cookieStore)
             .disableRedirectHandling()
+            .disableContentCompression()
             .setDefaultRequestConfig(globalConfig)
         // Configure proxy if a proxy have been provided:
         if (httpProxy != null) {
@@ -139,13 +141,20 @@ internal class ApacheHttpClient(
         val version = resp.statusLine.protocolVersion.toString()
         resp.close()
 
+        val contentEncodingHeader = getHeader(headers = respHeaders, name = HeaderNames.CONTENT_ENCODING)
+        val encodings = contentEncodingHeader
+            ?.second
+            ?.split(",")
+            ?.mapNotNull { Encoding.fromValue(it.trim()) }
+
         val response = HttpResponse(
             version = version,
             code = statusCode,
             headers = respHeaders,
             charset = contentType.charset ?: Charsets.UTF_8,
             mimeType = contentType.mimeType,
-            body = respBody
+            body = respBody,
+            encodings = encodings ?: emptyList()
         )
 
         val cookies = cookieStore.cookies.map {
@@ -156,9 +165,8 @@ internal class ApacheHttpClient(
                 expires = it.expiryDate,
                 name = it.name,
                 value = it.value,
-                )
+            )
         }
-
 
         return HttpResult(
             request = request,
@@ -166,6 +174,10 @@ internal class ApacheHttpClient(
             response = response,
             cookies = cookies
         )
+    }
+
+    private fun getHeader(headers: List<Pair<String, String>>, name: String): Pair<String, String>? {
+        return headers.firstOrNull { it.first.toLowerCase() == name.toLowerCase() }
     }
 
 

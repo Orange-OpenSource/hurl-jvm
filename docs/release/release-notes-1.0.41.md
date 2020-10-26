@@ -3,6 +3,8 @@
 ## ⭐ New Features
 
 - Add `--to-entry` cli option (<https://hurl.dev/docs/man-page.html#to-entry>)
+- Add `--compress` cli option
+- Add decoding support for Brotli, GZIP, Deflate encoder
 
 ## 🐞 Bug Fixes
 

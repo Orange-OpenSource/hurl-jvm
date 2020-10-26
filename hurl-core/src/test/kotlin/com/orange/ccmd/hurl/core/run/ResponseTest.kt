@@ -40,7 +40,8 @@ internal class ResponseTest {
         headers = listOf("x-app-0" to "var0", "x-app-1" to "var1", "x-app-2" to "var2"),
         charset = Charset.forName("UTF-8"),
         mimeType = "application/json",
-        body = """{"state": "running", "id": "123"}""".toByteArray()
+        body = """{"state": "running", "id": "123"}""".toByteArray(),
+        encodings = emptyList()
     )
 
 
