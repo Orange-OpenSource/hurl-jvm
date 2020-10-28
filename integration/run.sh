@@ -7,7 +7,7 @@ echo "$hurl"
 for hurl_file in "$@"; do
     set +e
 
-    options=("--color")
+    options=("")
     if test -f "${hurl_file%.*}.options"; then
         options+=("$(cat "${hurl_file%.*}.options")")
     fi
