@@ -36,7 +36,9 @@ import java.io.File
  * @property proxy use proxy on given port (ex: localhost:3128)
  * @property followsRedirect follow redirect (HTTP 3xx status code). Default is false.
  * @property compressed request a compressed response using one of the algorithms br, gzip, deflate and automatically decompress the content.
- * @property user Specify the user name and password to use for server authentication.
+ * @property user specify the user name and password to use for server authentication.
+ * @property connectTimeoutInSecond timeout in seconds until a connection is established
+ * @property maxTime maximum time in seconds that you allow a request/response to take. This is the standard timeout.
  */
 data class Options(
     val variables: Map<String, String> = emptyMap(),
@@ -49,4 +51,6 @@ data class Options(
     val toEntry: Int? = null,
     val compressed: Boolean = false,
     val user: String? = null,
+    val connectTimeoutInSecond: Int = 60,
+    val maxTime: Int? = null
 )

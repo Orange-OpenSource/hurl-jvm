@@ -94,6 +94,8 @@ class App {
                 compressed = options.compressed,
                 outputFile = options.outputFile?.let { File(options.outputFile) },
                 user = options.user,
+                connectTimeoutInSecond = options.connectTimeoutInSecond,
+                maxTime = options.maxTime
             )
             if (ret != SUCCESS) {
                 returnCode = ret

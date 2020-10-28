@@ -3,9 +3,11 @@
 ## ⭐ New Features
 
 - Add `--to-entry` cli option (<https://hurl.dev/docs/man-page.html#to-entry>)
-- Add `--compress` cli option
+- Add `--compress` cli option (<https://hurl.dev/docs/man-page.html#compress>)
 - Add decoding support for Brotli, GZIP, Deflate encoder
-- Add `--user` cli option
+- Add `--user` cli option (<https://hurl.dev/docs/man-page.html#user>)
+- Add `--connect-timeout` cli option (<https://hurl.dev/docs/man-page.html#connect-timeout>)
+- Add `--max-time` cli option (<https://hurl.dev/docs/man-page.html#max-time>)
 
 ## 🐞 Bug Fixes
 

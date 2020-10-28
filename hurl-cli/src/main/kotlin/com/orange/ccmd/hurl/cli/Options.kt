@@ -33,6 +33,8 @@ data class Options(
     val compressed: Boolean = false,
     val outputFile: String? = null,
     val user: String? = null,
+    val connectTimeoutInSecond: Int = 60,
+    val maxTime: Int? = null
 ) {
     override fun toString(): String {
         var string = "* version: $version\n"
@@ -47,6 +49,7 @@ data class Options(
         string += "* compressed: $compressed\n"
         string += "* outputFile: ${outputFile ?: ""}\n"
         string += "* user: ${user ?: ""}\n"
+        string += "* connectTimeout: $connectTimeoutInSecond\n"
         return string
     }
 }

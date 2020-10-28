@@ -19,6 +19,9 @@ usage: java -jar hurl.jar file
                                          using one of the algorithms br,
                                          gzip, deflate and automatically
                                          decompress the content
+    --connect-timeout <SECONDS>          Maximum time in seconds that you
+                                         allow Hurl’s connection to take.
+                                         See also -m, --max-time option.
     --file-root <file>                   Specify the root directory for
                                          file inclusions
  -h,--help                               This help text
@@ -27,6 +30,11 @@ usage: java -jar hurl.jar file
  -k,--insecure                           Allow connections to SSL sites
                                          without certs
  -L,--location                           Follow redirect
+ -m,--max-time <SECONDS>                 Maximum time in seconds that you
+                                         allow a request/response to take.
+                                         This is the standard timeout.
+                                         See also --connect-timeout
+                                         option.
     --no-color                           Do not colorize output (not yet
                                          implemented)
  -o,--output <file>                      Write output to <file> instead of
