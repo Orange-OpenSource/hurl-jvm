@@ -39,6 +39,7 @@ import com.orange.ccmd.hurl.core.http.Mime
 import com.orange.ccmd.hurl.core.http.Proxy
 import com.orange.ccmd.hurl.core.http.TextFormData
 import com.orange.ccmd.hurl.core.http.XmlRequestBody
+import com.orange.ccmd.hurl.core.utils.addTimer
 import org.apache.http.HttpHost
 import org.apache.http.client.CookieStore
 import org.apache.http.client.config.CookieSpecs
@@ -72,7 +73,9 @@ internal class ApacheHttpClient(
     val allowsInsecure: Boolean = false,
     val httpProxy: Proxy? = null,
     val authentification: BasicAuthentification? = null,
-    val compressed: Boolean = false
+    val compressed: Boolean = false,
+    val connectTimeoutInSecond: Int = 60,
+    val maxTime: Int? = null
 ) : HttpClient {
     private val client: CloseableHttpClient
     private val cookieStore: CookieStore
@@ -93,6 +96,7 @@ internal class ApacheHttpClient(
 
         val globalConfig = RequestConfig.custom()
             .setCookieSpec(CookieSpecs.STANDARD)
+            .setConnectTimeout(connectTimeoutInSecond * 1000)
             .build()
 
         builder = builder
@@ -122,17 +126,22 @@ internal class ApacheHttpClient(
         val builder = RequestBuilder.create(request.method)
 
         request.prepareUri(builder = builder)
-        request.prepareHeaders(builder = builder, authentification = authentification, compressed = compressed, )
+        request.prepareHeaders(builder = builder, authentification = authentification, compressed = compressed)
         request.prepareBody(builder = builder)
         request.prepareCookies(builder = builder)
 
+
+        val uri = builder.uri
+        val targetHost = if (httpProxy == null) { null } else { HttpHost(uri.host, uri.port, uri.scheme) }
+        val req = builder.build()
+        if (maxTime != null) {
+            addTimer(maxTime) {
+                req.abort()
+            }
+        }
         val resp = if (httpProxy == null) {
-            val req = builder.build()
             client.execute(req)
         } else {
-            val uri = builder.uri
-            val targetHost = HttpHost(uri.host, uri.port, uri.scheme)
-            val req = builder.build()
             client.execute(targetHost, req)
         }
 

@@ -47,6 +47,8 @@ class CliHelper {
             compressed: Boolean,
             outputFile: File?,
             user: String?,
+            connectTimeoutInSecond: Int,
+            maxTime: Int?,
             reporterType: ReporterType = SIMPLE,
         ): CliReturnCode {
 
@@ -81,7 +83,9 @@ class CliHelper {
                     followsRedirect = followsRedirect,
                     toEntry = toEntry,
                     compressed = compressed,
-                    user = user
+                    user = user,
+                    connectTimeoutInSecond = connectTimeoutInSecond,
+                    maxTime = maxTime
                 )
             )
             val result = runner.run()

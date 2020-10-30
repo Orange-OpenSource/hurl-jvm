@@ -68,7 +68,9 @@ data class Runner(
             allowsInsecure = options.allowsInsecure,
             httpProxy = httpProxy,
             authentification = authentification,
-            compressed = options.compressed
+            compressed = options.compressed,
+            connectTimeoutInSecond = options.connectTimeoutInSecond,
+            maxTime = options.maxTime
         )
 
         variableJar = VariableJar.from(options.variables)

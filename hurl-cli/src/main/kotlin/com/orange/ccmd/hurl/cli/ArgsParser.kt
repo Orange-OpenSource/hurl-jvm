@@ -112,6 +112,18 @@ class ArgsParser {
         .argName("user:password")
         .desc("Specify the user name and password to use for server authentication (currently only Basic Authentication is supported)")
         .build()
+    private val connectTimeoutOption: Option = Option.builder()
+        .longOpt("connect-timeout")
+        .hasArg()
+        .argName("SECONDS")
+        .desc("Maximum time in seconds that you allow Hurl’s connection to take.\nSee also -m, --max-time option.")
+        .build()
+    private val maxTimeOption: Option = Option.builder("m")
+        .longOpt("max-time")
+        .hasArg()
+        .argName("SECONDS")
+        .desc("Maximum time in seconds that you allow a request/response to take. This is the standard timeout.\nSee also --connect-timeout option.")
+        .build()
 
     private val options: Options = Options()
 
@@ -132,6 +144,8 @@ class ArgsParser {
             addOption(compressedOption)
             addOption(outputFileOption)
             addOption(userOption)
+            addOption(connectTimeoutOption)
+            addOption(maxTimeOption)
         }
     }
 
@@ -165,6 +179,18 @@ class ArgsParser {
             throw IllegalArgumentException("Invalid to-entry parameter")
         }
 
+        val connectTimeout = try {
+            line.getOptionValue(connectTimeoutOption.longOpt)?.toInt()
+        } catch (e: NumberFormatException) {
+            throw IllegalArgumentException("Invalid connect-timeout parameter")
+        }
+
+        val maxTime = try {
+            line.getOptionValue(maxTimeOption.longOpt)?.toInt()
+        } catch (e: NumberFormatException) {
+            throw IllegalArgumentException("Invalid max-time parameter")
+        }
+
         val user = line.getOptionValue(userOption.longOpt)
         if (user != null && ":" !in user) {
             throw IllegalArgumentException("user option should be <user:password>")
@@ -184,7 +210,9 @@ class ArgsParser {
             toEntry = toEntry ?: defaultOptions.toEntry,
             compressed = if (line.hasOption(compressedOption.longOpt)) true else defaultOptions.compressed,
             outputFile = line.getOptionValue(outputFileOption.longOpt, defaultOptions.outputFile),
-            user = user ?: defaultOptions.user
+            user = user ?: defaultOptions.user,
+            connectTimeoutInSecond = connectTimeout ?: defaultOptions.connectTimeoutInSecond,
+            maxTime = maxTime ?: defaultOptions.maxTime
         )
         return positional to options
     }
