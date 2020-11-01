@@ -34,9 +34,7 @@ compileClasspath - Compile classpath for compilation 'main' (target  (jvm)).
 |    |    \--- org.jetbrains:annotations:13.0
 |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10
 |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
-+--- commons-cli:commons-cli:1.4
-\--- org.slf4j:slf4j-jdk14:1.7.30
-     \--- org.slf4j:slf4j-api:1.7.30
+\--- commons-cli:commons-cli:1.4
 
 compileOnly - Compile only dependencies for compilation 'main' (target  (jvm)). (n)
 No dependencies
@@ -252,8 +250,7 @@ No dependencies
 implementation - Implementation only dependencies for compilation 'main' (target  (jvm)). (n)
 +--- project hurl-core (n)
 +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.10 (n)
-+--- commons-cli:commons-cli:1.4 (n)
-\--- org.slf4j:slf4j-jdk14:1.7.30 (n)
+\--- commons-cli:commons-cli:1.4 (n)
 
 implementationDependenciesMetadata
 +--- project :hurl-core
@@ -263,9 +260,7 @@ implementationDependenciesMetadata
 |    |    \--- org.jetbrains:annotations:13.0
 |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10
 |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
-+--- commons-cli:commons-cli:1.4
-\--- org.slf4j:slf4j-jdk14:1.7.30
-     \--- org.slf4j:slf4j-api:1.7.30
+\--- commons-cli:commons-cli:1.4
 
 kotlinCompilerClasspath
 \--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.4.10
@@ -332,19 +327,16 @@ runtimeClasspath - Runtime classpath of compilation 'main' (target  (jvm)).
 |    |    +--- net.minidev:json-smart:2.3
 |    |    |    \--- net.minidev:accessors-smart:1.2
 |    |    |         \--- org.ow2.asm:asm:5.0.4
-|    |    \--- org.slf4j:slf4j-api:1.7.25 -> 1.7.30
+|    |    \--- org.slf4j:slf4j-api:1.7.25
 |    +--- org.apache.httpcomponents:httpclient:4.5.13
 |    |    +--- org.apache.httpcomponents:httpcore:4.4.13
 |    |    +--- commons-logging:commons-logging:1.2
 |    |    \--- commons-codec:commons-codec:1.11
 |    +--- org.apache.httpcomponents:httpmime:4.5.13
 |    |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
-|    +--- org.slf4j:slf4j-api:1.7.30
 |    \--- org.brotli:dec:0.1.2
 +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.10 (*)
-+--- commons-cli:commons-cli:1.4
-\--- org.slf4j:slf4j-jdk14:1.7.30
-     \--- org.slf4j:slf4j-api:1.7.30
+\--- commons-cli:commons-cli:1.4
 
 runtimeElements - Elements of runtime for main. (n)
 No dependencies
@@ -379,8 +371,6 @@ testCompileClasspath - Compile classpath for compilation 'test' (target  (jvm)).
 |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10
 |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
 +--- commons-cli:commons-cli:1.4
-+--- org.slf4j:slf4j-jdk14:1.7.30
-|    \--- org.slf4j:slf4j-api:1.7.30
 +--- org.jetbrains.kotlin:kotlin-test:1.4.10
 |    +--- org.jetbrains.kotlin:kotlin-test-common:1.4.10
 |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
@@ -424,8 +414,6 @@ testImplementationDependenciesMetadata
 |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10
 |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
 +--- commons-cli:commons-cli:1.4
-+--- org.slf4j:slf4j-jdk14:1.7.30
-|    \--- org.slf4j:slf4j-api:1.7.30
 +--- org.jetbrains.kotlin:kotlin-test:1.4.10
 |    +--- org.jetbrains.kotlin:kotlin-test-common:1.4.10
 |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
@@ -470,19 +458,16 @@ testRuntimeClasspath - Runtime classpath of compilation 'test' (target  (jvm)).
 |    |    +--- net.minidev:json-smart:2.3
 |    |    |    \--- net.minidev:accessors-smart:1.2
 |    |    |         \--- org.ow2.asm:asm:5.0.4
-|    |    \--- org.slf4j:slf4j-api:1.7.25 -> 1.7.30
+|    |    \--- org.slf4j:slf4j-api:1.7.25
 |    +--- org.apache.httpcomponents:httpclient:4.5.13
 |    |    +--- org.apache.httpcomponents:httpcore:4.4.13
 |    |    +--- commons-logging:commons-logging:1.2
 |    |    \--- commons-codec:commons-codec:1.11
 |    +--- org.apache.httpcomponents:httpmime:4.5.13
 |    |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
-|    +--- org.slf4j:slf4j-api:1.7.30
 |    \--- org.brotli:dec:0.1.2
 +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.10 (*)
 +--- commons-cli:commons-cli:1.4
-+--- org.slf4j:slf4j-jdk14:1.7.30
-|    \--- org.slf4j:slf4j-api:1.7.30
 +--- org.jetbrains.kotlin:kotlin-test:1.4.10
 |    +--- org.jetbrains.kotlin:kotlin-test-common:1.4.10
 |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10

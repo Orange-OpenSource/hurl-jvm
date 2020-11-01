@@ -30,9 +30,6 @@ import com.orange.ccmd.hurl.fmt.highlight.TermFormatter
 import com.orange.ccmd.hurl.fmt.lint.LintFormatter
 import java.io.File
 import java.util.*
-import java.util.logging.ConsoleHandler
-import java.util.logging.Level
-import java.util.logging.Logger as JulLogger
 
 
 class App {
@@ -64,9 +61,7 @@ class App {
             return OK
         }
 
-
         val stdin = "-"
-        configureLogging(verbose = options.verbose)
 
         if (options.inplace && stdin in positional) {
             println("inplace option not compatible with stdin (-).")
@@ -93,21 +88,6 @@ class App {
 
     internal val version: String
         get() = Properties("application.properties").get["version"] ?: "undefined"
-
-    internal fun configureLogging(verbose: Boolean) {
-        System.setProperty("java.util.logging.SimpleFormatter.format", "%5\$s%n")
-        val julLogger = JulLogger.getLogger("com.orange.ccmd.hurl")
-        julLogger.level = Level.FINE
-        julLogger.useParentHandlers = false
-
-        val handler = ConsoleHandler()
-        handler.level = if (verbose) {
-            Level.FINE
-        } else {
-            Level.INFO
-        }
-        julLogger.addHandler(handler)
-    }
 
     internal fun formatFile(text: String, fileName: String, format: String, theme: String): String? {
 

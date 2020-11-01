@@ -23,17 +23,10 @@ import com.orange.ccmd.hurl.core.cli.run.CliHelper
 import com.orange.ccmd.hurl.core.cli.run.CliReturnCode.OPTIONS_PARSING_ERROR
 import com.orange.ccmd.hurl.core.cli.run.CliReturnCode.SUCCESS
 import com.orange.ccmd.hurl.core.utils.Properties
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import java.io.File
-import java.util.logging.ConsoleHandler
-import java.util.logging.Level
-import java.util.logging.Logger as JulLogger
 
 
 class App {
-
-    private val logger: Logger = LoggerFactory.getLogger(javaClass)
 
     /**
      * Entry point for the cli.
@@ -65,9 +58,6 @@ class App {
             println("hurl (jar) $version")
             return SUCCESS.value
         }
-
-        configureLogging(verbose = options.verbose)
-        logger.debug("$options")
 
         var returnCode = SUCCESS
 
@@ -108,15 +98,4 @@ class App {
     private val version: String
         get() = Properties("application.properties").get["version"] ?: "undefined"
 
-    private fun configureLogging(verbose: Boolean) {
-        System.setProperty("java.util.logging.SimpleFormatter.format", "%5\$s%n")
-        val julLogger = JulLogger.getLogger("com.orange.ccmd.hurl")
-        julLogger.level = Level.FINE
-        julLogger.useParentHandlers = false
-
-        val handler = ConsoleHandler()
-        // level quiet -> Level.OFF
-        handler.level = if (verbose) { Level.FINE } else { Level.INFO }
-        julLogger.addHandler(handler)
-    }
 }

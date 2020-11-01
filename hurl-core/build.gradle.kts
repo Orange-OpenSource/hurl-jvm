@@ -27,7 +27,6 @@ val jacksonVersion = "2.11.3"
 val jsoupVersion = "1.13.1"
 val jsonPathVersion = "2.4.0"
 val apacheHttpVersion = "4.5.13"
-val sl4jVersion = "1.7.30"
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
@@ -36,10 +35,7 @@ dependencies {
     implementation("com.jayway.jsonpath:json-path:$jsonPathVersion")
     implementation("org.apache.httpcomponents:httpclient:$apacheHttpVersion")
     implementation("org.apache.httpcomponents:httpmime:$apacheHttpVersion")
-    implementation("org.slf4j:slf4j-api:$sl4jVersion")
     implementation("org.brotli:dec:$brotliVersion")
-
-    testImplementation("org.slf4j:slf4j-nop:$sl4jVersion")
 }
 
 tasks.jacocoTestReport {

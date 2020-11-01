@@ -20,20 +20,23 @@
 package com.orange.ccmd.hurl.core.cli.run
 
 import com.orange.ccmd.hurl.core.ast.HurlParser
-import com.orange.ccmd.hurl.core.report.ReporterType
-import com.orange.ccmd.hurl.core.report.ReporterType.SIMPLE
-import com.orange.ccmd.hurl.core.report.ReporterType.TEST
-import com.orange.ccmd.hurl.core.report.SimpleReporter
-import com.orange.ccmd.hurl.core.report.TestReporter
 import com.orange.ccmd.hurl.core.run.Options
 import com.orange.ccmd.hurl.core.run.Runner
+import com.orange.ccmd.hurl.core.utils.lineAt
+import com.orange.ccmd.hurl.core.utils.logError
 import java.io.File
 
-
+/**
+ * Helper for running an Hurl file
+ */
 class CliHelper {
 
     companion object {
 
+        /**
+         * Runs an Hurl file.
+         *
+         */
         fun run(
             file: File,
             variables: Map<String, String>,
@@ -48,27 +51,32 @@ class CliHelper {
             outputFile: File?,
             user: String?,
             connectTimeoutInSecond: Int,
-            maxTime: Int?,
-            reporterType: ReporterType = SIMPLE,
+            maxTime: Int?
         ): CliReturnCode {
 
             val fileName = file.absoluteFile.name
             val text = file.readText()
 
-            val reporter = when (reporterType) {
-                SIMPLE -> SimpleReporter(text = text, fileName = fileName)
-                TEST -> TestReporter(text = text, fileName = fileName)
-            }
-
-            reporter.reportStart()
-
             // Parse the input files and report any error.
             val parser = HurlParser(text = text)
             val hurl = parser.parse()
             if (hurl == null) {
-                reporter.reportSyntaxError(error = parser.rootError)
+                val error = parser.rootError
+                logError(
+                    fileName = fileName,
+                    line = text.lineAt(error.position.line),
+                    message = error.message,
+                    position = error.position,
+                    showPosition = true
+                )
                 return CliReturnCode.INPUT_FILE_PARSING_ERROR
             }
+
+            /*
+            val file = "$fileName:".ansi.fg.bold
+            val state = "RUNNING".ansi.fg.blueBold
+            println("$file $state")
+             */
 
             // Run the file and report run results.
             val runner = Runner(
@@ -88,9 +96,18 @@ class CliHelper {
                     maxTime = maxTime
                 )
             )
+
+
             val result = runner.run()
 
-            reporter.reportResult(result = result)
+            /*
+            val file = "$fileName:".ansi.fg.bold
+            val state = if (result.succeeded) {
+                "SUCCESS".ansi.fg.greenBold
+            } else {
+                "FAILED".ansi.fg.redBold
+            }
+            */
             return when {
                 result.succeeded -> {
                     // If the run is successful, we dump the bytes body response

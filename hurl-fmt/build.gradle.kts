@@ -25,12 +25,10 @@ plugins {
 }
 
 val commonCliVersion = "1.4"
-val sl4jJdkVersion = "1.7.30"
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("commons-cli:commons-cli:$commonCliVersion")
-    implementation("org.slf4j:slf4j-jdk14:$sl4jJdkVersion")
 }
 
 application {

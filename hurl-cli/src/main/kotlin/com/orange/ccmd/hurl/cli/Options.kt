@@ -19,6 +19,29 @@
 
 package com.orange.ccmd.hurl.cli
 
+/**
+ * Hurl Cli options.
+ *
+ * This class represents all options of the command line tool hurl
+ *
+ * @property help true show help message, false do nothing
+ * @property version true show version of the cli tool, false do nothing
+ * @property verbose Turn on verbose output on standard error stream Useful for debugging.
+ * @property followRedirect follow redirect (HTTP 3xx status code). Default is false.
+ * @property insecure explicitly allows Hurl to perform “insecure” SSL connections and transfers. (defualt false)
+ * @property proxy use proxy on given port (ex: localhost:3128)
+ * @property variables map of variable (pair of string for name and value), that are injected in the
+ * construction of a runner, and latter augmented by captures during the execution
+ * of a session.
+ * @property fileRoot root directory for body file includes. Default is hurlFile directory.
+ * @property include include protocol headers in the output. Default is false.
+ * @property toEntry execute Hurl file to toEntry (starting at 1). Ignore the remaining of the file.
+ * @property verbose turn off/on verbosity on log message
+ * @property compressed request a compressed response using one of the algorithms br, gzip, deflate and automatically decompress the content.
+ * @property user specify the user name and password to use for server authentication.
+ * @property connectTimeoutInSecond timeout in seconds until a connection is established
+ * @property maxTime maximum time in seconds that you allow a request/response to take. This is the standard timeout.
+ */
 data class Options(
     val help: Boolean = false,
     val version: Boolean = false,
@@ -35,21 +58,4 @@ data class Options(
     val user: String? = null,
     val connectTimeoutInSecond: Int = 60,
     val maxTime: Int? = null
-) {
-    override fun toString(): String {
-        var string = "* version: $version\n"
-        string += "* verbose: $verbose\n"
-        string += "* include: $include\n"
-        string += "* variables:\n"
-        variables.forEach { (k, v) -> string += "*   $k -> $v\n" }
-        string += "* fileRoot: ${fileRoot ?: ""}\n"
-        string += "* insecure: $insecure\n"
-        string += "* proxy: ${proxy ?: ""}\n"
-        string += "* toEntry: ${toEntry ?: ""}\n"
-        string += "* compressed: $compressed\n"
-        string += "* outputFile: ${outputFile ?: ""}\n"
-        string += "* user: ${user ?: ""}\n"
-        string += "* connectTimeout: $connectTimeoutInSecond\n"
-        return string
-    }
-}
+)
