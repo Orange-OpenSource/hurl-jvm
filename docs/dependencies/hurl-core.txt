@@ -39,14 +39,13 @@ compileClasspath - Compile classpath for compilation 'main' (target  (jvm)).
 |    +--- net.minidev:json-smart:2.3
 |    |    \--- net.minidev:accessors-smart:1.2
 |    |         \--- org.ow2.asm:asm:5.0.4
-|    \--- org.slf4j:slf4j-api:1.7.25 -> 1.7.30
+|    \--- org.slf4j:slf4j-api:1.7.25
 +--- org.apache.httpcomponents:httpclient:4.5.13
 |    +--- org.apache.httpcomponents:httpcore:4.4.13
 |    +--- commons-logging:commons-logging:1.2
 |    \--- commons-codec:commons-codec:1.11
 +--- org.apache.httpcomponents:httpmime:4.5.13
 |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
-+--- org.slf4j:slf4j-api:1.7.30
 \--- org.brotli:dec:0.1.2
 
 compileOnly - Compile only dependencies for compilation 'main' (target  (jvm)). (n)
@@ -267,7 +266,6 @@ implementation - Implementation only dependencies for compilation 'main' (target
 +--- com.jayway.jsonpath:json-path:2.4.0 (n)
 +--- org.apache.httpcomponents:httpclient:4.5.13 (n)
 +--- org.apache.httpcomponents:httpmime:4.5.13 (n)
-+--- org.slf4j:slf4j-api:1.7.30 (n)
 \--- org.brotli:dec:0.1.2 (n)
 
 implementationDependenciesMetadata
@@ -283,14 +281,13 @@ implementationDependenciesMetadata
 |    +--- net.minidev:json-smart:2.3
 |    |    \--- net.minidev:accessors-smart:1.2
 |    |         \--- org.ow2.asm:asm:5.0.4
-|    \--- org.slf4j:slf4j-api:1.7.25 -> 1.7.30
+|    \--- org.slf4j:slf4j-api:1.7.25
 +--- org.apache.httpcomponents:httpclient:4.5.13
 |    +--- org.apache.httpcomponents:httpcore:4.4.13
 |    +--- commons-logging:commons-logging:1.2
 |    \--- commons-codec:commons-codec:1.11
 +--- org.apache.httpcomponents:httpmime:4.5.13
 |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
-+--- org.slf4j:slf4j-api:1.7.30
 \--- org.brotli:dec:0.1.2
 
 jacocoAgent - The Jacoco agent to use to get coverage data.
@@ -375,14 +372,13 @@ runtimeClasspath - Runtime classpath of compilation 'main' (target  (jvm)).
 |    +--- net.minidev:json-smart:2.3
 |    |    \--- net.minidev:accessors-smart:1.2
 |    |         \--- org.ow2.asm:asm:5.0.4
-|    \--- org.slf4j:slf4j-api:1.7.25 -> 1.7.30
+|    \--- org.slf4j:slf4j-api:1.7.25
 +--- org.apache.httpcomponents:httpclient:4.5.13
 |    +--- org.apache.httpcomponents:httpcore:4.4.13
 |    +--- commons-logging:commons-logging:1.2
 |    \--- commons-codec:commons-codec:1.11
 +--- org.apache.httpcomponents:httpmime:4.5.13
 |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
-+--- org.slf4j:slf4j-api:1.7.30
 \--- org.brotli:dec:0.1.2
 
 runtimeElements - Elements of runtime for main. (n)
@@ -422,40 +418,37 @@ testCompileClasspath - Compile classpath for compilation 'test' (target  (jvm)).
 |    +--- net.minidev:json-smart:2.3
 |    |    \--- net.minidev:accessors-smart:1.2
 |    |         \--- org.ow2.asm:asm:5.0.4
-|    \--- org.slf4j:slf4j-api:1.7.25 -> 1.7.30
+|    \--- org.slf4j:slf4j-api:1.7.25
 +--- org.apache.httpcomponents:httpclient:4.5.13
 |    +--- org.apache.httpcomponents:httpcore:4.4.13
 |    +--- commons-logging:commons-logging:1.2
 |    \--- commons-codec:commons-codec:1.11
 +--- org.apache.httpcomponents:httpmime:4.5.13
 |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
-+--- org.slf4j:slf4j-api:1.7.30
 +--- org.brotli:dec:0.1.2
 +--- org.jetbrains.kotlin:kotlin-test:1.4.10
 |    +--- org.jetbrains.kotlin:kotlin-test-common:1.4.10
 |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
 |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
-+--- org.junit.jupiter:junit-jupiter-engine:5.7.0
-|    +--- org.junit:junit-bom:5.7.0
-|    |    +--- org.junit.jupiter:junit-jupiter-api:5.7.0 (c)
-|    |    +--- org.junit.jupiter:junit-jupiter-engine:5.7.0 (c)
-|    |    +--- org.junit.platform:junit-platform-engine:1.7.0 (c)
-|    |    \--- org.junit.platform:junit-platform-commons:1.7.0 (c)
-|    +--- org.apiguardian:apiguardian-api:1.1.0
-|    +--- org.junit.platform:junit-platform-engine:1.7.0
-|    |    +--- org.junit:junit-bom:5.7.0 (*)
-|    |    +--- org.apiguardian:apiguardian-api:1.1.0
-|    |    +--- org.opentest4j:opentest4j:1.2.0
-|    |    \--- org.junit.platform:junit-platform-commons:1.7.0
-|    |         +--- org.junit:junit-bom:5.7.0 (*)
-|    |         \--- org.apiguardian:apiguardian-api:1.1.0
-|    \--- org.junit.jupiter:junit-jupiter-api:5.7.0
-|         +--- org.junit:junit-bom:5.7.0 (*)
-|         +--- org.apiguardian:apiguardian-api:1.1.0
-|         +--- org.opentest4j:opentest4j:1.2.0
-|         \--- org.junit.platform:junit-platform-commons:1.7.0 (*)
-\--- org.slf4j:slf4j-nop:1.7.30
-     \--- org.slf4j:slf4j-api:1.7.30
+\--- org.junit.jupiter:junit-jupiter-engine:5.7.0
+     +--- org.junit:junit-bom:5.7.0
+     |    +--- org.junit.jupiter:junit-jupiter-api:5.7.0 (c)
+     |    +--- org.junit.jupiter:junit-jupiter-engine:5.7.0 (c)
+     |    +--- org.junit.platform:junit-platform-engine:1.7.0 (c)
+     |    \--- org.junit.platform:junit-platform-commons:1.7.0 (c)
+     +--- org.apiguardian:apiguardian-api:1.1.0
+     +--- org.junit.platform:junit-platform-engine:1.7.0
+     |    +--- org.junit:junit-bom:5.7.0 (*)
+     |    +--- org.apiguardian:apiguardian-api:1.1.0
+     |    +--- org.opentest4j:opentest4j:1.2.0
+     |    \--- org.junit.platform:junit-platform-commons:1.7.0
+     |         +--- org.junit:junit-bom:5.7.0 (*)
+     |         \--- org.apiguardian:apiguardian-api:1.1.0
+     \--- org.junit.jupiter:junit-jupiter-api:5.7.0
+          +--- org.junit:junit-bom:5.7.0 (*)
+          +--- org.apiguardian:apiguardian-api:1.1.0
+          +--- org.opentest4j:opentest4j:1.2.0
+          \--- org.junit.platform:junit-platform-commons:1.7.0 (*)
 
 testCompileOnly - Compile only dependencies for compilation 'test' (target  (jvm)). (n)
 No dependencies
@@ -465,8 +458,7 @@ No dependencies
 
 testImplementation - Implementation only dependencies for compilation 'test' (target  (jvm)). (n)
 +--- org.jetbrains.kotlin:kotlin-test:1.4.10 (n)
-+--- org.junit.jupiter:junit-jupiter-engine:5.7.0 (n)
-\--- org.slf4j:slf4j-nop:1.7.30 (n)
+\--- org.junit.jupiter:junit-jupiter-engine:5.7.0 (n)
 
 testImplementationDependenciesMetadata
 +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.10
@@ -481,40 +473,37 @@ testImplementationDependenciesMetadata
 |    +--- net.minidev:json-smart:2.3
 |    |    \--- net.minidev:accessors-smart:1.2
 |    |         \--- org.ow2.asm:asm:5.0.4
-|    \--- org.slf4j:slf4j-api:1.7.25 -> 1.7.30
+|    \--- org.slf4j:slf4j-api:1.7.25
 +--- org.apache.httpcomponents:httpclient:4.5.13
 |    +--- org.apache.httpcomponents:httpcore:4.4.13
 |    +--- commons-logging:commons-logging:1.2
 |    \--- commons-codec:commons-codec:1.11
 +--- org.apache.httpcomponents:httpmime:4.5.13
 |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
-+--- org.slf4j:slf4j-api:1.7.30
 +--- org.brotli:dec:0.1.2
 +--- org.jetbrains.kotlin:kotlin-test:1.4.10
 |    +--- org.jetbrains.kotlin:kotlin-test-common:1.4.10
 |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
 |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
-+--- org.junit.jupiter:junit-jupiter-engine:5.7.0
-|    +--- org.junit:junit-bom:5.7.0
-|    |    +--- org.junit.jupiter:junit-jupiter-api:5.7.0 (c)
-|    |    +--- org.junit.jupiter:junit-jupiter-engine:5.7.0 (c)
-|    |    +--- org.junit.platform:junit-platform-engine:1.7.0 (c)
-|    |    \--- org.junit.platform:junit-platform-commons:1.7.0 (c)
-|    +--- org.apiguardian:apiguardian-api:1.1.0
-|    +--- org.junit.platform:junit-platform-engine:1.7.0
-|    |    +--- org.junit:junit-bom:5.7.0 (*)
-|    |    +--- org.apiguardian:apiguardian-api:1.1.0
-|    |    +--- org.opentest4j:opentest4j:1.2.0
-|    |    \--- org.junit.platform:junit-platform-commons:1.7.0
-|    |         +--- org.junit:junit-bom:5.7.0 (*)
-|    |         \--- org.apiguardian:apiguardian-api:1.1.0
-|    \--- org.junit.jupiter:junit-jupiter-api:5.7.0
-|         +--- org.junit:junit-bom:5.7.0 (*)
-|         +--- org.apiguardian:apiguardian-api:1.1.0
-|         +--- org.opentest4j:opentest4j:1.2.0
-|         \--- org.junit.platform:junit-platform-commons:1.7.0 (*)
-\--- org.slf4j:slf4j-nop:1.7.30
-     \--- org.slf4j:slf4j-api:1.7.30
+\--- org.junit.jupiter:junit-jupiter-engine:5.7.0
+     +--- org.junit:junit-bom:5.7.0
+     |    +--- org.junit.jupiter:junit-jupiter-api:5.7.0 (c)
+     |    +--- org.junit.jupiter:junit-jupiter-engine:5.7.0 (c)
+     |    +--- org.junit.platform:junit-platform-engine:1.7.0 (c)
+     |    \--- org.junit.platform:junit-platform-commons:1.7.0 (c)
+     +--- org.apiguardian:apiguardian-api:1.1.0
+     +--- org.junit.platform:junit-platform-engine:1.7.0
+     |    +--- org.junit:junit-bom:5.7.0 (*)
+     |    +--- org.apiguardian:apiguardian-api:1.1.0
+     |    +--- org.opentest4j:opentest4j:1.2.0
+     |    \--- org.junit.platform:junit-platform-commons:1.7.0
+     |         +--- org.junit:junit-bom:5.7.0 (*)
+     |         \--- org.apiguardian:apiguardian-api:1.1.0
+     \--- org.junit.jupiter:junit-jupiter-api:5.7.0
+          +--- org.junit:junit-bom:5.7.0 (*)
+          +--- org.apiguardian:apiguardian-api:1.1.0
+          +--- org.opentest4j:opentest4j:1.2.0
+          \--- org.junit.platform:junit-platform-commons:1.7.0 (*)
 
 testKotlinScriptDef - Script filename extensions discovery classpath configuration
 No dependencies
@@ -535,40 +524,37 @@ testRuntimeClasspath - Runtime classpath of compilation 'test' (target  (jvm)).
 |    +--- net.minidev:json-smart:2.3
 |    |    \--- net.minidev:accessors-smart:1.2
 |    |         \--- org.ow2.asm:asm:5.0.4
-|    \--- org.slf4j:slf4j-api:1.7.25 -> 1.7.30
+|    \--- org.slf4j:slf4j-api:1.7.25
 +--- org.apache.httpcomponents:httpclient:4.5.13
 |    +--- org.apache.httpcomponents:httpcore:4.4.13
 |    +--- commons-logging:commons-logging:1.2
 |    \--- commons-codec:commons-codec:1.11
 +--- org.apache.httpcomponents:httpmime:4.5.13
 |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
-+--- org.slf4j:slf4j-api:1.7.30
 +--- org.brotli:dec:0.1.2
 +--- org.jetbrains.kotlin:kotlin-test:1.4.10
 |    +--- org.jetbrains.kotlin:kotlin-test-common:1.4.10
 |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
 |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
-+--- org.junit.jupiter:junit-jupiter-engine:5.7.0
-|    +--- org.junit:junit-bom:5.7.0
-|    |    +--- org.junit.jupiter:junit-jupiter-api:5.7.0 (c)
-|    |    +--- org.junit.jupiter:junit-jupiter-engine:5.7.0 (c)
-|    |    +--- org.junit.platform:junit-platform-engine:1.7.0 (c)
-|    |    \--- org.junit.platform:junit-platform-commons:1.7.0 (c)
-|    +--- org.apiguardian:apiguardian-api:1.1.0
-|    +--- org.junit.platform:junit-platform-engine:1.7.0
-|    |    +--- org.junit:junit-bom:5.7.0 (*)
-|    |    +--- org.apiguardian:apiguardian-api:1.1.0
-|    |    +--- org.opentest4j:opentest4j:1.2.0
-|    |    \--- org.junit.platform:junit-platform-commons:1.7.0
-|    |         +--- org.junit:junit-bom:5.7.0 (*)
-|    |         \--- org.apiguardian:apiguardian-api:1.1.0
-|    \--- org.junit.jupiter:junit-jupiter-api:5.7.0
-|         +--- org.junit:junit-bom:5.7.0 (*)
-|         +--- org.apiguardian:apiguardian-api:1.1.0
-|         +--- org.opentest4j:opentest4j:1.2.0
-|         \--- org.junit.platform:junit-platform-commons:1.7.0 (*)
-\--- org.slf4j:slf4j-nop:1.7.30
-     \--- org.slf4j:slf4j-api:1.7.30
+\--- org.junit.jupiter:junit-jupiter-engine:5.7.0
+     +--- org.junit:junit-bom:5.7.0
+     |    +--- org.junit.jupiter:junit-jupiter-api:5.7.0 (c)
+     |    +--- org.junit.jupiter:junit-jupiter-engine:5.7.0 (c)
+     |    +--- org.junit.platform:junit-platform-engine:1.7.0 (c)
+     |    \--- org.junit.platform:junit-platform-commons:1.7.0 (c)
+     +--- org.apiguardian:apiguardian-api:1.1.0
+     +--- org.junit.platform:junit-platform-engine:1.7.0
+     |    +--- org.junit:junit-bom:5.7.0 (*)
+     |    +--- org.apiguardian:apiguardian-api:1.1.0
+     |    +--- org.opentest4j:opentest4j:1.2.0
+     |    \--- org.junit.platform:junit-platform-commons:1.7.0
+     |         +--- org.junit:junit-bom:5.7.0 (*)
+     |         \--- org.apiguardian:apiguardian-api:1.1.0
+     \--- org.junit.jupiter:junit-jupiter-api:5.7.0
+          +--- org.junit:junit-bom:5.7.0 (*)
+          +--- org.apiguardian:apiguardian-api:1.1.0
+          +--- org.opentest4j:opentest4j:1.2.0
+          \--- org.junit.platform:junit-platform-commons:1.7.0 (*)
 
 testRuntimeOnly - Runtime only dependencies for compilation 'test' (target  (jvm)). (n)
 No dependencies

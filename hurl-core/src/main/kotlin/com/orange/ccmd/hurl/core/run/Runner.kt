@@ -28,7 +28,7 @@ import com.orange.ccmd.hurl.core.http.HttpResult
 import com.orange.ccmd.hurl.core.http.Proxy
 import com.orange.ccmd.hurl.core.http.impl.ApacheHttpClient
 import com.orange.ccmd.hurl.core.run.experimental.Command
-import com.orange.ccmd.hurl.core.run.log.RunnerLogger
+import com.orange.ccmd.hurl.core.run.log.Logger
 import com.orange.ccmd.hurl.core.template.InvalidVariableException
 import com.orange.ccmd.hurl.core.variable.VariableJar
 import java.io.FileNotFoundException
@@ -48,10 +48,11 @@ import java.time.Instant
 data class Runner(
     val hurlFile: HurlFile,
     val options: Options,
-    val runLogger: RunnerLogger = RunnerLogger(outputHeaders = options.outputHeaders, verbose = options.verbose)
 ) {
     private val httpClient: HttpClient
     private val variableJar: VariableJar
+    private val logger: Logger = Logger(outputHeaders = options.outputHeaders, verbose = options.verbose)
+
 
     init {
         val httpProxy = if (options.proxy != null) {
@@ -85,6 +86,8 @@ data class Runner(
         val results = mutableListOf<EntryResult>()
         val entries = hurlFile.entries
 
+        logger.logOptions(options = options)
+
         // Process each entry in the hurlFile, and stop at
         // the first failure.
         for ((index, entry) in entries.withIndex()) {
@@ -100,7 +103,9 @@ data class Runner(
             }
         }
 
-        return RunResult(duration = Duration.between(start, Instant.now()), entryResults = results)
+        val duration = Duration.between(start, Instant.now())
+        logger.logStop(duration = duration)
+        return RunResult(duration = duration, entryResults = results)
     }
 
 
@@ -113,7 +118,7 @@ data class Runner(
      */
     private fun runEntry(entry: Entry, index: Int): EntryResult {
 
-        runLogger.logStart(index = index)
+        logger.logEntry(index = index)
 
         runExperimentalCommands(entry)
 
@@ -138,7 +143,7 @@ data class Runner(
         // Executes request, follow redirection if necessary.
         while (true) {
 
-            runLogger.logHttpRequestSpec(requestSpec)
+            logger.logHttpRequestSpec(requestSpec)
 
             httpResult = try {
                 httpClient.execute(requestSpec)
@@ -146,9 +151,9 @@ data class Runner(
                 return EntryResult(errors = listOf(RuntimeErrorResult(position = entry.request.method.begin, message = e.message)))
             }
 
-            runLogger.logHttpRequest(httpResult.finalizedRequest)
-            runLogger.logHttpResponse(httpResult.response)
-            runLogger.logCookies(httpResult.cookies)
+            logger.logHttpRequest(httpResult.finalizedRequest)
+            logger.logHttpResponse(httpResult.response)
+            logger.logCookies(httpResult.cookies)
 
             if (options.followsRedirect && httpResult.response.code >= 300 && httpResult.response.code < 400) {
                 val header = httpResult.response.headers
@@ -218,7 +223,7 @@ data class Runner(
             .mapNotNull { it.comment }
             .mapNotNull { Command.fromString(it.value) }
             .forEach {
-                runLogger.logCommand(it)
+                logger.logCommand(it)
                 it.run(httpClient)
             }
     }

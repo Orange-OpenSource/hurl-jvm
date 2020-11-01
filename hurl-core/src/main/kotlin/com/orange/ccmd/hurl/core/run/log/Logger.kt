@@ -22,26 +22,24 @@ package com.orange.ccmd.hurl.core.run.log
 import com.orange.ccmd.hurl.core.http.Cookie
 import com.orange.ccmd.hurl.core.http.HttpRequest
 import com.orange.ccmd.hurl.core.http.HttpResponse
+import com.orange.ccmd.hurl.core.run.Options
 import com.orange.ccmd.hurl.core.run.experimental.Command
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import java.time.Duration
 
-class RunnerLogger(val outputHeaders: Boolean, val verbose: Boolean) : BaseLogger {
+class Logger(val outputHeaders: Boolean, val verbose: Boolean) {
 
-    private val logger: Logger = LoggerFactory.getLogger(javaClass)
-
-    override fun logStart(index: Int) {
-        if (!verbose) {
-            return
-        }
+    fun logEntry(index: Int) {
         logInfo("-".repeat(80))
-        logInfo("Entry $index")
+        logInfo("Executing entry $index")
+        logInfo("")
     }
 
-    override fun logHttpRequestSpec(request: HttpRequest) {
-        if (!verbose) {
-            return
-        }
+    fun logStop(duration: Duration) {
+        logInfo("Duration: ${duration.toMillis()}ms")
+        logInfo("")
+    }
+
+    fun logHttpRequestSpec(request: HttpRequest) {
         logInfo("Request spec:")
         logInfo("${request.method} ${request.url}")
         request.headers.forEach { (k, v) -> logInfo("$k: $v") }
@@ -56,22 +54,16 @@ class RunnerLogger(val outputHeaders: Boolean, val verbose: Boolean) : BaseLogge
         logInfo("")
     }
 
-    override fun logHttpRequest(request: HttpRequest) {
-        if (!verbose) {
-            return
-        }
+    fun logHttpRequest(request: HttpRequest) {
         logInput("${request.method} ${request.url}")
         request.headers.forEach { (k, v) -> logInput("$k: $v") }
         logInput("")
     }
 
-    override fun logHttpResponse(response: HttpResponse) {
-
-        if (verbose) {
-            logOutput("${response.version} ${response.code} (${response.body.size} bytes)")
-            response.headers.forEach { (k, v) -> logOutput("$k: $v") }
-            logOutput("")
-        }
+    fun logHttpResponse(response: HttpResponse) {
+        logOutput("${response.version} ${response.code} (${response.body.size} bytes)")
+        response.headers.forEach { (k, v) -> logOutput("$k: $v") }
+        logOutput("")
 
         if (!verbose && outputHeaders) {
             log("${response.version} ${response.code} (${response.body.size} bytes)")
@@ -80,34 +72,52 @@ class RunnerLogger(val outputHeaders: Boolean, val verbose: Boolean) : BaseLogge
         }
     }
 
-    override fun logCookies(cookies: List<Cookie>) {
-        if (verbose && cookies.isNotEmpty()) {
-            logInfo("Cookie store:")
-            cookies.forEach { (k, v) -> logInfo("$k: $v") }
-        }
+    fun logCookies(cookies: List<Cookie>) {
+        logInfo("Cookie store:")
+        cookies.forEach { (k, v) -> logInfo("$k: $v") }
     }
 
-    override fun logCommand(command: Command) {
-        if (!verbose) {
-            return
-        }
+    fun logCommand(command: Command) {
         logInfo("[Experimental] Run command $command")
     }
 
+    fun logOptions(options: Options) {
+        logInfo("Options:")
+        logInfo(" include: ${options.outputHeaders}")
+        logInfo(" variables:")
+        options.variables.forEach { (k, v) -> logInfo("   $k -> $v") }
+        logInfo(" fileRoot: ${options.fileRoot}")
+        logInfo(" insecure: ${options.allowsInsecure}")
+        logInfo(" proxy: ${options.proxy ?: ""}")
+        logInfo(" toEntry: ${options.toEntry ?: ""}")
+        logInfo(" compressed: ${options.compressed}")
+        logInfo(" user: ${options.user ?: ""}")
+        logInfo(" connectTimeout: ${options.connectTimeoutInSecond}")
+    }
+
     private fun log(text: String) {
-        logger.info(text)
+        println(text)
     }
 
     private fun logInfo(text: String) {
-        logger.info("* $text")
+        if (!verbose) {
+            return
+        }
+        println("* $text")
     }
 
     private fun logInput(text: String) {
-        logger.info("> $text")
+        if (!verbose) {
+            return
+        }
+        println("> $text")
     }
 
     private fun logOutput(text: String) {
-        logger.info("< $text")
+        if (!verbose) {
+            return
+        }
+        println("< $text")
     }
 
 }
