@@ -24,11 +24,6 @@ Copyright © 1999–2020 The Apache Software Foundation.
 Apache HttpComponents Client is distributed under the terms and conditions of the Apache Software License 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
 You may download the source code on the following website: http://hc.apache.org/httpcomponents-client-ga/
 //-----//
-Simple Logging Facade for Java - version 1.7.30
-Copyright © 2004-2019 QOS.ch
-Simple Logging Facade for Java is distributed under the terms and conditions ot the MIT License (http://opensource.org/licenses/MIT)
-You may download the source code on the following website: http://www.slf4j.org
-//-----//
 Commons CLI - version 1.4
 Copyright © 2002-2019 The Apache Software Foundation.
 Apache HttpComponents Client is distributed under the terms and conditions of the Apache Software License 2.0 (http://www.apache.org/licenses/LICENSE-2.0).

@@ -8,6 +8,7 @@
 - Add `--user` cli option (<https://hurl.dev/docs/man-page.html#user>)
 - Add `--connect-timeout` cli option (<https://hurl.dev/docs/man-page.html#connect-timeout>)
 - Add `--max-time` cli option (<https://hurl.dev/docs/man-page.html#max-time>)
+- Simplify log management and remove sl4j dependency
 
 ## 🐞 Bug Fixes
 
