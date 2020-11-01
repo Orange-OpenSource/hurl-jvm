@@ -32,7 +32,7 @@ internal fun Capture.eval(response: HttpResponse, variables: VariableJar): Entry
     val result = try {
         query.eval(response = response, variables = variables)
     } catch (e: InvalidQueryException) {
-        return CaptureResult(succeeded = false, position = begin, variable = name)
+        return CaptureResultFailed(position = begin, variable = name)
     } catch (e: InvalidVariableException) {
         return InvalidVariableResult(position = e.position, reason = e.reason)
     }
@@ -47,7 +47,7 @@ internal fun Capture.eval(response: HttpResponse, variables: VariableJar): Entry
         try {
             subquery.eval(text = result.value, variables = variables)
         } catch (e: InvalidSubqueryException) {
-            return CaptureResult(succeeded = false, position = subquery.begin, variable = name)
+            return CaptureResultFailed(position = subquery.begin, variable = name)
         } catch (e: InvalidVariableException) {
             return InvalidVariableResult(position = e.position, reason = e.reason)
         }
@@ -55,8 +55,7 @@ internal fun Capture.eval(response: HttpResponse, variables: VariableJar): Entry
         result
     }
 
-    return CaptureResult(
-        succeeded = true,
+    return CaptureResultOk(
         position = begin,
         variable = name,
         value = value

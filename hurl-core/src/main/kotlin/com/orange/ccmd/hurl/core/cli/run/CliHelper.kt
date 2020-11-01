@@ -52,7 +52,8 @@ class CliHelper {
             outputFile: File?,
             user: String?,
             connectTimeoutInSecond: Int,
-            maxTime: Int?
+            maxTime: Int?,
+            jsonReport: File?
         ): CliReturnCode {
 
             val fileName = file.absoluteFile.name
@@ -94,7 +95,8 @@ class CliHelper {
                     compressed = compressed,
                     user = user,
                     connectTimeoutInSecond = connectTimeoutInSecond,
-                    maxTime = maxTime
+                    maxTime = maxTime,
+                    jsonReport = jsonReport
                 )
             )
 

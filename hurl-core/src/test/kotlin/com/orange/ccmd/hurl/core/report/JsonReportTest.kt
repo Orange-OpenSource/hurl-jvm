@@ -17,18 +17,23 @@
  *
  */
 
-package com.orange.ccmd.hurl.core.run
+package com.orange.ccmd.hurl.core.report
 
-import com.orange.ccmd.hurl.core.http.HttpRequest
-import com.orange.ccmd.hurl.core.http.HttpResponse
+import com.orange.ccmd.hurl.core.run.RunResult
+import org.junit.jupiter.api.Test
+import java.io.File
+import java.time.Duration
+import kotlin.test.assertEquals
 
-data class EntryResult(
-    val httpRequestSpec: HttpRequest? = null,
-    val httpResponse: HttpResponse? = null,
-    val errors: List<EntryStepResult> = emptyList(),
-    val captures: List<EntryStepResult> = emptyList(),
-    val asserts: List<EntryStepResult> = emptyList(),
-) {
-    val results: List<EntryStepResult> = listOf(errors, captures, asserts).flatten()
-    val succeeded: Boolean = results.all { it.succeeded }
+class JsonReportTest {
+
+    @Test
+    fun `export a run result`() {
+        val runResult = RunResult(
+            duration = Duration.ofSeconds(12000),
+            entryResults = emptyList(),
+        )
+
+        assertEquals("""{"entries":[],"success":true,"duration":12000000}""", JsonReport(runResult).build())
+    }
 }

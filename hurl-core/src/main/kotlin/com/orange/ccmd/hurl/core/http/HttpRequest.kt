@@ -41,23 +41,21 @@ data class HttpRequest(
     val multipartFormDatas: List<FormData> = emptyList(),
     val cookies: List<Cookie> = emptyList()
 ) {
-    // TODO: Content of the body request, in unicode.
-    //  The encoding of the response content should is determined based solely on HTTP headers,
-    //  (see RFC 2616 https://tools.ietf.org/html/rfc2616)
-    val text: String?
 
-    init {
-        text = if (body != null) {
-            val decoder = StandardCharsets.UTF_8.newDecoder()
-            try {
-                decoder.decode(ByteBuffer.wrap(body.data)).toString()
-            } catch (ex: CharacterCodingException) {
-                null
+     /**
+     *  Content of the body request, in unicode.
+     *  TODO: The encoding of the response content should is determined based solely on HTTP headers,
+     * (see RFC 2616 https://tools.ietf.org/html/rfc2616)
+     * @throws CharacterCodingException
+     */
+    val text: String?
+        get() {
+            if (body == null) {
+                return null
             }
-        } else {
-            null
+            val decoder = StandardCharsets.UTF_8.newDecoder()
+            return decoder.decode(ByteBuffer.wrap(body.data)).toString()
         }
-    }
 
     /**
      * Returns the list of header (a name, value pair of string) for a given header name.
@@ -70,6 +68,5 @@ data class HttpRequest(
     override fun toString(): String {
         return "HttpRequestSpec(method='$method', url='$url', queryStringParams=$queryStringParams, headers=$headers, body=$body)"
     }
-
 
 }

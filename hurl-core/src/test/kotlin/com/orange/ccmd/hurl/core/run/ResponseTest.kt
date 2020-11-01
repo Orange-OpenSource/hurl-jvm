@@ -59,7 +59,7 @@ internal class ResponseTest {
         """.trimIndent())
         val results = responseSpec.getCaptureResults(variables = VariableJar(), httpResponse = httpResponse)
         assertEquals(results.size, 1)
-        val captureResults = results.filterIsInstance<CaptureResult>()
+        val captureResults = results.filterIsInstance<CaptureResultOk>()
 
         assertEquals(captureResults[0].succeeded, true)
         assertEquals(captureResults[0].position, Position(offset = 24, line = 3, column = 1))

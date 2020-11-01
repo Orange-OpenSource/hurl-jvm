@@ -124,6 +124,12 @@ class ArgsParser {
         .argName("SECONDS")
         .desc("Maximum time in seconds that you allow a request/response to take. This is the standard timeout.\nSee also --connect-timeout option.")
         .build()
+    private val jsonReportOption: Option = Option.builder()
+        .longOpt("json")
+        .hasArg()
+        .argName("file")
+        .desc("Write full session(s) to a json file. The format is very closed to HAR format.")
+        .build()
 
     private val options: Options = Options()
 
@@ -146,6 +152,7 @@ class ArgsParser {
             addOption(userOption)
             addOption(connectTimeoutOption)
             addOption(maxTimeOption)
+            addOption(jsonReportOption)
         }
     }
 
@@ -212,7 +219,8 @@ class ArgsParser {
             outputFile = line.getOptionValue(outputFileOption.longOpt, defaultOptions.outputFile),
             user = user ?: defaultOptions.user,
             connectTimeoutInSecond = connectTimeout ?: defaultOptions.connectTimeoutInSecond,
-            maxTime = maxTime ?: defaultOptions.maxTime
+            maxTime = maxTime ?: defaultOptions.maxTime,
+            jsonReport = line.getOptionValue(jsonReportOption.longOpt, defaultOptions.outputFile)
         )
         return positional to options
     }

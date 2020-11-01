@@ -27,6 +27,7 @@ import com.orange.ccmd.hurl.core.http.HttpRequest
 import com.orange.ccmd.hurl.core.http.HttpResult
 import com.orange.ccmd.hurl.core.http.Proxy
 import com.orange.ccmd.hurl.core.http.impl.ApacheHttpClient
+import com.orange.ccmd.hurl.core.report.JsonReport
 import com.orange.ccmd.hurl.core.run.experimental.Command
 import com.orange.ccmd.hurl.core.run.log.Logger
 import com.orange.ccmd.hurl.core.template.InvalidVariableException
@@ -51,7 +52,6 @@ data class Runner(
     private val httpClient: HttpClient
     private val variableJar: VariableJar
     private val logger: Logger = Logger(verbose = options.verbose)
-
 
     init {
         val httpProxy = if (options.proxy != null) {
@@ -103,6 +103,8 @@ data class Runner(
         }
 
         val duration = Duration.between(start, Instant.now())
+        val runResult = RunResult(duration = duration, entryResults = results)
+
         logger.logStop(duration = duration)
 
         // Log last HTTP response headers
@@ -111,7 +113,13 @@ data class Runner(
             logger.logHttpResponseHeaders(lastResponse)
         }
 
-        return RunResult(duration = duration, entryResults = results)
+        // Build reports.
+        if (options.jsonReport != null) {
+            val report = JsonReport(runResult = runResult)
+            options.jsonReport.writeText(report.build())
+        }
+
+        return runResult
     }
 
 
@@ -135,14 +143,17 @@ data class Runner(
                 fileRoot = options.fileRoot
             )
         } catch (e: InvalidVariableException) {
-            return EntryResult(errors = listOf(InvalidVariableResult(position = e.position, reason = e.reason)))
+            return EntryResult(
+                errors = listOf(InvalidVariableResult(position = e.position, reason = e.reason))
+            )
         } catch (e: FileNotFoundException) {
             // We catch this exception because the evaluation of a request can
             // raise a FileNotFoundException when using a file body node.
             // TODO: create and use here a custom RuntimeErrorException
-            return EntryResult(errors = listOf(RuntimeErrorResult(position = entry.request.begin, message = e.message)))
+            return EntryResult(
+                errors = listOf(RuntimeErrorResult(position = entry.request.begin, message = e.message))
+            )
         }
-
 
         var httpResult: HttpResult
 
@@ -154,7 +165,10 @@ data class Runner(
             httpResult = try {
                 httpClient.execute(requestSpec)
             } catch (e: Exception) {
-                return EntryResult(errors = listOf(RuntimeErrorResult(position = entry.request.method.begin, message = e.message)))
+                return EntryResult(
+                    httpRequestSpec = requestSpec,
+                    errors = listOf(RuntimeErrorResult(position = entry.request.method.begin, message = e.message))
+                )
             }
 
             logger.logHttpRequest(httpResult.finalizedRequest)
@@ -164,7 +178,10 @@ data class Runner(
             if (options.followsRedirect && httpResult.response.code >= 300 && httpResult.response.code < 400) {
                 val header = httpResult.response.headers
                     .firstOrNull { (k, _) -> k.toLowerCase() == "location" }
-                    ?: return EntryResult(errors = listOf(RuntimeErrorResult(position = entry.request.method.begin, message = "Unable to get Location header")))
+                    ?: return EntryResult(
+                        httpRequestSpec = requestSpec,
+                        errors = listOf(RuntimeErrorResult(position = entry.request.method.begin, message = "Unable to get Location header"))
+                    )
                 requestSpec = HttpRequest(method = "GET", url = header.second)
                 continue
             }
@@ -174,7 +191,7 @@ data class Runner(
         val responseSpec = entry.response
         val httpResponse = httpResult.response
         if (responseSpec == null) {
-            return EntryResult(httpResponse = httpResponse)
+            return EntryResult(httpRequestSpec = requestSpec, httpResponse = httpResponse)
         }
 
         // First evaluate all capture results and update variable map accordingly.
@@ -205,6 +222,7 @@ data class Runner(
         val bodyResult = responseSpec.getCheckBodyResult(variables = variableJar, fileRoot = options.fileRoot, httpResponse = httpResponse)
 
         return EntryResult(
+            httpRequestSpec = requestSpec,
             httpResponse = httpResponse,
             captures = captureResults,
             asserts = listOfNotNull(

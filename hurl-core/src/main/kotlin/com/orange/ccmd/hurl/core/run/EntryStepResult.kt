@@ -32,15 +32,18 @@ class AssertResult(succeeded: Boolean, position: Position, message: String) :
         message = message
     )
 
-class CaptureResult(succeeded: Boolean, position: Position, val variable: String, val value: QueryResult? = null) :
+class CaptureResultOk(position: Position, val variable: String, val value: QueryResult) :
     EntryStepResult(
-        succeeded = succeeded,
+        succeeded = true,
         position = position,
-        message = if (succeeded) {
-            "capture variable '$variable' succeeded"
-        } else {
-            "capture variable '$variable' failed"
-        }
+        message = "capture variable '$variable' succeeded"
+    )
+
+class CaptureResultFailed(position: Position, val variable: String) :
+    EntryStepResult(
+        succeeded = false,
+        position = position,
+        message = "capture variable '$variable' failed"
     )
 
 class InvalidVariableResult(position: Position, val reason: String) :

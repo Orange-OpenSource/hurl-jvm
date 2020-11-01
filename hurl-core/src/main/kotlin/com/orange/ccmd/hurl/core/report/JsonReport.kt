@@ -17,18 +17,20 @@
  *
  */
 
-package com.orange.ccmd.hurl.core.run
+package com.orange.ccmd.hurl.core.report
 
-import com.orange.ccmd.hurl.core.http.HttpRequest
-import com.orange.ccmd.hurl.core.http.HttpResponse
+import com.orange.ccmd.hurl.core.report.dto.toRunResultDto
+import com.orange.ccmd.hurl.core.run.RunResult
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
-data class EntryResult(
-    val httpRequestSpec: HttpRequest? = null,
-    val httpResponse: HttpResponse? = null,
-    val errors: List<EntryStepResult> = emptyList(),
-    val captures: List<EntryStepResult> = emptyList(),
-    val asserts: List<EntryStepResult> = emptyList(),
-) {
-    val results: List<EntryStepResult> = listOf(errors, captures, asserts).flatten()
-    val succeeded: Boolean = results.all { it.succeeded }
+internal class JsonReport(val runResult: RunResult) {
+
+    /**
+     *
+     */
+    fun build(): String {
+        val runResultDto = runResult.toRunResultDto()
+        return Json.encodeToString(runResultDto)
+    }
 }

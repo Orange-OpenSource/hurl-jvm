@@ -39,6 +39,7 @@ import java.io.File
  * @property user specify the user name and password to use for server authentication.
  * @property connectTimeoutInSecond timeout in seconds until a connection is established
  * @property maxTime maximum time in seconds that you allow a request/response to take. This is the standard timeout.
+ * @property jsonReport write full session(s) to this json file. The format is very closed to HAR format.
  */
 data class Options(
     val variables: Map<String, String> = emptyMap(),
@@ -52,5 +53,6 @@ data class Options(
     val compressed: Boolean = false,
     val user: String? = null,
     val connectTimeoutInSecond: Int = 60,
-    val maxTime: Int? = null
+    val maxTime: Int? = null,
+    val jsonReport: File? = null
 )

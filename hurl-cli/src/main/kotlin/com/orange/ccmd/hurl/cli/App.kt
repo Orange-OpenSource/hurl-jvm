@@ -85,7 +85,8 @@ class App {
                 outputFile = options.outputFile?.let { File(options.outputFile) },
                 user = options.user,
                 connectTimeoutInSecond = options.connectTimeoutInSecond,
-                maxTime = options.maxTime
+                maxTime = options.maxTime,
+                jsonReport = options.jsonReport?.let { File(options.jsonReport) }
             )
             if (ret != SUCCESS) {
                 returnCode = ret

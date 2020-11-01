@@ -17,18 +17,12 @@
  *
  */
 
-package com.orange.ccmd.hurl.core.run
+package com.orange.ccmd.hurl.core.report.dto
 
-import com.orange.ccmd.hurl.core.http.HttpRequest
-import com.orange.ccmd.hurl.core.http.HttpResponse
+import kotlinx.serialization.Serializable
 
-data class EntryResult(
-    val httpRequestSpec: HttpRequest? = null,
-    val httpResponse: HttpResponse? = null,
-    val errors: List<EntryStepResult> = emptyList(),
-    val captures: List<EntryStepResult> = emptyList(),
-    val asserts: List<EntryStepResult> = emptyList(),
-) {
-    val results: List<EntryStepResult> = listOf(errors, captures, asserts).flatten()
-    val succeeded: Boolean = results.all { it.succeeded }
-}
+@Serializable
+data class KeyValueDto (
+    val name: String,
+    val value: String
+)

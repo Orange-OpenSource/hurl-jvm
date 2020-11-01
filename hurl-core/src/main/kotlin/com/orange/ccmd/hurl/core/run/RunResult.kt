@@ -21,6 +21,7 @@ package com.orange.ccmd.hurl.core.run
 
 import java.time.Duration
 
+
 class RunResult(val duration: Duration, val entryResults: List<EntryResult>) {
     val succeeded: Boolean = entryResults.all { it.succeeded }
 }

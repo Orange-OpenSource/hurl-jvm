@@ -19,6 +19,8 @@
 
 package com.orange.ccmd.hurl.cli
 
+import java.io.File
+
 /**
  * Hurl Cli options.
  *
@@ -41,6 +43,7 @@ package com.orange.ccmd.hurl.cli
  * @property user specify the user name and password to use for server authentication.
  * @property connectTimeoutInSecond timeout in seconds until a connection is established
  * @property maxTime maximum time in seconds that you allow a request/response to take. This is the standard timeout.
+ * @property jsonReport write full session(s) to this json file. The format is very closed to HAR format.
  */
 data class Options(
     val help: Boolean = false,
@@ -57,5 +60,6 @@ data class Options(
     val outputFile: String? = null,
     val user: String? = null,
     val connectTimeoutInSecond: Int = 60,
-    val maxTime: Int? = null
+    val maxTime: Int? = null,
+    val jsonReport: String? = null
 )

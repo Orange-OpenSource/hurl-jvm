@@ -38,9 +38,8 @@ internal fun Response.getCaptureResults(variables: VariableJar, httpResponse: Ht
 }
 
 fun List<EntryStepResult>.getCaptureVariables(): Map<String, QueryResult> {
-    return filterIsInstance<CaptureResult>()
-        .filter { it.succeeded }
-        .map { it.variable to (it.value ?: QueryNoneResult) }
+    return filterIsInstance<CaptureResultOk>()
+        .map { it.variable to it.value }
         .toMap()
 }
 

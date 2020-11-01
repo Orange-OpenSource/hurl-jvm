@@ -19,25 +19,12 @@
 
 package com.orange.ccmd.hurl.core.http
 
-sealed class RequestBody(val data: ByteArray) {
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as RequestBody
-
-        if (!data.contentEquals(other.data)) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return data.contentHashCode()
-    }
+sealed class RequestBody {
+    abstract val data: ByteArray
 }
 
-class BinaryRequestBody(data: ByteArray): RequestBody(data)
+data class BinaryRequestBody(override val data: ByteArray): RequestBody()
 
-class JsonRequestBody(data: ByteArray): RequestBody(data)
+data class JsonRequestBody(override val data: ByteArray): RequestBody()
 
-class XmlRequestBody(data: ByteArray): RequestBody(data)
+data class XmlRequestBody(override val data: ByteArray): RequestBody()
