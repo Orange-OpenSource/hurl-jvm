@@ -26,7 +26,7 @@ import com.orange.ccmd.hurl.core.run.Options
 import com.orange.ccmd.hurl.core.run.experimental.Command
 import java.time.Duration
 
-class Logger(val outputHeaders: Boolean, val verbose: Boolean) {
+class Logger(val verbose: Boolean) {
 
     fun logEntry(index: Int) {
         logInfo("-".repeat(80))
@@ -64,12 +64,12 @@ class Logger(val outputHeaders: Boolean, val verbose: Boolean) {
         logOutput("${response.version} ${response.code} (${response.body.size} bytes)")
         response.headers.forEach { (k, v) -> logOutput("$k: $v") }
         logOutput("")
+    }
 
-        if (!verbose && outputHeaders) {
-            log("${response.version} ${response.code} (${response.body.size} bytes)")
-            response.headers.forEach { (k, v) -> log("$k: $v") }
-            log("")
-        }
+    fun logHttpResponseHeaders(response: HttpResponse) {
+        log("${response.version} ${response.code} (${response.body.size} bytes)")
+        response.headers.forEach { (k, v) -> log("$k: $v") }
+        log("")
     }
 
     fun logCookies(cookies: List<Cookie>) {

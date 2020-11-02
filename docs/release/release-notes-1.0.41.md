@@ -13,7 +13,8 @@
 ## 🐞 Bug Fixes
 
 - Fix predicates with not qualifier <https://github.com/Orange-OpenSource/hurl/issues/39> 
-- Remove `Content-Length` request header when request body is empty.
+- Remove `Content-Length` request header when request body is empty
+- Output only last HTTP response headers when using `--include` option <https://github.com/Orange-OpenSource/hurl/issues/59>
  
 ## 📔 Documentation
 
