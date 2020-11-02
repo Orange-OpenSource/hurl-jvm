@@ -106,7 +106,7 @@ data class Runner(
         logger.logStop(duration = duration)
 
         // Log last HTTP response headers
-        val lastResponse = results.last().httpResponse
+        val lastResponse = results.lastOrNull()?.httpResponse
         if (options.outputHeaders && lastResponse != null) {
             logger.logHttpResponseHeaders(lastResponse)
         }
