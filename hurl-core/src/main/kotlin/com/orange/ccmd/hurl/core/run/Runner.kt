@@ -43,7 +43,6 @@ import java.time.Instant
  *
  * @property hurlFile Hurl file describing requests and response of this session
  * @property options options for this runner
- * @property runLogger logger that output run debug informations
  */
 data class Runner(
     val hurlFile: HurlFile,
@@ -51,7 +50,7 @@ data class Runner(
 ) {
     private val httpClient: HttpClient
     private val variableJar: VariableJar
-    private val logger: Logger = Logger(outputHeaders = options.outputHeaders, verbose = options.verbose)
+    private val logger: Logger = Logger(verbose = options.verbose)
 
 
     init {
@@ -105,6 +104,13 @@ data class Runner(
 
         val duration = Duration.between(start, Instant.now())
         logger.logStop(duration = duration)
+
+        // Log last HTTP response headers
+        val lastResponse = results.last().httpResponse
+        if (options.outputHeaders && lastResponse != null) {
+            logger.logHttpResponseHeaders(lastResponse)
+        }
+
         return RunResult(duration = duration, entryResults = results)
     }
 
