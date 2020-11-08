@@ -1,10 +1,7 @@
-name: Java CI with Gradle
+name: CI
 
-on:
-  push:
-    branches: [ $default-branch ]
-  pull_request:
-    branches: [ $default-branch ]
+on: [push, pull_request]
+
 
 jobs:
   build:
@@ -19,5 +16,14 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - name: Build
-        run: bin/build.sh
+      - name: Unit Tests
+        run: |
+          bin/test-unit.sh
+      - name: Integration Tests
+        run: |
+          pip3 install Flask
+          cd integration && python3 server.py &
+          export HURL_VERSION=$(grep version gradle.properties | cut -f2 -d"=")
+          export hurl="java -jar $PWD/hurl-cli/build/libs/hurl-$HURL_VERSION.jar"
+          bin/test-integration.sh
+
