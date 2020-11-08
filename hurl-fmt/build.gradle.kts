@@ -21,16 +21,19 @@ import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
     kotlin("jvm")
+    kotlin("plugin.serialization")
     application
 }
 
 val commonCliVersion = "1.4"
 val slf4jNopVersion = "1.7.30"
+val kotlinxSerializationJsonVersion = "1.0.1"
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("commons-cli:commons-cli:$commonCliVersion")
     implementation("org.slf4j:slf4j-nop:$slf4jNopVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationJsonVersion")
 }
 
 application {

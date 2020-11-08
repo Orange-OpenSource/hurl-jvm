@@ -27,7 +27,7 @@ import com.orange.ccmd.hurl.core.utils.lineAt
 import com.orange.ccmd.hurl.core.utils.logError
 import com.orange.ccmd.hurl.fmt.highlight.HtmlFormatter
 import com.orange.ccmd.hurl.fmt.highlight.TermFormatter
-import com.orange.ccmd.hurl.fmt.lint.LintFormatter
+import com.orange.ccmd.hurl.fmt.json.JsonFormatter
 import java.io.File
 import java.util.*
 
@@ -109,7 +109,7 @@ class App {
             "term" -> TermFormatter(showWhitespaces = false)
             "termws" -> TermFormatter(showWhitespaces = true)
             "html" -> HtmlFormatter(theme = theme)
-            "lint" -> LintFormatter()
+            "json" -> JsonFormatter()
             else -> return null
         }
 

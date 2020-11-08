@@ -17,18 +17,17 @@
  *
  */
 
-package com.orange.ccmd.hurl.fmt
+package com.orange.ccmd.hurl.fmt.json
 
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import com.orange.ccmd.hurl.core.ast.HurlFile
+import com.orange.ccmd.hurl.fmt.Formatter
 
+class JsonFormatter : Formatter {
 
-data class Options(
-    val help: Boolean = false,
-    val version: Boolean = false,
-    val verbose: Boolean = false,
-    val format: String = "termws",
-    val theme: String = "dark256",
-    val inplace: Boolean = false,
-    ) {
-    val formatValues = listOf("termws", "term", "lint", "html", "json")
-    val themeValues = listOf("dark16", "dark256", "light256")
+    override fun format(hurlFile: HurlFile): String {
+        val jsonFile = hurlFile.toJsonFile()
+        return Json.encodeToString(jsonFile)
+    }
 }

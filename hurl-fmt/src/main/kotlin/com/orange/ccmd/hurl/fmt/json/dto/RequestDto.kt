@@ -17,18 +17,26 @@
  *
  */
 
-package com.orange.ccmd.hurl.fmt
+package com.orange.ccmd.hurl.fmt.json.dto
 
+import kotlinx.serialization.Serializable
+import com.orange.ccmd.hurl.core.ast.Request as RequestNode
 
+@Serializable
+data class RequestDto(
+    val method: String,
+    val url: String,
+    val headers: List<KeyValueDto>? = null,
+)
 
-data class Options(
-    val help: Boolean = false,
-    val version: Boolean = false,
-    val verbose: Boolean = false,
-    val format: String = "termws",
-    val theme: String = "dark256",
-    val inplace: Boolean = false,
-    ) {
-    val formatValues = listOf("termws", "term", "lint", "html", "json")
-    val themeValues = listOf("dark16", "dark256", "light256")
+fun RequestNode.toRequest(): RequestDto {
+    return RequestDto(
+        method = method.value,
+        url = url.value,
+        headers = if (headers.isNotEmpty()) {
+            headers.map { KeyValueDto(name = it.name, value = it.value) }
+        } else {
+            null
+        }
+    )
 }

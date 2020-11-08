@@ -17,13 +17,12 @@
  *
  */
 
-package com.orange.ccmd.hurl.fmt.lint
+package com.orange.ccmd.hurl.fmt.json.dto
 
-import com.orange.ccmd.hurl.core.ast.HurlFile
-import com.orange.ccmd.hurl.fmt.Formatter
+import kotlinx.serialization.Serializable
 
-class LintFormatter : Formatter {
-
-    override fun format(hurlFile: HurlFile): String = hurlFile.lint()
-
-}
+@Serializable
+data class KeyValueDto (
+    val name: String,
+    val value: String,
+)

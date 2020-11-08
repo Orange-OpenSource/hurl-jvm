@@ -19,6 +19,7 @@
 
 plugins {
     kotlin("jvm")
+    kotlin("plugin.serialization")
     jacoco
 }
 
@@ -27,6 +28,7 @@ val jacksonVersion = "2.11.3"
 val jsoupVersion = "1.13.1"
 val jsonPathVersion = "2.4.0"
 val apacheHttpVersion = "4.5.13"
+val kotlinxSerializationJsonVersion = "1.0.1"
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
@@ -36,6 +38,7 @@ dependencies {
     implementation("org.apache.httpcomponents:httpclient:$apacheHttpVersion")
     implementation("org.apache.httpcomponents:httpmime:$apacheHttpVersion")
     implementation("org.brotli:dec:$brotliVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationJsonVersion")
 }
 
 tasks.jacocoTestReport {

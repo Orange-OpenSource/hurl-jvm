@@ -46,7 +46,15 @@ compileClasspath - Compile classpath for compilation 'main' (target  (jvm)).
 |    \--- commons-codec:commons-codec:1.11
 +--- org.apache.httpcomponents:httpmime:4.5.13
 |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
-\--- org.brotli:dec:0.1.2
++--- org.brotli:dec:0.1.2
+\--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1
+     \--- org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.0.1
+          +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
+          +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
+          \--- org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.1
+               \--- org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.0.1
+                    +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
+                    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
 
 compileOnly - Compile only dependencies for compilation 'main' (target  (jvm)). (n)
 No dependencies
@@ -266,7 +274,8 @@ implementation - Implementation only dependencies for compilation 'main' (target
 +--- com.jayway.jsonpath:json-path:2.4.0 (n)
 +--- org.apache.httpcomponents:httpclient:4.5.13 (n)
 +--- org.apache.httpcomponents:httpmime:4.5.13 (n)
-\--- org.brotli:dec:0.1.2 (n)
++--- org.brotli:dec:0.1.2 (n)
+\--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1 (n)
 
 implementationDependenciesMetadata
 +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.10
@@ -288,7 +297,13 @@ implementationDependenciesMetadata
 |    \--- commons-codec:commons-codec:1.11
 +--- org.apache.httpcomponents:httpmime:4.5.13
 |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
-\--- org.brotli:dec:0.1.2
++--- org.brotli:dec:0.1.2
+\--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1
+     \--- org.jetbrains.kotlinx:kotlinx-serialization-json-metadata:1.0.1
+          +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
+          \--- org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.1
+               \--- org.jetbrains.kotlinx:kotlinx-serialization-core-metadata:1.0.1
+                    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
 
 jacocoAgent - The Jacoco agent to use to get coverage data.
 \--- org.jacoco:org.jacoco.agent:0.8.5
@@ -320,22 +335,25 @@ kotlinCompilerClasspath
      \--- org.jetbrains.intellij.deps:trove4j:1.0.20181211
 
 kotlinCompilerPluginClasspath
-\--- org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:1.4.10
-     +--- org.jetbrains.kotlin:kotlin-scripting-compiler-impl-embeddable:1.4.10
-     |    +--- org.jetbrains.kotlin:kotlin-scripting-common:1.4.10
-     |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10
-     |    |    |    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
-     |    |    |    \--- org.jetbrains:annotations:13.0
-     |    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7
-     |    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.71 -> 1.4.10 (*)
-     |    |         \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.3.71 -> 1.4.10
-     |    +--- org.jetbrains.kotlin:kotlin-scripting-jvm:1.4.10
-     |    |    +--- org.jetbrains.kotlin:kotlin-script-runtime:1.4.10
-     |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
-     |    |    \--- org.jetbrains.kotlin:kotlin-scripting-common:1.4.10 (*)
-     |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
-     |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7 (*)
-     \--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
++--- org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:1.4.10
+|    +--- org.jetbrains.kotlin:kotlin-scripting-compiler-impl-embeddable:1.4.10
+|    |    +--- org.jetbrains.kotlin:kotlin-scripting-common:1.4.10
+|    |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10
+|    |    |    |    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
+|    |    |    |    \--- org.jetbrains:annotations:13.0
+|    |    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7
+|    |    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.71 -> 1.4.10 (*)
+|    |    |         \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.3.71 -> 1.4.10
+|    |    +--- org.jetbrains.kotlin:kotlin-scripting-jvm:1.4.10
+|    |    |    +--- org.jetbrains.kotlin:kotlin-script-runtime:1.4.10
+|    |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
+|    |    |    \--- org.jetbrains.kotlin:kotlin-scripting-common:1.4.10 (*)
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7 (*)
+|    \--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
+\--- org.jetbrains.kotlin:kotlin-serialization:1.4.10
+     \--- org.jetbrains.kotlin:kotlin-gradle-plugin-api:1.4.10
+          \--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
 
 kotlinKlibCommonizerClasspath
 \--- org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.4.10
@@ -351,7 +369,7 @@ kotlinKlibCommonizerClasspath
           \--- org.jetbrains.intellij.deps:trove4j:1.0.20181211
 
 kotlinNativeCompilerPluginClasspath
-No dependencies
+\--- org.jetbrains.kotlin:kotlin-serialization-unshaded:1.4.10
 
 kotlinScriptDef - Script filename extensions discovery classpath configuration
 No dependencies
@@ -379,7 +397,15 @@ runtimeClasspath - Runtime classpath of compilation 'main' (target  (jvm)).
 |    \--- commons-codec:commons-codec:1.11
 +--- org.apache.httpcomponents:httpmime:4.5.13
 |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
-\--- org.brotli:dec:0.1.2
++--- org.brotli:dec:0.1.2
+\--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1
+     \--- org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.0.1
+          +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
+          +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
+          \--- org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.1
+               \--- org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.0.1
+                    +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
+                    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
 
 runtimeElements - Elements of runtime for main. (n)
 No dependencies
@@ -426,6 +452,14 @@ testCompileClasspath - Compile classpath for compilation 'test' (target  (jvm)).
 +--- org.apache.httpcomponents:httpmime:4.5.13
 |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
 +--- org.brotli:dec:0.1.2
++--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1
+|    \--- org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.0.1
+|         +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
+|         \--- org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.1
+|              \--- org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.0.1
+|                   +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
+|                   \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
 +--- org.jetbrains.kotlin:kotlin-test:1.4.10
 |    +--- org.jetbrains.kotlin:kotlin-test-common:1.4.10
 |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
@@ -481,6 +515,12 @@ testImplementationDependenciesMetadata
 +--- org.apache.httpcomponents:httpmime:4.5.13
 |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
 +--- org.brotli:dec:0.1.2
++--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1
+|    \--- org.jetbrains.kotlinx:kotlinx-serialization-json-metadata:1.0.1
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
+|         \--- org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.1
+|              \--- org.jetbrains.kotlinx:kotlinx-serialization-core-metadata:1.0.1
+|                   \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
 +--- org.jetbrains.kotlin:kotlin-test:1.4.10
 |    +--- org.jetbrains.kotlin:kotlin-test-common:1.4.10
 |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
@@ -532,6 +572,14 @@ testRuntimeClasspath - Runtime classpath of compilation 'test' (target  (jvm)).
 +--- org.apache.httpcomponents:httpmime:4.5.13
 |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
 +--- org.brotli:dec:0.1.2
++--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1
+|    \--- org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.0.1
+|         +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
+|         \--- org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.1
+|              \--- org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.0.1
+|                   +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.10 (*)
+|                   \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
 +--- org.jetbrains.kotlin:kotlin-test:1.4.10
 |    +--- org.jetbrains.kotlin:kotlin-test-common:1.4.10
 |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10
