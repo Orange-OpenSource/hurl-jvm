@@ -40,5 +40,6 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           path: |
-            hurl-cli/build/libs/hurl-$HURL_VERSION.jar
-            hurl-fmt/build/libs/hurlfmt-$HURL_VERSION.jar
+            hurl-cli/build/libs/hurl*.jar
+            hurl-fmt/build/libs/hurlfmt*.jar
+          if-no-files-found: error
