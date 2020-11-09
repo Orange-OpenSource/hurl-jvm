@@ -42,10 +42,11 @@ application {
 
 tasks {
     jar {
+        archiveBaseName.set("hurlfmt")
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
         manifest {
             attributes["Main-Class"] = application.mainClassName
         }
-        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
         // Include direct dependencies.
         configurations.compileClasspath.get().forEach { from(zipTree(it.absoluteFile)) }
