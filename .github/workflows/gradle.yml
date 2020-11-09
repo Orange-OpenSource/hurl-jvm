@@ -28,6 +28,12 @@ jobs:
           export hurlfmt="java -jar $PWD/hurl-fmt/build/libs/hurl-fmt-$HURL_VERSION.jar"
           bin/test-integration.sh
       - name: Publish local
+        env:
+          GNUGP_SIGNING_KEYID: ${{ secrets.GNUGP_SIGNING_KEYID }}
+          GNUGP_SIGNING_PASSWORD: ${{ secrets.GNUGP_SIGNING_PASSWORD }}
+          GNUGP_SIGNING_KEY: ${{ secrets.GNUGP_SIGNING_KEY }}
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
         run: |
           bin/publish-local.sh
       - name: Archive artifacts
