@@ -16,10 +16,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - name: Unit Tests
+      - name: Unit tests
         run: |
           bin/test-unit.sh
-      - name: Integration Tests
+      - name: Integration tests
         run: |
           pip3 install Flask
           cd integration && python3 server.py &
@@ -27,4 +27,12 @@ jobs:
           export hurl="java -jar $PWD/hurl-cli/build/libs/hurl-$HURL_VERSION.jar"
           export hurlfmt="java -jar $PWD/hurl-fmt/build/libs/hurl-fmt-$HURL_VERSION.jar"
           bin/test-integration.sh
-
+      - name: Publish local
+        run: |
+          bin/publish-local.sh
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          path: |
+            $HOME/.m2/repository/com/orange/ccmd/hurl/$HURL_VERSION/hurl-$HURL_VERSION.jar
+            $HOME/.m2/repository/com/orange/ccmd/hurlfmt/$HURL_VERSION/hurlfmt-$HURL_VERSION.jar
