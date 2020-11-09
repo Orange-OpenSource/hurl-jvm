@@ -6,7 +6,7 @@ Hurl JVM is a [Hurl](https://hurl.dev) client for the JVM platform, written in K
 Hurl JVM is available as a standalone jar, launchable in a shell (ex: `java -jar hurl.jar test.hurl`).
 Hurl JVM try to have the same functionality as the official [Hurl client](https://github.com/Orange-OpenSource/hurl).
 
-[![deploy status](https://github.com/Orange-OpenSource/hurl-jvm/workflows/CI/badge.svg)](https://github.com/Orange-OpenSource/hurl/actions)
+[![deploy status](https://github.com/Orange-OpenSource/hurl-jvm/workflows/CI/badge.svg)](https://github.com/Orange-OpenSource/hurl-jvm/actions)
 [![documentation](https://img.shields.io/badge/-documentation-informational)](https://hurl.dev)
 
 
