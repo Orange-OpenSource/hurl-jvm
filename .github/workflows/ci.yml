@@ -25,20 +25,20 @@ jobs:
           cd integration && python3 server.py &
           export HURL_VERSION=$(grep version gradle.properties | cut -f2 -d"=")
           export hurl="java -jar $PWD/hurl-cli/build/libs/hurl-$HURL_VERSION.jar"
-          export hurlfmt="java -jar $PWD/hurl-fmt/build/libs/hurl-fmt-$HURL_VERSION.jar"
+          export hurlfmt="java -jar $PWD/hurl-fmt/build/libs/hurlfmt-$HURL_VERSION.jar"
           bin/test-integration.sh
-      - name: Publish local
-        env:
-          GNUGP_SIGNING_KEYID: ${{ secrets.GNUGP_SIGNING_KEYID }}
-          GNUGP_SIGNING_PASSWORD: ${{ secrets.GNUGP_SIGNING_PASSWORD }}
-          GNUGP_SIGNING_KEY: ${{ secrets.GNUGP_SIGNING_KEY }}
-          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-        run: |
-          bin/publish-local.sh
+#      - name: Publish local
+#        env:
+#          GNUGP_SIGNING_KEYID: ${{ secrets.GNUGP_SIGNING_KEYID }}
+#          GNUGP_SIGNING_PASSWORD: ${{ secrets.GNUGP_SIGNING_PASSWORD }}
+#          GNUGP_SIGNING_KEY: ${{ secrets.GNUGP_SIGNING_KEY }}
+#          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+#          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+#        run: |
+#          bin/publish-local.sh
       - name: Archive artifacts
         uses: actions/upload-artifact@v2
         with:
           path: |
-            $HOME/.m2/repository/com/orange/ccmd/hurl/$HURL_VERSION/hurl-$HURL_VERSION.jar
-            $HOME/.m2/repository/com/orange/ccmd/hurlfmt/$HURL_VERSION/hurlfmt-$HURL_VERSION.jar
+            hurl-cli/build/libs/hurl-$HURL_VERSION.jar
+            hurl-fmt/build/libs/hurlfmt-$HURL_VERSION.jar
