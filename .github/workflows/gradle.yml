@@ -25,5 +25,6 @@ jobs:
           cd integration && python3 server.py &
           export HURL_VERSION=$(grep version gradle.properties | cut -f2 -d"=")
           export hurl="java -jar $PWD/hurl-cli/build/libs/hurl-$HURL_VERSION.jar"
+          export hurlfmt="java -jar $PWD/hurl-fmt/build/libs/hurl-fmt-$HURL_VERSION.jar"
           bin/test-integration.sh
 
