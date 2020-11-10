@@ -37,7 +37,7 @@ jobs:
       - name: Prepare release
         if: startsWith(github.ref, 'refs/tags/')
         run: |
-          bin/prepare-version.h
+          bin/prepare-version.sh
       - name: Publish release to Maven Central
         if: startsWith(github.ref, 'refs/tags/')
         env:
