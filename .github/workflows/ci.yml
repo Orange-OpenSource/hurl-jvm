@@ -27,19 +27,45 @@ jobs:
           export hurl="java -jar $PWD/hurl-cli/build/libs/hurl-$HURL_VERSION.jar"
           export hurlfmt="java -jar $PWD/hurl-fmt/build/libs/hurlfmt-$HURL_VERSION.jar"
           bin/test-integration.sh
-#      - name: Publish local
-#        env:
-#          GNUGP_SIGNING_KEYID: ${{ secrets.GNUGP_SIGNING_KEYID }}
-#          GNUGP_SIGNING_PASSWORD: ${{ secrets.GNUGP_SIGNING_PASSWORD }}
-#          GNUGP_SIGNING_KEY: ${{ secrets.GNUGP_SIGNING_KEY }}
-#          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-#          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-#        run: |
-#          bin/publish-local.sh
       - name: Archive artifacts
         uses: actions/upload-artifact@v2
         with:
           path: |
-            hurl-cli/build/libs/hurl*.jar
-            hurl-fmt/build/libs/hurlfmt*.jar
+            ./hurl-cli/build/libs/hurl*.jar
+            ./hurl-fmt/build/libs/hurlfmt*.jar
           if-no-files-found: error
+      - name: Prepare release
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          bin/prepare-version.h
+      - name: Publish release to Maven Central
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GNUGP_SIGNING_KEYID: ${{ secrets.GNUGP_SIGNING_KEYID }}
+          GNUGP_SIGNING_PASSWORD: ${{ secrets.GNUGP_SIGNING_PASSWORD }}
+          GNUGP_SIGNING_KEY: ${{ secrets.GNUGP_SIGNING_KEY }}
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+        run: |
+          bin/publish-maven.sh
+      - name: Create GitHub release
+          if: startsWith(github.ref, 'refs/tags/')
+          id: create_release
+          uses: actions/create-release@v1
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+            tag_name: ${{ github.ref }}
+            release_name: Release ${{ github.ref }}
+            draft: false
+            prerelease: false
+#      - name: Upload GitHub release asset
+#          id: upload-release-asset
+#          uses: actions/upload-release-asset@v1
+#          env:
+#            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          with:
+#            upload_url: ${{ steps.create_release.outputs.upload_url }}
+#            asset_path: ./my-artifact.zip
+#            asset_name: my-artifact.zip
+#            asset_content_type: application/zip
