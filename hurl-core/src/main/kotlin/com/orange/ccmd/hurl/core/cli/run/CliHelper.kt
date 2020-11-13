@@ -20,6 +20,7 @@
 package com.orange.ccmd.hurl.core.cli.run
 
 import com.orange.ccmd.hurl.core.ast.HurlParser
+import com.orange.ccmd.hurl.core.run.InvalidVariableResult
 import com.orange.ccmd.hurl.core.run.Options
 import com.orange.ccmd.hurl.core.run.Runner
 import com.orange.ccmd.hurl.core.utils.lineAt
@@ -100,14 +101,20 @@ class CliHelper {
 
             val result = runner.run()
 
-            /*
-            val file = "$fileName:".ansi.fg.bold
-            val state = if (result.succeeded) {
-                "SUCCESS".ansi.fg.greenBold
-            } else {
-                "FAILED".ansi.fg.redBold
-            }
-            */
+            result.entryResults
+                .flatMap { it.results }
+                .filterNot { it.succeeded }
+                .forEach {
+                    val line = text.lineAt(it.position.line)
+                    logError(
+                        fileName = fileName,
+                        line = line,
+                        message = it.message,
+                        position = it.position,
+                        showPosition = it is InvalidVariableResult
+                    )
+                }
+
             return when {
                 result.succeeded -> {
                     // If the run is successful, we dump the bytes body response
@@ -125,7 +132,7 @@ class CliHelper {
                         if (outputFile != null) {
                         // To support /dev/null on all platform, including Windows one,
                         // we explicitly disable writing on /dev/null (and nul https://gcc.gnu.org/legacy-ml/gcc-patches/2005-05/msg01793.html)
-                        if (outputFile.path != "/dev/null" && outputFile.path != "nul") {
+                        if (outputFile.path !in listOf("/dev/null", "\\dev\\null", "nul")) {
                             outputFile.writeBytes(body)
                         }
                     } else {
