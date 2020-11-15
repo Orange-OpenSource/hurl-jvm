@@ -27,9 +27,16 @@ data class ResponseDto(
     val version: String,
     val status: Int,
     val headers: List<KeyValueDto>? = null,
+    val captures: List<CaptureDto>? = null,
+    val asserts: List<AssertDto>? = null,
+    val body: BytesDto? = null,
 )
 
 fun ResponseNode.toResponse(): ResponseDto {
+
+    val asserts = assertsSection?.asserts?.map { it.toAssertDto() }
+    val captures = capturesSection?.captures?.map { it.toCaptureDto() }
+
     return ResponseDto(
         version = version.value,
         status = status.value,
@@ -37,6 +44,17 @@ fun ResponseNode.toResponse(): ResponseDto {
             headers.map { KeyValueDto(name = it.name, value = it.value) }
         } else {
             null
-        }
+        },
+        asserts = if (asserts.isNullOrEmpty()) {
+            null
+        } else {
+            asserts
+        },
+        captures = if (captures.isNullOrEmpty()) {
+            null
+        } else {
+            captures
+        },
+        body = body?.bytes?.toBytesDto()
     )
 }

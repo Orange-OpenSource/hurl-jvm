@@ -17,17 +17,22 @@
  *
  */
 
-package com.orange.ccmd.hurl.fmt.json
+package com.orange.ccmd.hurl.fmt.json.dto
 
-import com.orange.ccmd.hurl.core.ast.HurlFile
-import com.orange.ccmd.hurl.fmt.Formatter
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import com.orange.ccmd.hurl.core.ast.Capture
+import kotlinx.serialization.Serializable
 
-class JsonFormatter : Formatter {
+@Serializable
+data class CaptureDto(
+    val name: String,
+    val query: QueryDto,
+    val subquery: SubqueryDto? = null
+)
 
-    override fun format(hurlFile: HurlFile): String {
-        val jsonFile = hurlFile.toJsonFile()
-        return Json.encodeToString(jsonFile)
-    }
+fun Capture.toCaptureDto(): CaptureDto {
+    return CaptureDto(
+        name = name.value,
+        query = query.toQueryDto(),
+        subquery = subquery?.toSubqueryDto()
+    )
 }
