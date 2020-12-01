@@ -7,3 +7,5 @@
 ## 📔 Documentation
 
 ## 🔨 Dependency Added / Upgrades
+
+- Upgrade to Kotlin 1.4.20
