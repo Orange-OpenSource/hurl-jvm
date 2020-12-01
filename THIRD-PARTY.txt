@@ -34,6 +34,6 @@ Copyright © 2020 The JUnit Team
 JUnit is distributed under the terms and conditions ot the Eclipse Public License 2.0 (https://www.eclipse.org/legal/epl-2.0/)
 You may download the source code on the following website: https://github.com/junit-team/junit5/
 //-----//
-Gradle Versions Plugin - version 0.33.0
+Gradle Versions Plugin - version 0.36.0
 Gradle Versions Plugin is distributed under the terms and conditions of the Apache Software License 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
 You may download the source code on the following website: https://github.com/ben-manes/gradle-versions-plugin
