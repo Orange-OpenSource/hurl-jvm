@@ -17,17 +17,25 @@
  *
  */
 
-package com.orange.ccmd.hurl.fmt.json
+package com.orange.ccmd.hurl.fmt.json.dto
 
-import com.orange.ccmd.hurl.core.ast.HurlFile
-import com.orange.ccmd.hurl.fmt.Formatter
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import com.orange.ccmd.hurl.core.ast.RegexSubquery
+import com.orange.ccmd.hurl.core.ast.Subquery
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-class JsonFormatter : Formatter {
+@Serializable
+sealed class SubqueryDto
 
-    override fun format(hurlFile: HurlFile): String {
-        val jsonFile = hurlFile.toJsonFile()
-        return Json.encodeToString(jsonFile)
+@Serializable
+@SerialName("regex")
+data class RegexSubqueryDto(
+    val expr: String
+) : SubqueryDto()
+
+
+fun Subquery.toSubqueryDto(): SubqueryDto {
+    return when (this) {
+        is RegexSubquery -> RegexSubqueryDto(expr = expr.value)
     }
 }

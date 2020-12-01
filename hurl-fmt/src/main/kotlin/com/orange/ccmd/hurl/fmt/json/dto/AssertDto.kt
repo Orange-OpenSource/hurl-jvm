@@ -17,17 +17,20 @@
  *
  */
 
-package com.orange.ccmd.hurl.fmt.json
+package com.orange.ccmd.hurl.fmt.json.dto
 
-import com.orange.ccmd.hurl.core.ast.HurlFile
-import com.orange.ccmd.hurl.fmt.Formatter
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import com.orange.ccmd.hurl.core.ast.Assert
+import kotlinx.serialization.Serializable
 
-class JsonFormatter : Formatter {
+@Serializable
+data class AssertDto(
+    val query: QueryDto,
+    val predicate: PredicateDto
+)
 
-    override fun format(hurlFile: HurlFile): String {
-        val jsonFile = hurlFile.toJsonFile()
-        return Json.encodeToString(jsonFile)
-    }
+fun Assert.toAssertDto(): AssertDto {
+    return AssertDto(
+        query = query.toQueryDto(),
+        predicate = predicate.toPredicateDto()
+    )
 }
