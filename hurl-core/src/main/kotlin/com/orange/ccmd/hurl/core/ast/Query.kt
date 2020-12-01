@@ -19,6 +19,26 @@
 
 package com.orange.ccmd.hurl.core.ast
 
+internal fun HurlParser.query(): Query? {
+    return choice(listOf(
+        { statusQuery() },
+        { headerQuery() },
+        { cookieQuery() },
+        { bodyQuery() },
+        { xPathQuery() },
+        { jsonPathQuery() },
+        { regexQuery() },
+        { variableQuery() },
+        { durationQuery() },
+    ))
+}
+
+internal fun HurlParser.queryType(type: String): QueryType? {
+    val begin = position.copy()
+    val value = literal(type)?.value ?: return null
+    return QueryType(begin = begin, end = position, value = value)
+}
+
 internal fun HurlParser.bodyQuery(): BodyQuery? {
     val begin = position.copy()
     val type = queryType("body") ?: return null
@@ -33,6 +53,12 @@ internal fun HurlParser.cookieQuery(): CookieQuery? {
     val cookieName = quotedString() ?: return null
 
     return CookieQuery(begin = begin, end = position, type = type, spaces = spaces, expr = cookieName)
+}
+
+internal fun HurlParser.durationQuery(): DurationQuery? {
+    val begin = position.copy()
+    val type = queryType("duration") ?: return null
+    return DurationQuery(begin = begin, end = position, type = type)
 }
 
 internal fun HurlParser.headerQuery(): HeaderQuery? {

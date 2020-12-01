@@ -159,6 +159,8 @@ data class CountPredicate(
     val expr: Number
 ) : PredicateFunc()
 
+data class DurationQuery(override val begin: Position, override val end: Position, override val type: QueryType) : Query()
+
 data class Entry(override val begin: Position, override val end: Position, val request: Request, val response: Response?) : Node()
 
 data class EqualBoolPredicate(

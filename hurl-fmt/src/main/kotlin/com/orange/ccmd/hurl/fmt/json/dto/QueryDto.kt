@@ -21,6 +21,7 @@ package com.orange.ccmd.hurl.fmt.json.dto
 
 import com.orange.ccmd.hurl.core.ast.BodyQuery
 import com.orange.ccmd.hurl.core.ast.CookieQuery
+import com.orange.ccmd.hurl.core.ast.DurationQuery
 import com.orange.ccmd.hurl.core.ast.HeaderQuery
 import com.orange.ccmd.hurl.core.ast.JsonPathQuery
 import com.orange.ccmd.hurl.core.ast.Query
@@ -79,6 +80,11 @@ data class XPathQueryDto(
     val expr: String
 ) : QueryDto()
 
+@Serializable
+@SerialName("duration")
+object DurationQueryDto : QueryDto()
+
+
 fun Query.toQueryDto(): QueryDto {
     return when (this) {
         is BodyQuery -> BodyQueryDto
@@ -89,5 +95,6 @@ fun Query.toQueryDto(): QueryDto {
         is StatusQuery -> StatusQueryDto
         is VariableQuery -> VariableQueryDto(name = variable.value)
         is XPathQuery -> XPathQueryDto(expr = expr.value)
+        is DurationQuery -> DurationQueryDto
     }
 }

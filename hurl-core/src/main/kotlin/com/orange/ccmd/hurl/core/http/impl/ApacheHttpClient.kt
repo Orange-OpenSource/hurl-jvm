@@ -63,6 +63,8 @@ import org.apache.http.message.BasicNameValuePair
 import org.apache.http.ssl.SSLContextBuilder
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets.UTF_8
+import java.time.Duration
+import java.time.Instant
 
 /**
  * Implements {@link HttpClient} with Apache Http client.
@@ -146,11 +148,13 @@ internal class ApacheHttpClient(
                 req.abort()
             }
         }
+        val start = Instant.now()
         val resp = if (httpProxy == null) {
             client.execute(req)
         } else {
             client.execute(targetHost, req)
         }
+        val duration = Duration.between(start, Instant.now())
 
         // We get the request log to have the final real list of HTTP headers,
         // specified by the spec, and added by the http client.
@@ -178,7 +182,8 @@ internal class ApacheHttpClient(
             charset = contentType.charset ?: Charsets.UTF_8,
             mimeType = contentType.mimeType,
             body = respBody,
-            encodings = encodings ?: emptyList()
+            encodings = encodings ?: emptyList(),
+            duration = duration.toMillis()
         )
 
         val cookies = cookieStore.cookies.map {

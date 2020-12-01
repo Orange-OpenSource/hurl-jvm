@@ -3,7 +3,8 @@
 ## ⭐ New Features
 
 - Add JSON export format in `hurlfmt`
- 
+- Add `duration` query
+
 ## 🐞 Bug Fixes
 
 - Fix basic authentication support in url
