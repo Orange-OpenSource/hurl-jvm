@@ -391,7 +391,9 @@ runtimeClasspath - Runtime classpath of compilation 'main' (target  (jvm)).
 |    |    |    \--- org.jetbrains:annotations:13.0
 |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.20
 |    |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.4.20 (*)
-|    +--- com.fasterxml.jackson.core:jackson-core:2.11.3
+|    +--- com.fasterxml.jackson.core:jackson-core:2.12.0
+|    |    \--- com.fasterxml.jackson:jackson-bom:2.12.0
+|    |         \--- com.fasterxml.jackson.core:jackson-core:2.12.0 (c)
 |    +--- org.jsoup:jsoup:1.13.1
 |    +--- com.jayway.jsonpath:json-path:2.4.0
 |    |    +--- net.minidev:json-smart:2.3
@@ -539,7 +541,9 @@ testRuntimeClasspath - Runtime classpath of compilation 'test' (target  (jvm)).
 |    |    |    \--- org.jetbrains:annotations:13.0
 |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.20
 |    |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.4.20 (*)
-|    +--- com.fasterxml.jackson.core:jackson-core:2.11.3
+|    +--- com.fasterxml.jackson.core:jackson-core:2.12.0
+|    |    \--- com.fasterxml.jackson:jackson-bom:2.12.0
+|    |         \--- com.fasterxml.jackson.core:jackson-core:2.12.0 (c)
 |    +--- org.jsoup:jsoup:1.13.1
 |    +--- com.jayway.jsonpath:json-path:2.4.0
 |    |    +--- net.minidev:json-smart:2.3
