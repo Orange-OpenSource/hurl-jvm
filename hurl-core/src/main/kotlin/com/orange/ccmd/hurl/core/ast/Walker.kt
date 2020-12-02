@@ -193,6 +193,16 @@ fun walk(visitor: Visitor, node: Node?) {
             walk(visitor, node.lt)
             node.params.forEach { walk(visitor, it) }
         }
+        is GreaterPredicate -> {
+            walk(visitor, node.type)
+            node.spaces.forEach { walk(visitor, it) }
+            walk(visitor, node.expr)
+        }
+        is GreaterOrEqualPredicate -> {
+            walk(visitor, node.type)
+            node.spaces.forEach { walk(visitor, it) }
+            walk(visitor, node.expr)
+        }
         is Header -> {
             node.lts.forEach { walk(visitor, it) }
             node.spaces.forEach { walk(visitor, it) }
@@ -239,6 +249,16 @@ fun walk(visitor: Visitor, node: Node?) {
             walk(visitor, node.colon)
             node.spaces1.forEach { walk(visitor, it) }
             walk(visitor, node.value)
+        }
+        is LessPredicate -> {
+            walk(visitor, node.type)
+            node.spaces.forEach { walk(visitor, it) }
+            walk(visitor, node.expr)
+        }
+        is LessOrEqualPredicate -> {
+            walk(visitor, node.type)
+            node.spaces.forEach { walk(visitor, it) }
+            walk(visitor, node.expr)
         }
         is LineTerminator -> {
             node.spaces.forEach { walk(visitor, it) }

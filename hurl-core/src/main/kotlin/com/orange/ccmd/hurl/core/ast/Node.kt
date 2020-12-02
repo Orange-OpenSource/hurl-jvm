@@ -212,6 +212,22 @@ data class Expr(
     val text: String,
 ) : Node()
 
+data class GreaterPredicate(
+    override val begin: Position,
+    override val end: Position,
+    override val type: PredicateType,
+    val spaces: List<Space>,
+    val expr: Number
+) : PredicateFunc()
+
+data class GreaterOrEqualPredicate(
+    override val begin: Position,
+    override val end: Position,
+    override val type: PredicateType,
+    val spaces: List<Space>,
+    val expr: Number
+) : PredicateFunc()
+
 data class File(
     override val begin: Position,
     override val end: Position,
@@ -338,6 +354,22 @@ data class KeyValue(
     val spaces1: List<Space>,
     val value: HString
 ) : Node()
+
+data class LessPredicate(
+    override val begin: Position,
+    override val end: Position,
+    override val type: PredicateType,
+    val spaces: List<Space>,
+    val expr: Number
+) : PredicateFunc()
+
+data class LessOrEqualPredicate(
+    override val begin: Position,
+    override val end: Position,
+    override val type: PredicateType,
+    val spaces: List<Space>,
+    val expr: Number
+) : PredicateFunc()
 
 data class Literal(override val begin: Position, override val end: Position, val value: String) : Node()
 

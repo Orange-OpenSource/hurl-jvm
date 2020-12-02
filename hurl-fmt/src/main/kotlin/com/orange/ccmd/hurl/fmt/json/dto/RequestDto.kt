@@ -35,7 +35,7 @@ data class RequestDto(
     val body: BytesDto? = null
 )
 
-fun RequestNode.toRequest(): RequestDto {
+fun RequestNode.toRequestDto(): RequestDto {
     return RequestDto(
         method = method.value,
         url = url.value,

@@ -126,10 +126,17 @@ internal class ApacheHttpClient(
         val builder = RequestBuilder.create(request.method)
 
         request.prepareUri(builder = builder)
-        request.prepareHeaders(builder = builder, authentification = authentification, compressed = compressed)
+
+        // We prefer basic authentification provided by option, then basic
+        // authentification in url
+        val selectedAuthentification = when {
+            authentification != null -> authentification
+            builder.uri.userInfo != null -> BasicAuthentification.fromString(builder.uri.rawUserInfo)
+            else -> null
+        }
+        request.prepareHeaders(builder = builder, authentification = selectedAuthentification, compressed = compressed)
         request.prepareBody(builder = builder)
         request.prepareCookies(builder = builder)
-
 
         val uri = builder.uri
         val targetHost = if (httpProxy == null) { null } else { HttpHost(uri.host, uri.port, uri.scheme) }
