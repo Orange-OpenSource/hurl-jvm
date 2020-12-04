@@ -19,6 +19,22 @@
 
 package com.orange.ccmd.hurl.core.ast
 
+internal fun HurlParser.predicateFunc(): PredicateFunc? {
+    return choice(listOf(
+        { equalPredicate() },
+        { greaterPredicate() },
+        { greaterOrEqualPredicate() },
+        { lessPredicate() },
+        { lessOrEqualPredicate() },
+        { countPredicate() },
+        { startWithPredicate() },
+        { containPredicate() },
+        { includePredicate() },
+        { matchPredicate() },
+        { existPredicate() },
+    ))
+}
+
 internal fun HurlParser.containPredicate(): ContainPredicate? {
     val begin = position.copy()
     val type = predicateType("contains") ?: return null
@@ -94,6 +110,28 @@ internal fun HurlParser.existPredicate(): ExistPredicate? {
     return ExistPredicate(begin = begin, end = position, type = type)
 }
 
+internal fun HurlParser.greaterPredicate(): GreaterPredicate? {
+    val begin = position.copy()
+    val type = predicateType("greaterThan") ?: return null
+    val spaces = zeroOrMore { space() }
+    val expr = choice(listOf(
+        { float() },
+        { integer() }
+    )) ?: return null
+    return GreaterPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+}
+
+internal fun HurlParser.greaterOrEqualPredicate(): GreaterOrEqualPredicate? {
+    val begin = position.copy()
+    val type = predicateType("greaterThanOrEquals") ?: return null
+    val spaces = zeroOrMore { space() }
+    val expr = choice(listOf(
+        { float() },
+        { integer() }
+    )) ?: return null
+    return GreaterOrEqualPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+}
+
 internal fun HurlParser.includePredicate(): PredicateFunc? {
     return choice(listOf(
         { includeBoolPredicate() },
@@ -138,6 +176,28 @@ internal fun HurlParser.includeStringPredicate(): IncludeStringPredicate? {
     return IncludeStringPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
 }
 
+internal fun HurlParser.lessPredicate(): LessPredicate? {
+    val begin = position.copy()
+    val type = predicateType("lessThan") ?: return null
+    val spaces = zeroOrMore { space() }
+    val expr = choice(listOf(
+        { float() },
+        { integer() }
+    )) ?: return null
+    return LessPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+}
+
+internal fun HurlParser.lessOrEqualPredicate(): LessOrEqualPredicate? {
+    val begin = position.copy()
+    val type = predicateType("lessThanOrEquals") ?: return null
+    val spaces = zeroOrMore { space() }
+    val expr = choice(listOf(
+        { float() },
+        { integer() }
+    )) ?: return null
+    return LessOrEqualPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+}
+
 internal fun HurlParser.matchPredicate(): MatchPredicate? {
     val begin = position.copy()
     val type = predicateType("matches") ?: return null
@@ -157,18 +217,6 @@ internal fun HurlParser.predicate(): Predicate? {
     }
     val predicateFunc = predicateFunc() ?: return null
     return Predicate(begin = begin, end = position, not = not, spaces = spaces, predicateFunc = predicateFunc)
-}
-
-internal fun HurlParser.predicateFunc(): PredicateFunc? {
-    return choice(listOf(
-        { equalPredicate() },
-        { countPredicate() },
-        { startWithPredicate() },
-        { containPredicate() },
-        { includePredicate() },
-        { matchPredicate() },
-        { existPredicate() },
-    ))
 }
 
 internal fun HurlParser.predicateType(type: String): PredicateType? {

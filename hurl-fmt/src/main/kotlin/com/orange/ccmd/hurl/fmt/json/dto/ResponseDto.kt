@@ -20,11 +20,11 @@
 package com.orange.ccmd.hurl.fmt.json.dto
 
 import kotlinx.serialization.Serializable
-import com.orange.ccmd.hurl.core.ast.Response as ResponseNode
+import com.orange.ccmd.hurl.core.ast.Response
 
 @Serializable
 data class ResponseDto(
-    val version: String,
+    val version: String? = null,
     val status: Int,
     val headers: List<KeyValueDto>? = null,
     val captures: List<CaptureDto>? = null,
@@ -32,18 +32,22 @@ data class ResponseDto(
     val body: BytesDto? = null,
 )
 
-fun ResponseNode.toResponse(): ResponseDto {
+fun Response.toResponseDto(): ResponseDto {
 
     val asserts = assertsSection?.asserts?.map { it.toAssertDto() }
     val captures = capturesSection?.captures?.map { it.toCaptureDto() }
 
     return ResponseDto(
-        version = version.value,
-        status = status.value,
-        headers = if (headers.isNotEmpty()) {
-            headers.map { KeyValueDto(name = it.name, value = it.value) }
-        } else {
+        version = if (version.value == "HTTP/*") {
             null
+        } else {
+            version.value
+        },
+        status = status.value,
+        headers = if (headers.isEmpty()) {
+            null
+        } else {
+            headers.map { KeyValueDto(name = it.name, value = it.value) }
         },
         asserts = if (asserts.isNullOrEmpty()) {
             null

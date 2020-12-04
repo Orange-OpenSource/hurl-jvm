@@ -29,9 +29,9 @@ data class EntryDto(
 )
 
 
-fun EntryNode.toEntry(): EntryDto {
+fun EntryNode.toEntryDto(): EntryDto {
     return EntryDto(
-        request = request.toRequest(),
-        response = response?.toResponse(),
+        request = request.toRequestDto(),
+        response = response?.toResponseDto(),
     )
 }

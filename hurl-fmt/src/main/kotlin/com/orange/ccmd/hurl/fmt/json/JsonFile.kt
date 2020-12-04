@@ -21,7 +21,7 @@ package com.orange.ccmd.hurl.fmt.json
 
 import com.orange.ccmd.hurl.core.ast.HurlFile
 import com.orange.ccmd.hurl.fmt.json.dto.EntryDto
-import com.orange.ccmd.hurl.fmt.json.dto.toEntry
+import com.orange.ccmd.hurl.fmt.json.dto.toEntryDto
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -31,6 +31,6 @@ data class JsonFile(
 
 fun HurlFile.toJsonFile(): JsonFile {
     return JsonFile(
-        entries = entries.map { it.toEntry() }
+        entries = entries.map { it.toEntryDto() }
     )
 }

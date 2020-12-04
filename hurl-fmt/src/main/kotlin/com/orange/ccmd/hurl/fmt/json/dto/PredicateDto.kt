@@ -27,10 +27,14 @@ import com.orange.ccmd.hurl.core.ast.EqualNullPredicate
 import com.orange.ccmd.hurl.core.ast.EqualNumberPredicate
 import com.orange.ccmd.hurl.core.ast.EqualStringPredicate
 import com.orange.ccmd.hurl.core.ast.ExistPredicate
+import com.orange.ccmd.hurl.core.ast.GreaterOrEqualPredicate
+import com.orange.ccmd.hurl.core.ast.GreaterPredicate
 import com.orange.ccmd.hurl.core.ast.IncludeBoolPredicate
 import com.orange.ccmd.hurl.core.ast.IncludeNullPredicate
 import com.orange.ccmd.hurl.core.ast.IncludeNumberPredicate
 import com.orange.ccmd.hurl.core.ast.IncludeStringPredicate
+import com.orange.ccmd.hurl.core.ast.LessOrEqualPredicate
+import com.orange.ccmd.hurl.core.ast.LessPredicate
 import com.orange.ccmd.hurl.core.ast.MatchPredicate
 import com.orange.ccmd.hurl.core.ast.Predicate
 import com.orange.ccmd.hurl.core.ast.StartWithPredicate
@@ -90,6 +94,34 @@ data class StartWithPredicateDto(
     val value: String,
 ) : PredicateDto()
 
+@Serializable
+@SerialName("greater")
+data class GreaterPredicateDto(
+    val not: Boolean? = null,
+    val value: ValueDto,
+) : PredicateDto()
+
+@Serializable
+@SerialName("greater-or-equal")
+data class GreaterOrEqualPredicateDto(
+    val not: Boolean? = null,
+    val value: ValueDto,
+) : PredicateDto()
+
+@Serializable
+@SerialName("less")
+data class LessPredicateDto(
+    val not: Boolean? = null,
+    val value: ValueDto,
+) : PredicateDto()
+
+@Serializable
+@SerialName("less-or-equal")
+data class LessOrEqualPredicateDto(
+    val not: Boolean? = null,
+    val value: ValueDto,
+) : PredicateDto()
+
 fun Predicate.toPredicateDto(): PredicateDto {
     val notValue = not?.let { true }
     return when (val pred = predicateFunc) {
@@ -97,29 +129,31 @@ fun Predicate.toPredicateDto(): PredicateDto {
         is CountPredicate -> CountPredicateDto(not = notValue, value = pred.expr.value.toLong())
         is EqualBoolPredicate -> EqualPredicateDto(not = notValue, value = BooleanValueDto(pred.expr.value))
         is EqualNullPredicate -> EqualPredicateDto(not = notValue, value = NullValueDto)
-        is EqualNumberPredicate -> {
-            // FIXME: we should register in the ast if the value is a double or an long
-            if ("." in pred.expr.text) {
-                EqualPredicateDto(not = notValue, value = DoubleValueDto(pred.expr.value))
-            } else {
-                EqualPredicateDto(not = notValue, value = LongValueDto(pred.expr.value.toLong()))
-            }
-        }
+        is EqualNumberPredicate -> EqualPredicateDto(not = notValue, value = numberDto(text = pred.expr.text, value = pred.expr.value))
         is EqualStringPredicate -> EqualPredicateDto(not = notValue, value = StringValueDto(pred.expr.value))
         is EqualExprPredicate -> EqualPredicateDto(not = notValue, value = StringValueDto(pred.expr.name.value))
         is ExistPredicate -> ExistPredicateDto(not = notValue)
         is IncludeBoolPredicate -> IncludePredicateDto(not = notValue, value = BooleanValueDto(pred.expr.value))
         is IncludeNullPredicate -> IncludePredicateDto(not = notValue, value = NullValueDto)
-        is IncludeNumberPredicate -> {
-            // FIXME: we should register in the ast if the value is a double or an long
-            if ("." in pred.expr.text) {
-                IncludePredicateDto(not = notValue, value = DoubleValueDto(pred.expr.value))
-            } else {
-                IncludePredicateDto(not = notValue, value = LongValueDto(pred.expr.value.toLong()))
-            }
-        }
+        is IncludeNumberPredicate -> IncludePredicateDto(not = notValue, value = numberDto(text = pred.expr.text, value = pred.expr.value))
         is IncludeStringPredicate -> IncludePredicateDto(not = notValue, value = StringValueDto(pred.expr.value))
         is MatchPredicate -> MatchPredicateDto(not = notValue, value = pred.expr.value)
         is StartWithPredicate -> StartWithPredicateDto(not = notValue, value = pred.expr.value)
+        is GreaterPredicate -> GreaterPredicateDto(not = notValue, value = numberDto(text = pred.expr.text, value = pred.expr.value))
+        is GreaterOrEqualPredicate -> GreaterOrEqualPredicateDto(not = notValue, value = numberDto(text = pred.expr.text, value = pred.expr.value))
+        is LessPredicate -> LessPredicateDto(not = notValue, value = numberDto(text = pred.expr.text, value = pred.expr.value))
+        is LessOrEqualPredicate -> LessOrEqualPredicateDto(not = notValue, value = numberDto(text = pred.expr.text, value = pred.expr.value))
+    }
+}
+
+// FIXME: currently in the ast, we don't differentiate double and long values.
+//  For the moment, to serialize a value as an int when the value is an int in the ast, we
+//  check if the text representation of the value contains a dot (will be done at ast
+//  parsing time in the future)
+private fun numberDto(text: String, value: Double): ValueDto {
+    return if ("." in text) {
+        DoubleValueDto(value)
+    } else {
+        LongValueDto(value.toLong())
     }
 }

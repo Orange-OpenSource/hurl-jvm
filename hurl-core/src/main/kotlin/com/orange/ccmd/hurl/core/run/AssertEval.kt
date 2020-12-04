@@ -29,11 +29,15 @@ import com.orange.ccmd.hurl.core.ast.EqualNullPredicate
 import com.orange.ccmd.hurl.core.ast.EqualNumberPredicate
 import com.orange.ccmd.hurl.core.ast.EqualStringPredicate
 import com.orange.ccmd.hurl.core.ast.ExistPredicate
+import com.orange.ccmd.hurl.core.ast.GreaterOrEqualPredicate
+import com.orange.ccmd.hurl.core.ast.GreaterPredicate
 import com.orange.ccmd.hurl.core.ast.Header
 import com.orange.ccmd.hurl.core.ast.IncludeBoolPredicate
 import com.orange.ccmd.hurl.core.ast.IncludeNullPredicate
 import com.orange.ccmd.hurl.core.ast.IncludeNumberPredicate
 import com.orange.ccmd.hurl.core.ast.IncludeStringPredicate
+import com.orange.ccmd.hurl.core.ast.LessOrEqualPredicate
+import com.orange.ccmd.hurl.core.ast.LessPredicate
 import com.orange.ccmd.hurl.core.ast.MatchPredicate
 import com.orange.ccmd.hurl.core.ast.StartWithPredicate
 import com.orange.ccmd.hurl.core.ast.Status
@@ -48,10 +52,14 @@ import com.orange.ccmd.hurl.core.predicate.equalDouble
 import com.orange.ccmd.hurl.core.predicate.equalNull
 import com.orange.ccmd.hurl.core.predicate.equalString
 import com.orange.ccmd.hurl.core.predicate.exist
+import com.orange.ccmd.hurl.core.predicate.greater
+import com.orange.ccmd.hurl.core.predicate.greaterOrEqual
 import com.orange.ccmd.hurl.core.predicate.includeBool
 import com.orange.ccmd.hurl.core.predicate.includeNull
 import com.orange.ccmd.hurl.core.predicate.includeNumber
 import com.orange.ccmd.hurl.core.predicate.includeString
+import com.orange.ccmd.hurl.core.predicate.less
+import com.orange.ccmd.hurl.core.predicate.lessOrEqual
 import com.orange.ccmd.hurl.core.predicate.match
 import com.orange.ccmd.hurl.core.predicate.notContain
 import com.orange.ccmd.hurl.core.predicate.notCount
@@ -61,10 +69,14 @@ import com.orange.ccmd.hurl.core.predicate.notEqualDouble
 import com.orange.ccmd.hurl.core.predicate.notEqualNull
 import com.orange.ccmd.hurl.core.predicate.notEqualString
 import com.orange.ccmd.hurl.core.predicate.notExist
+import com.orange.ccmd.hurl.core.predicate.notGreater
+import com.orange.ccmd.hurl.core.predicate.notGreaterOrEqual
 import com.orange.ccmd.hurl.core.predicate.notIncludeBool
 import com.orange.ccmd.hurl.core.predicate.notIncludeNull
 import com.orange.ccmd.hurl.core.predicate.notIncludeNumber
 import com.orange.ccmd.hurl.core.predicate.notIncludeString
+import com.orange.ccmd.hurl.core.predicate.notLess
+import com.orange.ccmd.hurl.core.predicate.notLessOrEqual
 import com.orange.ccmd.hurl.core.predicate.notMatch
 import com.orange.ccmd.hurl.core.predicate.notStartWith
 import com.orange.ccmd.hurl.core.predicate.startWith
@@ -320,6 +332,34 @@ internal fun Assert.eval(response: HttpResponse, variables: VariableJar): EntryS
                     notExist(first = first)
                 } else {
                     exist(first = first)
+                }
+            }
+            is GreaterPredicate -> {
+                if (not) {
+                    notGreater(first = first, second = predicateFunc.expr.value)
+                } else {
+                    greater(first = first, second = predicateFunc.expr.value)
+                }
+            }
+            is GreaterOrEqualPredicate -> {
+                if (not) {
+                    notGreaterOrEqual(first = first, second = predicateFunc.expr.value)
+                } else {
+                    greaterOrEqual(first = first, second = predicateFunc.expr.value)
+                }
+            }
+            is LessPredicate -> {
+                if (not) {
+                    notLess(first = first, second = predicateFunc.expr.value)
+                } else {
+                    less(first = first, second = predicateFunc.expr.value)
+                }
+            }
+            is LessOrEqualPredicate -> {
+                if (not) {
+                    notLessOrEqual(first = first, second = predicateFunc.expr.value)
+                } else {
+                    lessOrEqual(first = first, second = predicateFunc.expr.value)
                 }
             }
         }

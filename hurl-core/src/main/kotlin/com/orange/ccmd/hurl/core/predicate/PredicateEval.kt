@@ -146,7 +146,6 @@ internal fun notEqualDouble(first: QueryResult, second: Double): PredicateResult
     return PredicateResult(succeeded = succeeded, first = first.text(), second = secondText)
 }
 
-
 internal fun equal(first: QueryResult, second: Any?): PredicateResult {
     return when (second) {
         is String -> equalString(first = first, second = second)
@@ -422,7 +421,6 @@ internal fun notMatch(first: QueryResult, second: String): PredicateResult {
     return PredicateResult(succeeded = succeeded, first = first.text(), second = secondText)
 }
 
-
 /**
  * Evaluates if query result [first] exist.
  * @param first query result to be evaluated
@@ -451,4 +449,124 @@ internal fun notExist(first: QueryResult): PredicateResult {
     }
     val second = ""
     return PredicateResult(succeeded = succeeded, first = first.text(), second = second)
+}
+
+/**
+ * Evaluates if query result [first] is greater than [second].
+ * @param first query result to be tested
+ * @param second number to test
+ * @return the result of predicate
+ */
+internal fun greater(first: QueryResult, second: Double): PredicateResult {
+    val succeeded = when (first) {
+        is QueryNumberResult -> first.value.toDouble() > second
+        else -> false
+    }
+    val secondText = "is greater than <$second>"
+    return PredicateResult(succeeded = succeeded, first = first.text(), second = secondText)
+}
+
+/**
+ * Evaluates if query result [first] is not greater than [second].
+ * @param first query result to be tested
+ * @param second number to test
+ * @return the result of predicate
+ */
+internal fun notGreater(first: QueryResult, second: Double): PredicateResult {
+    val succeeded = when (first) {
+        is QueryNumberResult -> first.value.toDouble() <= second
+        else -> true
+    }
+    val secondText = "isn't greater than $second"
+    return PredicateResult(succeeded = succeeded, first = first.text(), second = secondText)
+}
+
+/**
+ * Evaluates if query result [first] is greater or equal to [second].
+ * @param first query result to be tested
+ * @param second number to test
+ * @return the result of predicate
+ */
+internal fun greaterOrEqual(first: QueryResult, second: Double): PredicateResult {
+    val succeeded = when (first) {
+        is QueryNumberResult -> first.value.toDouble() >= second
+        else -> false
+    }
+    val secondText = "is greater or equal to <$second>"
+    return PredicateResult(succeeded = succeeded, first = first.text(), second = secondText)
+}
+
+/**
+ * Evaluates if query result [first] is not greater or equal to [second].
+ * @param first query result to be tested
+ * @param second number to test
+ * @return the result of predicate
+ */
+internal fun notGreaterOrEqual(first: QueryResult, second: Double): PredicateResult {
+    val succeeded = when (first) {
+        is QueryNumberResult -> first.value.toDouble() < second
+        else -> true
+    }
+    val secondText = "isn't greater or equal to $second"
+    return PredicateResult(succeeded = succeeded, first = first.text(), second = secondText)
+}
+
+/**
+ * Evaluates if query result [first] is less than [second].
+ * @param first query result to be tested
+ * @param second number to test
+ * @return the result of predicate
+ */
+internal fun less(first: QueryResult, second: Double): PredicateResult {
+    val succeeded = when (first) {
+        is QueryNumberResult -> first.value.toDouble() < second
+        else -> false
+    }
+    val secondText = "is less than <$second>"
+    return PredicateResult(succeeded = succeeded, first = first.text(), second = secondText)
+}
+
+/**
+ * Evaluates if query result [first] is not less than [second].
+ * @param first query result to be tested
+ * @param second number to test
+ * @return the result of predicate
+ */
+internal fun notLess(first: QueryResult, second: Double): PredicateResult {
+    val succeeded = when (first) {
+        is QueryNumberResult -> first.value.toDouble() >= second
+        else -> true
+    }
+    val secondText = "isn't less than $second"
+    return PredicateResult(succeeded = succeeded, first = first.text(), second = secondText)
+}
+
+/**
+ * Evaluates if query result [first] is less or equal to [second].
+ * @param first query result to be tested
+ * @param second number to test
+ * @return the result of predicate
+ */
+internal fun lessOrEqual(first: QueryResult, second: Double): PredicateResult {
+    val succeeded = when (first) {
+        is QueryNumberResult -> first.value.toDouble() <= second
+        else -> false
+    }
+    val secondText = "is less or equal to <$second>"
+    return PredicateResult(succeeded = succeeded, first = first.text(), second = secondText)
+}
+
+/**
+ * Evaluates if query result [first] is not less or equal to [second].
+ * @param first query result to be tested
+ * @param second number to test
+ * @return the result of predicate
+ */
+internal fun notLessOrEqual(first: QueryResult, second: Double): PredicateResult {
+    val succeeded = when (first) {
+        is QueryNumberResult -> first.value.toDouble() > second
+        else -> true
+    }
+    val secondText = "isn't less or equal to $second"
+    return PredicateResult(succeeded = succeeded, first = first.text(), second = secondText)
 }
