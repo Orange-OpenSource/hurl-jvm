@@ -2,7 +2,11 @@
 
 ## ⭐ New Features
 
+- Add JSON export format in `hurlfmt`
+ 
 ## 🐞 Bug Fixes
+
+- Fix basic authentication support in url
 
 ## 📔 Documentation
 
