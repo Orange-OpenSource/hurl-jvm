@@ -19,13 +19,15 @@
 
 package com.orange.ccmd.hurl.fmt.json.dto
 
+import com.orange.ccmd.hurl.core.ast.AnyStatusValue
+import com.orange.ccmd.hurl.core.ast.IntStatusValue
 import kotlinx.serialization.Serializable
 import com.orange.ccmd.hurl.core.ast.Response
 
 @Serializable
 data class ResponseDto(
     val version: String? = null,
-    val status: Int,
+    val status: Int? = null,
     val headers: List<KeyValueDto>? = null,
     val captures: List<CaptureDto>? = null,
     val asserts: List<AssertDto>? = null,
@@ -36,28 +38,28 @@ fun Response.toResponseDto(): ResponseDto {
 
     val asserts = assertsSection?.asserts?.map { it.toAssertDto() }
     val captures = capturesSection?.captures?.map { it.toCaptureDto() }
+    val statusValue = status.value
 
     return ResponseDto(
-        version = if (version.value == "HTTP/*") {
-            null
-        } else {
-            version.value
+        version = when(version.value) {
+            "HTTP/*" -> null
+            else -> version.value
         },
-        status = status.value,
-        headers = if (headers.isEmpty()) {
-            null
-        } else {
-            headers.map { KeyValueDto(name = it.name, value = it.value) }
+        status = when (statusValue) {
+            is IntStatusValue -> statusValue.value
+            is AnyStatusValue -> null
         },
-        asserts = if (asserts.isNullOrEmpty()) {
-            null
-        } else {
-            asserts
+        headers = when {
+            headers.isEmpty() -> null
+            else -> headers.map { KeyValueDto(name = it.name, value = it.value) }
         },
-        captures = if (captures.isNullOrEmpty()) {
-            null
-        } else {
-            captures
+        asserts = when {
+            asserts.isNullOrEmpty() -> null
+            else -> asserts
+        },
+        captures = when {
+            captures.isNullOrEmpty() -> null
+            else -> captures
         },
         body = body?.bytes?.toBytesDto()
     )

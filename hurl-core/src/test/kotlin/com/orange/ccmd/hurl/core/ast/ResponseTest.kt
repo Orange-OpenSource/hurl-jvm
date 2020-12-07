@@ -81,8 +81,21 @@ class ResponseTest {
     @Test
     fun `parse status with success`() {
         val text = "200xxx"
-        val expectedValue = 200
+        val expectedValue = IntStatusValue(200)
         val expectedText = "200"
+        val parser = HurlParser(text)
+        val node = parser.status()
+        assertNotNull(node)
+        assertNull(parser.error)
+        assertEquals(expectedValue, node.value)
+        assertEquals(expectedText, node.text)
+    }
+
+    @Test
+    fun `parse wildcard status with success`() {
+        val text = "*abcd"
+        val expectedValue = AnyStatusValue
+        val expectedText = "*"
         val parser = HurlParser(text)
         val node = parser.status()
         assertNotNull(node)

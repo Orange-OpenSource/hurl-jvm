@@ -5,6 +5,7 @@
 - Add JSON export format in `hurlfmt`
 - Add `duration` query
 - Add `lessThan`, `lessThanOrEquals`, `greaterThan`, `greaterThanOrEquals` predicates
+- Add wildcard response status code
 
 ## 🐞 Bug Fixes
 

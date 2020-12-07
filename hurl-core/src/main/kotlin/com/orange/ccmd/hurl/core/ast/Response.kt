@@ -155,6 +155,14 @@ internal fun HurlParser.responseSection(): ResponseSection? {
 internal fun HurlParser.status(): Status? {
     val begin = position.copy()
 
+    // First, test if the status value is a wildcard status.
+    val cp0 = peek() ?: return null
+    if (cp0 == '*'.toInt()) {
+        read()
+        return Status(begin = begin, end = position, value = AnyStatusValue, text = "*")
+    }
+
+    // It's not a wildcard status, so it must be an integer value.
     val cps = readWhile { it.isAsciiDigit }
     if (cps == null) {
         error = SyntaxError("0-9 is expected", position)
@@ -167,7 +175,7 @@ internal fun HurlParser.status(): Status? {
         error = SyntaxError("0-9 is expected", position)
         return null
     }
-    return Status(begin = begin, end = position, value = value, text = digits)
+    return Status(begin = begin, end = position, value = IntStatusValue(value = value), text = digits)
 }
 
 internal fun HurlParser.version(): Version? {

@@ -534,7 +534,13 @@ data class StartWithPredicate(
     val expr: HString
 ) : PredicateFunc()
 
-data class Status(override val begin: Position, override val end: Position, val value: Int, val text: String) : Node()
+data class Status(override val begin: Position, override val end: Position, val value: StatusValue, val text: String) : Node()
+
+sealed class StatusValue
+
+data class IntStatusValue(val value: Int): StatusValue()
+
+object AnyStatusValue: StatusValue()
 
 data class StatusQuery(override val begin: Position, override val end: Position, override val type: QueryType) : Query()
 
@@ -553,6 +559,8 @@ data class VariableQuery(
     val spaces: List<Space>,
     val variable: HString
 ): Query()
+
+// TODO: add a VersionValue enum to manage wildcard version `HTTP/*` (see Status node)
 
 data class Version(override val begin: Position, override val end: Position, val value: String): Node()
 

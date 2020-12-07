@@ -19,8 +19,10 @@
 
 package com.orange.ccmd.hurl.core.run
 
+import com.orange.ccmd.hurl.core.ast.AnyStatusValue
 import com.orange.ccmd.hurl.core.ast.Assert
 import com.orange.ccmd.hurl.core.ast.HurlParser
+import com.orange.ccmd.hurl.core.ast.IntStatusValue
 import com.orange.ccmd.hurl.core.ast.Status
 import com.orange.ccmd.hurl.core.ast.Version
 import com.orange.ccmd.hurl.core.ast.assert
@@ -81,15 +83,23 @@ internal class AssertTest {
 
     @Test
     fun `assert of status code succeeded`() {
-        val specStatus = Status(begin = zero, end = zero, value = 500, text = "500")
+        val specStatus = Status(begin = zero, end = zero, value = IntStatusValue(500), text = "500")
         val realStatus = 500
         val result = specStatus.checkStatusCode(realStatus)
         assertTrue(result.succeeded)
     }
 
     @Test
+    fun `assert of wildcard status code succeeded`() {
+        val specStatus = Status(begin = zero, end = zero, value = AnyStatusValue, text = "*")
+        val realStatus = 432
+        val result = specStatus.checkStatusCode(realStatus)
+        assertTrue(result.succeeded)
+    }
+
+    @Test
     fun `assert of status code failed`() {
-        val specStatus = Status(begin = zero, end = zero, value = 200, text = "200")
+        val specStatus = Status(begin = zero, end = zero, value = IntStatusValue(200), text = "200")
         val realStatus = 404
         val result = specStatus.checkStatusCode(realStatus)
         assertFalse(result.succeeded)
