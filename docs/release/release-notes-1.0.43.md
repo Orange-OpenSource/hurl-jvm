@@ -4,6 +4,7 @@
 
 - Add JSON export format in `hurlfmt`
 - Add `duration` query
+- Add `lessThan`, `lessThanOrEquals`, `greaterThan`, `greaterThanOrEquals` predicates
 
 ## 🐞 Bug Fixes
 
