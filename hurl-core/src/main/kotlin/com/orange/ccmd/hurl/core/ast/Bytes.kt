@@ -98,25 +98,6 @@ internal fun HurlParser.json(): Json? {
     return Json(begin = begin, end = position, text = text)
 }
 
-internal fun HurlParser.query(): Query? {
-    return choice(listOf(
-        { statusQuery() },
-        { headerQuery() },
-        { cookieQuery() },
-        { bodyQuery() },
-        { xPathQuery() },
-        { jsonPathQuery() },
-        { regexQuery() },
-        { variableQuery() },
-    ))
-}
-
-internal fun HurlParser.queryType(type: String): QueryType? {
-    val begin = position.copy()
-    val value = literal(type)?.value ?: return null
-    return QueryType(begin = begin, end = position, value = value)
-}
-
 internal fun HurlParser.rawString(): RawString? {
     val begin = position.copy()
 

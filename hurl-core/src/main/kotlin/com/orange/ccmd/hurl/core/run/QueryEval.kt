@@ -21,6 +21,7 @@ package com.orange.ccmd.hurl.core.run
 
 import com.orange.ccmd.hurl.core.ast.BodyQuery
 import com.orange.ccmd.hurl.core.ast.CookieQuery
+import com.orange.ccmd.hurl.core.ast.DurationQuery
 import com.orange.ccmd.hurl.core.ast.HeaderQuery
 import com.orange.ccmd.hurl.core.ast.JsonPathQuery
 import com.orange.ccmd.hurl.core.ast.Query
@@ -68,6 +69,7 @@ fun Query.eval(response: HttpResponse, variables: VariableJar): QueryResult = wh
     is JsonPathQuery -> this.eval(response = response, variables = variables)
     is RegexQuery -> this.eval(response = response, variables = variables)
     is VariableQuery -> this.eval(variables = variables)
+    is DurationQuery -> this.eval(response = response)
 }
 
 fun XPathResult.toQueryResult(): QueryResult = when (this) {
@@ -207,3 +209,10 @@ internal fun VariableQuery.eval(variables: VariableJar): QueryResult {
         is ObjectVar -> QueryObjectResult(value = variable.value)
     }
 }
+
+/**
+ * Evaluates a spec {%link DurationQuery} against a HTTP [response].
+ * @param response an input HTTP response
+ * @return a {%link QueryNumberResult} representing the query result.
+ */
+internal fun DurationQuery.eval(response: HttpResponse): QueryNumberResult = QueryNumberResult(response.duration)

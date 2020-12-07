@@ -123,6 +123,9 @@ fun walk(visitor: Visitor, node: Node?) {
             node.spaces.forEach { walk(visitor, it) }
             walk(visitor, node.expr)
         }
+        is DurationQuery -> {
+            walk(visitor, node.type)
+        }
         is Entry -> {
             walk(visitor, node.request)
             walk(visitor, node.response)

@@ -41,7 +41,8 @@ internal class ResponseTest {
         charset = Charset.forName("UTF-8"),
         mimeType = "application/json",
         body = """{"state": "running", "id": "123"}""".toByteArray(),
-        encodings = emptyList()
+        encodings = emptyList(),
+        duration = 123,
     )
 
 
@@ -137,14 +138,18 @@ internal class ResponseTest {
             jsonpath "$.state" equals "running"
             jsonpath "$.id" startsWith "1"
             jsonpath "$.id" equals "{{ID}}"
+            duration lessThan 1000
+            duration greaterThan 100
         """.trimIndent())
 
         val results = responseSpec.getAssertsResults(variables = from(mapOf("ID" to "123")), httpResponse = httpResponse)
-        assertEquals(results.size, 4)
+        assertEquals(results.size, 6)
         assertEquals(results[0].succeeded, true)
         assertEquals(results[1].succeeded, true)
         assertEquals(results[2].succeeded, true)
         assertEquals(results[3].succeeded, true)
+        assertEquals(results[4].succeeded, true)
+        assertEquals(results[5].succeeded, true)
     }
 
 }

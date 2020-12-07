@@ -53,7 +53,8 @@ internal class QueryEvalTest {
             charset = Charset.forName("utf-8"),
             mimeType = "text/plain",
             body = ByteArray(0),
-            encodings = emptyList()
+            encodings = emptyList(),
+            duration = 100,
         )
         val expected = QueryNumberResult(500)
         assertEquals(expected, query.eval(response))
@@ -71,7 +72,8 @@ internal class QueryEvalTest {
             charset = Charset.forName("utf-8"),
             mimeType = "text/plain",
             body = ByteArray(0),
-            encodings = emptyList()
+            encodings = emptyList(),
+            duration = 100,
         )
         val expected = QueryStringResult("value2")
         assertEquals(expected, query.eval(response))
@@ -97,7 +99,8 @@ internal class QueryEvalTest {
             charset = Charset.forName("utf-8"),
             mimeType = "text/plain",
             body = ByteArray(0),
-            encodings = emptyList()
+            encodings = emptyList(),
+            duration = 100,
         )
         val expected = QueryStringResult("a3fWa")
         assertEquals(expected, query.eval(response = response, variables = VariableJar()))
@@ -119,7 +122,8 @@ internal class QueryEvalTest {
             charset = Charset.forName("utf-8"),
             mimeType = "text/plain",
             body = ByteArray(0),
-            encodings = emptyList()
+            encodings = emptyList(),
+            duration = 100,
         )
         val expected = QueryNoneResult
         assertEquals(expected, query.eval(response = response, variables = VariableJar()))
@@ -137,7 +141,8 @@ internal class QueryEvalTest {
             charset = Charset.forName("UTF-8"),
             mimeType = "text/plain",
             body = "café".trimIndent().toByteArray(),
-            encodings = emptyList()
+            encodings = emptyList(),
+            duration = 100,
         )
         val expected = QueryStringResult("café")
         assertEquals(expected, query.eval(response))
@@ -155,7 +160,8 @@ internal class QueryEvalTest {
             charset = Charset.forName("UTF-8"),
             mimeType = "text/plain",
             body = "café".toByteArray(charset = Charset.forName("ISO-8859-1")),
-            encodings = emptyList()
+            encodings = emptyList(),
+            duration = 100,
         )
         assertThrows<InvalidQueryException> { query.eval(response) }
     }
@@ -190,7 +196,8 @@ internal class QueryEvalTest {
                 charset = Charset.forName("UTF-8"),
                 mimeType = "text/html",
                 body = html.toByteArray(),
-                encodings = emptyList()
+                encodings = emptyList(),
+                duration = 100,
             )
             assertEquals(expectedResult, query.eval(response = response, variables = variables))
         }
@@ -229,7 +236,8 @@ internal class QueryEvalTest {
                 charset = Charset.forName("UTF-8"),
                 mimeType = "application/json",
                 body = json.toByteArray(),
-                encodings = emptyList()
+                encodings = emptyList(),
+                duration = 100,
             )
             assertEquals(expectedResult, query.eval(response = response, variables = variables))
         }
@@ -261,7 +269,8 @@ internal class QueryEvalTest {
                 charset = Charset.forName("UTF-8"),
                 mimeType = "text/html",
                 body = html.toByteArray(),
-                encodings = emptyList()
+                encodings = emptyList(),
+                duration = 100,
             )
             assertEquals(expectedResult, query.eval(response = response, variables = variables))
         }

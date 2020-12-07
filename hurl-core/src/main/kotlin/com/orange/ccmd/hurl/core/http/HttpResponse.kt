@@ -36,7 +36,8 @@ class HttpResponse(
     val charset: Charset,
     val mimeType: String,
     val body: ByteArray,
-    val encodings: List<Encoding>
+    val encodings: List<Encoding>,
+    val duration: Long
 ) {
 
     fun getDecompressedBody(): ByteArray {
