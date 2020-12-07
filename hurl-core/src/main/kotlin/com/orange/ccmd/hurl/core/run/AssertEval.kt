@@ -19,6 +19,7 @@
 
 package com.orange.ccmd.hurl.core.run
 
+import com.orange.ccmd.hurl.core.ast.AnyStatusValue
 import com.orange.ccmd.hurl.core.ast.Assert
 import com.orange.ccmd.hurl.core.ast.Body
 import com.orange.ccmd.hurl.core.ast.ContainPredicate
@@ -36,6 +37,7 @@ import com.orange.ccmd.hurl.core.ast.IncludeBoolPredicate
 import com.orange.ccmd.hurl.core.ast.IncludeNullPredicate
 import com.orange.ccmd.hurl.core.ast.IncludeNumberPredicate
 import com.orange.ccmd.hurl.core.ast.IncludeStringPredicate
+import com.orange.ccmd.hurl.core.ast.IntStatusValue
 import com.orange.ccmd.hurl.core.ast.LessOrEqualPredicate
 import com.orange.ccmd.hurl.core.ast.LessPredicate
 import com.orange.ccmd.hurl.core.ast.MatchPredicate
@@ -119,21 +121,31 @@ internal fun Version.checkVersion(version: String): AssertResult =
  * @param statusCode actual HTTP response status code (ex 200)
  * @return the assert result
  */
-internal fun Status.checkStatusCode(statusCode: Int): AssertResult =
-    if (value == statusCode) {
-        AssertResult(
+internal fun Status.checkStatusCode(statusCode: Int): AssertResult {
+    return when (value) {
+        is IntStatusValue -> {
+            if (value.value == statusCode) {
+                AssertResult(
+                    succeeded = true,
+                    position = begin,
+                    message = "assert status code equals ${value.value} succeeded"
+                )
+            } else {
+                AssertResult(
+                    succeeded = false,
+                    position = begin,
+                    message = "assert status code equals failed\n  actual:   $statusCode\n  expected: ${value.value}"
+                )
+            }
+        }
+        is AnyStatusValue -> AssertResult(
             succeeded = true,
             position = begin,
-            message = "assert status code equals $value succeeded"
-        )
-    } else {
-        AssertResult(
-            succeeded = false,
-            position = begin,
-            message = "assert status code equals failed\n  actual:   $statusCode\n  expected: $value"
+            message = "assert status code equals * succeeded"
         )
     }
 
+}
 /**
  * Check if an expected {@link Header} is present and equals in a list of given HTTP [headers].
  * Received HTTP headers can contains multiple values for the a single key.
