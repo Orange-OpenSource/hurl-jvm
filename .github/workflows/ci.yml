@@ -22,6 +22,8 @@ jobs:
       - name: Integration tests
         run: |
           pip3 install Flask
+          wget --quiet --output-document - https://snapshots.mitmproxy.org/5.2/mitmproxy-5.2-linux.tar.gz | tar -xz
+          ./mitmdump -p 8888 --modify-header "/From-Proxy/Hello" &
           cd integration && python3 server.py &
           export HURL_VERSION=$(grep version gradle.properties | cut -f2 -d"=")
           export hurl="java -jar $PWD/hurl-cli/build/libs/hurl-$HURL_VERSION.jar"
