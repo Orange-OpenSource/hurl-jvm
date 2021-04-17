@@ -55,7 +55,7 @@ class App {
             return SUCCESS.value
         }
         if (options.version) {
-            println("hurl (jar) $version")
+            println("hurl (jvm) $version")
             return SUCCESS.value
         }
 

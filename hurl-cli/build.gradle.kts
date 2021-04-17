@@ -34,7 +34,7 @@ dependencies {
 }
 
 application {
-    mainClassName = "com.orange.ccmd.hurl.cli.MainKt"
+    mainClass.set("com.orange.ccmd.hurl.cli.MainKt")
 }
 
 tasks {
@@ -42,7 +42,7 @@ tasks {
         archiveBaseName.set("hurl")
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
         manifest {
-            attributes["Main-Class"] = application.mainClassName
+            attributes["Main-Class"] = application.mainClass.get()
         }
 
         // Include direct dependencies.
