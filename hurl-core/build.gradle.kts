@@ -24,11 +24,11 @@ plugins {
 }
 
 val brotliVersion = "0.1.2"
-val jacksonVersion = "2.12.0"
+val jacksonVersion = "2.12.3"
 val jsoupVersion = "1.13.1"
-val jsonPathVersion = "2.4.0"
+val jsonPathVersion = "2.5.0"
 val apacheHttpVersion = "4.5.13"
-val kotlinxSerializationJsonVersion = "1.0.1"
+val kotlinxSerializationJsonVersion = "1.1.0"
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))

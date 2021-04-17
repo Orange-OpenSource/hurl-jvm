@@ -15,5 +15,8 @@
 
 ## 🔨 Dependency Added / Upgrades
 
-- Upgrade to Kotlin 1.4.20
-- Upgrade to Jackson 2.12.0
+- Upgrade to Kotlin 1.4.32
+- Upgrade to Kotlinx Serialization 1.1.0
+- Upgrade to Jackson 2.12.3
+- Upgrade to Jayway JsonPath 2.5.0
+
