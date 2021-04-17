@@ -20,16 +20,16 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.4.20" apply false
-    kotlin("plugin.serialization") version "1.4.20" apply false
-    id("org.jetbrains.dokka") version "1.4.10.2"
+    kotlin("jvm") version "1.4.32" apply false
+    kotlin("plugin.serialization") version "1.4.32" apply false
+    id("org.jetbrains.dokka") version "1.4.30"
     // Ajoute la task dependencyUpdates pour gérer les dépendances.
-    id("com.github.ben-manes.versions") version "0.36.0"
+    id("com.github.ben-manes.versions") version "0.38.0"
     `maven-publish`
     signing
 }
 
-val jUnitVersion = "5.7.0"
+val jUnitVersion = "5.7.1"
 
 subprojects {
     apply(plugin = "kotlin")
@@ -140,6 +140,17 @@ tasks.dependencyUpdates {
                     .any { it.matches(candidate.version) }
                 if (rejected) {
                     reject("Release candidate")
+                }
+
+                // We reject some libraries whose versioning schema has changed
+                // and that are problematic for last version resolution
+                // see <https://github.com/ben-manes/gradle-versions-plugin/issues/434>
+                val blackList = listOf(
+                    "commons-cli:commons-cli:20040117.000000"
+                )
+                val version = "${candidate.group}:${candidate.module}:${candidate.version}"
+                if (blackList.any { it == version }) {
+                    reject("Blacklisted $version")
                 }
             }
         }
