@@ -2,7 +2,7 @@
 > Task :hurl-core:dependencies
 
 ------------------------------------------------------------
-Project :hurl-core
+Project ':hurl-core'
 ------------------------------------------------------------
 
 annotationProcessor - Annotation processors and their dependencies for source set 'main'.
@@ -23,6 +23,9 @@ No dependencies
 archives - Configuration for archive artifacts. (n)
 No dependencies
 
+compile - Dependencies for compilation 'main' (target  (jvm)) (deprecated, use 'implementation ' instead).
+No dependencies
+
 compileClasspath - Compile classpath for compilation 'main' (target  (jvm)).
 +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.32
 |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.32
@@ -34,10 +37,10 @@ compileClasspath - Compile classpath for compilation 'main' (target  (jvm)).
 |    \--- com.fasterxml.jackson:jackson-bom:2.12.3
 |         \--- com.fasterxml.jackson.core:jackson-core:2.12.3 (c)
 +--- org.jsoup:jsoup:1.13.1
-+--- com.jayway.jsonpath:json-path:2.5.0
-|    +--- net.minidev:json-smart:2.3
-|    |    \--- net.minidev:accessors-smart:1.2
-|    |         \--- org.ow2.asm:asm:5.0.4
++--- com.jayway.jsonpath:json-path:2.6.0
+|    +--- net.minidev:json-smart:2.4.7
+|    |    \--- net.minidev:accessors-smart:2.4.7
+|    |         \--- org.ow2.asm:asm:9.1
 |    \--- org.slf4j:slf4j-api:1.7.30
 +--- org.apache.httpcomponents:httpclient:4.5.13
 |    +--- org.apache.httpcomponents:httpcore:4.4.13
@@ -55,7 +58,7 @@ compileClasspath - Compile classpath for compilation 'main' (target  (jvm)).
                     +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.30 -> 1.4.32 (*)
                     \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.30 -> 1.4.32
 
-compileOnly - Compile only dependencies for compilation 'main' (target  (jvm)). (n)
+compileOnly - Compile only dependencies for compilation 'main' (target  (jvm)).
 No dependencies
 
 compileOnlyDependenciesMetadata
@@ -86,9 +89,7 @@ dokkaGfmPartialPlugin
      |    |    \--- com.fasterxml.jackson.core:jackson-core:2.11.1
      |    +--- com.fasterxml.jackson.core:jackson-annotations:2.11.1
      |    \--- org.jetbrains.kotlin:kotlin-reflect:1.3.72 -> 1.4.30 (*)
-     +--- org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2
-     |    +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.0 -> 1.4.30 (*)
-     |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.0 -> 1.4.30
+     +--- org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2 FAILED
      \--- org.jetbrains.dokka:dokka-analysis:1.4.30
           +--- org.jetbrains.dokka:kotlin-analysis-intellij:1.4.30
           +--- org.jetbrains.dokka:kotlin-analysis-compiler:1.4.30
@@ -156,9 +157,7 @@ dokkaGfmPlugin
      |    |    \--- com.fasterxml.jackson.core:jackson-core:2.11.1
      |    +--- com.fasterxml.jackson.core:jackson-annotations:2.11.1
      |    \--- org.jetbrains.kotlin:kotlin-reflect:1.3.72 -> 1.4.30 (*)
-     +--- org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2
-     |    +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.0 -> 1.4.30 (*)
-     |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.0 -> 1.4.30
+     +--- org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2 FAILED
      \--- org.jetbrains.dokka:dokka-analysis:1.4.30
           +--- org.jetbrains.dokka:kotlin-analysis-intellij:1.4.30
           +--- org.jetbrains.dokka:kotlin-analysis-compiler:1.4.30
@@ -226,9 +225,7 @@ dokkaHtmlPartialPlugin
      |    |    \--- com.fasterxml.jackson.core:jackson-core:2.11.1
      |    +--- com.fasterxml.jackson.core:jackson-annotations:2.11.1
      |    \--- org.jetbrains.kotlin:kotlin-reflect:1.3.72 -> 1.4.30 (*)
-     +--- org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2
-     |    +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.0 -> 1.4.30 (*)
-     |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.0 -> 1.4.30
+     +--- org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2 FAILED
      \--- org.jetbrains.dokka:dokka-analysis:1.4.30
           +--- org.jetbrains.dokka:kotlin-analysis-intellij:1.4.30
           +--- org.jetbrains.dokka:kotlin-analysis-compiler:1.4.30
@@ -296,9 +293,7 @@ dokkaHtmlPlugin
      |    |    \--- com.fasterxml.jackson.core:jackson-core:2.11.1
      |    +--- com.fasterxml.jackson.core:jackson-annotations:2.11.1
      |    \--- org.jetbrains.kotlin:kotlin-reflect:1.3.72 -> 1.4.30 (*)
-     +--- org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2
-     |    +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.0 -> 1.4.30 (*)
-     |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.0 -> 1.4.30
+     +--- org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2 FAILED
      \--- org.jetbrains.dokka:dokka-analysis:1.4.30
           +--- org.jetbrains.dokka:kotlin-analysis-intellij:1.4.30
           +--- org.jetbrains.dokka:kotlin-analysis-compiler:1.4.30
@@ -366,9 +361,7 @@ dokkaJavadocPartialPlugin
      |    |    \--- com.fasterxml.jackson.core:jackson-core:2.11.1
      |    +--- com.fasterxml.jackson.core:jackson-annotations:2.11.1
      |    \--- org.jetbrains.kotlin:kotlin-reflect:1.3.72 -> 1.4.30 (*)
-     +--- org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2
-     |    +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.0 -> 1.4.30 (*)
-     |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.0 -> 1.4.30
+     +--- org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2 FAILED
      \--- org.jetbrains.dokka:dokka-analysis:1.4.30
           +--- org.jetbrains.dokka:kotlin-analysis-intellij:1.4.30
           +--- org.jetbrains.dokka:kotlin-analysis-compiler:1.4.30
@@ -436,9 +429,7 @@ dokkaJavadocPlugin
      |    |    \--- com.fasterxml.jackson.core:jackson-core:2.11.1
      |    +--- com.fasterxml.jackson.core:jackson-annotations:2.11.1
      |    \--- org.jetbrains.kotlin:kotlin-reflect:1.3.72 -> 1.4.30 (*)
-     +--- org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2
-     |    +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.0 -> 1.4.30 (*)
-     |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.0 -> 1.4.30
+     +--- org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2 FAILED
      \--- org.jetbrains.dokka:dokka-analysis:1.4.30
           +--- org.jetbrains.dokka:kotlin-analysis-intellij:1.4.30
           +--- org.jetbrains.dokka:kotlin-analysis-compiler:1.4.30
@@ -506,9 +497,7 @@ dokkaJekyllPartialPlugin
      |    |    \--- com.fasterxml.jackson.core:jackson-core:2.11.1
      |    +--- com.fasterxml.jackson.core:jackson-annotations:2.11.1
      |    \--- org.jetbrains.kotlin:kotlin-reflect:1.3.72 -> 1.4.30 (*)
-     +--- org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2
-     |    +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.0 -> 1.4.30 (*)
-     |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.0 -> 1.4.30
+     +--- org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2 FAILED
      \--- org.jetbrains.dokka:dokka-analysis:1.4.30
           +--- org.jetbrains.dokka:kotlin-analysis-intellij:1.4.30
           +--- org.jetbrains.dokka:kotlin-analysis-compiler:1.4.30
@@ -576,9 +565,7 @@ dokkaJekyllPlugin
      |    |    \--- com.fasterxml.jackson.core:jackson-core:2.11.1
      |    +--- com.fasterxml.jackson.core:jackson-annotations:2.11.1
      |    \--- org.jetbrains.kotlin:kotlin-reflect:1.3.72 -> 1.4.30 (*)
-     +--- org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2
-     |    +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.0 -> 1.4.30 (*)
-     |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.0 -> 1.4.30
+     +--- org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2 FAILED
      \--- org.jetbrains.dokka:dokka-analysis:1.4.30
           +--- org.jetbrains.dokka:kotlin-analysis-intellij:1.4.30
           +--- org.jetbrains.dokka:kotlin-analysis-compiler:1.4.30
@@ -634,7 +621,7 @@ implementation - Implementation only dependencies for compilation 'main' (target
 +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.32 (n)
 +--- com.fasterxml.jackson.core:jackson-core:2.12.3 (n)
 +--- org.jsoup:jsoup:1.13.1 (n)
-+--- com.jayway.jsonpath:json-path:2.5.0 (n)
++--- com.jayway.jsonpath:json-path:2.6.0 (n)
 +--- org.apache.httpcomponents:httpclient:4.5.13 (n)
 +--- org.apache.httpcomponents:httpmime:4.5.13 (n)
 +--- org.brotli:dec:0.1.2 (n)
@@ -651,10 +638,10 @@ implementationDependenciesMetadata
 |    \--- com.fasterxml.jackson:jackson-bom:2.12.3
 |         \--- com.fasterxml.jackson.core:jackson-core:2.12.3 (c)
 +--- org.jsoup:jsoup:1.13.1
-+--- com.jayway.jsonpath:json-path:2.5.0
-|    +--- net.minidev:json-smart:2.3
-|    |    \--- net.minidev:accessors-smart:1.2
-|    |         \--- org.ow2.asm:asm:5.0.4
++--- com.jayway.jsonpath:json-path:2.6.0
+|    +--- net.minidev:json-smart:2.4.7
+|    |    \--- net.minidev:accessors-smart:2.4.7
+|    |         \--- org.ow2.asm:asm:9.1
 |    \--- org.slf4j:slf4j-api:1.7.30
 +--- org.apache.httpcomponents:httpclient:4.5.13
 |    +--- org.apache.httpcomponents:httpcore:4.4.13
@@ -669,22 +656,22 @@ implementationDependenciesMetadata
           \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.30 -> 1.4.32
 
 jacocoAgent - The Jacoco agent to use to get coverage data.
-\--- org.jacoco:org.jacoco.agent:0.8.5
+\--- org.jacoco:org.jacoco.agent:0.8.6
 
 jacocoAnt - The Jacoco ant tasks to use to get execute Gradle tasks.
-\--- org.jacoco:org.jacoco.ant:0.8.5
-     +--- org.jacoco:org.jacoco.core:0.8.5
-     |    +--- org.ow2.asm:asm:7.2
-     |    +--- org.ow2.asm:asm-commons:7.2
-     |    |    +--- org.ow2.asm:asm:7.2
-     |    |    +--- org.ow2.asm:asm-tree:7.2
-     |    |    |    \--- org.ow2.asm:asm:7.2
-     |    |    \--- org.ow2.asm:asm-analysis:7.2
-     |    |         \--- org.ow2.asm:asm-tree:7.2 (*)
-     |    \--- org.ow2.asm:asm-tree:7.2 (*)
-     +--- org.jacoco:org.jacoco.report:0.8.5
-     |    \--- org.jacoco:org.jacoco.core:0.8.5 (*)
-     \--- org.jacoco:org.jacoco.agent:0.8.5
+\--- org.jacoco:org.jacoco.ant:0.8.6
+     +--- org.jacoco:org.jacoco.core:0.8.6
+     |    +--- org.ow2.asm:asm:8.0.1
+     |    +--- org.ow2.asm:asm-commons:8.0.1
+     |    |    +--- org.ow2.asm:asm:8.0.1
+     |    |    +--- org.ow2.asm:asm-tree:8.0.1
+     |    |    |    \--- org.ow2.asm:asm:8.0.1
+     |    |    \--- org.ow2.asm:asm-analysis:8.0.1
+     |    |         \--- org.ow2.asm:asm-tree:8.0.1 (*)
+     |    \--- org.ow2.asm:asm-tree:8.0.1 (*)
+     +--- org.jacoco:org.jacoco.report:0.8.6
+     |    \--- org.jacoco:org.jacoco.core:0.8.6 (*)
+     \--- org.jacoco:org.jacoco.agent:0.8.6
 
 kotlinCompilerClasspath
 \--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.4.32
@@ -740,6 +727,9 @@ No dependencies
 kotlinScriptDefExtensions
 No dependencies
 
+runtime - Runtime dependencies for compilation 'main' (target  (jvm)) (deprecated, use 'runtimeOnly ' instead).
+No dependencies
+
 runtimeClasspath - Runtime classpath of compilation 'main' (target  (jvm)).
 +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.32
 |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.32
@@ -751,10 +741,10 @@ runtimeClasspath - Runtime classpath of compilation 'main' (target  (jvm)).
 |    \--- com.fasterxml.jackson:jackson-bom:2.12.3
 |         \--- com.fasterxml.jackson.core:jackson-core:2.12.3 (c)
 +--- org.jsoup:jsoup:1.13.1
-+--- com.jayway.jsonpath:json-path:2.5.0
-|    +--- net.minidev:json-smart:2.3
-|    |    \--- net.minidev:accessors-smart:1.2
-|    |         \--- org.ow2.asm:asm:5.0.4
++--- com.jayway.jsonpath:json-path:2.6.0
+|    +--- net.minidev:json-smart:2.4.7
+|    |    \--- net.minidev:accessors-smart:2.4.7
+|    |         \--- org.ow2.asm:asm:9.1
 |    \--- org.slf4j:slf4j-api:1.7.30
 +--- org.apache.httpcomponents:httpclient:4.5.13
 |    +--- org.apache.httpcomponents:httpcore:4.4.13
@@ -799,6 +789,9 @@ No dependencies
 testApiDependenciesMetadata
 No dependencies
 
+testCompile - Dependencies for compilation 'test' (target  (jvm)) (deprecated, use 'testImplementation ' instead).
+No dependencies
+
 testCompileClasspath - Compile classpath for compilation 'test' (target  (jvm)).
 +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.32
 |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.32
@@ -810,10 +803,10 @@ testCompileClasspath - Compile classpath for compilation 'test' (target  (jvm)).
 |    \--- com.fasterxml.jackson:jackson-bom:2.12.3
 |         \--- com.fasterxml.jackson.core:jackson-core:2.12.3 (c)
 +--- org.jsoup:jsoup:1.13.1
-+--- com.jayway.jsonpath:json-path:2.5.0
-|    +--- net.minidev:json-smart:2.3
-|    |    \--- net.minidev:accessors-smart:1.2
-|    |         \--- org.ow2.asm:asm:5.0.4
++--- com.jayway.jsonpath:json-path:2.6.0
+|    +--- net.minidev:json-smart:2.4.7
+|    |    \--- net.minidev:accessors-smart:2.4.7
+|    |         \--- org.ow2.asm:asm:9.1
 |    \--- org.slf4j:slf4j-api:1.7.30
 +--- org.apache.httpcomponents:httpclient:4.5.13
 |    +--- org.apache.httpcomponents:httpcore:4.4.13
@@ -854,7 +847,7 @@ testCompileClasspath - Compile classpath for compilation 'test' (target  (jvm)).
           +--- org.opentest4j:opentest4j:1.2.0
           \--- org.junit.platform:junit-platform-commons:1.7.1 (*)
 
-testCompileOnly - Compile only dependencies for compilation 'test' (target  (jvm)). (n)
+testCompileOnly - Compile only dependencies for compilation 'test' (target  (jvm)).
 No dependencies
 
 testCompileOnlyDependenciesMetadata
@@ -875,10 +868,10 @@ testImplementationDependenciesMetadata
 |    \--- com.fasterxml.jackson:jackson-bom:2.12.3
 |         \--- com.fasterxml.jackson.core:jackson-core:2.12.3 (c)
 +--- org.jsoup:jsoup:1.13.1
-+--- com.jayway.jsonpath:json-path:2.5.0
-|    +--- net.minidev:json-smart:2.3
-|    |    \--- net.minidev:accessors-smart:1.2
-|    |         \--- org.ow2.asm:asm:5.0.4
++--- com.jayway.jsonpath:json-path:2.6.0
+|    +--- net.minidev:json-smart:2.4.7
+|    |    \--- net.minidev:accessors-smart:2.4.7
+|    |         \--- org.ow2.asm:asm:9.1
 |    \--- org.slf4j:slf4j-api:1.7.30
 +--- org.apache.httpcomponents:httpclient:4.5.13
 |    +--- org.apache.httpcomponents:httpcore:4.4.13
@@ -921,6 +914,9 @@ No dependencies
 testKotlinScriptDefExtensions
 No dependencies
 
+testRuntime - Runtime dependencies for compilation 'test' (target  (jvm)) (deprecated, use 'testRuntimeOnly ' instead).
+No dependencies
+
 testRuntimeClasspath - Runtime classpath of compilation 'test' (target  (jvm)).
 +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.32
 |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.32
@@ -932,10 +928,10 @@ testRuntimeClasspath - Runtime classpath of compilation 'test' (target  (jvm)).
 |    \--- com.fasterxml.jackson:jackson-bom:2.12.3
 |         \--- com.fasterxml.jackson.core:jackson-core:2.12.3 (c)
 +--- org.jsoup:jsoup:1.13.1
-+--- com.jayway.jsonpath:json-path:2.5.0
-|    +--- net.minidev:json-smart:2.3
-|    |    \--- net.minidev:accessors-smart:1.2
-|    |         \--- org.ow2.asm:asm:5.0.4
++--- com.jayway.jsonpath:json-path:2.6.0
+|    +--- net.minidev:json-smart:2.4.7
+|    |    \--- net.minidev:accessors-smart:2.4.7
+|    |         \--- org.ow2.asm:asm:9.1
 |    \--- org.slf4j:slf4j-api:1.7.30
 +--- org.apache.httpcomponents:httpclient:4.5.13
 |    +--- org.apache.httpcomponents:httpcore:4.4.13
@@ -988,9 +984,5 @@ No dependencies
 (n) - Not resolved (configuration is not meant to be resolved)
 
 A web-based, searchable dependency report is available by adding the --scan option.
-
-Deprecated Gradle features were used in this build, making it incompatible with Gradle 7.0.
-Use '--warning-mode all' to show the individual deprecation warnings.
-See https://docs.gradle.org/6.7.1/userguide/command_line_interface.html#sec:command_line_warnings
 
 1 actionable task: 1 executed
