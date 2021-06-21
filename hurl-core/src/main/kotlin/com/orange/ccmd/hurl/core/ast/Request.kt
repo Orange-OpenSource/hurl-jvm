@@ -187,8 +187,8 @@ internal fun HurlParser.url(): Url? {
     val url = readWhile {
         val isUnreserved = it.isAsciiLetter || it.isAsciiDigit || it.any("-._~")
         val isReserved = it.isGenDelims() || it.isSubDelims()
-        val isHurlSpecific = it == '{'.toInt() || it == '}'.toInt()
-        val isQuery = it == '%'.toInt()
+        val isHurlSpecific = it == '{'.code || it == '}'.code
+        val isQuery = it == '%'.code
         isReserved || isUnreserved || isQuery || isHurlSpecific
     }
     if (url == null || url.isEmpty()) {

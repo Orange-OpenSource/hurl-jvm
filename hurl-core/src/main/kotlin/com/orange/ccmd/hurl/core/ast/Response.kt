@@ -157,7 +157,7 @@ internal fun HurlParser.status(): Status? {
 
     // First, test if the status value is a wildcard status.
     val cp0 = peek() ?: return null
-    if (cp0 == '*'.toInt()) {
+    if (cp0 == '*'.code) {
         read()
         return Status(begin = begin, end = position, value = AnyStatusValue, text = "*")
     }

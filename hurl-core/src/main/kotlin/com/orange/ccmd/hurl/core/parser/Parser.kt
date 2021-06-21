@@ -48,7 +48,7 @@ open class Parser(val text: String) {
         if (!c.isCombining) {
             position.column += 1
         }
-        if (c == '\n'.toInt()) {
+        if (c == '\n'.code) {
             position.line += 1
             position.column = 1
         }

@@ -35,30 +35,30 @@ internal val Int.isCombining: Boolean
             (this in 0xfe20..0xfe2f)
 
 internal val Int.isNewLine: Boolean
-    get() = this == '\n'.toInt() || this == '\r'.toInt()
+    get() = this == '\n'.code || this == '\r'.code
 
 internal val Int.isAsciiSpace: Boolean
-    get() = this == ' '.toInt() || this == '\t'.toInt()
+    get() = this == ' '.code || this == '\t'.code
 
 internal val Int.isAsciiWhitespace: Boolean
     get() = isAsciiSpace || isNewLine
 
 internal val Int.isAsciiLetter: Boolean
-    get() = this in 'A'.toInt()..'Z'.toInt() ||
-            this in 'a'.toInt()..'z'.toInt()
+    get() = this in 'A'.code..'Z'.code ||
+            this in 'a'.code..'z'.code
 
 internal val Int.isHexaLetter: Boolean
-    get() = this in 'A'.toInt()..'F'.toInt() ||
-            this in 'a'.toInt()..'f'.toInt()
+    get() = this in 'A'.code..'F'.code ||
+            this in 'a'.code..'f'.code
 
 internal val Int.isAsciiDigit: Boolean
-    get() = this in '0'.toInt()..'9'.toInt()
+    get() = this in '0'.code..'9'.code
 
 internal val Int.isHurlTemplateControl: Boolean
-    get() = this == '{'.toInt() || this == '}'.toInt()
+    get() = this == '{'.code || this == '}'.code
 
 internal val Int.isSignificant: Boolean
-    get() = !this.isAsciiWhitespace && this != '#'.toInt()
+    get() = !this.isAsciiWhitespace && this != '#'.code
 
 internal fun Int.any(set: String): Boolean = this in set.codePoints().toArray()
 
