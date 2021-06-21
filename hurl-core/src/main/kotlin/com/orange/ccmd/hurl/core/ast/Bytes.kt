@@ -121,7 +121,7 @@ internal fun HurlParser.xml(): Xml? {
 
     // Check if there is a begining of xml header.
     val cp = peek()
-    if (cp == null || cp != '<'.toInt()) {
+    if (cp == null || cp != '<'.code) {
         error = SyntaxError("Xml is expected", position)
         return null
     }

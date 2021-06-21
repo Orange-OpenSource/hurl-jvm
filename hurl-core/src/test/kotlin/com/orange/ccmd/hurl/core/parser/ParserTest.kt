@@ -33,7 +33,7 @@ internal class ParserTest {
         val cp = parser.read()
         assertNotNull(cp)
         assertNull(parser.error)
-        assertEquals('S'.toInt(), cp, "First code point should be equal")
+        assertEquals('S'.code, cp, "First code point should be equal")
         assertEquals(1, parser.position.offset, "Parser offset should be incremented")
         assertEquals(1, parser.position.line, "Parser line should be equal")
         assertEquals(2, parser.position.column, "Parser column should be incremented")
@@ -94,7 +94,7 @@ internal class ParserTest {
         val text = "aaaaabcdef"
         val parser = Parser(text)
 
-        val cps = parser.readWhile { it == 'a'.toInt() }
+        val cps = parser.readWhile { it == 'a'.code }
         assertNotNull(cps)
         assertNull(parser.error)
         assertEquals("aaaaa", cps.string())
@@ -102,7 +102,7 @@ internal class ParserTest {
 
     @Test
     fun `read code points while extension call is true`() {
-        fun Int.isA(): Boolean = this == 'a'.toInt()
+        fun Int.isA(): Boolean = this == 'a'.code
         val text = "aaaaabcdef"
         val parser = Parser(text)
 
