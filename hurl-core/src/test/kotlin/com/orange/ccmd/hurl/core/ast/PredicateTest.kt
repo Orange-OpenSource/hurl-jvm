@@ -30,14 +30,26 @@ class PredicateTest {
     @TestFactory
     fun `parse predicate with success`() = listOf(
         "equals \"06 15 63 36 79\"" to "equals",
+        "== \"06 15 63 36 79\"" to "==",
         "equals true" to "equals",
+        "== true" to "==",
         "contains \"toto\"" to "contains",
         "equals 123.0" to "equals",
+        "== 123.0" to "==",
         "equals 12" to "equals",
+        "== 12" to "==",
         "startsWith \"something dummy\"xxx" to "startsWith",
         "countEquals 4" to "countEquals",
-        "existsxxx" to "exists"
-    ).map { (text, type) ->
+        "existsxxx" to "exists",
+        "greaterThan 12" to "greaterThan",
+        "> 12" to ">",
+        "lessThan 224" to "lessThan",
+        "< 224" to "<",
+        "greaterThanOrEquals 36" to "greaterThanOrEquals",
+        ">= 208" to ">=",
+        "lessThanOrEquals 224" to "lessThanOrEquals",
+        "<= 224" to "<=",
+        ).map { (text, type) ->
         DynamicTest.dynamicTest(text) {
             val parser = HurlParser(text)
             val node = parser.predicateFunc()

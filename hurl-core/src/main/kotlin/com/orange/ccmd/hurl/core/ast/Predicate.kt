@@ -63,7 +63,10 @@ internal fun HurlParser.equalPredicate(): PredicateFunc? {
 
 internal fun HurlParser.equalBoolPredicate(): EqualBoolPredicate? {
     val begin = position.copy()
-    val type = predicateType("equals") ?: return null
+    val type = choice(listOf(
+        { predicateType("==") },
+        { predicateType("equals") },
+    )) ?: return null
     val spaces = zeroOrMore { space() }
     val expr = bool() ?: return null
     return EqualBoolPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
@@ -71,7 +74,10 @@ internal fun HurlParser.equalBoolPredicate(): EqualBoolPredicate? {
 
 internal fun HurlParser.equalNullPredicate(): EqualNullPredicate? {
     val begin = position.copy()
-    val type = predicateType("equals") ?: return null
+    val type = choice(listOf(
+        { predicateType("==") },
+        { predicateType("equals") },
+    )) ?: return null
     val spaces = zeroOrMore { space() }
     val expr = `null`() ?: return null
     return EqualNullPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
@@ -79,7 +85,10 @@ internal fun HurlParser.equalNullPredicate(): EqualNullPredicate? {
 
 internal fun HurlParser.equalNumberPredicate(): EqualNumberPredicate? {
     val begin = position.copy()
-    val type = predicateType("equals") ?: return null
+    val type = choice(listOf(
+        { predicateType("==") },
+        { predicateType("equals") },
+    )) ?: return null
     val spaces = zeroOrMore { space() }
     val expr = choice(listOf(
         { float() },
@@ -90,7 +99,10 @@ internal fun HurlParser.equalNumberPredicate(): EqualNumberPredicate? {
 
 internal fun HurlParser.equalStringPredicate(): EqualStringPredicate? {
     val begin = position.copy()
-    val type = predicateType("equals") ?: return null
+    val type = choice(listOf(
+        { predicateType("==") },
+        { predicateType("equals") },
+    )) ?: return null
     val spaces = zeroOrMore { space() }
     val expr = quotedString() ?: return null
     return EqualStringPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
@@ -98,7 +110,10 @@ internal fun HurlParser.equalStringPredicate(): EqualStringPredicate? {
 
 internal fun HurlParser.equalExprPredicate(): EqualExprPredicate? {
     val begin = position.copy()
-    val type = predicateType("equals") ?: return null
+    val type = choice(listOf(
+        { predicateType("==") },
+        { predicateType("equals") },
+    )) ?: return null
     val spaces = zeroOrMore { space() }
     val expr = expr() ?: return null
     return EqualExprPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
@@ -112,7 +127,10 @@ internal fun HurlParser.existPredicate(): ExistPredicate? {
 
 internal fun HurlParser.greaterPredicate(): GreaterPredicate? {
     val begin = position.copy()
-    val type = predicateType("greaterThan") ?: return null
+    val type = choice(listOf(
+        { predicateType(">") },
+        { predicateType("greaterThan") },
+    )) ?: return null
     val spaces = zeroOrMore { space() }
     val expr = choice(listOf(
         { float() },
@@ -123,7 +141,10 @@ internal fun HurlParser.greaterPredicate(): GreaterPredicate? {
 
 internal fun HurlParser.greaterOrEqualPredicate(): GreaterOrEqualPredicate? {
     val begin = position.copy()
-    val type = predicateType("greaterThanOrEquals") ?: return null
+    val type = choice(listOf(
+        { predicateType(">=") },
+        { predicateType("greaterThanOrEquals") },
+    )) ?: return null
     val spaces = zeroOrMore { space() }
     val expr = choice(listOf(
         { float() },
@@ -178,7 +199,10 @@ internal fun HurlParser.includeStringPredicate(): IncludeStringPredicate? {
 
 internal fun HurlParser.lessPredicate(): LessPredicate? {
     val begin = position.copy()
-    val type = predicateType("lessThan") ?: return null
+    val type = choice(listOf(
+        { predicateType("<") },
+        { predicateType("lessThan") },
+    )) ?: return null
     val spaces = zeroOrMore { space() }
     val expr = choice(listOf(
         { float() },
@@ -189,7 +213,10 @@ internal fun HurlParser.lessPredicate(): LessPredicate? {
 
 internal fun HurlParser.lessOrEqualPredicate(): LessOrEqualPredicate? {
     val begin = position.copy()
-    val type = predicateType("lessThanOrEquals") ?: return null
+    val type = choice(listOf(
+        { predicateType("<=") },
+        { predicateType("lessThanOrEquals") },
+    )) ?: return null
     val spaces = zeroOrMore { space() }
     val expr = choice(listOf(
         { float() },
@@ -200,7 +227,10 @@ internal fun HurlParser.lessOrEqualPredicate(): LessOrEqualPredicate? {
 
 internal fun HurlParser.matchPredicate(): MatchPredicate? {
     val begin = position.copy()
-    val type = predicateType("matches") ?: return null
+    val type = choice(listOf(
+        { predicateType("=~") },
+        { predicateType("matches") },
+    )) ?: return null
     val spaces = zeroOrMore { space() }
     val expr = quotedString() ?: return null
     return MatchPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)

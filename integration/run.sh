@@ -3,6 +3,7 @@ set -u
 set -e
 
 echo "$hurl"
+echo "$hurlfmt"
 
 for hurl_file in "$@"; do
     set +e
@@ -39,5 +40,18 @@ for hurl_file in "$@"; do
         fi
     fi
 
+    # Test json export
+    cmd="$hurlfmt --format json $hurl_file"
+    echo "$cmd"
+
+    $cmd > /tmp/test.json
+    json_expected=$(cat "${hurl_file%.*}.json")
+    json_actual=$(cat /tmp/test.json)
+    if [ "$json_actual" != "$json_expected" ]; then
+        echo "ERROR Exit Code"
+        echo "  Expected: $json_expected"
+        echo "  Actual  : $json_actual"
+	exit 1
+    fi
 
 done
