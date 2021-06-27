@@ -74,12 +74,6 @@ internal fun HurlParser.capture(): Capture? {
     val colon = literal(":") ?: return null
     val spaces2 = zeroOrMore { space() }
     val query = query() ?: return null
-    val spaces3 = zeroOrMore { space() }
-    val subquery = if (spaces3.isNotEmpty()) {
-        optional { subquery() }
-    } else {
-        null
-    }
     val lt = lineTerminator() ?: return null
 
     return Capture(
@@ -92,8 +86,6 @@ internal fun HurlParser.capture(): Capture? {
         colon = colon,
         spaces2 = spaces2,
         query = query,
-        spaces3 = spaces3,
-        subquery = subquery,
         lt = lt
     )
 }

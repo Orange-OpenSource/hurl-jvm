@@ -34,6 +34,7 @@ import com.orange.ccmd.hurl.core.variable.VariableJar
 import java.io.FileNotFoundException
 import java.time.Duration
 import java.time.Instant
+import java.util.*
 
 
 /**
@@ -163,7 +164,7 @@ data class Runner(
 
             if (options.followsRedirect && httpResult.response.code >= 300 && httpResult.response.code < 400) {
                 val header = httpResult.response.headers
-                    .firstOrNull { (k, _) -> k.toLowerCase() == "location" }
+                    .firstOrNull { (k, _) -> k.lowercase() == "location" }
                     ?: return EntryResult(errors = listOf(RuntimeErrorResult(position = entry.request.method.begin, message = "Unable to get Location header")))
                 requestSpec = HttpRequest(method = "GET", url = header.second)
                 continue

@@ -140,23 +140,3 @@ internal fun HurlParser.xml(): Xml? {
     read(cpsCount)
     return Xml(begin = begin, end = position, text = text)
 }
-
-internal fun HurlParser.variableQuery(): VariableQuery? {
-    val begin = position.copy()
-
-    val type = queryType("variable") ?: return null
-    val spaces = oneOrMore { space() } ?: return null
-    val variable = quotedString() ?: return null
-
-    return VariableQuery(begin = begin, end = position, type = type, spaces = spaces, variable = variable)
-}
-
-internal fun HurlParser.xPathQuery(): XPathQuery? {
-    val begin = position.copy()
-
-    val type = queryType("xpath") ?: return null
-    val spaces = oneOrMore { space() } ?: return null
-    val expr = quotedString() ?: return null
-
-    return XPathQuery(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
-}

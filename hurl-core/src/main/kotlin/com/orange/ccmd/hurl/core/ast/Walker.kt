@@ -80,8 +80,6 @@ fun walk(visitor: Visitor, node: Node?) {
             walk(visitor, node.colon)
             node.spaces2.forEach { walk(visitor, it) }
             walk(visitor, node.query)
-            node.spaces3.forEach { walk(visitor, it) }
-            walk(visitor, node.subquery)
             walk(visitor, node.lt)
         }
         is CapturesSection -> {
@@ -108,8 +106,10 @@ fun walk(visitor: Visitor, node: Node?) {
         }
         is CookieQuery -> {
             walk(visitor, node.type)
-            node.spaces.forEach { walk(visitor, it) }
+            node.spaces0.forEach { walk(visitor, it) }
             walk(visitor, node.expr)
+            node.spaces1.forEach { walk(visitor, it) }
+            walk(visitor, node.subquery)
         }
         is CookiesSection -> {
             node.lts.forEach { walk(visitor, it) }
@@ -122,6 +122,9 @@ fun walk(visitor: Visitor, node: Node?) {
             walk(visitor, node.type)
             node.spaces.forEach { walk(visitor, it) }
             walk(visitor, node.expr)
+        }
+        is CountSubquery -> {
+            walk(visitor, node.type)
         }
         is DurationQuery -> {
             walk(visitor, node.type)
@@ -214,8 +217,10 @@ fun walk(visitor: Visitor, node: Node?) {
         }
         is HeaderQuery -> {
             walk(visitor, node.type)
-            node.spaces.forEach { walk(visitor, it) }
+            node.spaces0.forEach { walk(visitor, it) }
             walk(visitor, node.headerName)
+            node.spaces1.forEach { walk(visitor, it) }
+            walk(visitor, node.subquery)
         }
         is HurlFile -> {
             node.entries.forEach { walk(visitor, it) }
@@ -243,8 +248,10 @@ fun walk(visitor: Visitor, node: Node?) {
         }
         is JsonPathQuery -> {
             walk(visitor, node.type)
-            node.spaces.forEach { walk(visitor, it) }
+            node.spaces0.forEach { walk(visitor, it) }
             walk(visitor, node.expr)
+            node.spaces1.forEach { walk(visitor, it) }
+            walk(visitor, node.subquery)
         }
         is KeyValue -> {
             walk(visitor, node.key)
@@ -307,8 +314,10 @@ fun walk(visitor: Visitor, node: Node?) {
         }
         is RegexQuery -> {
             walk(visitor, node.type)
-            node.spaces.forEach { walk(visitor, it) }
+            node.spaces0.forEach { walk(visitor, it) }
             walk(visitor, node.expr)
+            node.spaces1.forEach { walk(visitor, it) }
+            walk(visitor, node.subquery)
         }
         is RegexSubquery -> {
             walk(visitor, node.type)
@@ -347,13 +356,17 @@ fun walk(visitor: Visitor, node: Node?) {
         }
         is VariableQuery -> {
             walk(visitor, node.type)
-            node.spaces.forEach { walk(visitor, it) }
+            node.spaces0.forEach { walk(visitor, it) }
             walk(visitor, node.variable)
+            node.spaces1.forEach { walk(visitor, it) }
+            walk(visitor, node.subquery)
         }
         is XPathQuery -> {
             walk(visitor, node.type)
-            node.spaces.forEach { walk(visitor, it) }
+            node.spaces0.forEach { walk(visitor, it) }
             walk(visitor, node.expr)
+            node.spaces1.forEach { walk(visitor, it) }
+            walk(visitor, node.subquery)
         }
         else -> { }
     }

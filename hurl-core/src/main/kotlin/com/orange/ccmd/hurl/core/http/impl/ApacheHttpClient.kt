@@ -206,7 +206,7 @@ internal class ApacheHttpClient(
     }
 
     private fun getHeader(headers: List<Pair<String, String>>, name: String): Pair<String, String>? {
-        return headers.firstOrNull { it.first.toLowerCase() == name.toLowerCase() }
+        return headers.firstOrNull { it.first.lowercase() == name.lowercase() }
     }
 
 

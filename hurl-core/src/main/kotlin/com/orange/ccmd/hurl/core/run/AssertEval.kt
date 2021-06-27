@@ -83,10 +83,10 @@ import com.orange.ccmd.hurl.core.predicate.notMatch
 import com.orange.ccmd.hurl.core.predicate.notStartWith
 import com.orange.ccmd.hurl.core.predicate.startWith
 import com.orange.ccmd.hurl.core.query.InvalidQueryException
-import com.orange.ccmd.hurl.core.variable.VariableJar
 import com.orange.ccmd.hurl.core.template.InvalidVariableException
 import com.orange.ccmd.hurl.core.template.Template
 import com.orange.ccmd.hurl.core.utils.shorten
+import com.orange.ccmd.hurl.core.variable.VariableJar
 import java.io.File
 import java.io.FileNotFoundException
 
@@ -162,7 +162,7 @@ internal fun Header.checkHeader(headers: List<Pair<String, String>>, variables: 
     }
 
     // We filter all received headers against the spec header name.
-    val filteredHeaders = headers.filter { it.first.toLowerCase() == name.toLowerCase() }
+    val filteredHeaders = headers.filter { it.first.lowercase() == name.lowercase() }
     if (filteredHeaders.isEmpty()) {
         return AssertResult(
             succeeded = false,

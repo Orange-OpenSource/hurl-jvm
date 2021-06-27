@@ -43,7 +43,7 @@ class CookiePath {
             // Filter set-cookie header among all HTTP headers.
             val cookie = try {
                 headers
-                    .filter { (name, _) -> name.toLowerCase() == "set-cookie" }
+                    .filter { (name, _) -> name.lowercase() == "set-cookie" }
                     .map { (_, value) -> Cookie.fromHeader(header = value) }
                     .firstOrNull { it.name == query.name } ?: return CookiePathFailed
             } catch (e: IllegalArgumentException) {
