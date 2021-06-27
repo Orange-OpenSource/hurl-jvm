@@ -30,12 +30,12 @@ data class CookiePathQuery(val name: String, val attribute: CookiePathAttribute)
             if (start == -1) {
                 return CookiePathQuery(name = query, attribute = CookiePathAttributeValue)
             }
-            val end = query.indexOf("]", startIndex = start+1)
+            val end = query.indexOf("]", startIndex = start + 1)
             if (end == -1) {
                 throw IllegalArgumentException("$query is not a valid cookie query")
             }
             val name = query.substring(0 until start)
-            val rawAttribute = query.substring((start+1) until end)
+            val rawAttribute = query.substring((start + 1) until end)
             // Does the query contains a cookie attribute?
             val attribute = when (rawAttribute.lowercase()) {
                 "value" -> CookiePathAttributeValue

@@ -83,10 +83,10 @@ import com.orange.ccmd.hurl.core.predicate.notMatch
 import com.orange.ccmd.hurl.core.predicate.notStartWith
 import com.orange.ccmd.hurl.core.predicate.startWith
 import com.orange.ccmd.hurl.core.query.InvalidQueryException
-import com.orange.ccmd.hurl.core.variable.VariableJar
 import com.orange.ccmd.hurl.core.template.InvalidVariableException
 import com.orange.ccmd.hurl.core.template.Template
 import com.orange.ccmd.hurl.core.utils.shorten
+import com.orange.ccmd.hurl.core.variable.VariableJar
 import java.io.File
 import java.io.FileNotFoundException
 
@@ -223,20 +223,31 @@ internal fun Body.checkBodyContent(body: ByteArray, variables: VariableJar, file
 }
 
 internal fun Assert.eval(response: HttpResponse, variables: VariableJar): EntryStepResult {
+
     // Evaluate actual value against the http response.
-    val first = try {
-        query.eval(response = response, variables = variables)
-    } catch (e: InvalidQueryException) {
-        return AssertResult(
-            succeeded = false,
-            position = begin,
-            message = "assert ${query.type.value} evaluation failed, ${e.message}"
-        )
-    } catch (e: InvalidVariableException) {
-        return InvalidVariableResult(position = e.position, reason = e.reason)
-    }
 
     val not = predicate.not != null
+
+    val first = try {
+        query.eval(response = response, variables = variables)
+    }
+    catch (e: Exception) {
+        return when(e) {
+            is InvalidQueryException, is InvalidSubqueryException -> {
+                val predicateFunc = predicate.predicateFunc
+                val not = if (not) { "not " } else { "" }
+                AssertResult(
+                    succeeded = false,
+                    position = begin,
+                    message = "assert ${query.type.value.text} $not${predicateFunc.type.value} failed, ${e.message}"
+                )
+            }
+            is InvalidVariableException -> {
+                InvalidVariableResult(position = e.position, reason = e.reason)
+            }
+            else -> throw e
+        }
+    }
 
     // Renders predicate value if necessary.
     val predicateFunc = predicate.predicateFunc
@@ -387,7 +398,7 @@ private fun Assert.buildMessage(result: PredicateResult): String {
     val state = if (result.succeeded) { "succeeded" } else { "failed" }
     val not = if (predicate.not != null) { "not " } else { "" }
     return """
-        assert ${query.type.value} $not${predicateFunc.type.value} $state
+        assert ${query.type.value.text} $not${predicateFunc.type.value} $state
           actual:   ${result.first}
           expected: ${result.second}
     """.trimIndent()

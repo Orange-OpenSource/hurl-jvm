@@ -29,17 +29,20 @@ import com.orange.ccmd.hurl.core.template.InvalidVariableException
 internal fun Capture.eval(response: HttpResponse, variables: VariableJar): EntryStepResult {
     val name = name.value
 
-    val result = try {
+    val value = try {
         query.eval(response = response, variables = variables)
     } catch (e: InvalidQueryException) {
         return CaptureResult(succeeded = false, position = begin, variable = name)
-    } catch (e: InvalidVariableException) {
+    } catch (e: InvalidSubqueryException) {
+        return CaptureResult(succeeded = false, position = begin, variable = name)
+    }
+    catch (e: InvalidVariableException) {
         return InvalidVariableResult(position = e.position, reason = e.reason)
     }
 
     // If the capture has a subquery, we evaluate it to get the final value
     // Only captures that are QueryStingResult are supported.
-    val value = if (subquery != null) {
+    /*val value = if (subquery != null) {
         if (result !is QueryStringResult) {
             return InvalidVariableResult(position = subquery.begin, reason = "invalid type for subquery ${result.text()}")
         }
@@ -53,7 +56,7 @@ internal fun Capture.eval(response: HttpResponse, variables: VariableJar): Entry
         }
     } else {
         result
-    }
+    }*/
 
     return CaptureResult(
         succeeded = true,

@@ -39,6 +39,7 @@ import com.orange.ccmd.hurl.core.ast.RawString
 import com.orange.ccmd.hurl.core.ast.SectionHeader
 import com.orange.ccmd.hurl.core.ast.Space
 import com.orange.ccmd.hurl.core.ast.Status
+import com.orange.ccmd.hurl.core.ast.SubqueryType
 import com.orange.ccmd.hurl.core.ast.Url
 import com.orange.ccmd.hurl.core.ast.VariableName
 import com.orange.ccmd.hurl.core.ast.Version
@@ -95,7 +96,14 @@ class HighlightingVisitor(
             is SectionHeader -> text += sectionHeaderFunc(node.value)
 
             // Query type.
-            is QueryType -> text += queryTypeFunc(node.value)
+            is QueryType -> text += queryTypeFunc(node.value.text)
+            // FIXME:
+            // For subquery, we want to match the color of the subquery with the predicates type
+            // so as, in
+            // jsonpath "$.books" count == 25
+            // `count ==` is the same color
+            // We need to proper introduce a specific subquery color
+            is SubqueryType -> text += predicateTypeFunc(node.value.text)
 
             // Predicate.
             is Not -> text += predicateTypeFunc(node.text.value)

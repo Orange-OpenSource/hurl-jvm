@@ -19,6 +19,7 @@
 
 package com.orange.ccmd.hurl.core.run
 
+import com.orange.ccmd.hurl.core.ast.CountSubquery
 import com.orange.ccmd.hurl.core.ast.RegexSubquery
 import com.orange.ccmd.hurl.core.ast.Subquery
 import com.orange.ccmd.hurl.core.variable.VariableJar
@@ -26,16 +27,30 @@ import com.orange.ccmd.hurl.core.template.Template
 
 class InvalidSubqueryException(message: String) : Exception(message)
 
-internal fun Subquery.eval(text: String, variables: VariableJar): QueryResult = when (this) {
-    is RegexSubquery -> this.eval(text = text, variables = variables)
+internal fun Subquery.eval(queryResult: QueryResult, variables: VariableJar): QueryResult = when (this) {
+    is CountSubquery -> this.eval(queryResult = queryResult)
+    is RegexSubquery -> this.eval(queryResult = queryResult, variables = variables)
 }
 
-internal fun RegexSubquery.eval(text: String, variables: VariableJar): QueryResult {
+internal fun CountSubquery.eval(queryResult: QueryResult): QueryResult {
+    return when (queryResult) {
+        is QueryListResult -> QueryNumberResult(queryResult.value.size)
+        is QueryNodeSetResult -> QueryNumberResult(queryResult.size)
+        QueryNoneResult -> QueryNumberResult(0)
+        else -> throw InvalidSubqueryException("count subquery is incompatible with query result")
+    }
+}
+
+internal fun RegexSubquery.eval(queryResult: QueryResult, variables: VariableJar): QueryResult {
+    if (queryResult !is QueryStringResult) {
+        throw InvalidSubqueryException("regex subquery expects a query string result")
+    }
+    val text = queryResult.value
     val exprRendered = Template.render(text = expr.value, variables = variables, position = expr.begin)
     val regex = Regex(pattern = exprRendered)
     val matchResult = regex.matchEntire(text)
     if (matchResult == null || matchResult.groupValues.size <= 1) {
-        throw InvalidSubqueryException("subquery must have at least one group")
+        throw InvalidSubqueryException("regex subquery must have at least one group")
     }
     return QueryStringResult(value = matchResult.groupValues[1])
 }

@@ -73,7 +73,8 @@ data class Body(
 data class BodyQuery(
     override val begin: Position,
     override val end: Position,
-    override val type: QueryType
+    override val type: QueryType,
+    override val subquery: Subquery?,
 ) : Query()
 
 data class Bool(override val begin: Position, override val end: Position, val value: Boolean, val text: String) : Node()
@@ -90,8 +91,6 @@ data class Capture(
     val colon: Literal,
     val spaces2: List<Space>,
     val query: Query,
-    val spaces3: List<Space>,
-    val subquery: Subquery?,
     val lt: LineTerminator
 ) : Node()
 
@@ -136,7 +135,8 @@ data class CookieQuery(
     override val end: Position,
     override val type: QueryType,
     val spaces: List<Space>,
-    val expr: HString
+    val expr: HString,
+    override val subquery: Subquery?
 ) : Query()
 
 data class CookiesSection(
@@ -159,7 +159,19 @@ data class CountPredicate(
     val expr: Number
 ) : PredicateFunc()
 
-data class DurationQuery(override val begin: Position, override val end: Position, override val type: QueryType) : Query()
+data class CountSubquery(
+    override val begin: Position,
+    override val end: Position,
+    val spaces: List<Space>,
+    override val type: SubqueryType,
+) : Subquery()
+
+data class DurationQuery(
+    override val begin: Position,
+    override val end: Position,
+    override val type: QueryType,
+    override val subquery: Subquery?
+) : Query()
 
 data class Entry(override val begin: Position, override val end: Position, val request: Request, val response: Response?) : Node()
 
@@ -295,7 +307,8 @@ data class HeaderQuery(
     override val end: Position,
     override val type: QueryType,
     val spaces: List<Space>,
-    val headerName: HString
+    val headerName: HString,
+    override val subquery: Subquery?
 ) : Query()
 
 data class HurlFile(
@@ -344,7 +357,8 @@ data class JsonPathQuery(
     override val end: Position,
     override val type: QueryType,
     val spaces: List<Space>,
-    val expr: HString
+    val expr: HString,
+    override val subquery: Subquery?
 ) : Query()
 
 data class KeyValue(
@@ -446,9 +460,22 @@ data class PredicateType(override val begin: Position, override val end: Positio
 
 sealed class Query : Node() {
     abstract val type: QueryType
+    abstract val subquery: Subquery?
 }
 
-data class QueryType(override val begin: Position, override val end: Position, val value: String) : Node()
+data class QueryType(override val begin: Position, override val end: Position, val value: QueryTypeValue) : Node()
+
+enum class QueryTypeValue(val text: String) {
+    STATUS("status"),
+    BODY("body"),
+    COOKIE("cookie"),
+    XPATH("xpath"),
+    JSONPATH("jsonpath"),
+    REGEX("regex"),
+    VARIABLE("variable"),
+    DURATION("duration"),
+    HEADER("header"),
+}
 
 data class QueryStringParamsSection(
     override val begin: Position,
@@ -472,14 +499,16 @@ data class RegexQuery(
     override val end: Position,
     override val type: QueryType,
     val spaces: List<Space>,
-    val expr: HString
+    val expr: HString,
+    override val subquery: Subquery?
 ) : Query()
 
 data class RegexSubquery(
     override val begin: Position,
     override val end: Position,
+    val spaces0: List<Space>,
     override val type: SubqueryType,
-    val spaces: List<Space>,
+    val spaces1: List<Space>,
     val expr: HString
 ) : Subquery()
 
@@ -542,13 +571,24 @@ data class IntStatusValue(val value: Int): StatusValue()
 
 object AnyStatusValue: StatusValue()
 
-data class StatusQuery(override val begin: Position, override val end: Position, override val type: QueryType) : Query()
+data class StatusQuery(
+    override val begin: Position,
+    override val end: Position,
+    override val type: QueryType,
+    override val subquery: Subquery?,
+) : Query()
 
 sealed class Subquery : Node() {
     abstract val type: SubqueryType
 }
 
-data class SubqueryType(override val begin: Position, override val end: Position, val value: String) : Node()
+data class SubqueryType(override val begin: Position, override val end: Position, val value: SubqueryTypeValue) : Node()
+
+enum class SubqueryTypeValue(val text: String) {
+    REGEX("regex"),
+    COUNT("count"),
+}
+
 
 data class Url(override val begin: Position, override val end: Position, val value: String) : Node()
 
@@ -557,8 +597,9 @@ data class VariableQuery(
     override val end: Position,
     override val type: QueryType,
     val spaces: List<Space>,
-    val variable: HString
-): Query()
+    val variable: HString,
+    override val subquery: Subquery?,
+) : Query()
 
 // TODO: add a VersionValue enum to manage wildcard version `HTTP/*` (see Status node)
 
@@ -571,7 +612,8 @@ data class XPathQuery(
     override val end: Position,
     override val type: QueryType,
     val spaces: List<Space>,
-    val expr: HString
+    val expr: HString,
+    override val subquery: Subquery?,
 ): Query()
 
 data class VariableName(override val begin: Position, override val end: Position, val value: String): Node()

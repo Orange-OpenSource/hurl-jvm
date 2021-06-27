@@ -33,6 +33,5 @@ fun Capture.toCaptureDto(): CaptureDto {
     return CaptureDto(
         name = name.value,
         query = query.toQueryDto(),
-        subquery = subquery?.toSubqueryDto()
     )
 }

@@ -50,7 +50,7 @@ internal fun HurlParser.hurlFile(): HurlFile? {
     }
     return HurlFile(
         begin = begin,
-        end = position,
+        end = position.copy(),
         entries = entries,
         lts = lts
     )
@@ -62,6 +62,6 @@ internal fun HurlParser.entry(): Entry? {
     val request = request() ?: return null
     val response = optional { response() }
 
-    return Entry(begin = begin, end = position, request = request, response = response)
+    return Entry(begin = begin, end = position.copy(), request = request, response = response)
 }
 

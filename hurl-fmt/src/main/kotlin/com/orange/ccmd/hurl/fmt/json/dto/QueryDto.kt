@@ -34,67 +34,82 @@ import kotlinx.serialization.Serializable
 
 
 @Serializable
-sealed class QueryDto
+sealed class QueryDto {
+    abstract val subquery: SubqueryDto?
+}
 
 @Serializable
 @SerialName("body")
-object BodyQueryDto : QueryDto()
+data class BodyQueryDto(
+    override val subquery: SubqueryDto? = null
+): QueryDto()
 
 @Serializable
 @SerialName("cookie")
 data class CookieQueryDto(
-    val expr: String
+    val expr: String,
+    override val subquery: SubqueryDto? = null
 ) : QueryDto()
 
 @Serializable
 @SerialName("status")
-object StatusQueryDto : QueryDto()
+data class StatusQueryDto(
+    override val subquery: SubqueryDto? = null
+) : QueryDto()
 
 @Serializable
 @SerialName("header")
 data class HeaderQueryDto(
-    val name: String
+    val name: String,
+    override val subquery: SubqueryDto? = null
 ) : QueryDto()
 
 @Serializable
 @SerialName("jsonpath")
 data class JsonPathQueryDto(
-    val expr: String
+    val expr: String,
+    override val subquery: SubqueryDto? = null,
 ) : QueryDto()
 
 @Serializable
 @SerialName("regex")
 data class RegexQueryDto(
-    val expr: String
+    val expr: String,
+    override val subquery: SubqueryDto? = null
 ) : QueryDto()
 
 @Serializable
 @SerialName("variable")
 data class VariableQueryDto(
-    val name: String
+    val name: String,
+    override val subquery: SubqueryDto? = null
 ) : QueryDto()
 
 @Serializable
 @SerialName("xpath")
 data class XPathQueryDto(
-    val expr: String
+    val expr: String,
+    override val subquery: SubqueryDto? = null
 ) : QueryDto()
 
 @Serializable
 @SerialName("duration")
-object DurationQueryDto : QueryDto()
+data class DurationQueryDto(
+    override val subquery: SubqueryDto? = null
+) : QueryDto()
 
 
 fun Query.toQueryDto(): QueryDto {
+    val subqueryDto = subquery?.toSubqueryDto()
     return when (this) {
-        is BodyQuery -> BodyQueryDto
-        is CookieQuery -> CookieQueryDto(expr = expr.value)
-        is HeaderQuery -> HeaderQueryDto(name = headerName.value)
-        is JsonPathQuery -> JsonPathQueryDto(expr = expr.value)
-        is RegexQuery -> RegexQueryDto(expr = expr.value)
-        is StatusQuery -> StatusQueryDto
-        is VariableQuery -> VariableQueryDto(name = variable.value)
-        is XPathQuery -> XPathQueryDto(expr = expr.value)
-        is DurationQuery -> DurationQueryDto
+        is BodyQuery -> BodyQueryDto(subquery = subqueryDto)
+        is CookieQuery -> CookieQueryDto(expr = expr.value, subquery = subqueryDto)
+        is HeaderQuery -> HeaderQueryDto(name = headerName.value, subquery = subqueryDto)
+        is JsonPathQuery -> JsonPathQueryDto(expr = expr.value, subquery = subqueryDto)
+        is RegexQuery -> RegexQueryDto(expr = expr.value, subquery = subqueryDto)
+        is StatusQuery -> StatusQueryDto(subquery = subqueryDto)
+        is VariableQuery -> VariableQueryDto(name = variable.value, subqueryDto)
+        is XPathQuery -> XPathQueryDto(expr = expr.value, subquery = subqueryDto)
+        is DurationQuery -> DurationQueryDto(subquery = subqueryDto)
     }
 }

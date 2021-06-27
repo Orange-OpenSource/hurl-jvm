@@ -10,8 +10,8 @@ jsonpath "$.count" >= 1.0
 jsonpath "$.success" equals false
 jsonpath "$.success" not equals null
 jsonpath "$.success" exists
-jsonpath "$.errors" countEquals 2
-jsonpath "$.warnings" countEquals 0
+jsonpath "$.errors" count == 2
+jsonpath "$.warnings" count == 0
 jsonpath "$.toto" not exists
 jsonpath "$.warnings" exists
 jsonpath "$.warnings" exists
@@ -23,7 +23,7 @@ jsonpath "$.duration" equals 1.5
 jsonpath "$.duration" lessThanOrEquals 2.0
 jsonpath "$.duration" <= 2.0
 jsonpath "$.duration" lessThan 2
-jsonpath "$.duration" lessThan 2
+jsonpath "$.duration" < 2
 jsonpath "$.nullable" equals null
 
 {
@@ -53,6 +53,6 @@ jsonpath "$.tags" not includes null
 GET http://localhost:8000/assert-json/list
 HTTP/1.0 200
 [Asserts]
-jsonpath "$" countEquals 2
+jsonpath "$" count == 2
 jsonpath "$.[0].name" equals "Bob"
 jsonpath "$[0].name" equals "Bob"
