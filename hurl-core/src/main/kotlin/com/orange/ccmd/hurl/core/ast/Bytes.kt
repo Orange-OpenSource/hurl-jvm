@@ -26,7 +26,7 @@ import com.orange.ccmd.hurl.core.utils.slice
 import com.orange.ccmd.hurl.core.utils.string
 
 internal fun HurlParser.base64(): Base64? {
-    val begin = position.copy()
+    val begin = positionFreezed
 
     val prefix = literal("base64,") ?: return null
     val spaces0 = zeroOrMore { space() }
@@ -36,7 +36,7 @@ internal fun HurlParser.base64(): Base64? {
 
     return Base64(
         begin = begin,
-        end = position,
+        end = positionFreezed,
         prefix = prefix,
         spaces0 = spaces0,
         base64String = base64String,
@@ -62,7 +62,7 @@ internal fun HurlParser.bytes(): Bytes? {
 }
 
 internal fun HurlParser.file(): File? {
-    val begin = position.copy()
+    val begin = positionFreezed
 
     val prefix = literal("file,") ?: return null
     val spaces0 = zeroOrMore { space() }
@@ -71,7 +71,7 @@ internal fun HurlParser.file(): File? {
     val suffix = literal(";") ?: return null
     return File(
         begin = begin,
-        end = position,
+        end = positionFreezed,
         prefix = prefix,
         spaces0 = spaces0,
         fileName = fileName,
@@ -81,7 +81,7 @@ internal fun HurlParser.file(): File? {
 }
 
 internal fun HurlParser.json(): Json? {
-    val begin = position.copy()
+    val begin = positionFreezed
 
     val remainingCps = buffer.slice(begin.offset)
     val remainingBytes = remainingCps.string().toByteArray()
@@ -95,11 +95,11 @@ internal fun HurlParser.json(): Json? {
     // Advance buffer from the number of bytes consumed.
     val cpsCount = text.codePoints().toArray().size
     read(cpsCount)
-    return Json(begin = begin, end = position, text = text)
+    return Json(begin = begin, end = positionFreezed, text = text)
 }
 
 internal fun HurlParser.rawString(): RawString? {
-    val begin = position.copy()
+    val begin = positionFreezed
 
     literal(multilineMarker) ?: return null
     optional { leadingRawStringPrefix() }
@@ -117,7 +117,7 @@ internal fun HurlParser.rawString(): RawString? {
 }
 
 internal fun HurlParser.xml(): Xml? {
-    val begin = position.copy()
+    val begin = positionFreezed
 
     // Check if there is a begining of xml header.
     val cp = peek()
@@ -138,5 +138,5 @@ internal fun HurlParser.xml(): Xml? {
     // Advance buffer from the number of bytes consumed.
     val cpsCount = text.codePoints().toArray().size
     read(cpsCount)
-    return Xml(begin = begin, end = position, text = text)
+    return Xml(begin = begin, end = positionFreezed, text = text)
 }

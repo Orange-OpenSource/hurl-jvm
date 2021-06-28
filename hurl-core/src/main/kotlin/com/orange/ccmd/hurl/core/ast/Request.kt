@@ -26,7 +26,7 @@ import com.orange.ccmd.hurl.core.parser.isAsciiLetter
 import com.orange.ccmd.hurl.core.utils.string
 
 internal fun HurlParser.cookiesSection(): CookiesSection? {
-    val begin = position.copy()
+    val begin = positionFreezed
 
     val lts = zeroOrMore { lineTerminator() }
     val spaces = zeroOrMore { space() }
@@ -35,7 +35,7 @@ internal fun HurlParser.cookiesSection(): CookiesSection? {
     val cookies = zeroOrMore { cookie() }
     return CookiesSection(
         begin = begin,
-        end = position,
+        end = positionFreezed,
         lts = lts,
         spaces = spaces,
         header = header,
@@ -45,7 +45,7 @@ internal fun HurlParser.cookiesSection(): CookiesSection? {
 }
 
 internal fun HurlParser.formParamsSection(): FormParamsSection? {
-    val begin = position.copy()
+    val begin = positionFreezed
 
     val lts = zeroOrMore { lineTerminator() }
     val spaces = zeroOrMore { space() }
@@ -54,7 +54,7 @@ internal fun HurlParser.formParamsSection(): FormParamsSection? {
     val params = zeroOrMore { param() }
     return FormParamsSection(
         begin = begin,
-        end = position,
+        end = positionFreezed,
         lts = lts,
         spaces = spaces,
         header = header,
@@ -64,7 +64,7 @@ internal fun HurlParser.formParamsSection(): FormParamsSection? {
 }
 
 internal fun HurlParser.method(): Method? {
-    val begin = position.copy()
+    val begin = positionFreezed
 
     val methods = listOf(
         "GET", "HEAD", "POST", "PUT", "DELETE", "CONNECT", "OPTIONS", "TRACE", "PATCH"
@@ -72,15 +72,15 @@ internal fun HurlParser.method(): Method? {
     for (m in methods) {
         val node = optional { literal(m) }
         if (node != null) {
-            return Method(begin = begin, end = position, value = m)
+            return Method(begin = begin, end = positionFreezed, value = m)
         }
     }
-    error = SyntaxError("method is expected", position)
+    error = SyntaxError("method is expected", positionFreezed)
     return null
 }
 
 internal fun HurlParser.multipartFormDataSection(): MultipartFormDataSection? {
-    val begin = position.copy()
+    val begin = positionFreezed
 
     val lts = zeroOrMore { lineTerminator() }
     val spaces = zeroOrMore { space() }
@@ -106,7 +106,7 @@ internal fun HurlParser.multipartFormDataSection(): MultipartFormDataSection? {
 
     return MultipartFormDataSection(
         begin = begin,
-        end = position,
+        end = positionFreezed,
         lts = lts,
         spaces = spaces,
         header = header,
@@ -117,7 +117,7 @@ internal fun HurlParser.multipartFormDataSection(): MultipartFormDataSection? {
 }
 
 internal fun HurlParser.queryStringParamsSection(): QueryStringParamsSection? {
-    val begin = position.copy()
+    val begin = positionFreezed
 
     val lts = zeroOrMore { lineTerminator() }
     val spaces = zeroOrMore { space() }
@@ -126,7 +126,7 @@ internal fun HurlParser.queryStringParamsSection(): QueryStringParamsSection? {
     val params = zeroOrMore { param() }
     return QueryStringParamsSection(
         begin = begin,
-        end = position,
+        end = positionFreezed,
         lts = lts,
         spaces = spaces,
         header = header,
@@ -136,7 +136,7 @@ internal fun HurlParser.queryStringParamsSection(): QueryStringParamsSection? {
 }
 
 internal fun HurlParser.request(): Request? {
-    val begin = position.copy()
+    val begin = positionFreezed
 
     val lts = zeroOrMore { lineTerminator() }
     val spaces0 = zeroOrMore { space() }
@@ -150,7 +150,7 @@ internal fun HurlParser.request(): Request? {
 
     return Request(
         begin = begin,
-        end = position,
+        end = positionFreezed,
         lts = lts,
         spaces0 = spaces0,
         method = method,
@@ -177,7 +177,7 @@ internal fun HurlParser.requestSection(): RequestSection? {
  * @see <a href="https://tools.ietf.org/html/rfc3986">RFC3986<a>
  */
 internal fun HurlParser.url(): Url? {
-    val begin = position.copy()
+    val begin = positionFreezed
 
     // FIXME: not a real url parsing
     // For instance, we doen't invalidate query parameters like %2X.
@@ -192,8 +192,8 @@ internal fun HurlParser.url(): Url? {
         isReserved || isUnreserved || isQuery || isHurlSpecific
     }
     if (url == null || url.isEmpty()) {
-        error = SyntaxError("url is expected", position)
+        error = SyntaxError("url is expected", positionFreezed)
         return null
     }
-    return Url(begin = begin, value = url.string(), end = position)
+    return Url(begin = begin, value = url.string(), end = positionFreezed)
 }

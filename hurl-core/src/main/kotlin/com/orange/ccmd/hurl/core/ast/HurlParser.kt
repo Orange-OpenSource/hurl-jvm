@@ -33,7 +33,7 @@ class HurlParser(text: String) : Parser(text) {
 }
 
 internal fun HurlParser.hurlFile(): HurlFile? {
-    val begin = position.copy()
+    val begin = positionFreezed
 
     val entries = zeroOrMore { entry() }
     val lts = zeroOrMore { lineTerminator() }
@@ -50,18 +50,18 @@ internal fun HurlParser.hurlFile(): HurlFile? {
     }
     return HurlFile(
         begin = begin,
-        end = position,
+        end = positionFreezed,
         entries = entries,
         lts = lts
     )
 }
 
 internal fun HurlParser.entry(): Entry? {
-    val begin = position.copy()
+    val begin = positionFreezed
 
     val request = request() ?: return null
     val response = optional { response() }
 
-    return Entry(begin = begin, end = position, request = request, response = response)
+    return Entry(begin = begin, end = positionFreezed, request = request, response = response)
 }
 

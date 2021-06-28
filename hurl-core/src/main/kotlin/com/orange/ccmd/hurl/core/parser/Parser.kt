@@ -141,6 +141,8 @@ open class Parser(val text: String) {
         return null
     }
 
+    val positionFreezed: Position get() = position.copy()
+
     /**
      * Returns the most probable root error.
      *

@@ -95,7 +95,7 @@ class HighlightingVisitor(
             is SectionHeader -> text += sectionHeaderFunc(node.value)
 
             // Query type.
-            is QueryType -> text += queryTypeFunc(node.value)
+            is QueryType -> text += queryTypeFunc(node.value.text)
 
             // Predicate.
             is Not -> text += predicateTypeFunc(node.text.value)

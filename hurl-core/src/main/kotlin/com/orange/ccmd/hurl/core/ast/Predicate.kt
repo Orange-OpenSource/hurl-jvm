@@ -36,19 +36,19 @@ internal fun HurlParser.predicateFunc(): PredicateFunc? {
 }
 
 internal fun HurlParser.containPredicate(): ContainPredicate? {
-    val begin = position.copy()
+    val begin = positionFreezed
     val type = predicateType("contains") ?: return null
     val spaces = zeroOrMore { space() }
     val expr = quotedString() ?: return null
-    return ContainPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return ContainPredicate(begin = begin, end = positionFreezed, type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.countPredicate(): CountPredicate? {
-    val begin = position.copy()
+    val begin = positionFreezed
     val type = predicateType("countEquals") ?: return null
     val spaces = zeroOrMore { space() }
     val expr = integer() ?: return null
-    return CountPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return CountPredicate(begin = begin, end = positionFreezed, type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.equalPredicate(): PredicateFunc? {
@@ -62,29 +62,29 @@ internal fun HurlParser.equalPredicate(): PredicateFunc? {
 }
 
 internal fun HurlParser.equalBoolPredicate(): EqualBoolPredicate? {
-    val begin = position.copy()
+    val begin = positionFreezed
     val type = choice(listOf(
         { predicateType("==") },
         { predicateType("equals") },
     )) ?: return null
     val spaces = zeroOrMore { space() }
     val expr = bool() ?: return null
-    return EqualBoolPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return EqualBoolPredicate(begin = begin, end = positionFreezed, type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.equalNullPredicate(): EqualNullPredicate? {
-    val begin = position.copy()
+    val begin = positionFreezed
     val type = choice(listOf(
         { predicateType("==") },
         { predicateType("equals") },
     )) ?: return null
     val spaces = zeroOrMore { space() }
     val expr = `null`() ?: return null
-    return EqualNullPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return EqualNullPredicate(begin = begin, end = positionFreezed, type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.equalNumberPredicate(): EqualNumberPredicate? {
-    val begin = position.copy()
+    val begin = positionFreezed
     val type = choice(listOf(
         { predicateType("==") },
         { predicateType("equals") },
@@ -94,39 +94,39 @@ internal fun HurlParser.equalNumberPredicate(): EqualNumberPredicate? {
         { float() },
         { integer() }
     )) ?: return null
-    return EqualNumberPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return EqualNumberPredicate(begin = begin, end = positionFreezed, type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.equalStringPredicate(): EqualStringPredicate? {
-    val begin = position.copy()
+    val begin = positionFreezed
     val type = choice(listOf(
         { predicateType("==") },
         { predicateType("equals") },
     )) ?: return null
     val spaces = zeroOrMore { space() }
     val expr = quotedString() ?: return null
-    return EqualStringPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return EqualStringPredicate(begin = begin, end = positionFreezed, type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.equalExprPredicate(): EqualExprPredicate? {
-    val begin = position.copy()
+    val begin = positionFreezed
     val type = choice(listOf(
         { predicateType("==") },
         { predicateType("equals") },
     )) ?: return null
     val spaces = zeroOrMore { space() }
     val expr = expr() ?: return null
-    return EqualExprPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return EqualExprPredicate(begin = begin, end = positionFreezed, type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.existPredicate(): ExistPredicate? {
-    val begin = position.copy()
+    val begin = positionFreezed
     val type = predicateType("exists") ?: return null
-    return ExistPredicate(begin = begin, end = position, type = type)
+    return ExistPredicate(begin = begin, end = positionFreezed, type = type)
 }
 
 internal fun HurlParser.greaterPredicate(): GreaterPredicate? {
-    val begin = position.copy()
+    val begin = positionFreezed
     val type = choice(listOf(
         { predicateType(">") },
         { predicateType("greaterThan") },
@@ -136,11 +136,11 @@ internal fun HurlParser.greaterPredicate(): GreaterPredicate? {
         { float() },
         { integer() }
     )) ?: return null
-    return GreaterPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return GreaterPredicate(begin = begin, end = positionFreezed, type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.greaterOrEqualPredicate(): GreaterOrEqualPredicate? {
-    val begin = position.copy()
+    val begin = positionFreezed
     val type = choice(listOf(
         { predicateType(">=") },
         { predicateType("greaterThanOrEquals") },
@@ -150,7 +150,7 @@ internal fun HurlParser.greaterOrEqualPredicate(): GreaterOrEqualPredicate? {
         { float() },
         { integer() }
     )) ?: return null
-    return GreaterOrEqualPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return GreaterOrEqualPredicate(begin = begin, end = positionFreezed, type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.includePredicate(): PredicateFunc? {
@@ -163,42 +163,42 @@ internal fun HurlParser.includePredicate(): PredicateFunc? {
 }
 
 internal fun HurlParser.includeBoolPredicate(): IncludeBoolPredicate? {
-    val begin = position.copy()
+    val begin = positionFreezed
     val type = predicateType("includes") ?: return null
     val spaces = zeroOrMore { space() }
     val expr = bool() ?: return null
-    return IncludeBoolPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return IncludeBoolPredicate(begin = begin, end = positionFreezed, type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.includeNullPredicate(): IncludeNullPredicate? {
-    val begin = position.copy()
+    val begin = positionFreezed
     val type = predicateType("includes") ?: return null
     val spaces = zeroOrMore { space() }
     val expr = `null`() ?: return null
-    return IncludeNullPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return IncludeNullPredicate(begin = begin, end = positionFreezed, type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.includeNumberPredicate(): IncludeNumberPredicate? {
-    val begin = position.copy()
+    val begin = positionFreezed
     val type = predicateType("includes") ?: return null
     val spaces = zeroOrMore { space() }
     val expr = choice(listOf(
         { float() },
         { integer() }
     )) ?: return null
-    return IncludeNumberPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return IncludeNumberPredicate(begin = begin, end = positionFreezed, type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.includeStringPredicate(): IncludeStringPredicate? {
-    val begin = position.copy()
+    val begin = positionFreezed
     val type = predicateType("includes") ?: return null
     val spaces = zeroOrMore { space() }
     val expr = quotedString() ?: return null
-    return IncludeStringPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return IncludeStringPredicate(begin = begin, end = positionFreezed, type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.lessPredicate(): LessPredicate? {
-    val begin = position.copy()
+    val begin = positionFreezed
     val type = choice(listOf(
         { predicateType("<") },
         { predicateType("lessThan") },
@@ -208,11 +208,11 @@ internal fun HurlParser.lessPredicate(): LessPredicate? {
         { float() },
         { integer() }
     )) ?: return null
-    return LessPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return LessPredicate(begin = begin, end = positionFreezed, type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.lessOrEqualPredicate(): LessOrEqualPredicate? {
-    val begin = position.copy()
+    val begin = positionFreezed
     val type = choice(listOf(
         { predicateType("<=") },
         { predicateType("lessThanOrEquals") },
@@ -222,22 +222,22 @@ internal fun HurlParser.lessOrEqualPredicate(): LessOrEqualPredicate? {
         { float() },
         { integer() }
     )) ?: return null
-    return LessOrEqualPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return LessOrEqualPredicate(begin = begin, end = positionFreezed, type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.matchPredicate(): MatchPredicate? {
-    val begin = position.copy()
+    val begin = positionFreezed
     val type = choice(listOf(
         { predicateType("=~") },
         { predicateType("matches") },
     )) ?: return null
     val spaces = zeroOrMore { space() }
     val expr = quotedString() ?: return null
-    return MatchPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return MatchPredicate(begin = begin, end = positionFreezed, type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.predicate(): Predicate? {
-    val begin = position.copy()
+    val begin = positionFreezed
 
     val not = optional { not() }
     val spaces = if (not != null) {
@@ -246,20 +246,20 @@ internal fun HurlParser.predicate(): Predicate? {
         listOf()
     }
     val predicateFunc = predicateFunc() ?: return null
-    return Predicate(begin = begin, end = position, not = not, spaces = spaces, predicateFunc = predicateFunc)
+    return Predicate(begin = begin, end = positionFreezed, not = not, spaces = spaces, predicateFunc = predicateFunc)
 }
 
 internal fun HurlParser.predicateType(type: String): PredicateType? {
-    val begin = position.copy()
+    val begin = positionFreezed
     val value = literal(type)?.value ?: return null
-    return PredicateType(begin = begin, end = position, value = value)
+    return PredicateType(begin = begin, end = positionFreezed, value = value)
 }
 
 internal fun HurlParser.startWithPredicate(): StartWithPredicate? {
-    val begin = position.copy()
+    val begin = positionFreezed
     val type = predicateType("startsWith") ?: return null
     val spaces = zeroOrMore { space() }
     val expr = quotedString() ?: return null
-    return StartWithPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return StartWithPredicate(begin = begin, end = positionFreezed, type = type, spaces = spaces, expr = expr)
 }
 

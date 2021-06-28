@@ -74,7 +74,6 @@ data class BodyQuery(
     override val begin: Position,
     override val end: Position,
     override val type: QueryType,
-    val spaces: List<Space>,
     override val subquery: Subquery?,
 ) : Query()
 
@@ -135,9 +134,8 @@ data class CookieQuery(
     override val begin: Position,
     override val end: Position,
     override val type: QueryType,
-    val spaces0: List<Space>,
+    val spaces: List<Space>,
     val expr: HString,
-    val spaces1: List<Space>,
     override val subquery: Subquery?
 ) : Query()
 
@@ -164,6 +162,7 @@ data class CountPredicate(
 data class CountSubquery(
     override val begin: Position,
     override val end: Position,
+    val spaces: List<Space>,
     override val type: SubqueryType,
 ) : Subquery()
 
@@ -171,7 +170,6 @@ data class DurationQuery(
     override val begin: Position,
     override val end: Position,
     override val type: QueryType,
-    val spaces: List<Space>,
     override val subquery: Subquery?
 ) : Query()
 
@@ -308,9 +306,8 @@ data class HeaderQuery(
     override val begin: Position,
     override val end: Position,
     override val type: QueryType,
-    val spaces0: List<Space>,
+    val spaces: List<Space>,
     val headerName: HString,
-    val spaces1: List<Space>,
     override val subquery: Subquery?
 ) : Query()
 
@@ -359,9 +356,8 @@ data class JsonPathQuery(
     override val begin: Position,
     override val end: Position,
     override val type: QueryType,
-    val spaces0: List<Space>,
+    val spaces: List<Space>,
     val expr: HString,
-    val spaces1: List<Space>,
     override val subquery: Subquery?
 ) : Query()
 
@@ -467,7 +463,19 @@ sealed class Query : Node() {
     abstract val subquery: Subquery?
 }
 
-data class QueryType(override val begin: Position, override val end: Position, val value: String) : Node()
+data class QueryType(override val begin: Position, override val end: Position, val value: QueryTypeValue) : Node()
+
+enum class QueryTypeValue(val text: String) {
+    STATUS("status"),
+    BODY("body"),
+    COOKIE("cookie"),
+    XPATH("xpath"),
+    JSONPATH("jsonpath"),
+    REGEX("regex"),
+    VARIABLE("variable"),
+    DURATION("duration"),
+    HEADER("header"),
+}
 
 data class QueryStringParamsSection(
     override val begin: Position,
@@ -490,17 +498,17 @@ data class RegexQuery(
     override val begin: Position,
     override val end: Position,
     override val type: QueryType,
-    val spaces0: List<Space>,
+    val spaces: List<Space>,
     val expr: HString,
-    val spaces1: List<Space>,
     override val subquery: Subquery?
 ) : Query()
 
 data class RegexSubquery(
     override val begin: Position,
     override val end: Position,
+    val spaces0: List<Space>,
     override val type: SubqueryType,
-    val spaces: List<Space>,
+    val spaces1: List<Space>,
     val expr: HString
 ) : Subquery()
 
@@ -567,7 +575,6 @@ data class StatusQuery(
     override val begin: Position,
     override val end: Position,
     override val type: QueryType,
-    val spaces: List<Space>,
     override val subquery: Subquery?,
 ) : Query()
 
@@ -575,7 +582,13 @@ sealed class Subquery : Node() {
     abstract val type: SubqueryType
 }
 
-data class SubqueryType(override val begin: Position, override val end: Position, val value: String) : Node()
+data class SubqueryType(override val begin: Position, override val end: Position, val value: SubqueryTypeValue) : Node()
+
+enum class SubqueryTypeValue(val text: String) {
+    REGEX("regex"),
+    COUNT("count"),
+}
+
 
 data class Url(override val begin: Position, override val end: Position, val value: String) : Node()
 
@@ -583,9 +596,8 @@ data class VariableQuery(
     override val begin: Position,
     override val end: Position,
     override val type: QueryType,
-    val spaces0: List<Space>,
+    val spaces: List<Space>,
     val variable: HString,
-    val spaces1: List<Space>,
     override val subquery: Subquery?,
 ) : Query()
 
@@ -599,9 +611,8 @@ data class XPathQuery(
     override val begin: Position,
     override val end: Position,
     override val type: QueryType,
-    val spaces0: List<Space>,
+    val spaces: List<Space>,
     val expr: HString,
-    val spaces1: List<Space>,
     override val subquery: Subquery?,
 ): Query()
 

@@ -24,7 +24,7 @@ import com.orange.ccmd.hurl.core.parser.isAsciiDigit
 import com.orange.ccmd.hurl.core.utils.string
 
 internal fun HurlParser.assert(): Assert? {
-    val begin = position.copy()
+    val begin = positionFreezed
 
     val lts = zeroOrMore { lineTerminator() }
     val spaces0 = zeroOrMore { space() }
@@ -35,7 +35,7 @@ internal fun HurlParser.assert(): Assert? {
 
     return Assert(
         begin = begin,
-        end = position,
+        end = positionFreezed,
         lts = lts,
         spaces0 = spaces0,
         query = query,
@@ -46,7 +46,7 @@ internal fun HurlParser.assert(): Assert? {
 }
 
 internal fun HurlParser.assertsSection(): AssertsSection? {
-    val begin = position.copy()
+    val begin = positionFreezed
 
     val lts = zeroOrMore { lineTerminator() }
     val spaces = zeroOrMore { space() }
@@ -55,7 +55,7 @@ internal fun HurlParser.assertsSection(): AssertsSection? {
     val asserts = zeroOrMore { assert() }
     return AssertsSection(
         begin = begin,
-        end = position,
+        end = positionFreezed,
         lts = lts,
         spaces = spaces,
         header = header,
@@ -65,7 +65,7 @@ internal fun HurlParser.assertsSection(): AssertsSection? {
 }
 
 internal fun HurlParser.capture(): Capture? {
-    val begin = position.copy()
+    val begin = positionFreezed
 
     val lts = zeroOrMore { lineTerminator() }
     val spaces0 = zeroOrMore { space() }
@@ -78,7 +78,7 @@ internal fun HurlParser.capture(): Capture? {
 
     return Capture(
         begin = begin,
-        end = position,
+        end = positionFreezed,
         lts = lts,
         spaces0 = spaces0,
         name = name,
@@ -91,7 +91,7 @@ internal fun HurlParser.capture(): Capture? {
 }
 
 internal fun HurlParser.capturesSection(): CapturesSection? {
-    val begin = position.copy()
+    val begin = positionFreezed
 
     val lts = zeroOrMore { lineTerminator() }
     val spaces = zeroOrMore { space() }
@@ -100,7 +100,7 @@ internal fun HurlParser.capturesSection(): CapturesSection? {
     val captures = zeroOrMore { capture() }
     return CapturesSection(
         begin = begin,
-        end = position,
+        end = positionFreezed,
         lts = lts,
         spaces = spaces,
         header = header,
@@ -110,7 +110,7 @@ internal fun HurlParser.capturesSection(): CapturesSection? {
 }
 
 internal fun HurlParser.response(): Response? {
-    val begin = position.copy()
+    val begin = positionFreezed
 
     val lts = zeroOrMore { lineTerminator() }
     val spaces0 = zeroOrMore { space() }
@@ -124,7 +124,7 @@ internal fun HurlParser.response(): Response? {
 
     return Response(
         begin = begin,
-        end = position,
+        end = positionFreezed,
         lts = lts,
         spaces0 = spaces0,
         version = version,
@@ -145,41 +145,41 @@ internal fun HurlParser.responseSection(): ResponseSection? {
 }
 
 internal fun HurlParser.status(): Status? {
-    val begin = position.copy()
+    val begin = positionFreezed
 
     // First, test if the status value is a wildcard status.
     val cp0 = peek() ?: return null
     if (cp0 == '*'.code) {
         read()
-        return Status(begin = begin, end = position, value = AnyStatusValue, text = "*")
+        return Status(begin = begin, end = positionFreezed, value = AnyStatusValue, text = "*")
     }
 
     // It's not a wildcard status, so it must be an integer value.
     val cps = readWhile { it.isAsciiDigit }
     if (cps == null) {
-        error = SyntaxError("0-9 is expected", position)
+        error = SyntaxError("0-9 is expected", positionFreezed)
         return null
     }
     val digits = cps.string()
     val value = try {
         digits.toInt()
     } catch (e: NumberFormatException) {
-        error = SyntaxError("0-9 is expected", position)
+        error = SyntaxError("0-9 is expected", positionFreezed)
         return null
     }
-    return Status(begin = begin, end = position, value = IntStatusValue(value = value), text = digits)
+    return Status(begin = begin, end = positionFreezed, value = IntStatusValue(value = value), text = digits)
 }
 
 internal fun HurlParser.version(): Version? {
-    val begin = position.copy()
+    val begin = positionFreezed
 
     val versions = listOf("HTTP/1.0", "HTTP/1.1", "HTTP/2", "HTTP/*")
     for (v in versions) {
         val node = optional { literal(v) }
         if (node != null) {
-            return Version(begin = begin, value = v, end = position)
+            return Version(begin = begin, value = v, end = positionFreezed)
         }
     }
-    error = SyntaxError("version is expected", position)
+    error = SyntaxError("version is expected", positionFreezed)
     return null
 }

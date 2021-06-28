@@ -387,7 +387,7 @@ private fun Assert.buildMessage(result: PredicateResult): String {
     val state = if (result.succeeded) { "succeeded" } else { "failed" }
     val not = if (predicate.not != null) { "not " } else { "" }
     return """
-        assert ${query.type.value} $not${predicateFunc.type.value} $state
+        assert ${query.type.value.text} $not${predicateFunc.type.value} $state
           actual:   ${result.first}
           expected: ${result.second}
     """.trimIndent()
