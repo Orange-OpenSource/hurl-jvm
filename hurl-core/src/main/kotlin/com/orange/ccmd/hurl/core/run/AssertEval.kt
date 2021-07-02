@@ -223,20 +223,31 @@ internal fun Body.checkBodyContent(body: ByteArray, variables: VariableJar, file
 }
 
 internal fun Assert.eval(response: HttpResponse, variables: VariableJar): EntryStepResult {
+
     // Evaluate actual value against the http response.
-    val first = try {
-        query.eval(response = response, variables = variables)
-    } catch (e: InvalidQueryException) {
-        return AssertResult(
-            succeeded = false,
-            position = begin,
-            message = "assert ${query.type.value} evaluation failed, ${e.message}"
-        )
-    } catch (e: InvalidVariableException) {
-        return InvalidVariableResult(position = e.position, reason = e.reason)
-    }
 
     val not = predicate.not != null
+
+    val first = try {
+        query.eval(response = response, variables = variables)
+    }
+    catch (e: Exception) {
+        return when(e) {
+            is InvalidQueryException, is InvalidSubqueryException -> {
+                val predicateFunc = predicate.predicateFunc
+                val not = if (not) { "not " } else { "" }
+                AssertResult(
+                    succeeded = false,
+                    position = begin,
+                    message = "assert ${query.type.value.text} $not${predicateFunc.type.value} failed, ${e.message}"
+                )
+            }
+            is InvalidVariableException -> {
+                InvalidVariableResult(position = e.position, reason = e.reason)
+            }
+            else -> throw e
+        }
+    }
 
     // Renders predicate value if necessary.
     val predicateFunc = predicate.predicateFunc

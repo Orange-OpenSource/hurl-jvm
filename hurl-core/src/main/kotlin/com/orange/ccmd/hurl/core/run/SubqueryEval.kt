@@ -28,7 +28,7 @@ import com.orange.ccmd.hurl.core.template.Template
 class InvalidSubqueryException(message: String) : Exception(message)
 
 internal fun Subquery.eval(queryResult: QueryResult, variables: VariableJar): QueryResult = when (this) {
-    is CountSubquery -> this.eval(queryResult = queryResult, variables = variables)
+    is CountSubquery -> this.eval(queryResult = queryResult)
     is RegexSubquery -> this.eval(queryResult = queryResult, variables = variables)
 }
 
@@ -37,13 +37,13 @@ internal fun CountSubquery.eval(queryResult: QueryResult): QueryResult {
         is QueryListResult -> QueryNumberResult(queryResult.value.size)
         is QueryNodeSetResult -> QueryNumberResult(queryResult.size)
         QueryNoneResult -> QueryNumberResult(0)
-        else -> throw InvalidSubqueryException("invalid query return for count subquery")
+        else -> throw InvalidSubqueryException("count subquery is incompatible with query result")
     }
 }
 
 internal fun RegexSubquery.eval(queryResult: QueryResult, variables: VariableJar): QueryResult {
     if (queryResult !is QueryStringResult) {
-        throw InvalidSubqueryException("a query string result is expected")
+        throw InvalidSubqueryException("regex subquery expects a query string result")
     }
     val text = queryResult.value
     val exprRendered = Template.render(text = expr.value, variables = variables, position = expr.begin)
