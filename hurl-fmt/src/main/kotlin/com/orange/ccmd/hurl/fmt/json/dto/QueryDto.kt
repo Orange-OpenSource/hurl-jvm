@@ -41,61 +41,61 @@ sealed class QueryDto {
 @Serializable
 @SerialName("body")
 data class BodyQueryDto(
-    override val subquery: SubqueryDto?
+    override val subquery: SubqueryDto? = null
 ): QueryDto()
 
 @Serializable
 @SerialName("cookie")
 data class CookieQueryDto(
     val expr: String,
-    override val subquery: SubqueryDto?
+    override val subquery: SubqueryDto? = null
 ) : QueryDto()
 
 @Serializable
 @SerialName("status")
 data class StatusQueryDto(
-    override val subquery: SubqueryDto?
+    override val subquery: SubqueryDto? = null
 ) : QueryDto()
 
 @Serializable
 @SerialName("header")
 data class HeaderQueryDto(
     val name: String,
-    override val subquery: SubqueryDto?
+    override val subquery: SubqueryDto? = null
 ) : QueryDto()
 
 @Serializable
 @SerialName("jsonpath")
 data class JsonPathQueryDto(
     val expr: String,
-    override val subquery: SubqueryDto?,
+    override val subquery: SubqueryDto? = null,
 ) : QueryDto()
 
 @Serializable
 @SerialName("regex")
 data class RegexQueryDto(
     val expr: String,
-    override val subquery: SubqueryDto?
+    override val subquery: SubqueryDto? = null
 ) : QueryDto()
 
 @Serializable
 @SerialName("variable")
 data class VariableQueryDto(
     val name: String,
-    override val subquery: SubqueryDto?
+    override val subquery: SubqueryDto? = null
 ) : QueryDto()
 
 @Serializable
 @SerialName("xpath")
 data class XPathQueryDto(
     val expr: String,
-    override val subquery: SubqueryDto?
+    override val subquery: SubqueryDto? = null
 ) : QueryDto()
 
 @Serializable
 @SerialName("duration")
 data class DurationQueryDto(
-    override val subquery: SubqueryDto?
+    override val subquery: SubqueryDto? = null
 ) : QueryDto()
 
 
