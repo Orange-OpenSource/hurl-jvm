@@ -115,7 +115,7 @@ internal fun StatusQuery.eval(response: HttpResponse): QueryNumberResult = Query
  */
 internal fun HeaderQuery.eval(response: HttpResponse): QueryResult {
     val name = headerName.value
-    val headers = response.headers.filter { it.first.toLowerCase() == name.toLowerCase() }
+    val headers = response.headers.filter { it.first.lowercase() == name.lowercase() }
     return when {
         headers.isEmpty() -> QueryNoneResult
         headers.size == 1 -> QueryStringResult(headers[0].second)

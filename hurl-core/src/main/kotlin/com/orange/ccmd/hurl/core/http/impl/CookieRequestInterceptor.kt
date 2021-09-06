@@ -48,7 +48,7 @@ class CookieRequestInterceptor : HttpRequestInterceptor {
         request.removeHeaders(HeaderNames.COOKIE)
         val mergedCookie = cookies
             .map { it.value }
-            .sortedBy { it.toLowerCase() }
+            .sortedBy { it.lowercase() }
             .joinToString(separator = "; ")
         request.setHeader(HeaderNames.COOKIE, mergedCookie)
     }

@@ -24,5 +24,5 @@ fun String.safeName() = if (isEmpty()) {
 } else {
     var name = replace("\n", "\\n")
     name = name.replace("\r", "\\r")
-    name.take(30).toLowerCase()
+    name.take(30).lowercase()
 }

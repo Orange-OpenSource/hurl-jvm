@@ -81,7 +81,7 @@ data class Cookie(
                     val attName = token
                         .substring(0, sep)
                         .trim()
-                        .toLowerCase()
+                        .lowercase()
                     val attValue = token
                         .substring(sep + 1)
                         .trim()
@@ -89,7 +89,7 @@ data class Cookie(
                 } else {
                     val attName = token
                         .trim()
-                        .toLowerCase()
+                        .lowercase()
                     singleAttributes.add(attName)
                 }
             }
