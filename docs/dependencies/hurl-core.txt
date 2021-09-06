@@ -46,14 +46,14 @@ compileClasspath - Compile classpath for compilation 'main' (target  (jvm)).
 +--- org.apache.httpcomponents:httpmime:4.5.13
 |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
 +--- org.brotli:dec:0.1.2
-\--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0
-     \--- org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.1.0
-          +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.30 -> 1.5.30 (*)
-          +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.30 -> 1.5.30
-          \--- org.jetbrains.kotlinx:kotlinx-serialization-core:1.1.0
-               \--- org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.1.0
-                    +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.30 -> 1.5.30 (*)
-                    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.30 -> 1.5.30
+\--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2
+     \--- org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.2.2
+          +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.5.20 -> 1.5.30
+          +--- org.jetbrains.kotlinx:kotlinx-serialization-core:1.2.2
+          |    \--- org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.2.2
+          |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.5.20 -> 1.5.30 (*)
+          |         \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.5.20 -> 1.5.30
+          \--- org.jetbrains.kotlin:kotlin-stdlib:1.5.20 -> 1.5.30 (*)
 
 compileOnly - Compile only dependencies for compilation 'main' (target  (jvm)).
 No dependencies
@@ -638,7 +638,7 @@ implementation - Implementation only dependencies for compilation 'main' (target
 +--- org.apache.httpcomponents:httpclient:4.5.13 (n)
 +--- org.apache.httpcomponents:httpmime:4.5.13 (n)
 +--- org.brotli:dec:0.1.2 (n)
-\--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0 (n)
+\--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2 (n)
 
 implementationDependenciesMetadata
 +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.30
@@ -663,10 +663,10 @@ implementationDependenciesMetadata
 +--- org.apache.httpcomponents:httpmime:4.5.13
 |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
 +--- org.brotli:dec:0.1.2
-\--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0
-     +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.30 -> 1.5.30
-     \--- org.jetbrains.kotlinx:kotlinx-serialization-core:1.1.0
-          \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.30 -> 1.5.30
+\--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2
+     +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.5.20 -> 1.5.30
+     \--- org.jetbrains.kotlinx:kotlinx-serialization-core:1.2.2
+          \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.5.20 -> 1.5.30
 
 intransitiveDependenciesMetadata
 No dependencies
@@ -802,14 +802,14 @@ runtimeClasspath - Runtime classpath of compilation 'main' (target  (jvm)).
 +--- org.apache.httpcomponents:httpmime:4.5.13
 |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
 +--- org.brotli:dec:0.1.2
-\--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0
-     \--- org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.1.0
-          +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.30 -> 1.5.30 (*)
-          +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.30 -> 1.5.30
-          \--- org.jetbrains.kotlinx:kotlinx-serialization-core:1.1.0
-               \--- org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.1.0
-                    +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.30 -> 1.5.30 (*)
-                    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.30 -> 1.5.30
+\--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2
+     \--- org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.2.2
+          +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.5.20 -> 1.5.30
+          +--- org.jetbrains.kotlinx:kotlinx-serialization-core:1.2.2
+          |    \--- org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.2.2
+          |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.5.20 -> 1.5.30 (*)
+          |         \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.5.20 -> 1.5.30
+          \--- org.jetbrains.kotlin:kotlin-stdlib:1.5.20 -> 1.5.30 (*)
 
 runtimeElements - Elements of runtime for main. (n)
 No dependencies
@@ -861,14 +861,14 @@ testCompileClasspath - Compile classpath for compilation 'test' (target  (jvm)).
 +--- org.apache.httpcomponents:httpmime:4.5.13
 |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
 +--- org.brotli:dec:0.1.2
-+--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0
-|    \--- org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.1.0
-|         +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.30 -> 1.5.30 (*)
-|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.30 -> 1.5.30
-|         \--- org.jetbrains.kotlinx:kotlinx-serialization-core:1.1.0
-|              \--- org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.1.0
-|                   +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.30 -> 1.5.30 (*)
-|                   \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.30 -> 1.5.30
++--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2
+|    \--- org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.2.2
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.5.20 -> 1.5.30
+|         +--- org.jetbrains.kotlinx:kotlinx-serialization-core:1.2.2
+|         |    \--- org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.2.2
+|         |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.5.20 -> 1.5.30 (*)
+|         |         \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.5.20 -> 1.5.30
+|         \--- org.jetbrains.kotlin:kotlin-stdlib:1.5.20 -> 1.5.30 (*)
 +--- org.jetbrains.kotlin:kotlin-test:1.5.30
 |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.5.30 (*)
 |    \--- org.jetbrains.kotlin:kotlin-test-junit5:1.5.30
@@ -929,10 +929,10 @@ testImplementationDependenciesMetadata
 +--- org.apache.httpcomponents:httpmime:4.5.13
 |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
 +--- org.brotli:dec:0.1.2
-+--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0
-|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.30 -> 1.5.30
-|    \--- org.jetbrains.kotlinx:kotlinx-serialization-core:1.1.0
-|         \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.30 -> 1.5.30
++--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.5.20 -> 1.5.30
+|    \--- org.jetbrains.kotlinx:kotlinx-serialization-core:1.2.2
+|         \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.5.20 -> 1.5.30
 +--- org.jetbrains.kotlin:kotlin-test:1.5.30
 |    +--- org.jetbrains.kotlin:kotlin-test-common:1.5.30
 |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.5.30
@@ -991,14 +991,14 @@ testRuntimeClasspath - Runtime classpath of compilation 'test' (target  (jvm)).
 +--- org.apache.httpcomponents:httpmime:4.5.13
 |    \--- org.apache.httpcomponents:httpclient:4.5.13 (*)
 +--- org.brotli:dec:0.1.2
-+--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0
-|    \--- org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.1.0
-|         +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.30 -> 1.5.30 (*)
-|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.30 -> 1.5.30
-|         \--- org.jetbrains.kotlinx:kotlinx-serialization-core:1.1.0
-|              \--- org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.1.0
-|                   +--- org.jetbrains.kotlin:kotlin-stdlib:1.4.30 -> 1.5.30 (*)
-|                   \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.30 -> 1.5.30
++--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2
+|    \--- org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.2.2
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.5.20 -> 1.5.30
+|         +--- org.jetbrains.kotlinx:kotlinx-serialization-core:1.2.2
+|         |    \--- org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.2.2
+|         |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.5.20 -> 1.5.30 (*)
+|         |         \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.5.20 -> 1.5.30
+|         \--- org.jetbrains.kotlin:kotlin-stdlib:1.5.20 -> 1.5.30 (*)
 +--- org.jetbrains.kotlin:kotlin-test:1.5.30
 |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.5.30 (*)
 |    \--- org.jetbrains.kotlin:kotlin-test-junit5:1.5.30

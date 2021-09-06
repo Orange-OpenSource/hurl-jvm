@@ -27,7 +27,7 @@ plugins {
 
 val commonCliVersion = "1.4"
 val slf4jNopVersion = "1.7.30"
-val kotlinxSerializationJsonVersion = "1.1.0"
+val kotlinxSerializationJsonVersion = "1.2.2"
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
