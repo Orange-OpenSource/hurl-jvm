@@ -162,7 +162,7 @@ internal fun Header.checkHeader(headers: List<Pair<String, String>>, variables: 
     }
 
     // We filter all received headers against the spec header name.
-    val filteredHeaders = headers.filter { it.first.toLowerCase() == name.toLowerCase() }
+    val filteredHeaders = headers.filter { it.first.lowercase() == name.lowercase() }
     if (filteredHeaders.isEmpty()) {
         return AssertResult(
             succeeded = false,

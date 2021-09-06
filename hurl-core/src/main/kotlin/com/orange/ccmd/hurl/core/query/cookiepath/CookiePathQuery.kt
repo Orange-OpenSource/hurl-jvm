@@ -37,7 +37,7 @@ data class CookiePathQuery(val name: String, val attribute: CookiePathAttribute)
             val name = query.substring(0 until start)
             val rawAttribute = query.substring((start+1) until end)
             // Does the query contains a cookie attribute?
-            val attribute = when (rawAttribute.toLowerCase()) {
+            val attribute = when (rawAttribute.lowercase()) {
                 "value" -> CookiePathAttributeValue
                 "expires" -> CookiePathAttributeExpires
                 "max-age" -> CookiePathAttributeMaxAge
