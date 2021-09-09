@@ -19,4 +19,5 @@
 - Upgrade to Kotlinx Serialization 1.2.2
 - Upgrade to Jackson 2.12.5
 - Upgrade to Jayway JsonPath 2.6.0
+- Upgrade to JSoup 1.14.2
 

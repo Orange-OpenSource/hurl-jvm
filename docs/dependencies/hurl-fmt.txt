@@ -745,7 +745,7 @@ runtimeClasspath - Runtime classpath of compilation 'main' (target  (jvm)).
 |    +--- com.fasterxml.jackson.core:jackson-core:2.12.5
 |    |    \--- com.fasterxml.jackson:jackson-bom:2.12.5
 |    |         \--- com.fasterxml.jackson.core:jackson-core:2.12.5 (c)
-|    +--- org.jsoup:jsoup:1.13.1
+|    +--- org.jsoup:jsoup:1.14.2
 |    +--- com.jayway.jsonpath:json-path:2.6.0
 |    |    +--- net.minidev:json-smart:2.4.7
 |    |    |    \--- net.minidev:accessors-smart:2.4.7
@@ -916,7 +916,7 @@ testRuntimeClasspath - Runtime classpath of compilation 'test' (target  (jvm)).
 |    +--- com.fasterxml.jackson.core:jackson-core:2.12.5
 |    |    \--- com.fasterxml.jackson:jackson-bom:2.12.5
 |    |         \--- com.fasterxml.jackson.core:jackson-core:2.12.5 (c)
-|    +--- org.jsoup:jsoup:1.13.1
+|    +--- org.jsoup:jsoup:1.14.2
 |    +--- com.jayway.jsonpath:json-path:2.6.0
 |    |    +--- net.minidev:json-smart:2.4.7
 |    |    |    \--- net.minidev:accessors-smart:2.4.7
