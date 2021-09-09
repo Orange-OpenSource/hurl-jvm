@@ -32,8 +32,8 @@ compileClasspath - Compile classpath for compilation 'main' (target  (jvm)).
 |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.30
 |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.5.30 (*)
 +--- commons-cli:commons-cli:1.4
-+--- org.slf4j:slf4j-nop:1.7.30
-|    \--- org.slf4j:slf4j-api:1.7.30
++--- org.slf4j:slf4j-nop:1.7.32
+|    \--- org.slf4j:slf4j-api:1.7.32
 \--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2
      \--- org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.2.2
           +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.5.20 -> 1.5.30
@@ -622,7 +622,7 @@ implementation - Implementation only dependencies for compilation 'main' (target
 +--- project hurl-core (n)
 +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.30 (n)
 +--- commons-cli:commons-cli:1.4 (n)
-+--- org.slf4j:slf4j-nop:1.7.30 (n)
++--- org.slf4j:slf4j-nop:1.7.32 (n)
 \--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2 (n)
 
 implementationDependenciesMetadata
@@ -634,8 +634,8 @@ implementationDependenciesMetadata
 |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.30
 |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.5.30 (*)
 +--- commons-cli:commons-cli:1.4
-+--- org.slf4j:slf4j-nop:1.7.30
-|    \--- org.slf4j:slf4j-api:1.7.30
++--- org.slf4j:slf4j-nop:1.7.32
+|    \--- org.slf4j:slf4j-api:1.7.32
 \--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2
      +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.5.20 -> 1.5.30
      \--- org.jetbrains.kotlinx:kotlinx-serialization-core:1.2.2
@@ -750,7 +750,7 @@ runtimeClasspath - Runtime classpath of compilation 'main' (target  (jvm)).
 |    |    +--- net.minidev:json-smart:2.4.7
 |    |    |    \--- net.minidev:accessors-smart:2.4.7
 |    |    |         \--- org.ow2.asm:asm:9.1
-|    |    \--- org.slf4j:slf4j-api:1.7.30
+|    |    \--- org.slf4j:slf4j-api:1.7.30 -> 1.7.32
 |    +--- org.apache.httpcomponents:httpclient:4.5.13
 |    |    +--- org.apache.httpcomponents:httpcore:4.4.13
 |    |    +--- commons-logging:commons-logging:1.2
@@ -768,8 +768,8 @@ runtimeClasspath - Runtime classpath of compilation 'main' (target  (jvm)).
 |              \--- org.jetbrains.kotlin:kotlin-stdlib:1.5.20 -> 1.5.30 (*)
 +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.30 (*)
 +--- commons-cli:commons-cli:1.4
-+--- org.slf4j:slf4j-nop:1.7.30
-|    \--- org.slf4j:slf4j-api:1.7.30
++--- org.slf4j:slf4j-nop:1.7.32
+|    \--- org.slf4j:slf4j-api:1.7.32
 \--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2 (*)
 
 runtimeElements - Elements of runtime for main. (n)
@@ -808,8 +808,8 @@ testCompileClasspath - Compile classpath for compilation 'test' (target  (jvm)).
 |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.30
 |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.5.30 (*)
 +--- commons-cli:commons-cli:1.4
-+--- org.slf4j:slf4j-nop:1.7.30
-|    \--- org.slf4j:slf4j-api:1.7.30
++--- org.slf4j:slf4j-nop:1.7.32
+|    \--- org.slf4j:slf4j-api:1.7.32
 +--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2
 |    \--- org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.2.2
 |         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.5.20 -> 1.5.30
@@ -822,26 +822,26 @@ testCompileClasspath - Compile classpath for compilation 'test' (target  (jvm)).
 |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.5.30 (*)
 |    \--- org.jetbrains.kotlin:kotlin-test-junit5:1.5.30
 |         +--- org.jetbrains.kotlin:kotlin-test:1.5.30 (*)
-|         \--- org.junit.jupiter:junit-jupiter-api:5.6.0 -> 5.7.1
-|              +--- org.junit:junit-bom:5.7.1
-|              |    +--- org.junit.jupiter:junit-jupiter-api:5.7.1 (c)
-|              |    +--- org.junit.jupiter:junit-jupiter-engine:5.7.1 (c)
-|              |    +--- org.junit.platform:junit-platform-engine:1.7.1 (c)
-|              |    \--- org.junit.platform:junit-platform-commons:1.7.1 (c)
+|         \--- org.junit.jupiter:junit-jupiter-api:5.6.0 -> 5.7.2
+|              +--- org.junit:junit-bom:5.7.2
+|              |    +--- org.junit.jupiter:junit-jupiter-api:5.7.2 (c)
+|              |    +--- org.junit.jupiter:junit-jupiter-engine:5.7.2 (c)
+|              |    +--- org.junit.platform:junit-platform-engine:1.7.2 (c)
+|              |    \--- org.junit.platform:junit-platform-commons:1.7.2 (c)
 |              +--- org.apiguardian:apiguardian-api:1.1.0
 |              +--- org.opentest4j:opentest4j:1.2.0
-|              \--- org.junit.platform:junit-platform-commons:1.7.1
-|                   +--- org.junit:junit-bom:5.7.1 (*)
+|              \--- org.junit.platform:junit-platform-commons:1.7.2
+|                   +--- org.junit:junit-bom:5.7.2 (*)
 |                   \--- org.apiguardian:apiguardian-api:1.1.0
-+--- org.junit.jupiter:junit-jupiter-engine:5.7.1
-|    +--- org.junit:junit-bom:5.7.1 (*)
++--- org.junit.jupiter:junit-jupiter-engine:5.7.2
+|    +--- org.junit:junit-bom:5.7.2 (*)
 |    +--- org.apiguardian:apiguardian-api:1.1.0
-|    +--- org.junit.platform:junit-platform-engine:1.7.1
-|    |    +--- org.junit:junit-bom:5.7.1 (*)
+|    +--- org.junit.platform:junit-platform-engine:1.7.2
+|    |    +--- org.junit:junit-bom:5.7.2 (*)
 |    |    +--- org.apiguardian:apiguardian-api:1.1.0
 |    |    +--- org.opentest4j:opentest4j:1.2.0
-|    |    \--- org.junit.platform:junit-platform-commons:1.7.1 (*)
-|    \--- org.junit.jupiter:junit-jupiter-api:5.7.1 (*)
+|    |    \--- org.junit.platform:junit-platform-commons:1.7.2 (*)
+|    \--- org.junit.jupiter:junit-jupiter-api:5.7.2 (*)
 \--- org.jetbrains.kotlin:kotlin-test:1.5.30 (*)
 
 testCompileOnly - Compile only dependencies for compilation 'test' (target  (jvm)).
@@ -852,7 +852,7 @@ No dependencies
 
 testImplementation - Implementation only dependencies for compilation 'test' (target  (jvm)). (n)
 +--- org.jetbrains.kotlin:kotlin-test:1.5.30 (n)
-+--- org.junit.jupiter:junit-jupiter-engine:5.7.1 (n)
++--- org.junit.jupiter:junit-jupiter-engine:5.7.2 (n)
 \--- org.jetbrains.kotlin:kotlin-test:1.5.30 (n)
 
 testImplementationDependenciesMetadata
@@ -864,8 +864,8 @@ testImplementationDependenciesMetadata
 |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.30
 |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.5.30 (*)
 +--- commons-cli:commons-cli:1.4
-+--- org.slf4j:slf4j-nop:1.7.30
-|    \--- org.slf4j:slf4j-api:1.7.30
++--- org.slf4j:slf4j-nop:1.7.32
+|    \--- org.slf4j:slf4j-api:1.7.32
 +--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2
 |    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.5.20 -> 1.5.30
 |    \--- org.jetbrains.kotlinx:kotlinx-serialization-core:1.2.2
@@ -875,25 +875,25 @@ testImplementationDependenciesMetadata
 |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.5.30
 |    \--- org.jetbrains.kotlin:kotlin-test-annotations-common:1.5.30
 |         \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.5.30
-+--- org.junit.jupiter:junit-jupiter-engine:5.7.1
-|    +--- org.junit:junit-bom:5.7.1
-|    |    +--- org.junit.jupiter:junit-jupiter-api:5.7.1 (c)
-|    |    +--- org.junit.jupiter:junit-jupiter-engine:5.7.1 (c)
-|    |    +--- org.junit.platform:junit-platform-engine:1.7.1 (c)
-|    |    \--- org.junit.platform:junit-platform-commons:1.7.1 (c)
++--- org.junit.jupiter:junit-jupiter-engine:5.7.2
+|    +--- org.junit:junit-bom:5.7.2
+|    |    +--- org.junit.jupiter:junit-jupiter-api:5.7.2 (c)
+|    |    +--- org.junit.jupiter:junit-jupiter-engine:5.7.2 (c)
+|    |    +--- org.junit.platform:junit-platform-engine:1.7.2 (c)
+|    |    \--- org.junit.platform:junit-platform-commons:1.7.2 (c)
 |    +--- org.apiguardian:apiguardian-api:1.1.0
-|    +--- org.junit.platform:junit-platform-engine:1.7.1
-|    |    +--- org.junit:junit-bom:5.7.1 (*)
+|    +--- org.junit.platform:junit-platform-engine:1.7.2
+|    |    +--- org.junit:junit-bom:5.7.2 (*)
 |    |    +--- org.apiguardian:apiguardian-api:1.1.0
 |    |    +--- org.opentest4j:opentest4j:1.2.0
-|    |    \--- org.junit.platform:junit-platform-commons:1.7.1
-|    |         +--- org.junit:junit-bom:5.7.1 (*)
+|    |    \--- org.junit.platform:junit-platform-commons:1.7.2
+|    |         +--- org.junit:junit-bom:5.7.2 (*)
 |    |         \--- org.apiguardian:apiguardian-api:1.1.0
-|    \--- org.junit.jupiter:junit-jupiter-api:5.7.1
-|         +--- org.junit:junit-bom:5.7.1 (*)
+|    \--- org.junit.jupiter:junit-jupiter-api:5.7.2
+|         +--- org.junit:junit-bom:5.7.2 (*)
 |         +--- org.apiguardian:apiguardian-api:1.1.0
 |         +--- org.opentest4j:opentest4j:1.2.0
-|         \--- org.junit.platform:junit-platform-commons:1.7.1 (*)
+|         \--- org.junit.platform:junit-platform-commons:1.7.2 (*)
 \--- org.jetbrains.kotlin:kotlin-test:1.5.30 (*)
 
 testIntransitiveDependenciesMetadata
@@ -921,7 +921,7 @@ testRuntimeClasspath - Runtime classpath of compilation 'test' (target  (jvm)).
 |    |    +--- net.minidev:json-smart:2.4.7
 |    |    |    \--- net.minidev:accessors-smart:2.4.7
 |    |    |         \--- org.ow2.asm:asm:9.1
-|    |    \--- org.slf4j:slf4j-api:1.7.30
+|    |    \--- org.slf4j:slf4j-api:1.7.30 -> 1.7.32
 |    +--- org.apache.httpcomponents:httpclient:4.5.13
 |    |    +--- org.apache.httpcomponents:httpcore:4.4.13
 |    |    +--- commons-logging:commons-logging:1.2
@@ -939,34 +939,34 @@ testRuntimeClasspath - Runtime classpath of compilation 'test' (target  (jvm)).
 |              \--- org.jetbrains.kotlin:kotlin-stdlib:1.5.20 -> 1.5.30 (*)
 +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.30 (*)
 +--- commons-cli:commons-cli:1.4
-+--- org.slf4j:slf4j-nop:1.7.30
-|    \--- org.slf4j:slf4j-api:1.7.30
++--- org.slf4j:slf4j-nop:1.7.32
+|    \--- org.slf4j:slf4j-api:1.7.32
 +--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2 (*)
 +--- org.jetbrains.kotlin:kotlin-test:1.5.30
 |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.5.30 (*)
 |    \--- org.jetbrains.kotlin:kotlin-test-junit5:1.5.30
-|         +--- org.junit.jupiter:junit-jupiter-engine:5.6.0 -> 5.7.1
-|         |    +--- org.junit:junit-bom:5.7.1
-|         |    |    +--- org.junit.jupiter:junit-jupiter-api:5.7.1 (c)
-|         |    |    +--- org.junit.jupiter:junit-jupiter-engine:5.7.1 (c)
-|         |    |    +--- org.junit.platform:junit-platform-engine:1.7.1 (c)
-|         |    |    \--- org.junit.platform:junit-platform-commons:1.7.1 (c)
+|         +--- org.junit.jupiter:junit-jupiter-engine:5.6.0 -> 5.7.2
+|         |    +--- org.junit:junit-bom:5.7.2
+|         |    |    +--- org.junit.jupiter:junit-jupiter-api:5.7.2 (c)
+|         |    |    +--- org.junit.jupiter:junit-jupiter-engine:5.7.2 (c)
+|         |    |    +--- org.junit.platform:junit-platform-engine:1.7.2 (c)
+|         |    |    \--- org.junit.platform:junit-platform-commons:1.7.2 (c)
 |         |    +--- org.apiguardian:apiguardian-api:1.1.0
-|         |    +--- org.junit.platform:junit-platform-engine:1.7.1
-|         |    |    +--- org.junit:junit-bom:5.7.1 (*)
+|         |    +--- org.junit.platform:junit-platform-engine:1.7.2
+|         |    |    +--- org.junit:junit-bom:5.7.2 (*)
 |         |    |    +--- org.apiguardian:apiguardian-api:1.1.0
 |         |    |    +--- org.opentest4j:opentest4j:1.2.0
-|         |    |    \--- org.junit.platform:junit-platform-commons:1.7.1
-|         |    |         +--- org.junit:junit-bom:5.7.1 (*)
+|         |    |    \--- org.junit.platform:junit-platform-commons:1.7.2
+|         |    |         +--- org.junit:junit-bom:5.7.2 (*)
 |         |    |         \--- org.apiguardian:apiguardian-api:1.1.0
-|         |    \--- org.junit.jupiter:junit-jupiter-api:5.7.1
-|         |         +--- org.junit:junit-bom:5.7.1 (*)
+|         |    \--- org.junit.jupiter:junit-jupiter-api:5.7.2
+|         |         +--- org.junit:junit-bom:5.7.2 (*)
 |         |         +--- org.apiguardian:apiguardian-api:1.1.0
 |         |         +--- org.opentest4j:opentest4j:1.2.0
-|         |         \--- org.junit.platform:junit-platform-commons:1.7.1 (*)
+|         |         \--- org.junit.platform:junit-platform-commons:1.7.2 (*)
 |         +--- org.jetbrains.kotlin:kotlin-test:1.5.30 (*)
-|         \--- org.junit.jupiter:junit-jupiter-api:5.6.0 -> 5.7.1 (*)
-+--- org.junit.jupiter:junit-jupiter-engine:5.7.1 (*)
+|         \--- org.junit.jupiter:junit-jupiter-api:5.6.0 -> 5.7.2 (*)
++--- org.junit.jupiter:junit-jupiter-engine:5.7.2 (*)
 \--- org.jetbrains.kotlin:kotlin-test:1.5.30 (*)
 
 testRuntimeOnly - Runtime only dependencies for compilation 'test' (target  (jvm)). (n)

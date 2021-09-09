@@ -873,26 +873,26 @@ testCompileClasspath - Compile classpath for compilation 'test' (target  (jvm)).
 |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.5.30 (*)
 |    \--- org.jetbrains.kotlin:kotlin-test-junit5:1.5.30
 |         +--- org.jetbrains.kotlin:kotlin-test:1.5.30 (*)
-|         \--- org.junit.jupiter:junit-jupiter-api:5.6.0 -> 5.7.1
-|              +--- org.junit:junit-bom:5.7.1
-|              |    +--- org.junit.jupiter:junit-jupiter-api:5.7.1 (c)
-|              |    +--- org.junit.jupiter:junit-jupiter-engine:5.7.1 (c)
-|              |    +--- org.junit.platform:junit-platform-engine:1.7.1 (c)
-|              |    \--- org.junit.platform:junit-platform-commons:1.7.1 (c)
+|         \--- org.junit.jupiter:junit-jupiter-api:5.6.0 -> 5.7.2
+|              +--- org.junit:junit-bom:5.7.2
+|              |    +--- org.junit.jupiter:junit-jupiter-api:5.7.2 (c)
+|              |    +--- org.junit.jupiter:junit-jupiter-engine:5.7.2 (c)
+|              |    +--- org.junit.platform:junit-platform-engine:1.7.2 (c)
+|              |    \--- org.junit.platform:junit-platform-commons:1.7.2 (c)
 |              +--- org.apiguardian:apiguardian-api:1.1.0
 |              +--- org.opentest4j:opentest4j:1.2.0
-|              \--- org.junit.platform:junit-platform-commons:1.7.1
-|                   +--- org.junit:junit-bom:5.7.1 (*)
+|              \--- org.junit.platform:junit-platform-commons:1.7.2
+|                   +--- org.junit:junit-bom:5.7.2 (*)
 |                   \--- org.apiguardian:apiguardian-api:1.1.0
-+--- org.junit.jupiter:junit-jupiter-engine:5.7.1
-|    +--- org.junit:junit-bom:5.7.1 (*)
++--- org.junit.jupiter:junit-jupiter-engine:5.7.2
+|    +--- org.junit:junit-bom:5.7.2 (*)
 |    +--- org.apiguardian:apiguardian-api:1.1.0
-|    +--- org.junit.platform:junit-platform-engine:1.7.1
-|    |    +--- org.junit:junit-bom:5.7.1 (*)
+|    +--- org.junit.platform:junit-platform-engine:1.7.2
+|    |    +--- org.junit:junit-bom:5.7.2 (*)
 |    |    +--- org.apiguardian:apiguardian-api:1.1.0
 |    |    +--- org.opentest4j:opentest4j:1.2.0
-|    |    \--- org.junit.platform:junit-platform-commons:1.7.1 (*)
-|    \--- org.junit.jupiter:junit-jupiter-api:5.7.1 (*)
+|    |    \--- org.junit.platform:junit-platform-commons:1.7.2 (*)
+|    \--- org.junit.jupiter:junit-jupiter-api:5.7.2 (*)
 \--- org.jetbrains.kotlin:kotlin-test:1.5.30 (*)
 
 testCompileOnly - Compile only dependencies for compilation 'test' (target  (jvm)).
@@ -903,7 +903,7 @@ No dependencies
 
 testImplementation - Implementation only dependencies for compilation 'test' (target  (jvm)). (n)
 +--- org.jetbrains.kotlin:kotlin-test:1.5.30 (n)
-+--- org.junit.jupiter:junit-jupiter-engine:5.7.1 (n)
++--- org.junit.jupiter:junit-jupiter-engine:5.7.2 (n)
 \--- org.jetbrains.kotlin:kotlin-test:1.5.30 (n)
 
 testImplementationDependenciesMetadata
@@ -938,25 +938,25 @@ testImplementationDependenciesMetadata
 |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.5.30
 |    \--- org.jetbrains.kotlin:kotlin-test-annotations-common:1.5.30
 |         \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.5.30
-+--- org.junit.jupiter:junit-jupiter-engine:5.7.1
-|    +--- org.junit:junit-bom:5.7.1
-|    |    +--- org.junit.jupiter:junit-jupiter-api:5.7.1 (c)
-|    |    +--- org.junit.jupiter:junit-jupiter-engine:5.7.1 (c)
-|    |    +--- org.junit.platform:junit-platform-engine:1.7.1 (c)
-|    |    \--- org.junit.platform:junit-platform-commons:1.7.1 (c)
++--- org.junit.jupiter:junit-jupiter-engine:5.7.2
+|    +--- org.junit:junit-bom:5.7.2
+|    |    +--- org.junit.jupiter:junit-jupiter-api:5.7.2 (c)
+|    |    +--- org.junit.jupiter:junit-jupiter-engine:5.7.2 (c)
+|    |    +--- org.junit.platform:junit-platform-engine:1.7.2 (c)
+|    |    \--- org.junit.platform:junit-platform-commons:1.7.2 (c)
 |    +--- org.apiguardian:apiguardian-api:1.1.0
-|    +--- org.junit.platform:junit-platform-engine:1.7.1
-|    |    +--- org.junit:junit-bom:5.7.1 (*)
+|    +--- org.junit.platform:junit-platform-engine:1.7.2
+|    |    +--- org.junit:junit-bom:5.7.2 (*)
 |    |    +--- org.apiguardian:apiguardian-api:1.1.0
 |    |    +--- org.opentest4j:opentest4j:1.2.0
-|    |    \--- org.junit.platform:junit-platform-commons:1.7.1
-|    |         +--- org.junit:junit-bom:5.7.1 (*)
+|    |    \--- org.junit.platform:junit-platform-commons:1.7.2
+|    |         +--- org.junit:junit-bom:5.7.2 (*)
 |    |         \--- org.apiguardian:apiguardian-api:1.1.0
-|    \--- org.junit.jupiter:junit-jupiter-api:5.7.1
-|         +--- org.junit:junit-bom:5.7.1 (*)
+|    \--- org.junit.jupiter:junit-jupiter-api:5.7.2
+|         +--- org.junit:junit-bom:5.7.2 (*)
 |         +--- org.apiguardian:apiguardian-api:1.1.0
 |         +--- org.opentest4j:opentest4j:1.2.0
-|         \--- org.junit.platform:junit-platform-commons:1.7.1 (*)
+|         \--- org.junit.platform:junit-platform-commons:1.7.2 (*)
 \--- org.jetbrains.kotlin:kotlin-test:1.5.30 (*)
 
 testIntransitiveDependenciesMetadata
@@ -1002,28 +1002,28 @@ testRuntimeClasspath - Runtime classpath of compilation 'test' (target  (jvm)).
 +--- org.jetbrains.kotlin:kotlin-test:1.5.30
 |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.5.30 (*)
 |    \--- org.jetbrains.kotlin:kotlin-test-junit5:1.5.30
-|         +--- org.junit.jupiter:junit-jupiter-engine:5.6.0 -> 5.7.1
-|         |    +--- org.junit:junit-bom:5.7.1
-|         |    |    +--- org.junit.jupiter:junit-jupiter-api:5.7.1 (c)
-|         |    |    +--- org.junit.jupiter:junit-jupiter-engine:5.7.1 (c)
-|         |    |    +--- org.junit.platform:junit-platform-engine:1.7.1 (c)
-|         |    |    \--- org.junit.platform:junit-platform-commons:1.7.1 (c)
+|         +--- org.junit.jupiter:junit-jupiter-engine:5.6.0 -> 5.7.2
+|         |    +--- org.junit:junit-bom:5.7.2
+|         |    |    +--- org.junit.jupiter:junit-jupiter-api:5.7.2 (c)
+|         |    |    +--- org.junit.jupiter:junit-jupiter-engine:5.7.2 (c)
+|         |    |    +--- org.junit.platform:junit-platform-engine:1.7.2 (c)
+|         |    |    \--- org.junit.platform:junit-platform-commons:1.7.2 (c)
 |         |    +--- org.apiguardian:apiguardian-api:1.1.0
-|         |    +--- org.junit.platform:junit-platform-engine:1.7.1
-|         |    |    +--- org.junit:junit-bom:5.7.1 (*)
+|         |    +--- org.junit.platform:junit-platform-engine:1.7.2
+|         |    |    +--- org.junit:junit-bom:5.7.2 (*)
 |         |    |    +--- org.apiguardian:apiguardian-api:1.1.0
 |         |    |    +--- org.opentest4j:opentest4j:1.2.0
-|         |    |    \--- org.junit.platform:junit-platform-commons:1.7.1
-|         |    |         +--- org.junit:junit-bom:5.7.1 (*)
+|         |    |    \--- org.junit.platform:junit-platform-commons:1.7.2
+|         |    |         +--- org.junit:junit-bom:5.7.2 (*)
 |         |    |         \--- org.apiguardian:apiguardian-api:1.1.0
-|         |    \--- org.junit.jupiter:junit-jupiter-api:5.7.1
-|         |         +--- org.junit:junit-bom:5.7.1 (*)
+|         |    \--- org.junit.jupiter:junit-jupiter-api:5.7.2
+|         |         +--- org.junit:junit-bom:5.7.2 (*)
 |         |         +--- org.apiguardian:apiguardian-api:1.1.0
 |         |         +--- org.opentest4j:opentest4j:1.2.0
-|         |         \--- org.junit.platform:junit-platform-commons:1.7.1 (*)
+|         |         \--- org.junit.platform:junit-platform-commons:1.7.2 (*)
 |         +--- org.jetbrains.kotlin:kotlin-test:1.5.30 (*)
-|         \--- org.junit.jupiter:junit-jupiter-api:5.6.0 -> 5.7.1 (*)
-+--- org.junit.jupiter:junit-jupiter-engine:5.7.1 (*)
+|         \--- org.junit.jupiter:junit-jupiter-api:5.6.0 -> 5.7.2 (*)
++--- org.junit.jupiter:junit-jupiter-engine:5.7.2 (*)
 \--- org.jetbrains.kotlin:kotlin-test:1.5.30 (*)
 
 testRuntimeOnly - Runtime only dependencies for compilation 'test' (target  (jvm)). (n)
