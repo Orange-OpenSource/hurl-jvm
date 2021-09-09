@@ -25,7 +25,7 @@ plugins {
 }
 
 val commonCliVersion = "1.4"
-val slf4jNopVersion = "1.7.30"
+val slf4jNopVersion = "1.7.32"
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
