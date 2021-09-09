@@ -25,7 +25,7 @@ plugins {
 
 val brotliVersion = "0.1.2"
 val jacksonVersion = "2.12.5"
-val jsoupVersion = "1.13.1"
+val jsoupVersion = "1.14.2"
 val jsonPathVersion = "2.6.0"
 val apacheHttpVersion = "4.5.13"
 val kotlinxSerializationJsonVersion = "1.2.2"
