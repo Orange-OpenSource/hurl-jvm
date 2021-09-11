@@ -40,7 +40,7 @@ internal fun HurlParser.containPredicate(): ContainPredicate? {
     val type = predicateType("contains") ?: return null
     val spaces = zeroOrMore { space() }
     val expr = quotedString() ?: return null
-    return ContainPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return ContainPredicate(begin = begin, end = position.copy(), type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.countPredicate(): CountPredicate? {
@@ -48,7 +48,7 @@ internal fun HurlParser.countPredicate(): CountPredicate? {
     val type = predicateType("countEquals") ?: return null
     val spaces = zeroOrMore { space() }
     val expr = integer() ?: return null
-    return CountPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return CountPredicate(begin = begin, end = position.copy(), type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.equalPredicate(): PredicateFunc? {
@@ -69,7 +69,7 @@ internal fun HurlParser.equalBoolPredicate(): EqualBoolPredicate? {
     )) ?: return null
     val spaces = zeroOrMore { space() }
     val expr = bool() ?: return null
-    return EqualBoolPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return EqualBoolPredicate(begin = begin, end = position.copy(), type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.equalNullPredicate(): EqualNullPredicate? {
@@ -80,7 +80,7 @@ internal fun HurlParser.equalNullPredicate(): EqualNullPredicate? {
     )) ?: return null
     val spaces = zeroOrMore { space() }
     val expr = `null`() ?: return null
-    return EqualNullPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return EqualNullPredicate(begin = begin, end = position.copy(), type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.equalNumberPredicate(): EqualNumberPredicate? {
@@ -94,7 +94,7 @@ internal fun HurlParser.equalNumberPredicate(): EqualNumberPredicate? {
         { float() },
         { integer() }
     )) ?: return null
-    return EqualNumberPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return EqualNumberPredicate(begin = begin, end = position.copy(), type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.equalStringPredicate(): EqualStringPredicate? {
@@ -105,7 +105,7 @@ internal fun HurlParser.equalStringPredicate(): EqualStringPredicate? {
     )) ?: return null
     val spaces = zeroOrMore { space() }
     val expr = quotedString() ?: return null
-    return EqualStringPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return EqualStringPredicate(begin = begin, end = position.copy(), type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.equalExprPredicate(): EqualExprPredicate? {
@@ -116,13 +116,13 @@ internal fun HurlParser.equalExprPredicate(): EqualExprPredicate? {
     )) ?: return null
     val spaces = zeroOrMore { space() }
     val expr = expr() ?: return null
-    return EqualExprPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return EqualExprPredicate(begin = begin, end = position.copy(), type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.existPredicate(): ExistPredicate? {
     val begin = position.copy()
     val type = predicateType("exists") ?: return null
-    return ExistPredicate(begin = begin, end = position, type = type)
+    return ExistPredicate(begin = begin, end = position.copy(), type = type)
 }
 
 internal fun HurlParser.greaterPredicate(): GreaterPredicate? {
@@ -136,7 +136,7 @@ internal fun HurlParser.greaterPredicate(): GreaterPredicate? {
         { float() },
         { integer() }
     )) ?: return null
-    return GreaterPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return GreaterPredicate(begin = begin, end = position.copy(), type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.greaterOrEqualPredicate(): GreaterOrEqualPredicate? {
@@ -150,7 +150,7 @@ internal fun HurlParser.greaterOrEqualPredicate(): GreaterOrEqualPredicate? {
         { float() },
         { integer() }
     )) ?: return null
-    return GreaterOrEqualPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return GreaterOrEqualPredicate(begin = begin, end = position.copy(), type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.includePredicate(): PredicateFunc? {
@@ -167,7 +167,7 @@ internal fun HurlParser.includeBoolPredicate(): IncludeBoolPredicate? {
     val type = predicateType("includes") ?: return null
     val spaces = zeroOrMore { space() }
     val expr = bool() ?: return null
-    return IncludeBoolPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return IncludeBoolPredicate(begin = begin, end = position.copy(), type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.includeNullPredicate(): IncludeNullPredicate? {
@@ -175,7 +175,7 @@ internal fun HurlParser.includeNullPredicate(): IncludeNullPredicate? {
     val type = predicateType("includes") ?: return null
     val spaces = zeroOrMore { space() }
     val expr = `null`() ?: return null
-    return IncludeNullPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return IncludeNullPredicate(begin = begin, end = position.copy(), type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.includeNumberPredicate(): IncludeNumberPredicate? {
@@ -186,7 +186,7 @@ internal fun HurlParser.includeNumberPredicate(): IncludeNumberPredicate? {
         { float() },
         { integer() }
     )) ?: return null
-    return IncludeNumberPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return IncludeNumberPredicate(begin = begin, end = position.copy(), type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.includeStringPredicate(): IncludeStringPredicate? {
@@ -194,7 +194,7 @@ internal fun HurlParser.includeStringPredicate(): IncludeStringPredicate? {
     val type = predicateType("includes") ?: return null
     val spaces = zeroOrMore { space() }
     val expr = quotedString() ?: return null
-    return IncludeStringPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return IncludeStringPredicate(begin = begin, end = position.copy(), type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.lessPredicate(): LessPredicate? {
@@ -208,7 +208,7 @@ internal fun HurlParser.lessPredicate(): LessPredicate? {
         { float() },
         { integer() }
     )) ?: return null
-    return LessPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return LessPredicate(begin = begin, end = position.copy(), type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.lessOrEqualPredicate(): LessOrEqualPredicate? {
@@ -222,7 +222,7 @@ internal fun HurlParser.lessOrEqualPredicate(): LessOrEqualPredicate? {
         { float() },
         { integer() }
     )) ?: return null
-    return LessOrEqualPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return LessOrEqualPredicate(begin = begin, end = position.copy(), type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.matchPredicate(): MatchPredicate? {
@@ -233,7 +233,7 @@ internal fun HurlParser.matchPredicate(): MatchPredicate? {
     )) ?: return null
     val spaces = zeroOrMore { space() }
     val expr = quotedString() ?: return null
-    return MatchPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return MatchPredicate(begin = begin, end = position.copy(), type = type, spaces = spaces, expr = expr)
 }
 
 internal fun HurlParser.predicate(): Predicate? {
@@ -246,13 +246,13 @@ internal fun HurlParser.predicate(): Predicate? {
         listOf()
     }
     val predicateFunc = predicateFunc() ?: return null
-    return Predicate(begin = begin, end = position, not = not, spaces = spaces, predicateFunc = predicateFunc)
+    return Predicate(begin = begin, end = position.copy(), not = not, spaces = spaces, predicateFunc = predicateFunc)
 }
 
 internal fun HurlParser.predicateType(type: String): PredicateType? {
     val begin = position.copy()
     val value = literal(type)?.value ?: return null
-    return PredicateType(begin = begin, end = position, value = value)
+    return PredicateType(begin = begin, end = position.copy(), value = value)
 }
 
 internal fun HurlParser.startWithPredicate(): StartWithPredicate? {
@@ -260,6 +260,6 @@ internal fun HurlParser.startWithPredicate(): StartWithPredicate? {
     val type = predicateType("startsWith") ?: return null
     val spaces = zeroOrMore { space() }
     val expr = quotedString() ?: return null
-    return StartWithPredicate(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return StartWithPredicate(begin = begin, end = position.copy(), type = type, spaces = spaces, expr = expr)
 }
 

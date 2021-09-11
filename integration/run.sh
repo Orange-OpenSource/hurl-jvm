@@ -2,6 +2,7 @@
 set -u
 set -e
 
+
 echo "$hurl"
 echo "$hurlfmt"
 
@@ -51,6 +52,7 @@ for hurl_file in "$@"; do
         echo "ERROR Exit Code"
         echo "  Expected: $json_expected"
         echo "  Actual  : $json_actual"
+        diff -y --suppress-common-lines <(echo "$json_expected" | tr ',' '\n') <(echo "$json_actual" | tr ',' '\n')
 	exit 1
     fi
 

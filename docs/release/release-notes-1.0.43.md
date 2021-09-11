@@ -6,6 +6,7 @@
 - Add `duration` query
 - Add `lessThan`, `lessThanOrEquals`, `greaterThan`, `greaterThanOrEquals` predicates
 - Add wildcard response status code
+- Add `count` subquery
 
 ## 🐞 Bug Fixes
 

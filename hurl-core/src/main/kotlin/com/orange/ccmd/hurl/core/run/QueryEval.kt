@@ -32,11 +32,11 @@ import com.orange.ccmd.hurl.core.ast.XPathQuery
 import com.orange.ccmd.hurl.core.http.HttpResponse
 import com.orange.ccmd.hurl.core.query.InvalidQueryException
 import com.orange.ccmd.hurl.core.query.cookiepath.CookiePath
-import com.orange.ccmd.hurl.core.query.cookiepath.CookiePathUnitResult
 import com.orange.ccmd.hurl.core.query.cookiepath.CookiePathFailed
 import com.orange.ccmd.hurl.core.query.cookiepath.CookiePathNumberResult
 import com.orange.ccmd.hurl.core.query.cookiepath.CookiePathResult
 import com.orange.ccmd.hurl.core.query.cookiepath.CookiePathStringResult
+import com.orange.ccmd.hurl.core.query.cookiepath.CookiePathUnitResult
 import com.orange.ccmd.hurl.core.query.jsonpath.JsonArray
 import com.orange.ccmd.hurl.core.query.jsonpath.JsonBoolean
 import com.orange.ccmd.hurl.core.query.jsonpath.JsonNull
@@ -52,24 +52,31 @@ import com.orange.ccmd.hurl.core.query.xpath.XPathNodeSetResult
 import com.orange.ccmd.hurl.core.query.xpath.XPathNumberResult
 import com.orange.ccmd.hurl.core.query.xpath.XPathResult
 import com.orange.ccmd.hurl.core.query.xpath.XPathStringResult
+import com.orange.ccmd.hurl.core.template.Template
 import com.orange.ccmd.hurl.core.variable.BoolVar
 import com.orange.ccmd.hurl.core.variable.NumberVar
 import com.orange.ccmd.hurl.core.variable.ObjectVar
 import com.orange.ccmd.hurl.core.variable.StringVar
 import com.orange.ccmd.hurl.core.variable.VariableJar
-import com.orange.ccmd.hurl.core.template.Template
 import java.util.regex.PatternSyntaxException
 
-fun Query.eval(response: HttpResponse, variables: VariableJar): QueryResult = when (this) {
-    is StatusQuery -> this.eval(response = response)
-    is HeaderQuery -> this.eval(response = response)
-    is CookieQuery -> this.eval(response = response, variables = variables)
-    is BodyQuery -> this.eval(response = response)
-    is XPathQuery -> this.eval(response = response, variables = variables)
-    is JsonPathQuery -> this.eval(response = response, variables = variables)
-    is RegexQuery -> this.eval(response = response, variables = variables)
-    is VariableQuery -> this.eval(variables = variables)
-    is DurationQuery -> this.eval(response = response)
+fun Query.eval(response: HttpResponse, variables: VariableJar): QueryResult {
+    var result = when (this) {
+        is StatusQuery -> this.eval(response = response)
+        is HeaderQuery -> this.eval(response = response)
+        is CookieQuery -> this.eval(response = response, variables = variables)
+        is BodyQuery -> this.eval(response = response)
+        is XPathQuery -> this.eval(response = response, variables = variables)
+        is JsonPathQuery -> this.eval(response = response, variables = variables)
+        is RegexQuery -> this.eval(response = response, variables = variables)
+        is VariableQuery -> this.eval(variables = variables)
+        is DurationQuery -> this.eval(response = response)
+    }
+    val subquery = subquery
+    if (subquery != null) {
+        result = subquery.eval(queryResult = result, variables = variables)
+    }
+    return result
 }
 
 fun XPathResult.toQueryResult(): QueryResult = when (this) {
@@ -180,7 +187,7 @@ internal fun RegexQuery.eval(response: HttpResponse, variables: VariableJar): Qu
     val pattern = Template.render(text = expr.value, variables = variables, position = expr.begin)
     val regex = try {
         Regex(pattern = pattern)
-    } catch (e : PatternSyntaxException) {
+    } catch (e: PatternSyntaxException) {
         throw InvalidQueryException("invalid regex \"$pattern\"")
     }
     val matchResult = regex.find(body)
@@ -191,8 +198,9 @@ internal fun RegexQuery.eval(response: HttpResponse, variables: VariableJar): Qu
 }
 
 private val HttpResponse.bodyAsText: String
-    get()  {
-        return getBodyAsText() ?: throw InvalidQueryException("body can not be decoded as text charset: $charset encodings: $encodings")
+    get() {
+        return getBodyAsText()
+            ?: throw InvalidQueryException("body can not be decoded as text charset: $charset encodings: $encodings")
     }
 
 /**

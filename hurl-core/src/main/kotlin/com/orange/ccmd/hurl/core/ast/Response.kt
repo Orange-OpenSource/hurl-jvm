@@ -35,7 +35,7 @@ internal fun HurlParser.assert(): Assert? {
 
     return Assert(
         begin = begin,
-        end = position,
+        end = position.copy(),
         lts = lts,
         spaces0 = spaces0,
         query = query,
@@ -55,7 +55,7 @@ internal fun HurlParser.assertsSection(): AssertsSection? {
     val asserts = zeroOrMore { assert() }
     return AssertsSection(
         begin = begin,
-        end = position,
+        end = position.copy(),
         lts = lts,
         spaces = spaces,
         header = header,
@@ -74,17 +74,11 @@ internal fun HurlParser.capture(): Capture? {
     val colon = literal(":") ?: return null
     val spaces2 = zeroOrMore { space() }
     val query = query() ?: return null
-    val spaces3 = zeroOrMore { space() }
-    val subquery = if (spaces3.isNotEmpty()) {
-        optional { subquery() }
-    } else {
-        null
-    }
     val lt = lineTerminator() ?: return null
 
     return Capture(
         begin = begin,
-        end = position,
+        end = position.copy(),
         lts = lts,
         spaces0 = spaces0,
         name = name,
@@ -92,8 +86,6 @@ internal fun HurlParser.capture(): Capture? {
         colon = colon,
         spaces2 = spaces2,
         query = query,
-        spaces3 = spaces3,
-        subquery = subquery,
         lt = lt
     )
 }
@@ -108,7 +100,7 @@ internal fun HurlParser.capturesSection(): CapturesSection? {
     val captures = zeroOrMore { capture() }
     return CapturesSection(
         begin = begin,
-        end = position,
+        end = position.copy(),
         lts = lts,
         spaces = spaces,
         header = header,
@@ -132,7 +124,7 @@ internal fun HurlParser.response(): Response? {
 
     return Response(
         begin = begin,
-        end = position,
+        end = position.copy(),
         lts = lts,
         spaces0 = spaces0,
         version = version,
@@ -159,23 +151,23 @@ internal fun HurlParser.status(): Status? {
     val cp0 = peek() ?: return null
     if (cp0 == '*'.code) {
         read()
-        return Status(begin = begin, end = position, value = AnyStatusValue, text = "*")
+        return Status(begin = begin, end = position.copy(), value = AnyStatusValue, text = "*")
     }
 
     // It's not a wildcard status, so it must be an integer value.
     val cps = readWhile { it.isAsciiDigit }
     if (cps == null) {
-        error = SyntaxError("0-9 is expected", position)
+        error = SyntaxError("0-9 is expected", position.copy())
         return null
     }
     val digits = cps.string()
     val value = try {
         digits.toInt()
     } catch (e: NumberFormatException) {
-        error = SyntaxError("0-9 is expected", position)
+        error = SyntaxError("0-9 is expected", position.copy())
         return null
     }
-    return Status(begin = begin, end = position, value = IntStatusValue(value = value), text = digits)
+    return Status(begin = begin, end = position.copy(), value = IntStatusValue(value = value), text = digits)
 }
 
 internal fun HurlParser.version(): Version? {
@@ -185,9 +177,9 @@ internal fun HurlParser.version(): Version? {
     for (v in versions) {
         val node = optional { literal(v) }
         if (node != null) {
-            return Version(begin = begin, value = v, end = position)
+            return Version(begin = begin, value = v, end = position.copy())
         }
     }
-    error = SyntaxError("version is expected", position)
+    error = SyntaxError("version is expected", position.copy())
     return null
 }

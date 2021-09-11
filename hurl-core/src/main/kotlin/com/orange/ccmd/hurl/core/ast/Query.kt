@@ -19,6 +19,9 @@
 
 package com.orange.ccmd.hurl.core.ast
 
+import com.orange.ccmd.hurl.core.parser.isAsciiSpace
+
+
 internal fun HurlParser.query(): Query? {
     return choice(listOf(
         { statusQuery() },
@@ -33,87 +36,132 @@ internal fun HurlParser.query(): Query? {
     ))
 }
 
-internal fun HurlParser.queryType(type: String): QueryType? {
+internal fun HurlParser.queryType(value: QueryTypeValue): QueryType? {
     val begin = position.copy()
-    val value = literal(type)?.value ?: return null
-    return QueryType(begin = begin, end = position, value = value)
+    literal(value.text) ?: return null
+    return QueryType(begin = begin, end = position.copy(), value = value)
 }
 
 internal fun HurlParser.bodyQuery(): BodyQuery? {
     val begin = position.copy()
-    val type = queryType("body") ?: return null
-    return BodyQuery(begin = begin, end = position, type = type)
+
+    val type = queryType(QueryTypeValue.BODY) ?: return null
+    val subquery = optional { subquery() }
+    return BodyQuery(begin = begin, end = position.copy(), type = type, subquery = subquery)
 }
 
 internal fun HurlParser.cookieQuery(): CookieQuery? {
     val begin = position.copy()
 
-    val type = queryType("cookie") ?: return null
+    val type = queryType(QueryTypeValue.COOKIE) ?: return null
     val spaces = oneOrMore { space() } ?: return null
     val cookieName = quotedString() ?: return null
+    val subquery = optional { subquery() }
+    return CookieQuery(begin = begin, end = position.copy(), type = type, expr = cookieName, spaces = spaces, subquery = subquery)
+}
 
-    return CookieQuery(begin = begin, end = position, type = type, spaces = spaces, expr = cookieName)
+internal fun HurlParser.countSubquery(): CountSubquery? {
+    val begin = position.copy()
+
+    val spaces = oneOrMore { space() } ?: return null
+    val type = subqueryType(SubqueryTypeValue.COUNT) ?: return null
+
+    // We must test that the next word is not `countPredicate`
+    // the grammar is ambiguous until `countPredicate`is removed from the grammar.
+    val next = peek()
+    if (next != null && !next.isAsciiSpace) {
+        return null
+    }
+
+    return CountSubquery(begin = begin, end = position.copy(), type = type, spaces = spaces)
 }
 
 internal fun HurlParser.durationQuery(): DurationQuery? {
     val begin = position.copy()
-    val type = queryType("duration") ?: return null
-    return DurationQuery(begin = begin, end = position, type = type)
+
+    val type = queryType(QueryTypeValue.DURATION) ?: return null
+    val subquery = optional { subquery() }
+    return DurationQuery(begin = begin, end = position.copy(), type = type, subquery = subquery)
 }
 
 internal fun HurlParser.headerQuery(): HeaderQuery? {
     val begin = position.copy()
 
-    val type = queryType("header") ?: return null
+    val type = queryType(QueryTypeValue.HEADER) ?: return null
     val spaces = oneOrMore { space() } ?: return null
     val headerName = quotedString() ?: return null
-
-    return HeaderQuery(begin = begin, end = position, type = type, spaces = spaces, headerName = headerName)
+    val subquery = optional { subquery() }
+    return HeaderQuery(begin = begin, end = position.copy(), type = type, spaces = spaces, headerName = headerName, subquery = subquery)
 }
 
 internal fun HurlParser.jsonPathQuery(): JsonPathQuery? {
     val begin = position.copy()
 
-    val type = queryType("jsonpath") ?: return null
+    val type = queryType(QueryTypeValue.JSONPATH) ?: return null
     val spaces = oneOrMore { space() } ?: return null
     val expr = quotedString() ?: return null
-
-    return JsonPathQuery(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    val subquery = optional { subquery() }
+    return JsonPathQuery(begin = begin, end = position.copy(), type = type, spaces = spaces, expr = expr, subquery = subquery)
 }
 
 internal fun HurlParser.regexQuery(): RegexQuery? {
     val begin = position.copy()
 
-    val type = queryType("regex") ?: return null
+    val type = queryType(QueryTypeValue.REGEX) ?: return null
     val spaces = oneOrMore { space() } ?: return null
     val expr = quotedString() ?: return null
-
-    return RegexQuery(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    val subquery = optional { subquery() }
+    return RegexQuery(begin = begin, end = position.copy(), type = type, spaces = spaces, expr = expr, subquery = subquery)
 }
 
 internal fun HurlParser.regexSubquery(): RegexSubquery? {
     val begin = position.copy()
 
-    val type = subqueryType("regex") ?: return null
-    val spaces = oneOrMore { space() } ?: return null
+    val spaces0 = oneOrMore { space() } ?: return null
+    val type = subqueryType(SubqueryTypeValue.REGEX) ?: return null
+    val spaces1 = oneOrMore { space() } ?: return null
     val expr = quotedString() ?: return null
-
-    return RegexSubquery(begin = begin, end = position, type = type, spaces = spaces, expr = expr)
+    return RegexSubquery(begin = begin, end = position.copy(), type = type, spaces0 = spaces0, expr = expr, spaces1 = spaces1)
 }
 
 internal fun HurlParser.statusQuery(): StatusQuery? {
     val begin = position.copy()
-    val type = queryType("status") ?: return null
-    return StatusQuery(begin = begin, end = position, type = type)
+    val type = queryType(QueryTypeValue.STATUS) ?: return null
+    val subquery = optional { subquery() }
+    return StatusQuery(begin = begin, end = position.copy(), type = type, subquery = subquery)
 }
 
 internal fun HurlParser.subquery(): Subquery? {
-    return regexSubquery()
+    return choice(
+        listOf(
+            { regexSubquery() },
+            { countSubquery() },
+        )
+    )
 }
 
-internal fun HurlParser.subqueryType(type: String): SubqueryType? {
+internal fun HurlParser.subqueryType(value: SubqueryTypeValue): SubqueryType? {
     val begin = position.copy()
-    val value = literal(type)?.value ?: return null
-    return SubqueryType(begin = begin, end = position, value = value)
+    literal(value.text) ?: return null
+    return SubqueryType(begin = begin, end = position.copy(), value = value)
 }
 
+internal fun HurlParser.variableQuery(): VariableQuery? {
+    val begin = position.copy()
+
+    val type = queryType(QueryTypeValue.VARIABLE) ?: return null
+    val spaces = oneOrMore { space() } ?: return null
+    val variable = quotedString() ?: return null
+    val subquery = optional { subquery() }
+    return VariableQuery(begin = begin, end = position.copy(), type = type, spaces = spaces, variable = variable, subquery = subquery)
+}
+
+internal fun HurlParser.xPathQuery(): XPathQuery? {
+    val begin = position.copy()
+
+    val type = queryType(QueryTypeValue.XPATH) ?: return null
+    val spaces = oneOrMore { space() } ?: return null
+    val expr = quotedString() ?: return null
+    val subquery = optional { subquery() }
+    return XPathQuery(begin = begin, end = position.copy(), type = type, spaces = spaces, expr = expr, subquery = subquery)
+}

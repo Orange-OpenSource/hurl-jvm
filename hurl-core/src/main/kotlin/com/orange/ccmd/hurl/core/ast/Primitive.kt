@@ -47,7 +47,7 @@ internal fun HurlParser.base64String(): Base64String? {
         error = SyntaxError("a valid base64-string is expected", position)
         return null
     }
-    return Base64String(begin = begin, end = position, value = value, text = encoded)
+    return Base64String(begin = begin, end = position.copy(), value = value, text = encoded)
 }
 
 internal fun HurlParser.body(): Body? {
@@ -58,7 +58,7 @@ internal fun HurlParser.body(): Body? {
     val bytes = bytes() ?: return null
     val lt = lineTerminator() ?: return null
 
-    return Body(begin = begin, end = position, lts = lts, spaces = spaces, bytes = bytes, lt = lt)
+    return Body(begin = begin, end = position.copy(), lts = lts, spaces = spaces, bytes = bytes, lt = lt)
 }
 
 internal fun HurlParser.bool(): Bool? {
@@ -68,10 +68,10 @@ internal fun HurlParser.bool(): Bool? {
     for ((text, value) in bools) {
         val lit = optional { literal(text) }
         if (lit != null) {
-            return Bool(begin = begin, value = value, text = text, end = position)
+            return Bool(begin = begin, value = value, text = text, end = position.copy())
         }
     }
-    error = SyntaxError("true or false is expected", position)
+    error = SyntaxError("true or false is expected", position.copy())
     return null
 }
 
@@ -82,7 +82,7 @@ internal fun HurlParser.comment(): Comment? {
     readWhile { !it.isNewLine }
     val value = buffer.slice(pos.offset, position.offset).string()
 
-    return Comment(begin = pos, end = position, value = value)
+    return Comment(begin = pos, end = position.copy(), value = value)
 }
 
 internal fun HurlParser.cookie(): Cookie? {
@@ -99,7 +99,7 @@ internal fun HurlParser.cookie(): Cookie? {
 
     return Cookie(
         begin = begin,
-        end = position,
+        end = position.copy(),
         lts = lts,
         spaces0 = spaces0,
         name = name,
@@ -126,10 +126,10 @@ internal fun HurlParser.cookieValue(): CookieValue? {
             it == '-'.code
     }
     if (cookies == null || cookies.isEmpty()) {
-        error = SyntaxError("[A-Za-z0-9:/%_-] char is expected in cookie-value", position)
+        error = SyntaxError("[A-Za-z0-9:/%_-] char is expected in cookie-value", position.copy())
         return null
     }
-    return CookieValue(begin = begin, end = position, value = cookies.string())
+    return CookieValue(begin = begin, end = position.copy(), value = cookies.string())
 }
 
 internal fun HurlParser.expr(): Expr? {
@@ -140,7 +140,7 @@ internal fun HurlParser.expr(): Expr? {
     val suffix = literal("}}") ?: return null
     val text = buffer.slice(begin.offset, position.offset).string()
 
-    return Expr(begin = begin, end = position, prefix = prefix, name = name, suffix = suffix, text = text)
+    return Expr(begin = begin, end = position.copy(), prefix = prefix, name = name, suffix = suffix, text = text)
 }
 
 internal fun HurlParser.fileParam(): FileParam? {
@@ -157,7 +157,7 @@ internal fun HurlParser.fileParam(): FileParam? {
 
     return FileParam(
         begin = begin,
-        end = position,
+        end = position.copy(),
         lts = lts,
         spaces0 = spaces0,
         key = key,
@@ -189,7 +189,7 @@ internal fun HurlParser.fileValue(): FileValue? {
 
     return FileValue(
         begin = begin,
-        end = position,
+        end = position.copy(),
         prefix = prefix,
         spaces0 = spaces0,
         fileName = fileName,
@@ -209,22 +209,22 @@ internal fun HurlParser.float(): Number? {
     }
     val cps0 = readWhile { it.isAsciiDigit }
     if (cps0 == null || cps0.isEmpty()) {
-        error = SyntaxError("[0-9] is expected", position)
+        error = SyntaxError("[0-9] is expected", position.copy())
         return null
     }
     val cp1 = read()
     if (cp1 == null || cp1 != '.'.code) {
-        error = SyntaxError("'.' is expected", position)
+        error = SyntaxError("'.' is expected", position.copy())
         return null
     }
     val cps1 = readWhile { it.isAsciiDigit }
     if (cps1 == null || cps1.isEmpty()) {
-        error = SyntaxError("[0-9] is expected", position)
+        error = SyntaxError("[0-9] is expected", position.copy())
         return null
     }
     val text = buffer.slice(begin.offset, position.offset).string()
     val value = text.toDoubleOrNull() ?: return null
-    return Number(begin = begin, end = position, value = value, text = text)
+    return Number(begin = begin, end = position.copy(), value = value, text = text)
 }
 
 internal fun HurlParser.header(): Header? {
@@ -237,7 +237,7 @@ internal fun HurlParser.header(): Header? {
 
     return Header(
         begin = begin,
-        end = position,
+        end = position.copy(),
         lts = lts,
         spaces = spaces,
         keyValue = keyValue,
@@ -254,12 +254,12 @@ internal fun HurlParser.integer(): Number? {
     }
     val cps = readWhile { it.isAsciiDigit }
     if (cps == null || cps.isEmpty()) {
-        error = SyntaxError("[0-9] is expected", position)
+        error = SyntaxError("[0-9] is expected", position.copy())
         return null
     }
     val text = buffer.slice(begin.offset, position.offset).string()
     val value = text.toIntOrNull() ?: return null
-    return Number(begin = begin, end = position, value = value.toDouble(), text = text)
+    return Number(begin = begin, end = position.copy(), value = value.toDouble(), text = text)
 }
 
 internal fun HurlParser.keyString(): HString? {
@@ -279,7 +279,7 @@ internal fun HurlParser.keyString(): HString? {
             cp = read()
             when (cp) {
                 null -> {
-                    error = SyntaxError("invalid key-string", position)
+                    error = SyntaxError("invalid key-string", position.copy())
                     return null
                 }
                 '#'.code -> key += "#"
@@ -295,7 +295,7 @@ internal fun HurlParser.keyString(): HString? {
                     key += unicode.codePointToString()
                 }
                 else -> {
-                    error = SyntaxError("invalid escape char ${cp.codePointToString()}", position)
+                    error = SyntaxError("invalid escape char ${cp.codePointToString()}", position.copy())
                     return null
                 }
             }
@@ -305,12 +305,12 @@ internal fun HurlParser.keyString(): HString? {
     }
 
     if (position.offset == begin.offset) {
-        error = SyntaxError("invalid empty key-string", position)
+        error = SyntaxError("invalid empty key-string", position.copy())
         return null
     }
 
     val text = buffer.slice(begin.offset, position.offset).string()
-    return HString(begin = begin, end = position, value = key, text = text)
+    return HString(begin = begin, end = position.copy(), value = key, text = text)
 }
 
 internal fun HurlParser.keyValue(): KeyValue? {
@@ -324,7 +324,7 @@ internal fun HurlParser.keyValue(): KeyValue? {
 
     return KeyValue(
         begin = begin,
-        end = position,
+        end = position.copy(),
         key = key,
         spaces0 = spaces0,
         colon = colon,
@@ -345,7 +345,7 @@ internal fun HurlParser.lineTerminator(): LineTerminator? {
         error = SyntaxError("newline is expected", begin)
         return null
     }
-    return LineTerminator(begin = begin, end = position, spaces = spaces, comment = comment, newLine = newLine)
+    return LineTerminator(begin = begin, end = position.copy(), spaces = spaces, comment = comment, newLine = newLine)
 }
 
 internal fun HurlParser.literal(literal: String): Literal? {
@@ -356,17 +356,17 @@ internal fun HurlParser.literal(literal: String): Literal? {
         val c = peek()
         if (c == null) {
             val message = "'$literal' is expected, invalid eof instead of '${cps[i].codePointToString()}'"
-            error = SyntaxError(message, position)
+            error = SyntaxError(message, position.copy())
             return null
         } else if (c != cps[i]) {
             val message =
                 "'$literal' is expected, invalid '${c.codePointToString()}' instead of '${cps[i].codePointToString()}'"
-            error = SyntaxError(message, position)
+            error = SyntaxError(message, position.copy())
             return null
         }
         read()
     }
-    return Literal(begin = begin, end = position, value = literal)
+    return Literal(begin = begin, end = position.copy(), value = literal)
 }
 
 internal const val multilineMarker = "```"
@@ -386,14 +386,14 @@ internal fun HurlParser.leadingRawStringPrefix(): HString? {
     newLine() ?: return null
     val cps = buffer.slice(begin.offset, position.offset)
     val text = cps.string()
-    return HString(begin = begin, end = position, value = text, text = text)
+    return HString(begin = begin, end = position.copy(), value = text, text = text)
 }
 
 internal fun HurlParser.not(): Not? {
     val begin = position.copy()
 
     val text = literal("not") ?: return null
-    return Not(begin = begin, end = position, text = text)
+    return Not(begin = begin, end = position.copy(), text = text)
 }
 
 internal fun HurlParser.newLine(): NewLine? {
@@ -414,13 +414,13 @@ internal fun HurlParser.newLine(): NewLine? {
         }
     }
     val eol = buffer.slice(begin.offset, position.offset)
-    return NewLine(begin = begin, end = position, value = eol.string())
+    return NewLine(begin = begin, end = position.copy(), value = eol.string())
 }
 
 internal fun HurlParser.`null`(): Null? {
     val begin = position.copy()
     literal("null") ?: return null
-    return Null(begin = begin, end = position)
+    return Null(begin = begin, end = position.copy())
 }
 
 internal fun HurlParser.param(): Param? {
@@ -433,7 +433,7 @@ internal fun HurlParser.param(): Param? {
 
     return Param(
         begin = begin,
-        end = position,
+        end = position.copy(),
         lts = lts,
         spaces = spaces,
         keyValue = keyValue,
@@ -449,15 +449,15 @@ internal fun HurlParser.pathString(): HString? {
                 it == '.'.code || it == '/'.code || it == '+'.code || it == '_'.code || it == '-'.code
     }
     if (cps == null) {
-        error = SyntaxError("a valid filename is expected", position)
+        error = SyntaxError("a valid filename is expected", position.copy())
         return null
     }
     val fileName = cps.string()
     if (fileName.contains("..")) {
-        error = SyntaxError("relative filename is not valid", position)
+        error = SyntaxError("relative filename is not valid", position.copy())
         return null
     }
-    return HString(begin = begin, end = position, value = fileName, text = fileName)
+    return HString(begin = begin, end = position.copy(), value = fileName, text = fileName)
 }
 
 internal fun HurlParser.quotedString(): HString? {
@@ -465,7 +465,7 @@ internal fun HurlParser.quotedString(): HString? {
 
     var cp = read()
     if (cp == null || cp != '"'.code) {
-        error = SyntaxError("\" is expected at quoted-string beginning", position)
+        error = SyntaxError("\" is expected at quoted-string beginning", position.copy())
         return null
     }
 
@@ -474,7 +474,7 @@ internal fun HurlParser.quotedString(): HString? {
     while (true) {
         cp = read()
         if (cp == null) {
-            error = SyntaxError("\" is expected at quoted-string end", position)
+            error = SyntaxError("\" is expected at quoted-string end", position.copy())
             return null
         } else if (cp == '"'.code) {
             break
@@ -482,7 +482,7 @@ internal fun HurlParser.quotedString(): HString? {
             cp = read()
             when (cp) {
                 null -> {
-                    error = SyntaxError("invalid quoted-string", position)
+                    error = SyntaxError("invalid quoted-string", position.copy())
                     return null
                 }
                 '"'.code -> value += "\""
@@ -506,13 +506,13 @@ internal fun HurlParser.quotedString(): HString? {
     }
 
     val text = buffer.slice(begin.offset, position.offset).string()
-    return HString(begin = begin, end = position, value = value, text = text)
+    return HString(begin = begin, end = position.copy(), value = value, text = text)
 }
 
 internal fun HurlParser.sectionHeader(section: String): SectionHeader? {
     val begin = position.copy()
     val value = literal("[$section]")?.value ?: return null
-    return SectionHeader(begin = begin, end = position, value = value)
+    return SectionHeader(begin = begin, end = position.copy(), value = value)
 }
 
 internal fun HurlParser.space(): Space? {
@@ -520,27 +520,27 @@ internal fun HurlParser.space(): Space? {
 
     val cp = read()
     if (cp == null || !cp.isAsciiSpace) {
-        error = SyntaxError("space or tab is expected", position)
+        error = SyntaxError("space or tab is expected", position.copy())
         return null
     }
-    return Space(begin = begin, end = position, value = cp.codePointToString())
+    return Space(begin = begin, end = position.copy(), value = cp.codePointToString())
 }
 
 internal fun HurlParser.unicodeChar(): Int? {
     // Unicode literal are {XXXX}
     var cp = read()
     if (cp == null || cp != '{'.code) {
-        error = SyntaxError("{ expected, invalid unicode literal", position)
+        error = SyntaxError("{ expected, invalid unicode literal", position.copy())
         return null
     }
     val cps = readWhile { it.isAsciiDigit || it.isHexaLetter }
     if (cps == null || cps.isEmpty() || cps.size > 8) {
-        error = SyntaxError("invalid unicode literal", position)
+        error = SyntaxError("invalid unicode literal", position.copy())
         return null
     }
     cp = read()
     if (cp == null || cp != '}'.code) {
-        error = SyntaxError("} expected, invalid unicode literal", position)
+        error = SyntaxError("} expected, invalid unicode literal", position.copy())
         return null
     }
     return cps.string().toInt(radix = 16)
@@ -549,9 +549,9 @@ internal fun HurlParser.unicodeChar(): Int? {
 internal fun HurlParser.valueString(): HString? {
     val begin = position.copy()
 
-    val cp0 = peek() ?: return HString(begin = begin, end = position, value = "", text = "")
+    val cp0 = peek() ?: return HString(begin = begin, end = position.copy(), value = "", text = "")
     if (cp0.isAsciiSpace) {
-        error = SyntaxError("invalid unquoted-string-value", position)
+        error = SyntaxError("invalid unquoted-string-value", position.copy())
         return null
     }
 
@@ -572,7 +572,7 @@ internal fun HurlParser.valueString(): HString? {
             cp = read()
             when (cp) {
                 null -> {
-                    error = SyntaxError("invalid unquoted-string-value", position)
+                    error = SyntaxError("invalid unquoted-string-value", position.copy())
                     return null
                 }
                 '\\'.code -> value += "\\"
@@ -586,7 +586,7 @@ internal fun HurlParser.valueString(): HString? {
                     value += unicode.codePointToString()
                 }
                 else -> {
-                    error = SyntaxError("invalid escape char ${cp.codePointToString()}", position)
+                    error = SyntaxError("invalid escape char ${cp.codePointToString()}", position.copy())
                     return null
                 }
             }
@@ -599,7 +599,7 @@ internal fun HurlParser.valueString(): HString? {
         }
     }
     val text = buffer.slice(begin.offset, position.offset).string()
-    return HString(begin = begin, end = position, value = value, text = text)
+    return HString(begin = begin, end = position.copy(), value = value, text = text)
 }
 
 internal fun HurlParser.variableName(): VariableName? {
@@ -615,5 +615,5 @@ internal fun HurlParser.variableName(): VariableName? {
         error = SyntaxError("[A-Za-z0-9_-] char is expected in variable-name", position)
         return null
     }
-    return VariableName(begin = begin, end = position, value = name.string())
+    return VariableName(begin = begin, end = position.copy(), value = name.string())
 }

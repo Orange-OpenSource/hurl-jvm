@@ -35,7 +35,7 @@ internal fun HurlParser.cookiesSection(): CookiesSection? {
     val cookies = zeroOrMore { cookie() }
     return CookiesSection(
         begin = begin,
-        end = position,
+        end = position.copy(),
         lts = lts,
         spaces = spaces,
         header = header,
@@ -54,7 +54,7 @@ internal fun HurlParser.formParamsSection(): FormParamsSection? {
     val params = zeroOrMore { param() }
     return FormParamsSection(
         begin = begin,
-        end = position,
+        end = position.copy(),
         lts = lts,
         spaces = spaces,
         header = header,
@@ -72,10 +72,10 @@ internal fun HurlParser.method(): Method? {
     for (m in methods) {
         val node = optional { literal(m) }
         if (node != null) {
-            return Method(begin = begin, end = position, value = m)
+            return Method(begin = begin, end = position.copy(), value = m)
         }
     }
-    error = SyntaxError("method is expected", position)
+    error = SyntaxError("method is expected", position.copy())
     return null
 }
 
@@ -106,7 +106,7 @@ internal fun HurlParser.multipartFormDataSection(): MultipartFormDataSection? {
 
     return MultipartFormDataSection(
         begin = begin,
-        end = position,
+        end = position.copy(),
         lts = lts,
         spaces = spaces,
         header = header,
@@ -126,7 +126,7 @@ internal fun HurlParser.queryStringParamsSection(): QueryStringParamsSection? {
     val params = zeroOrMore { param() }
     return QueryStringParamsSection(
         begin = begin,
-        end = position,
+        end = position.copy(),
         lts = lts,
         spaces = spaces,
         header = header,
@@ -150,7 +150,7 @@ internal fun HurlParser.request(): Request? {
 
     return Request(
         begin = begin,
-        end = position,
+        end = position.copy(),
         lts = lts,
         spaces0 = spaces0,
         method = method,
@@ -192,8 +192,8 @@ internal fun HurlParser.url(): Url? {
         isReserved || isUnreserved || isQuery || isHurlSpecific
     }
     if (url == null || url.isEmpty()) {
-        error = SyntaxError("url is expected", position)
+        error = SyntaxError("url is expected", position.copy())
         return null
     }
-    return Url(begin = begin, value = url.string(), end = position)
+    return Url(begin = begin, value = url.string(), end = position.copy())
 }

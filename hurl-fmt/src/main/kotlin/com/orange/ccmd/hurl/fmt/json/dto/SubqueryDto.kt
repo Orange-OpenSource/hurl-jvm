@@ -19,6 +19,7 @@
 
 package com.orange.ccmd.hurl.fmt.json.dto
 
+import com.orange.ccmd.hurl.core.ast.CountSubquery
 import com.orange.ccmd.hurl.core.ast.RegexSubquery
 import com.orange.ccmd.hurl.core.ast.Subquery
 import kotlinx.serialization.SerialName
@@ -33,9 +34,13 @@ data class RegexSubqueryDto(
     val expr: String
 ) : SubqueryDto()
 
+@Serializable
+@SerialName("count")
+object CountSubqueryDto : SubqueryDto()
 
 fun Subquery.toSubqueryDto(): SubqueryDto {
     return when (this) {
+        is CountSubquery -> CountSubqueryDto
         is RegexSubquery -> RegexSubqueryDto(expr = expr.value)
     }
 }
