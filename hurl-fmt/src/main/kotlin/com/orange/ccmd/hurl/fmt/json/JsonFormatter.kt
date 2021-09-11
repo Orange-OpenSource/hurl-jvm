@@ -21,9 +21,11 @@ package com.orange.ccmd.hurl.fmt.json
 
 import com.orange.ccmd.hurl.core.ast.HurlFile
 import com.orange.ccmd.hurl.fmt.Formatter
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
+@OptIn(ExperimentalSerializationApi::class)
 class JsonFormatter : Formatter {
 
     override fun format(hurlFile: HurlFile): String {
